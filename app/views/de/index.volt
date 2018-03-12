@@ -132,7 +132,7 @@
                     {{ text_field('') }} 
                 </div>
 
-                <h4 class="ui dividing header" style="color: darkblue;"><i class="map icon"></i>VI Transaction</h4>
+                <h4 class="ui dividing header" style="color: darkblue;"><i class="random icon"></i>VI Transaction</h4>
                 
                 <div class="field">    
                     <label>Merchant Order Number</label> 
