@@ -1,0 +1,192 @@
+body {
+    background-image: url("../img/bg/crossword.png");
+    /* background-color: #cccccc; */
+ }
+
+a {
+    cursor: pointer;
+}
+
+.ui.menu .item img.logo {
+    margin-right: 1em;
+}
+
+.main.container {
+    margin-top: 7em;
+}
+
+.main.wide {
+    margin-top: 2em;
+    padding: 5px;
+}
+
+/* .ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+} */
+
+.footer {
+    margin-top: 2em !important;
+}
+
+/* Semantic UI: To avoid modal strech until the bottom of the screen. */
+.modal { 
+    bottom: auto; 
+}
+
+.toastr-custom-pos {
+    margin-top: 5em;
+}
+
+/* .active.paging {
+    color:#ffffff !important;
+    background-color: #3d6eb9 !important;
+} */
+
+.pagination a {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400 !important;
+    size: 12px;
+    color: #666666 !important;
+}
+
+.ui.table thead th {
+    background: #eff0f1;
+}
+
+table thead tr th {
+    font-family: 'Oswald', 'Meiryo', sans-serif;
+    font-style: normal;
+    font-weight: 400 !important;
+    /* color: #666666 !important; */
+}
+
+table tfoot tr th {
+    font-family: 'Oswald', 'Meiryo', sans-serif;
+    font-style: normal;
+    font-weight: 400 !important;
+    size: 12px;
+    color: #666666 !important;
+}
+
+table tbody tr td, table tfoot tr th {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    size: 12px;
+    color: #292929;
+}
+
+.message {
+    float: top;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: grey;
+}
+
+textarea {
+    overflow: hidden;
+}
+
+.move.icon {
+    color: #292929;
+}
+
+.move.pair.icon
+{
+    position: relative;
+    display: block;    
+    
+    /* On top */
+    z-index: 100 !important;
+
+    margin-top: -20px !important;    
+    margin-left: 5px !important;
+}
+
+.overlay.icon
+{
+    position: relative;
+    display: block;
+    font-size: 18px !important;
+    width: 18px !important;
+
+    /* This makes an outline */
+    text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+
+    opacity: 1 !important;
+
+    /* On top */
+    z-index: 100 !important;
+
+}
+
+.overlay.bottom.icon {
+    margin-top: -15px !important;    
+}
+
+.overlay.right.icon {
+    margin-left: 14px !important;
+}
+
+.overlay.top.icon {
+    margin-top: -34px !important;
+}
+
+.overlay.centered.icon {
+    margin-top: -25px !important;
+    margin-left: 10px !important;
+}
+
+.sorted_table tr.placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: red;
+    margin-top: -5px;
+    left: -5px;
+    border-right: none; 
+}
+
+.sorted_head th {
+    cursor: pointer; 
+}
+  
+.sorted_head th.placeholder {
+    display: block;
+    background: red;
+    position: relative;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0; 
+}
+
+.sorted_head th.placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: red;
+    top: -6px;
+    margin-left: -5px;
+    border-bottom: none; 
+}
+
+.highlight {
+    background-color: #cedf8b;
+ }
+
+.ui.dropdown.onmodal .menu {
+    position: relative;
+    z-index: 999999 !important;
+}
