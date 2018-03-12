@@ -15,6 +15,11 @@ class Elements extends Component
                 'caption' => 'Home',
                 'action' => 'index',
                 'iconClass' => 'home icon'
+            ],
+            'index' => [
+                'caption' => 'Home',
+                'action' => 'index',
+                'iconClass' => 'home icon'
             ]
         ],
         'right' => [
