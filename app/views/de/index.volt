@@ -226,7 +226,7 @@
                 <a class="item" title="Magnify"><i class="eye icon"></i></a>
                 <a class="item" title="Pan"><i class="hand pointer icon"></i></a>
             </div>#}
-            <iframe src = "/ViewerJS/#../sampleimg/doc.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
+            <iframe src = "/ViewerJS/#../ftp/sample.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
         
     </div>
 </div>

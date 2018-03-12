@@ -1,6 +1,6 @@
 <?php
 
-class DEController extends ControllerBase
+class DeController extends ControllerBase
 {
 
     public function initialize()
