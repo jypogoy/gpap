@@ -43,7 +43,6 @@
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value=""></div>
                             <div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
                             <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
                             <div class="item" data-value="Currency None">CNY None</div>
@@ -132,7 +131,7 @@
                     <?= $this->tag->textField(['']) ?> 
                 </div>
 
-                <h4 class="ui dividing header" style="color: darkblue;"><i class="map icon"></i>VI Transaction</h4>
+                <h4 class="ui dividing header" style="color: darkblue;"><i class="random icon"></i>VI Transaction</h4>
                 
                 <div class="field">    
                     <label>Merchant Order Number</label> 
@@ -220,7 +219,9 @@
     <div class="twelve wide column">
         
             
-            <iframe src = "/ViewerJS/#../sampleimg/doc.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
-        
+            
+            <div id="viewer"></div>          
     </div>
 </div>
+
+<?= $this->tag->javascriptInclude('js/de.js') ?>

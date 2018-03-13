@@ -15,9 +15,6 @@
         {{ stylesheet_link('toastr/toastr.min.css') }}
         {{ stylesheet_link('css/app.css') }}
         
-        <!-- Snackbar -->
-        {#{ stylesheet_link('snackbar/snackbar.min.css') }#}
-
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -31,7 +28,9 @@
         {{ javascript_include('js/app.js') }}
         {{ javascript_include('js/list.js') }}
         {{ javascript_include('js/message.js') }}
-        {{ javascript_include('js/form.js') }}
+        {{ javascript_include('js/form.js') }}    
+        {{ javascript_include('iipmooviewer/js/mootools-core-1.6.0-compressed.js') }}  
+        {{ javascript_include('iipmooviewer/js/iipmooviewer-2.0-min.js') }}     
         {#{ javascript_include('js/register.js') }#}
     </body>
 </html>

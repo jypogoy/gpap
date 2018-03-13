@@ -15,9 +15,6 @@
         <?= $this->tag->stylesheetLink('toastr/toastr.min.css') ?>
         <?= $this->tag->stylesheetLink('css/app.css') ?>
         
-        <!-- Snackbar -->
-        
-
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -31,7 +28,9 @@
         <?= $this->tag->javascriptInclude('js/app.js') ?>
         <?= $this->tag->javascriptInclude('js/list.js') ?>
         <?= $this->tag->javascriptInclude('js/message.js') ?>
-        <?= $this->tag->javascriptInclude('js/form.js') ?>
+        <?= $this->tag->javascriptInclude('js/form.js') ?>    
+        <?= $this->tag->javascriptInclude('iipmooviewer/js/mootools-core-1.6.0-compressed.js') ?>  
+        <?= $this->tag->javascriptInclude('iipmooviewer/js/iipmooviewer-2.0-min.js') ?>     
         
     </body>
 </html>

@@ -43,7 +43,6 @@
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value=""></div>
                             <div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
                             <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
                             <div class="item" data-value="Currency None">CNY None</div>
@@ -226,7 +225,9 @@
                 <a class="item" title="Magnify"><i class="eye icon"></i></a>
                 <a class="item" title="Pan"><i class="hand pointer icon"></i></a>
             </div>#}
-            <iframe src = "/ViewerJS/#../ftp/sample.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
-        
+            {#<iframe src = "/ViewerJS/#../ftp/sample.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>#}
+            <div id="viewer"></div>          
     </div>
 </div>
+
+{{ javascript_include('js/de.js') }}
