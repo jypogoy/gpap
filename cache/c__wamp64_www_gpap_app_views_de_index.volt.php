@@ -220,7 +220,7 @@
         
             
             
-            <div id="viewer"></div>          
+            <div id="viewer" style="width: 100%; height: 50%;"></div>          
     </div>
 </div>
 

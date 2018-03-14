@@ -226,7 +226,7 @@
                 <a class="item" title="Pan"><i class="hand pointer icon"></i></a>
             </div>#}
             {#<iframe src = "/ViewerJS/#../ftp/sample.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>#}
-            <div id="viewer"></div>          
+            <div id="viewer" style="width: 100%; height: 50%;"></div>          
     </div>
 </div>
 

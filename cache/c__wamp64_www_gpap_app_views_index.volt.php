@@ -12,7 +12,11 @@
         <?= $this->tag->stylesheetLink('semantic/semantic.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.structure.css') ?>
-        <?= $this->tag->stylesheetLink('toastr/toastr.min.css') ?>
+        <?= $this->tag->stylesheetLink('diva/diva.min.css') ?>    
+
+
+        
+       
         <?= $this->tag->stylesheetLink('css/app.css') ?>
         
         <!-- Google Fonts -->
@@ -28,9 +32,11 @@
         <?= $this->tag->javascriptInclude('js/app.js') ?>
         <?= $this->tag->javascriptInclude('js/list.js') ?>
         <?= $this->tag->javascriptInclude('js/message.js') ?>
-        <?= $this->tag->javascriptInclude('js/form.js') ?>    
-        <?= $this->tag->javascriptInclude('iipmooviewer/js/mootools-core-1.6.0-compressed.js') ?>  
-        <?= $this->tag->javascriptInclude('iipmooviewer/js/iipmooviewer-2.0-min.js') ?>     
+        <?= $this->tag->javascriptInclude('js/form.js') ?>
+        <?= $this->tag->javascriptInclude('diva/diva.min.js') ?>    
+        
+           
+
         
     </body>
 </html>
