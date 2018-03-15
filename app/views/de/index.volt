@@ -19,11 +19,11 @@
                         <label>Currency Code</label>
                         {{ text_field('', 'id') }}
                     </div>   
-                    <div class="required small field">
+                    <div class="required field">
                         <label>DCN</label>
                         {{ text_field('') }}
                     </div> 
-                    <div class="required small field">
+                    <div class="required field">
                         <label>Deposit Date</label>
                         {{ text_field('') }}
                     </div>   
@@ -33,7 +33,7 @@
                         <label>Deposit Amount</label>
                         {{ text_field('') }}
                     </div>    
-                    <div class="required eleven wide small field">
+                    <div class="required eleven wide field">
                         <label>Merchant Pull Reason</label>
                         <div class="ui search selection dropdown">
                             <input type="hidden" name="reason">
@@ -65,7 +65,7 @@
                                 <div class="item" data-value="MID Status Frozen">MID Status Frozen</div>
                                 <div class="item" data-value="Trailer Batch Amount is unmatched with total amount of transactions">Trailer Amount unmatch total trans</div>
                                 <div class="item" data-value="Trailer Batch Amount None">Trailer Batch Amount None</div>
-                                <div class="item" data-value="Deleted Batch - Identical Auth Codes found in a batch">Del batch same Auth Codes</div>
+                                <div class="item" data-value="Deleted Batch - Identical Auth Codes found in a batch">Del batch same Auth Codes</div>                                
                             </div>
                         </div>
                     </div> 
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     </div>   
-                    <div class="required small field">
+                    <div class="required field">
                         <label>Cardholder Number (PAN)</label>
                         {{ text_field('') }}
                     </div> 
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" small field">    
+                    <div class="field">    
                         <label>Airline Ticket Number</label> 
                         {{ text_field('') }} 
                     </div>
@@ -170,7 +170,7 @@
                     <label>Commodity Code</label> 
                     {{ text_field('') }}
                 </div>#}
-                <div class="required field">
+                <div class="required small field">
                     <label>Sales Slip Pull Reason</label>
                     <div class="ui search selection dropdown">
                         <input type="hidden" name="reason">
@@ -234,19 +234,19 @@
                 <div class="ui error message"></div>
 
                 <button class="ui small green button"><i class="plus icon"></i>More</button>    
-                <div class="ui small primary buttons">
-                    <button class="ui button"><i class="save icon"></i>Save</button>
+
+                <a href="../gpap" class="ui small button" style="float:right;">Exit</a>
+                <div class="ui small primary buttons" style="float:right; padding-right: 10px;">
+                    <button class="ui button"><i class="save icon"></i>Save and Next</button>
                     <div class="ui floating dropdown icon button">
                         <i class="dropdown icon"></i>
-                        <div class="menu">  
-                            <div class="item">Save and Next</div>
+                        <div class="menu">                              
                             <div class="item">Complete and Next</div>
                             <div class="item">Complete and Exit</div>
+                            <div class="item">Save and Exit</div>
                         </div>
                     </div>       
-                </div>            
-                                
-                <a href="../gpap" class="ui small button" style="float:right;">Exit</a>
+                </div>                                                            
 
             </form>    
 
@@ -268,5 +268,7 @@
             {#<div id="viewer" style="width: 100%; height: 500px; overflow: scroll;" class="ui raised segment"></div>#}
     </div>
 </div>
+
+<div class="ui active loader"></div>
 
 {{ javascript_include('js/de.js') }}

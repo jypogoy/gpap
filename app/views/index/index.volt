@@ -4,7 +4,7 @@
     <div class="ui equal width stackable grid">
         <div class="column">
             <div class="ui action left icon input">
-                <i class="search icon"></i>
+                <i class="edit icon"></i>
                 {{ text_field("keyword", "id" : "fieldKeyword", "placeholder" : "Type in keywords...", "value" : '') }}
                 <button type="submit" class="ui teal submit button">Submit</button>
             </div>            
@@ -31,7 +31,7 @@
             <td>03-12-2018 12:48:00 PM</td>
             <td>
                 <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="folder open orange icon"></i>
+                    <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
@@ -44,7 +44,7 @@
             <td>03-12-2018 12:48:00 PM</td>
             <td>
                 <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="folder open orange icon"></i>
+                    <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
@@ -57,7 +57,7 @@
             <td>03-12-2018 12:48:00 PM</td>
             <td>
                 <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="folder open orange icon"></i>
+                    <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
@@ -70,7 +70,7 @@
             <td>03-12-2018 12:48:00 PM</td>
             <td>
                 <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="folder open orange icon"></i>
+                    <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
@@ -83,7 +83,7 @@
             <td>03-12-2018 12:48:00 PM</td>
             <td>
                 <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="folder open orange icon"></i>
+                    <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
@@ -92,3 +92,7 @@
         </tr>
     </tbody>
 </table>
+
+<div class="ui active loader"></div>
+
+{{ javascript_include('js/home.js') }}
