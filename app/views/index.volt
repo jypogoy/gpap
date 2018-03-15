@@ -12,10 +12,10 @@
         {{ stylesheet_link('semantic/semantic.min.css') }}
         {{ stylesheet_link('jqueryui/jquery-ui.min.css') }}
         {{ stylesheet_link('jqueryui/jquery-ui.structure.css') }}
-        {{ stylesheet_link('diva/diva.min.css') }}    
+        {#{ stylesheet_link('diva/diva.min.css') }}    
 
 
-        {#{ stylesheet_link('iipmooviewer/css/iip.min.css') }}
+        {{ stylesheet_link('iipmooviewer/css/iip.min.css') }}
         {{ stylesheet_link('iipmooviewer/css/gallery.min.css') }}
         {{ stylesheet_link('iipmooviewer/css/ie.min.css') }#}
        
@@ -26,6 +26,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         {{ javascript_include('js/jquery-3.3.1.min.js') }}        
         {{ content() }}                
         {{ javascript_include('jqueryui/jquery-ui.min.js') }}       
@@ -35,9 +36,12 @@
         {{ javascript_include('js/list.js') }}
         {{ javascript_include('js/message.js') }}
         {{ javascript_include('js/form.js') }}
-        {{ javascript_include('diva/diva.min.js') }}    
+
+        {{ javascript_include('js/tiff.min.js') }}   
+
+        {#{ javascript_include('diva/diva.min.js') }}    
         
-        {#{ javascript_include('iipmooviewer/js/mootools-core-1.6.0-compressed.js') }}  
+        {{ javascript_include('iipmooviewer/js/mootools-core-1.6.0-compressed.js') }}  
         {{ javascript_include('iipmooviewer/js/iipmooviewer-2.0-min.js') }}   
         {{ javascript_include('iipmooviewer/js/gallery.min.js') }#}   
 

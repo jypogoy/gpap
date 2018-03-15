@@ -12,9 +12,6 @@
         <?= $this->tag->stylesheetLink('semantic/semantic.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.structure.css') ?>
-        <?= $this->tag->stylesheetLink('diva/diva.min.css') ?>    
-
-
         
        
         <?= $this->tag->stylesheetLink('css/app.css') ?>
@@ -24,6 +21,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
     <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <?= $this->tag->javascriptInclude('js/jquery-3.3.1.min.js') ?>        
         <?= $this->getContent() ?>                
         <?= $this->tag->javascriptInclude('jqueryui/jquery-ui.min.js') ?>       
@@ -33,8 +31,9 @@
         <?= $this->tag->javascriptInclude('js/list.js') ?>
         <?= $this->tag->javascriptInclude('js/message.js') ?>
         <?= $this->tag->javascriptInclude('js/form.js') ?>
-        <?= $this->tag->javascriptInclude('diva/diva.min.js') ?>    
-        
+
+        <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
+
            
 
         
