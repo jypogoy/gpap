@@ -14,7 +14,7 @@ $(function () {
     var credit = '&copy; ADEC Innovations';
 
     // Create our iipmooviewer object
-    // new IIPMooViewer( "viewer", {
+    // new IIPMooViewer("viewer", {
     //     server: server,
     //     image: image,
     //     credit: credit,

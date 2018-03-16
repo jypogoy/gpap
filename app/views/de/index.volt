@@ -263,9 +263,15 @@
             </div>#}
             {#<iframe src = "/ViewerJS/#../ftp/0.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>#}
             
-            <iframe src = "http://localhost:82/angular-canvas-viewer/" class="ui sticky" width='100%' height='800px' allowfullscreen webkitallowfullscreen frameBorder="0"></iframe>
+            {#<iframe src = "http://localhost:82/imageviewer/" width='100%' height='800px' allowfullscreen webkitallowfullscreen frameBorder="0"></iframe>#}
             
             {#<div id="viewer" style="width: 100%; height: 500px; overflow: scroll;" class="ui raised segment"></div>#}
+            <?php 
+            
+                $multiTIFF = new Imagick(); 
+                echo 'HEy ' + $multiTIFF;
+
+            ?>
     </div>
 </div>
 

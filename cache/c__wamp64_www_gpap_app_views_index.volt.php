@@ -13,6 +13,11 @@
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.structure.css') ?>
         
+        <?= $this->tag->stylesheetLink('diva/diva.min.css') ?>    
+        
+        <?= $this->tag->stylesheetLink('iipmooviewer/css/iip.min.css') ?>
+        <?= $this->tag->stylesheetLink('iipmooviewer/css/gallery.min.css') ?>
+        <?= $this->tag->stylesheetLink('iipmooviewer/css/ie.min.css') ?>
        
         <?= $this->tag->stylesheetLink('css/app.css') ?>
         
@@ -34,7 +39,11 @@
 
         <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
 
-           
+        <?= $this->tag->javascriptInclude('diva/diva.min.js') ?>    
+        
+        <?= $this->tag->javascriptInclude('iipmooviewer/js/mootools-core-1.6.0-compressed.js') ?>  
+        <?= $this->tag->javascriptInclude('iipmooviewer/js/iipmooviewer-2.0-min.js') ?>   
+        <?= $this->tag->javascriptInclude('iipmooviewer/js/gallery.min.js') ?>   
 
         
     </body>
