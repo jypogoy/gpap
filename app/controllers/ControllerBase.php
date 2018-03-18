@@ -6,7 +6,7 @@ class ControllerBase extends Controller
 {
     protected function initialize()
     {
-        $this->tag->prependTitle('GPAP DC | ');
+        $this->tag->prependTitle('GPAP DE | ');
         $this->view->setTemplateAfter('main');
     }
 

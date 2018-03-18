@@ -1,0 +1,16 @@
+.command {
+	position : absolute;
+	z-index : 10;
+	top : 20px;
+    right : 50px;
+    background-color: beige !important;
+}
+
+.command > .button {
+    z-index : 100;
+    opacity: 0.8;
+}
+
+.command > .button > i {
+	z-index : 100;
+}
