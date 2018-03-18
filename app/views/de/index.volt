@@ -233,10 +233,22 @@
 
                 <div class="ui error message"></div>
 
-                <button class="ui small green button"><i class="plus icon"></i>More</button>    
-
-                <a href="../gpap" class="ui small button" style="float:right;">Exit</a>
-                <div class="ui small primary buttons" style="float:right; padding-right: 10px;">
+                <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>Add Slip</button>
+                <button class="ui small icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
+                <button class="ui small icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>    
+                <div style="margin-top: 5px;">
+                    <button class="ui small primary button" data-tooltip="Complete Order and process another" data-position="right center">Complete & Next</button>
+                    <button class="ui small primary button" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Complete & Exit</button>
+                </div>
+                <div style="margin-top: 5px;">
+                    <button class="ui small green button" data-tooltip="Save changes and process another" data-position="right center">Save & Next</button>
+                    <button class="ui small green button" data-tooltip="Save changes and proceed to Home Page" data-position="bottom center">Save & Exit</button>
+                    <a href="../gpap" class="ui small button">Exit</a>
+                </div>
+                
+                
+                {#<a href="../gpap" class="ui small button" style="float:right;">Exit</a>#}
+                {#<div class="ui small primary buttons" style="float:right; padding-right: 10px;">
                     <button class="ui button"><i class="save icon"></i>Save and Next</button>
                     <div class="ui floating dropdown icon button">
                         <i class="dropdown icon"></i>
@@ -246,7 +258,7 @@
                             <div class="item">Save and Exit</div>
                         </div>
                     </div>       
-                </div>                                                            
+                </div>#}                                                            
 
             </form>    
 
@@ -265,9 +277,8 @@
             
             {#<iframe src = "http://localhost:82/imageviewer/" width='100%' height='800px' allowfullscreen webkitallowfullscreen frameBorder="0"></iframe>#}
             
-            <div id="viewer" style="width: 100%; height: 800px; overflow: scroll; background-color: lightgrey;" class="ui raised segment">
-            
-            </div>            
+            <div id="viewer" style="width: 100%; height: 800px; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
+            <div class="ui large label filename">Scan0001.tif</div>
             <div class="command">           
                 <div class="ui small basic icon buttons">
                     <button id="preBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
@@ -279,11 +290,6 @@
                     <button id="zOutBtn" class="ui button" data-tooltip="Zoom Out" data-position="bottom center"><i class="zoom out icon"></i></button>
                     <button id="zoomBtn" class="ui button" data-tooltip="Zoom In" data-position="bottom center"><i class="zoom icon"></i></button>
                 </div>
-                {#<a class="ui olive icon button" onclick="resizeTo(\'page\')" title="Reset"><i class="expand arrows alternate icon"></i></a>
-                <div class="ui olive icon button" ng-click="rotate(-1)" title="Rotate Left"><i class="undo icon"></i></div>
-                <div class="ui olive icon button" ng-click="rotate(1)" title="Rotate Right"><i class="redo icon"></i></div>
-                <div class="ui olive icon button" ng-click="zoom(-1)" title="Zoom Out"><i class="search minus icon"></i></div>
-                <div class="ui olive icon button" ng-click="zoom(1)" title="Zoom In"><i class="search plus icon"></i></div>#}
             </div>    
     </div>
 </div>
