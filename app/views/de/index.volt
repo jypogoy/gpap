@@ -234,15 +234,15 @@
                 <div class="ui error message"></div>
 
                 <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>Add Slip</button>
-                <button class="ui small icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
-                <button class="ui small icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>    
+                <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
+                <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>    
                 <div style="margin-top: 5px;">
                     <button class="ui small primary button" data-tooltip="Complete Order and process another" data-position="right center">Complete & Next</button>
                     <button class="ui small primary button" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Complete & Exit</button>
                 </div>
                 <div style="margin-top: 5px;">
                     <button class="ui small green button" data-tooltip="Save changes and process another" data-position="right center">Save & Next</button>
-                    <button class="ui small green button" data-tooltip="Save changes and proceed to Home Page" data-position="bottom center">Save & Exit</button>
+                    <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="bottom center">Save & Exit</button>
                     <a href="../gpap" class="ui small button">Exit</a>
                 </div>
                 
