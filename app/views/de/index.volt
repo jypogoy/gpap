@@ -14,66 +14,138 @@
                     <label>Merchant Name</label>
                     {{ text_field('') }}
                 </div>  
-                <div class="three small fields">
+                <div class="equal width small fields">
                     <div class="required field">
-                        <label>Currency Code</label>
-                        {{ text_field('', 'id') }}
-                    </div>   
+                        <label>Currency Code</label>                        
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="card[type]">
+                            <div class="default text">Choose a code</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item" data-value="Normal">
+                                    036 (AUD)
+                                </div>
+                                <div class="item" data-value="Airline">
+                                    050 (BDT)
+                                </div>
+                                <div class="item" data-value="Credit">
+                                    096 (BND)
+                                </div>
+                                <div class="item" data-value="Cash Advance">
+                                    124 (CAD)
+                                </div>        
+                                <div class="item" data-value="Airline Credit">
+                                    156 (CNY)
+                                </div>            
+                            </div>
+                        </div>
+                    </div>                        
                     <div class="required field">
                         <label>DCN</label>
                         {{ text_field('') }}
-                    </div> 
-                    <div class="required field">
-                        <label>Deposit Date</label>
-                        {{ text_field('') }}
-                    </div>   
+                    </div>                       
                 </div>    
                 <div class="two small fields">
-                    <div class="required five wide field">
-                        <label>Deposit Amount</label>
+                    {#<div class="required field">
+                        <label>Deposit Date</label>
                         {{ text_field('') }}
-                    </div>    
-                    <div class="required eleven wide field">
-                        <label>Merchant Pull Reason</label>
-                        <div class="ui search selection dropdown">
-                            <input type="hidden" name="reason">
-                            <div class="default text">Choose a reason</div>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
-                                <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
-                                <div class="item" data-value="Currency None">CNY None</div>
-                                <div class="item" data-value="Currency is not accepted by the merchant">CNY not accepted by merc</div>    
-                                <div class="item" data-value="DCN less than 7 chars">DCN less than 7 chars</div> 
-                                <div class="item" data-value="DCN more than 7 chars">DCN more than 7 chars</div> 
-                                <div class="item" data-value="DCN None">DCN None</div> 
-                                <div class="item" data-value="Deleted Batch - No transaction attached">Del batch No transaction</div> 
-                                <div class="item" data-value="Deleted Batch per client request">Del batch per client request</div> 
-                                <div class="item" data-value="Deleted Batch">Deleted Batch</div> 
-                                <div class="item" data-value="Duplicate DCN found in the historical record">Dup DCN found in historical</div> 
-                                <div class="item" data-value="Duplicate DCN found within a batch">Dup DCN found within batch</div> 
-                                <div class="item" data-value="Illegible Currency">Illegible Currency</div> 
-                                <div class="item" data-value="Illegible DCN">Illegible DCN</div>
-                                <div class="item" data-value="Illegible Scan Issue">Illegible Scan Issue</div>
-                                <div class="item" data-value="Illegible Trailer Batch Amount">Illegible Trailer Batch Amt</div>
-                                <div class="item" data-value="MID does not Exist">MID does not Exist</div>
-                                <div class="item" data-value="MID None">MID None</div>
-                                <div class="item" data-value="MID on deposit slip/header is not identical with the slip(s)">MID header not same on slip</div>
-                                <div class="item" data-value="MID out of region">MID out of region</div>
-                                <div class="item" data-value="MID Status Closed">MID Status Closed</div>
-                                <div class="item" data-value="MID Status Deactivated">MID Status Deactivated</div>
-                                <div class="item" data-value="MID Status Frozen">MID Status Frozen</div>
-                                <div class="item" data-value="Trailer Batch Amount is unmatched with total amount of transactions">Trailer Amount unmatch total trans</div>
-                                <div class="item" data-value="Trailer Batch Amount None">Trailer Batch Amount None</div>
-                                <div class="item" data-value="Deleted Batch - Identical Auth Codes found in a batch">Del batch same Auth Codes</div>                                
+                    </div>   #}
+                    <div class="required field">
+                        <label>Deposit Date</label>
+                        <div class="ui calendar" id="depositDate">
+                            <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Date">
                             </div>
                         </div>
-                    </div> 
+                    </div>    
+                    <div class="required field">
+                        <label>Deposit Amount</label>
+                        {{ text_field('') }}
+                    </div>                                         
                 </div>    
+                <div class="required field">
+                    <label>Merchant Pull Reason</label>
+                    <div class="ui search selection dropdown">
+                        <input type="hidden" name="reason">
+                        <div class="default text">Choose a reason</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="1">Invalid Merchant: Not in demographic file</div>
+                            <div class="item" data-value="2">Invalid Merchant: Status neither ‘O’pen nor ‘R’eopened</div>
+                            <div class="item" data-value="3">Invalid Currency: Transaction currency is invalid in the region</div>
+                            <div class="item" data-value="4">Invalid Merchant: Transaction currency is not accepted for the merchant account</div>
+                            <div class="item" data-value="5">Invalid Merchant: Currency marked on deposit summary slip and sales slip is unmatched</div>
+                            <div class="item" data-value="6">Invalid Batch CDN: Same DCN within the same Region on the same day</div>
+                            <div class="item" data-value="7">Invalid Batch CDN: Same DCN, same MID, same total amount within the same Region in the historical record</div>
+                            <div class="item" data-value="8">Invalid Batch CDN: DCN is less or more than 7 digits</div>
+                            {#<div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
+                            <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
+                            <div class="item" data-value="Currency None">CNY None</div>
+                            <div class="item" data-value="Currency is not accepted by the merchant">CNY not accepted by merc</div>    
+                            <div class="item" data-value="DCN less than 7 chars">DCN less than 7 chars</div> 
+                            <div class="item" data-value="DCN more than 7 chars">DCN more than 7 chars</div> 
+                            <div class="item" data-value="DCN None">DCN None</div> 
+                            <div class="item" data-value="Deleted Batch - No transaction attached">Del batch No transaction</div> 
+                            <div class="item" data-value="Deleted Batch per client request">Del batch per client request</div> 
+                            <div class="item" data-value="Deleted Batch">Deleted Batch</div> 
+                            <div class="item" data-value="Duplicate DCN found in the historical record">Dup DCN found in historical</div> 
+                            <div class="item" data-value="Duplicate DCN found within a batch">Dup DCN found within batch</div> 
+                            <div class="item" data-value="Illegible Currency">Illegible Currency</div> 
+                            <div class="item" data-value="Illegible DCN">Illegible DCN</div>
+                            <div class="item" data-value="Illegible Scan Issue">Illegible Scan Issue</div>
+                            <div class="item" data-value="Illegible Trailer Batch Amount">Illegible Trailer Batch Amt</div>
+                            <div class="item" data-value="MID does not Exist">MID does not Exist</div>
+                            <div class="item" data-value="MID None">MID None</div>
+                            <div class="item" data-value="MID on deposit slip/header is not identical with the slip(s)">MID header not same on slip</div>
+                            <div class="item" data-value="MID out of region">MID out of region</div>
+                            <div class="item" data-value="MID Status Closed">MID Status Closed</div>
+                            <div class="item" data-value="MID Status Deactivated">MID Status Deactivated</div>
+                            <div class="item" data-value="MID Status Frozen">MID Status Frozen</div>
+                            <div class="item" data-value="Trailer Batch Amount is unmatched with total amount of transactions">Trailer Amount unmatch total trans</div>
+                            <div class="item" data-value="Trailer Batch Amount None">Trailer Batch Amount None</div>
+                            <div class="item" data-value="Deleted Batch - Identical Auth Codes found in a batch">Del batch same Auth Codes</div>#}                                
+                        </div>
+                    </div>
+                </div> 
 
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="credit card icon"></i>Sales Slip</h4>
 
                 <div class="two small fields">
+                    <div class="required field">
+                        <label>Transaction Type</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="card[type]">
+                            <div class="default text">Choose a type</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item" data-value="Normal">
+                                    Normal
+                                </div>
+                                <div class="item" data-value="Airline">
+                                    Airline
+                                </div>
+                                <div class="item" data-value="Credit">
+                                    Credit
+                                </div>
+                                <div class="item" data-value="Cash Advance">
+                                    Cash Advance
+                                </div>        
+                                <div class="item" data-value="Airline Credit">
+                                    Airline Credit
+                                </div>    
+                                <div class="item" data-value="VI">
+                                    VI (HK Only)
+                                </div>                 
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="required field">
+                        <label>Region</label>
+                        {{ text_field('', 'disabled' : true) }}
+                    </div> 
+                </div>
+                {#<div class="two small fields">
                     <div class="required field">
                         <label>Card Type</label>
                         <div class="ui selection dropdown">
@@ -100,7 +172,14 @@
                         <label>Cardholder Number (PAN)</label>
                         {{ text_field('') }}
                     </div> 
-                </div>
+                </div>#}
+                <div class="required small field">
+                    <label>Cardholder Number (PAN)</label>
+                    <div class="ui right labeled input">
+                        {{ text_field('') }}
+                        <div class="ui basic label"><img src="public/img/card/visa.png" style="height: 12px !important;"></div>
+                    </div>
+                </div> 
                 <div class="three small fields">    
                     <div class="required field">
                         <label>Transaction Date</label>
@@ -235,17 +314,16 @@
 
                 <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>Add Slip</button>
                 <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
-                <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>    
-                <div style="margin-top: 5px;">
-                    <button class="ui small primary button" data-tooltip="Complete Order and process another" data-position="right center">Complete & Next</button>
-                    <button class="ui small primary button" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Complete & Exit</button>
-                </div>
-                <div style="margin-top: 5px;">
+                <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>                
+                <div style="margin-top: 5px;">                    
+                    <button class="ui small primary button" data-tooltip="Complete Order and process another" data-position="right center">Complete & Next</button> 
+                    <button class="ui small primary button" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Complete & Exit</button>                    
+                </div>         
+                <div style="margin-top: 5px;">    
                     <button class="ui small green button" data-tooltip="Save changes and process another" data-position="right center">Save & Next</button>
                     <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="bottom center">Save & Exit</button>
-                    <a href="../gpap" class="ui small button">Exit</a>
-                </div>
-                
+                    <a href="../gpap" class="ui small button" style="float: right;">Exit</a>
+                </div>       
                 
                 {#<a href="../gpap" class="ui small button" style="float:right;">Exit</a>#}
                 {#<div class="ui small primary buttons" style="float:right; padding-right: 10px;">
@@ -277,7 +355,7 @@
             
             {#<iframe src = "http://localhost:82/imageviewer/" width='100%' height='800px' allowfullscreen webkitallowfullscreen frameBorder="0"></iframe>#}
             
-            <div id="viewer" style="width: 100%; height: 800px; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
+            <div id="viewer" style="width: 100%; height: 900px; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
             <div class="ui large label filename">Scan0001.tif</div>
             <div class="command">           
                 <div class="ui small basic icon buttons">

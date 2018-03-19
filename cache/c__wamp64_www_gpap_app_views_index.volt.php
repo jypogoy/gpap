@@ -10,14 +10,11 @@
         <?= $this->tag->getTitle() ?>
         <?= $this->tag->stylesheetLink('css/bootstrap.min.css') ?>
         <?= $this->tag->stylesheetLink('semantic/semantic.min.css') ?>
+        <?= $this->tag->stylesheetLink('semantic/calendar.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.structure.css') ?>
         
-        <?= $this->tag->stylesheetLink('diva/diva.min.css') ?>    
         
-        <?= $this->tag->stylesheetLink('iipmooviewer/css/iip.min.css') ?>
-        <?= $this->tag->stylesheetLink('iipmooviewer/css/gallery.min.css') ?>
-        <?= $this->tag->stylesheetLink('iipmooviewer/css/ie.min.css') ?>
        
         <?= $this->tag->stylesheetLink('css/app.css') ?>
         
@@ -31,6 +28,7 @@
         <?= $this->getContent() ?>                
         <?= $this->tag->javascriptInclude('jqueryui/jquery-ui.min.js') ?>       
         <?= $this->tag->javascriptInclude('semantic/semantic.min.js') ?>
+        <?= $this->tag->javascriptInclude('semantic/calendar.min.js') ?>
         <?= $this->tag->javascriptInclude('toastr/toastr.min.js') ?>
         <?= $this->tag->javascriptInclude('js/app.js') ?>
         <?= $this->tag->javascriptInclude('js/list.js') ?>
@@ -39,11 +37,7 @@
 
         <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
 
-        <?= $this->tag->javascriptInclude('diva/diva.min.js') ?>    
-        
-        <?= $this->tag->javascriptInclude('iipmooviewer/js/mootools-core-1.6.0-compressed.js') ?>  
-        <?= $this->tag->javascriptInclude('iipmooviewer/js/iipmooviewer-2.0-min.js') ?>   
-        <?= $this->tag->javascriptInclude('iipmooviewer/js/gallery.min.js') ?>   
+           
 
         
     </body>

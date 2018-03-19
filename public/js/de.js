@@ -1,5 +1,7 @@
 $(function () {
     
+    $('#depositDate').calendar({ type: 'date' });
+
     // IIPMooViewer options: See documentation at http://iipimage.sourceforge.net for more details
     // Server path: set if not using default path
     //var server = '/fcgi-bin/iipsrv.fcgi';
@@ -33,11 +35,18 @@ $(function () {
     //     });
     // });
 
-    var imageOrigSize;
-    
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'arraybuffer';
-    xhr.open('GET', "/ftp/tiff/scan0001.tif");
+    var imageOrigSize;    
+    //var xhr = createCORSRequest('GET', 'http://sdtdev.amdatex.com:82/20100101-BN-001/Airline/scan0001-5.tif');
+    var xhr = createCORSRequest('GET', '/ftp/tiff/scan0001.tif');    
+    if (!xhr) {
+        console.error('---- CORS not supported! ----');
+    } else {
+        console.log('---- CORS supported! ----');
+    }
+
+    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    // xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    // xhr.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
     xhr.onload = function (e) {
         var tiff = new Tiff({buffer: xhr.response});
         var canvas = tiff.toCanvas();
@@ -57,6 +66,26 @@ $(function () {
         imageOrigSize = $('canvas').width();
     };
     xhr.send();        
+
+    // $.ajax({
+    //     url: 'http://sdtdev.amdatex.com:82/20100101-BN-001/Airline/scan0001-5.tif',
+    //     //url: '/ftp/tiff/scan0001.tif',
+    //     method: 'GET',
+    //     data: {},
+    //     crossDomain: true,
+    //     dataType: 'arraybuffer',
+    //     xhrFields: {
+    //         withCredentials: true
+    //      },
+    //     beforeSend: function() {
+    //         console.log('Done!');
+    //     },
+        
+    // }).done(function(data) {
+    //     console.log(data);
+    //     var tiff = new Tiff({buffer: data});
+    //     console.log(tiff)
+    // });
 
     var degree = 0;
     $('#restoreBtn').on('click' , function() {
@@ -134,6 +163,27 @@ $(function () {
 
     $('.loader').fadeOut();
 });
+
+function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'arraybuffer';
+    if ("withCredentials" in xhr) {
+      // Check if the XMLHttpRequest object has a "withCredentials" property.
+      // "withCredentials" only exists on XMLHTTPRequest2 objects.
+      xhr.open(method, url, true);    
+      xhr.setRequestHeader('Access-Control-Allow-Origin', '*');  
+    } else if (typeof XDomainRequest != "undefined") {
+      // Otherwise, check if XDomainRequest.
+      // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+      xhr = new XDomainRequest();
+      xhr.open(method, url);
+    } else {
+      // Otherwise, CORS is not supported by the browser.
+      xhr = null;
+    }
+    return xhr;
+}
+  
 
 function performRotate(degree) {
     // For webkit browsers: e.g. Chrome
