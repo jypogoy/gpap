@@ -2,17 +2,17 @@
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">
         
-            {{ form('boards/save', 'role': 'form', 'id' : 'dataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
+            {{ form('', 'role': 'form', 'id' : 'dataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
 
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="shopping cart icon"></i>Merchant Header (Deposit Slip)</h4>
 
                 <div class="required small field">
                     <label>Merchant ID</label>
-                    {{ text_field('') }}
+                    {{ text_field('merchantId', 'maxlength': '16') }}
                 </div>  
                 <div class="required small field">
                     <label>Merchant Name</label>
-                    {{ text_field('') }}
+                    {{ text_field('', 'disabled' : true) }}
                 </div>  
                 <div class="equal width small fields">
                     <div class="required field">
@@ -36,13 +36,14 @@
                                 </div>        
                                 <div class="item" data-value="Airline Credit">
                                     156 (CNY)
-                                </div>            
+                                </div>      
+                                <div class="item" data-value="0">&nbsp;</div>      
                             </div>
                         </div>
                     </div>                        
                     <div class="required field">
                         <label>DCN</label>
-                        {{ text_field('') }}
+                        {{ text_field('dcn', 'maxlength': 7) }}
                     </div>                       
                 </div>    
                 <div class="two small fields">
@@ -61,7 +62,7 @@
                     </div>    
                     <div class="required field">
                         <label>Deposit Amount</label>
-                        {{ text_field('') }}
+                        {{ text_field('depositAmount') }}
                     </div>                                         
                 </div>    
                 <div class="required field">
@@ -71,17 +72,18 @@
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value="1">Invalid Merchant: Not in demographic file</div>
-                            <div class="item" data-value="2">Invalid Merchant: Status neither ‘O’pen nor ‘R’eopened</div>
-                            <div class="item" data-value="3">Invalid Currency: Transaction currency is invalid in the region</div>
-                            <div class="item" data-value="4">Invalid Merchant: Transaction currency is not accepted for the merchant account</div>
-                            <div class="item" data-value="5">Invalid Merchant: Currency marked on deposit summary slip and sales slip is unmatched</div>
-                            <div class="item" data-value="6">Invalid Batch CDN: Same DCN within the same Region on the same day</div>
-                            <div class="item" data-value="7">Invalid Batch CDN: Same DCN, same MID, same total amount within the same Region in the historical record</div>
-                            <div class="item" data-value="8">Invalid Batch CDN: DCN is less or more than 7 digits</div>
+                            <div class="item" data-value="1">Invalid Merchant - Not in demographic file</div>
+                            <div class="item" data-value="2">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
+                            <div class="item" data-value="3">Invalid Currency - Transaction currency is invalid in the region</div>
+                            <div class="item" data-value="4">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
+                            <div class="item" data-value="5">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
+                            <div class="item" data-value="6">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
+                            <div class="item" data-value="7">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
+                            <div class="item" data-value="8">Invalid Batch CDN - DCN is less or more than 7 digits</div>
+                            <div class="item" data-value="0">&nbsp;</div>
                             {#<div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
                             <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
-                            <div class="item" data-value="Currency None">CNY None</div>
+                            <div class="item" data-value="Currency None">CN None</div>
                             <div class="item" data-value="Currency is not accepted by the merchant">CNY not accepted by merc</div>    
                             <div class="item" data-value="DCN less than 7 chars">DCN less than 7 chars</div> 
                             <div class="item" data-value="DCN more than 7 chars">DCN more than 7 chars</div> 
@@ -109,7 +111,7 @@
                     </div>
                 </div> 
 
-                <h4 class="ui dividing header" style="color: darkblue;"><i class="credit card icon"></i>Sales Slip</h4>
+                <h4 class="ui dividing header" style="color: darkblue;"><i class="credit card icon"></i>Sales Slip (1 of 1)</h4>
 
                 <div class="two small fields">
                     <div class="required field">
@@ -136,7 +138,8 @@
                                 </div>    
                                 <div class="item" data-value="VI">
                                     VI (HK Only)
-                                </div>                 
+                                </div>           
+                                <div class="item" data-value="0">&nbsp;</div>      
                             </div>
                         </div>
                     </div>   
@@ -227,6 +230,7 @@
                                 <div class="item" data-value="36">36 Months</div>
                                 <div class="item" data-value="48">48 Months</div>
                                 <div class="item" data-value="60">60 Months</div>
+                                <div class="item" data-value="0">&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -290,6 +294,7 @@
                             <div class="item" data-value="Auth Code provided are 2 (or more) which are unidentical">Multi Authcodes not same</div>
                             <div class="item" data-value="Auth Code with duplicate">Authcode with duplicate</div>
                             <div class="item" data-value="Transac Date Format Invalid for this region">Trans date format invalid</div>
+                            <div class="item" data-value="0">&nbsp;</div>
                         </div>
                     </div>
                 </div>    
@@ -315,8 +320,8 @@
                 <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>More</button>
                 <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
                 <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>  
-                <button class="ui small primary button" data-tooltip="Complete Order and process another" data-position="right center">Comp/Next</button> 
-                <button class="ui small primary button" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Comp/Exit</button>                                  
+                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Comp/Exit</button>                                  
+                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and process another" data-position="right center">Comp/Next</button>                 
                 <div style="margin: 5px 0 20px 0; float: right;">    
                     <button class="ui small green button" data-tooltip="Save changes and process another" data-position="right center">Save/Next</button>
                     <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="bottom center">Save/Exit</button>

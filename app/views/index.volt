@@ -13,6 +13,8 @@
         {{ stylesheet_link('semantic/calendar.min.css') }}
         {{ stylesheet_link('jqueryui/jquery-ui.min.css') }}
         {{ stylesheet_link('jqueryui/jquery-ui.structure.css') }}
+        {{ stylesheet_link('toastr/toastr.min.css') }}
+        {{ stylesheet_link('css/app.css') }}
         
         {#{ stylesheet_link('diva/diva.min.css') }}    
         

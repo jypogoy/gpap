@@ -13,6 +13,8 @@
         <?= $this->tag->stylesheetLink('semantic/calendar.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.min.css') ?>
         <?= $this->tag->stylesheetLink('jqueryui/jquery-ui.structure.css') ?>
+        <?= $this->tag->stylesheetLink('toastr/toastr.min.css') ?>
+        <?= $this->tag->stylesheetLink('css/app.css') ?>
         
         
        

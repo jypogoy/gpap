@@ -73,7 +73,12 @@ $di->setShared('db', function () {
         'username' => $config->database->username,
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
-        'charset'  => $config->database->charset
+        'charset'  => $config->database->charset,
+        'options'  => array(
+            PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
+            PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
+            PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
+        )
     ];
 
     if ($config->database->adapter == 'Postgresql') {

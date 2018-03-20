@@ -1,6 +1,54 @@
-$(function () {
+$(function () {        
     
-    $('#depositDate').calendar({ type: 'date' });
+    $('form').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    $('#merchantId').on('keyup', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            console.log($(this).val())
+            $.post('merchant/get/' + $(this).val(), function (data) {
+                toastr.success("HEY");                
+            })
+            .done(function (msg) {
+                // Do nothing...
+            })
+            .fail(function (xhr, status, error) {
+                toastr.error(error);
+            });
+        }
+    });
+
+    $('#merchantId').blur(function() {
+        $(this).val(new Array($(this).attr('maxlength') - $(this).val().toString().length + 1).join('0') + $(this).val());
+    });
+
+    $('#dcn').blur(function() {
+        $(this).val(new Array($(this).attr('maxlength') - $(this).val().toString().length + 1).join('0') + $(this).val());
+    });    
+
+    $('#depositDate').calendar({ 
+        type: 'date',
+        monthFirst: true,
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = new Array(2 - date.getDate().toString().length + 1).join('0') + date.getDate();            
+                var month = new Array(2 - (date.getMonth() + 1).toString().length + 1).join('0') + (date.getMonth() + 1);
+                var year = date.getFullYear().toString().substr(-2);
+                return month + '/' + day + '/' + year;
+            }
+        }
+    });
+
+    $('#depositAmount').blur(function() {
+        $(this).val(parseFloat(Math.round($(this).val() * 100) / 100).toFixed(2));
+    });    
 
     // IIPMooViewer options: See documentation at http://iipimage.sourceforge.net for more details
     // Server path: set if not using default path
