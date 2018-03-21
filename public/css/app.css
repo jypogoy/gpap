@@ -190,3 +190,12 @@ textarea {
     position: relative;
     z-index: 999999 !important;
 }
+
+input[type="text"]:disabled {
+    color:blue !important;
+    font-weight: bold;
+}
+
+input[readonly] {
+    color:blue !important;
+}

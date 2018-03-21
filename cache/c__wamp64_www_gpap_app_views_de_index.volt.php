@@ -12,33 +12,16 @@
                 </div>  
                 <div class="required small field">
                     <label>Merchant Name</label>
-                    <?= $this->tag->textField(['', 'disabled' => true]) ?>
+                    <?= $this->tag->textField(['merchantName', 'disabled' => true]) ?>
                 </div>  
                 <div class="equal width small fields">
                     <div class="required field">
                         <label>Currency Code</label>                        
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
+                        <div id="currencyDropDown" class="ui selection dropdown">
+                            <input id="currencyCode" type="hidden" name="card[type]">
                             <div class="default text">Choose a code</div>
                             <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="Normal">
-                                    036 (AUD)
-                                </div>
-                                <div class="item" data-value="Airline">
-                                    050 (BDT)
-                                </div>
-                                <div class="item" data-value="Credit">
-                                    096 (BND)
-                                </div>
-                                <div class="item" data-value="Cash Advance">
-                                    124 (CAD)
-                                </div>        
-                                <div class="item" data-value="Airline Credit">
-                                    156 (CNY)
-                                </div>      
-                                <div class="item" data-value="0">&nbsp;</div>      
-                            </div>
+                            <div class="menu"></div>
                         </div>
                     </div>                        
                     <div class="required field">
@@ -53,7 +36,7 @@
                         <div class="ui calendar" id="depositDate">
                             <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input type="text" placeholder="Date">
+                            <?= $this->tag->textField(['', 'placeholder' => 'Date']) ?>
                             </div>
                         </div>
                     </div>    
@@ -64,28 +47,27 @@
                 </div>    
                 <div class="required field">
                     <label>Merchant Pull Reason</label>
-                    <div class="ui search selection dropdown">
-                        <input type="hidden" name="reason">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="card[type]">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value="1">Invalid Merchant - Not in demographic file</div>
-                            <div class="item" data-value="2">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
-                            <div class="item" data-value="3">Invalid Currency - Transaction currency is invalid in the region</div>
-                            <div class="item" data-value="4">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
-                            <div class="item" data-value="5">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
-                            <div class="item" data-value="6">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
-                            <div class="item" data-value="7">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
-                            <div class="item" data-value="8">Invalid Batch CDN - DCN is less or more than 7 digits</div>
+                            <div class="item" data-value="a">Invalid Mercha nt - Not in demographic file</div>
+                            <div class="item" data-value="b">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
+                            <div class="item" data-value="c">Invalid Currency - Transaction currency is invalid in the region</div>
+                            <div class="item" data-value="d">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
+                            <div class="item" data-value="e">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
+                            <div class="item" data-value="f">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
+                            <div class="item" data-value="g">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
+                            <div class="item" data-value="h">Invalid Batch CDN - DCN is less or more than 7 digits</div>
                             <div class="item" data-value="0">&nbsp;</div>
-                                                            
                         </div>
-                    </div>
+                    </div>                    
                 </div> 
 
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="credit card icon"></i>Sales Slip (1 of 1)</h4>
 
-                <div class="two small fields">
+                <div class="equal width small fields">
                     <div class="required field">
                         <label>Transaction Type</label>
                         <div class="ui selection dropdown">
@@ -117,36 +99,44 @@
                     </div>   
                     <div class="required field">
                         <label>Region</label>
-                        <?= $this->tag->textField(['', 'disabled' => true]) ?>
+                        <?= $this->tag->textField(['regionCode', 'disabled' => true]) ?>
                     </div> 
                 </div>
                 
-                <div class="required small field">
+                <div id="pan_div" class="required small field">
                     <label>Cardholder Number (PAN)</label>
                     <div class="ui right labeled input">
-                        <?= $this->tag->textField(['']) ?>
+                        <?= $this->tag->textField(['pan']) ?>
                         <div class="ui basic label"><img src="public/img/card/visa.png" style="height: 12px !important;"></div>
+                    </div>
+                    <div class="ui basic red pointing prompt label transition hidden" id="pan_alert">
+                        <i class="warning icon"></i><span id="pan_msg"></span>
                     </div>
                 </div> 
                 <div class="three small fields">    
                     <div class="required field">
                         <label>Transaction Date</label>
-                        <?= $this->tag->textField(['']) ?>
-                    </div> 
+                        <div class="ui calendar" id="transactionDate">
+                            <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <?= $this->tag->textField(['', 'placeholder' => 'Date']) ?>
+                            </div>
+                        </div>
+                    </div>  
                     <div class="required field">
                         <label>Authorization Code</label>
                         <?= $this->tag->textField(['']) ?>
                     </div>  
                     <div class="required field">
                         <label>Transaction Amount</label>
-                        <?= $this->tag->textField(['']) ?>
+                        <?= $this->tag->textField(['transactionAmount']) ?>
                     </div>     
                 </div>    
-                <div class="two small fields">
+                <div class="equal width small fields">
                     <div class="required field">    
                         <label>Installment Months</label>
-                        <div class="ui search selection dropdown">
-                            <input type="hidden" name="reason">
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="card[type]">
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -187,8 +177,8 @@
                 
                 <div class="required small field">
                     <label>Sales Slip Pull Reason</label>
-                    <div class="ui search selection dropdown">
-                        <input type="hidden" name="reason">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="card[type]">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
@@ -279,4 +269,5 @@
 <div class="ui active loader"></div>
 
 <?= $this->tag->stylesheetLink('css/viewer.css') ?>
-<?= $this->tag->javascriptInclude('js/de.js') ?>
+<?= $this->tag->javascriptInclude('js/viewer.js') ?>
+<?= $this->tag->javascriptInclude('js/de_form.js') ?>

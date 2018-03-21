@@ -87,6 +87,15 @@ $di->setShared('db', function () {
 
     $connection = new $class($params);
 
+    // Logger to view executed queries in runtime    
+    $logger = new \Phalcon\Logger\Adapter\File($config->path->tmp.'sql.log');
+    $eventsManager = new \Phalcon\Events\Manager();
+    $eventsManager->attach('db', function($event, $connection) use ($logger) {
+        if ($event->getType() == 'beforeQuery') $logger->log($connection->getSQLStatement());
+        //.' '.join(', ', $connection->getSQLVariables())
+    });
+    $connection->setEventsManager($eventsManager);
+
     return $connection;
 });
 

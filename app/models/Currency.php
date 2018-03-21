@@ -1,30 +1,30 @@
 <?php
 
-class Region extends \Phalcon\Mvc\Model
+class Currency extends \Phalcon\Mvc\Model
 {
 
     /**
      *
-     * @var string
+     * @var integer
      * @Primary
-     * @Column(type="string", length=2, nullable=false)
+     * @Identity
+     * @Column(type="integer", length=3, nullable=false)
      */
-    public $code;
+    public $id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=45, nullable=true)
+     * @Column(type="string", length=3, nullable=false)
      */
-    public $name;
+    public $num_code;
 
     /**
      *
      * @var string
-     * @Primary
-     * @Column(type="string", length=25, nullable=false)
+     * @Column(type="string", length=3, nullable=false)
      */
-    public $created_by;
+    public $alpha_code;
 
     /**
      * Initialize method for model.
@@ -32,10 +32,8 @@ class Region extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("gpap");
-        $this->setSource("region");
-        $this->hasMany('code', 'RegionCurrency', 'region_code', ['alias' => 'RegionCurrency']);
-        $this->hasMany('code', 'Zip', 'region_code', ['alias' => 'Zip']);
-        $this->hasManyToMany('code', 'RegionCurrency', 'region_code', 'currency_id', 'Currency', 'id');
+        $this->setSource("currency");
+        $this->hasMany('id', 'RegionCurrency', 'currency_id', ['alias' => 'RegionCurrency']);
     }
 
     /**
@@ -45,14 +43,14 @@ class Region extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'region';
+        return 'currency';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Region[]|Region|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Currency[]|Currency|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -63,7 +61,7 @@ class Region extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Region|\Phalcon\Mvc\Model\ResultInterface
+     * @return Currency|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

@@ -10,7 +10,7 @@
             </div>            
         </div>
         <div class="right aligned column">
-            <a href="de" class="ui primary button"><i class="plus icon"></i>Get Order</a>
+            <a href="de" class="ui primary button"><i class="plus icon"></i>Get Batch</a>
         </div>
     </div>     
 </form> 

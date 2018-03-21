@@ -16,10 +16,6 @@
         <?= $this->tag->stylesheetLink('toastr/toastr.min.css') ?>
         <?= $this->tag->stylesheetLink('css/app.css') ?>
         
-        
-       
-        <?= $this->tag->stylesheetLink('css/app.css') ?>
-        
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -32,15 +28,12 @@
         <?= $this->tag->javascriptInclude('semantic/semantic.min.js') ?>
         <?= $this->tag->javascriptInclude('semantic/calendar.min.js') ?>
         <?= $this->tag->javascriptInclude('toastr/toastr.min.js') ?>
+        <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
+
         <?= $this->tag->javascriptInclude('js/app.js') ?>
+        <?= $this->tag->javascriptInclude('js/util.js') ?>
         <?= $this->tag->javascriptInclude('js/list.js') ?>
         <?= $this->tag->javascriptInclude('js/message.js') ?>
         <?= $this->tag->javascriptInclude('js/form.js') ?>
-
-        <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
-
-           
-
-        
     </body>
 </html>

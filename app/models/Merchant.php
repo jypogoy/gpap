@@ -15,7 +15,7 @@ class Merchant extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=3, nullable=false)
+     * @Column(type="string", length=3, nullable=true)
      */
     public $corporate;
 
@@ -29,21 +29,21 @@ class Merchant extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=3, nullable=false)
+     * @Column(type="string", length=3, nullable=true)
      */
     public $principal;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=3, nullable=false)
+     * @Column(type="string", length=3, nullable=true)
      */
     public $associate;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=3, nullable=false)
+     * @Column(type="string", length=3, nullable=true)
      */
     public $chain;
 
@@ -52,7 +52,7 @@ class Merchant extends \Phalcon\Mvc\Model
      * @var string
      * @Column(type="string", length=16, nullable=false)
      */
-    public $merchant;
+    public $account_number;
 
     /**
      *
@@ -64,7 +64,7 @@ class Merchant extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=4, nullable=false)
+     * @Column(type="string", length=4, nullable=true)
      */
     public $mcc;
 
@@ -113,7 +113,7 @@ class Merchant extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=2, nullable=false)
+     * @Column(type="string", length=2, nullable=true)
      */
     public $country_code;
 
@@ -141,70 +141,70 @@ class Merchant extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_other_cncy;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_installments;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_retail_sales;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_cash_advance;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_amex;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_cup;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_jcb;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_mastercard;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_privatelabel;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
+     * @Column(type="string", length=1, nullable=false)
      */
     public $accept_visa;
 

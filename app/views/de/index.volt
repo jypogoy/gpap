@@ -12,33 +12,16 @@
                 </div>  
                 <div class="required small field">
                     <label>Merchant Name</label>
-                    {{ text_field('', 'disabled' : true) }}
+                    {{ text_field('merchantName', 'disabled' : true) }}
                 </div>  
                 <div class="equal width small fields">
                     <div class="required field">
                         <label>Currency Code</label>                        
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
+                        <div id="currencyDropDown" class="ui selection dropdown">
+                            <input id="currencyCode" type="hidden" name="card[type]">
                             <div class="default text">Choose a code</div>
                             <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="Normal">
-                                    036 (AUD)
-                                </div>
-                                <div class="item" data-value="Airline">
-                                    050 (BDT)
-                                </div>
-                                <div class="item" data-value="Credit">
-                                    096 (BND)
-                                </div>
-                                <div class="item" data-value="Cash Advance">
-                                    124 (CAD)
-                                </div>        
-                                <div class="item" data-value="Airline Credit">
-                                    156 (CNY)
-                                </div>      
-                                <div class="item" data-value="0">&nbsp;</div>      
-                            </div>
+                            <div class="menu"></div>
                         </div>
                     </div>                        
                     <div class="required field">
@@ -56,7 +39,7 @@
                         <div class="ui calendar" id="depositDate">
                             <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input type="text" placeholder="Date">
+                            {{ text_field('', 'placeholder': 'Date') }}
                             </div>
                         </div>
                     </div>    
@@ -67,53 +50,27 @@
                 </div>    
                 <div class="required field">
                     <label>Merchant Pull Reason</label>
-                    <div class="ui search selection dropdown">
-                        <input type="hidden" name="reason">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="card[type]">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value="1">Invalid Merchant - Not in demographic file</div>
-                            <div class="item" data-value="2">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
-                            <div class="item" data-value="3">Invalid Currency - Transaction currency is invalid in the region</div>
-                            <div class="item" data-value="4">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
-                            <div class="item" data-value="5">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
-                            <div class="item" data-value="6">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
-                            <div class="item" data-value="7">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
-                            <div class="item" data-value="8">Invalid Batch CDN - DCN is less or more than 7 digits</div>
+                            <div class="item" data-value="a">Invalid Mercha nt - Not in demographic file</div>
+                            <div class="item" data-value="b">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
+                            <div class="item" data-value="c">Invalid Currency - Transaction currency is invalid in the region</div>
+                            <div class="item" data-value="d">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
+                            <div class="item" data-value="e">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
+                            <div class="item" data-value="f">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
+                            <div class="item" data-value="g">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
+                            <div class="item" data-value="h">Invalid Batch CDN - DCN is less or more than 7 digits</div>
                             <div class="item" data-value="0">&nbsp;</div>
-                            {#<div class="item" data-value="Currencies marked on deposit summary slip and transaction slip are unmatched">CNY Dep & crdt/sales unmatch</div>
-                            <div class="item" data-value="Currency invalid in this Region">CNY invalid in this Region</div>
-                            <div class="item" data-value="Currency None">CN None</div>
-                            <div class="item" data-value="Currency is not accepted by the merchant">CNY not accepted by merc</div>    
-                            <div class="item" data-value="DCN less than 7 chars">DCN less than 7 chars</div> 
-                            <div class="item" data-value="DCN more than 7 chars">DCN more than 7 chars</div> 
-                            <div class="item" data-value="DCN None">DCN None</div> 
-                            <div class="item" data-value="Deleted Batch - No transaction attached">Del batch No transaction</div> 
-                            <div class="item" data-value="Deleted Batch per client request">Del batch per client request</div> 
-                            <div class="item" data-value="Deleted Batch">Deleted Batch</div> 
-                            <div class="item" data-value="Duplicate DCN found in the historical record">Dup DCN found in historical</div> 
-                            <div class="item" data-value="Duplicate DCN found within a batch">Dup DCN found within batch</div> 
-                            <div class="item" data-value="Illegible Currency">Illegible Currency</div> 
-                            <div class="item" data-value="Illegible DCN">Illegible DCN</div>
-                            <div class="item" data-value="Illegible Scan Issue">Illegible Scan Issue</div>
-                            <div class="item" data-value="Illegible Trailer Batch Amount">Illegible Trailer Batch Amt</div>
-                            <div class="item" data-value="MID does not Exist">MID does not Exist</div>
-                            <div class="item" data-value="MID None">MID None</div>
-                            <div class="item" data-value="MID on deposit slip/header is not identical with the slip(s)">MID header not same on slip</div>
-                            <div class="item" data-value="MID out of region">MID out of region</div>
-                            <div class="item" data-value="MID Status Closed">MID Status Closed</div>
-                            <div class="item" data-value="MID Status Deactivated">MID Status Deactivated</div>
-                            <div class="item" data-value="MID Status Frozen">MID Status Frozen</div>
-                            <div class="item" data-value="Trailer Batch Amount is unmatched with total amount of transactions">Trailer Amount unmatch total trans</div>
-                            <div class="item" data-value="Trailer Batch Amount None">Trailer Batch Amount None</div>
-                            <div class="item" data-value="Deleted Batch - Identical Auth Codes found in a batch">Del batch same Auth Codes</div>#}                                
                         </div>
-                    </div>
+                    </div>                    
                 </div> 
 
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="credit card icon"></i>Sales Slip (1 of 1)</h4>
 
-                <div class="two small fields">
+                <div class="equal width small fields">
                     <div class="required field">
                         <label>Transaction Type</label>
                         <div class="ui selection dropdown">
@@ -145,7 +102,7 @@
                     </div>   
                     <div class="required field">
                         <label>Region</label>
-                        {{ text_field('', 'disabled' : true) }}
+                        {{ text_field('regionCode', 'disabled' : true) }}
                     </div> 
                 </div>
                 {#<div class="two small fields">
@@ -176,32 +133,40 @@
                         {{ text_field('') }}
                     </div> 
                 </div>#}
-                <div class="required small field">
+                <div id="pan_div" class="required small field">
                     <label>Cardholder Number (PAN)</label>
                     <div class="ui right labeled input">
-                        {{ text_field('') }}
+                        {{ text_field('pan') }}
                         <div class="ui basic label"><img src="public/img/card/visa.png" style="height: 12px !important;"></div>
+                    </div>
+                    <div class="ui basic red pointing prompt label transition hidden" id="pan_alert">
+                        <i class="warning icon"></i><span id="pan_msg"></span>
                     </div>
                 </div> 
                 <div class="three small fields">    
                     <div class="required field">
                         <label>Transaction Date</label>
-                        {{ text_field('') }}
-                    </div> 
+                        <div class="ui calendar" id="transactionDate">
+                            <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            {{ text_field('', 'placeholder': 'Date') }}
+                            </div>
+                        </div>
+                    </div>  
                     <div class="required field">
                         <label>Authorization Code</label>
                         {{ text_field('') }}
                     </div>  
                     <div class="required field">
                         <label>Transaction Amount</label>
-                        {{ text_field('') }}
+                        {{ text_field('transactionAmount') }}
                     </div>     
                 </div>    
-                <div class="two small fields">
+                <div class="equal width small fields">
                     <div class="required field">    
                         <label>Installment Months</label>
-                        <div class="ui search selection dropdown">
-                            <input type="hidden" name="reason">
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="card[type]">
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -255,8 +220,8 @@
                 </div>#}
                 <div class="required small field">
                     <label>Sales Slip Pull Reason</label>
-                    <div class="ui search selection dropdown">
-                        <input type="hidden" name="reason">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="card[type]">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
@@ -378,4 +343,5 @@
 <div class="ui active loader"></div>
 
 {{ stylesheet_link('css/viewer.css') }}
-{{ javascript_include('js/de.js') }}
+{{ javascript_include('js/viewer.js') }}
+{{ javascript_include('js/de_form.js') }}
