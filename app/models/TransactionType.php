@@ -17,7 +17,7 @@ class TransactionType extends \Phalcon\Mvc\Model
      * @var string
      * @Column(type="string", length=45, nullable=false)
      */
-    public $name;
+    public $type;
 
     /**
      *

@@ -10,7 +10,7 @@
             </div>            
         </div>
         <div class="right aligned column">
-            <a href="de" class="ui primary button"><i class="plus icon"></i>Get Batch</a>
+            <a href="de" class="ui primary button data-process-btn"><i class="plus icon"></i>Get Batch</a>
         </div>
     </div>     
 </form> 
@@ -21,7 +21,7 @@
             <th>ORDER</th>
             <th>START TIME</th>
             <th>END TIME</th>
-            <th></th>
+            <th class="data-process-btn"></th>
         </tr>
     </thead>
     <tbody>
@@ -29,7 +29,7 @@
             <td>0001</td>
             <td>03-12-2018 12:22:00 PM</td>
             <td>03-12-2018 12:48:00 PM</td>
-            <td>
+            <td class="data-process-btn">
                 <a href="de" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>
@@ -42,7 +42,7 @@
             <td>0002</td>
             <td>03-12-2018 12:22:00 PM</td>
             <td>03-12-2018 12:48:00 PM</td>
-            <td>
+            <td class="data-process-btn">
                 <a href="de" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>
@@ -55,7 +55,7 @@
             <td>0003</td>
             <td>03-12-2018 12:22:00 PM</td>
             <td>03-12-2018 12:48:00 PM</td>
-            <td>
+            <td class="data-process-btn">
                 <a href="de" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>
@@ -68,7 +68,7 @@
             <td>0004</td>
             <td>03-12-2018 12:22:00 PM</td>
             <td>03-12-2018 12:48:00 PM</td>
-            <td>
+            <td class="data-process-btn">
                 <a href="de" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>
@@ -81,7 +81,7 @@
             <td>0005</td>
             <td>03-12-2018 12:22:00 PM</td>
             <td>03-12-2018 12:48:00 PM</td>
-            <td>
+            <td class="data-process-btn">
                 <a href="de" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>

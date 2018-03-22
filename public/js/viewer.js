@@ -2,11 +2,13 @@ $(function () {
 
     var imageOrigSize;    
     //var xhr = createCORSRequest('GET', 'http://sdtdev.amdatex.com:82/20100101-BN-001/Airline/scan0001-5.tif');
-    var xhr = createCORSRequest('GET', '/ftp/tiff/scan0001.tif');    
+    var url = '/ftp/tiff/';
+    var img = 'scan0002.tif';
+    var xhr = createCORSRequest('GET', url + img);    
     if (!xhr) {
-        console.error('---- CORS not supported! ----');
+        //console.error('---- CORS not supported! ----');
     } else {
-        console.log('---- CORS supported! ----');
+        //console.log('---- CORS supported! ----');
     }
 
     // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -15,6 +17,7 @@ $(function () {
     xhr.onload = function (e) {
         var tiff = new Tiff({buffer: xhr.response});
         var canvas = tiff.toCanvas();
+        $('.filename').append(img);
         $('#viewer').append(canvas);
         $('canvas').width($('canvas').width() / 2);        
         $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui

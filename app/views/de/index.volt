@@ -8,7 +8,7 @@
 
                 <div class="required small field">
                     <label>Merchant ID</label>
-                    {{ text_field('merchantId', 'maxlength': '16') }}
+                    {{ text_field('merchantId', 'maxlength': '16', 'placeholder': 'Type in the Merchant ID and press <Enter> to validate') }}
                 </div>  
                 <div class="required small field">
                     <label>Merchant Name</label>
@@ -17,8 +17,8 @@
                 <div class="equal width small fields">
                     <div class="required field">
                         <label>Currency Code</label>                        
-                        <div id="currencyDropDown" class="ui selection dropdown">
-                            <input id="currencyCode" type="hidden" name="card[type]">
+                        <div id="currencyDropdown" class="ui selection dropdown">
+                            <input id="currencyCode" type="hidden">
                             <div class="default text">Choose a code</div>
                             <i class="dropdown icon"></i>
                             <div class="menu"></div>
@@ -50,21 +50,11 @@
                 </div>    
                 <div class="required field">
                     <label>Merchant Pull Reason</label>
-                    <div class="ui selection dropdown">
-                        <input type="hidden" name="card[type]">
+                    <div id="merchantPullDropdown" class="ui selection dropdown">
+                        <input id="merchantPullReason" type="hidden">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item" data-value="a">Invalid Mercha nt - Not in demographic file</div>
-                            <div class="item" data-value="b">Invalid Merchant - Status neither ‘O’pen nor ‘R’eopened</div>
-                            <div class="item" data-value="c">Invalid Currency - Transaction currency is invalid in the region</div>
-                            <div class="item" data-value="d">Invalid Merchant - Transaction currency is not accepted for the merchant account</div>
-                            <div class="item" data-value="e">Invalid Merchant - Currency marked on deposit summary slip and sales slip is unmatched</div>
-                            <div class="item" data-value="f">Invalid Batch CDN - Same DCN within the same Region on the same day</div>
-                            <div class="item" data-value="g">Invalid Batch CDN - Same DCN, same MID, same total amount within the same Region in the historical record</div>
-                            <div class="item" data-value="h">Invalid Batch CDN - DCN is less or more than 7 digits</div>
-                            <div class="item" data-value="0">&nbsp;</div>
-                        </div>
+                        <div class="menu"></div>
                     </div>                    
                 </div> 
 
@@ -73,31 +63,11 @@
                 <div class="equal width small fields">
                     <div class="required field">
                         <label>Transaction Type</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
+                        <div id="transTypeDropdown" class="ui selection dropdown">
+                            <input id="transactionType" type="hidden">
                             <div class="default text">Choose a type</div>
                             <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="Normal">
-                                    Normal
-                                </div>
-                                <div class="item" data-value="Airline">
-                                    Airline
-                                </div>
-                                <div class="item" data-value="Credit">
-                                    Credit
-                                </div>
-                                <div class="item" data-value="Cash Advance">
-                                    Cash Advance
-                                </div>        
-                                <div class="item" data-value="Airline Credit">
-                                    Airline Credit
-                                </div>    
-                                <div class="item" data-value="VI">
-                                    VI (HK Only)
-                                </div>           
-                                <div class="item" data-value="0">&nbsp;</div>      
-                            </div>
+                            <div class="menu"></div>
                         </div>
                     </div>   
                     <div class="required field">
@@ -105,39 +75,11 @@
                         {{ text_field('regionCode', 'disabled' : true) }}
                     </div> 
                 </div>
-                {#<div class="two small fields">
-                    <div class="required field">
-                        <label>Card Type</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
-                            <div class="default text">Choose a type</div>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="visa">
-                                    <i class="visa icon"></i>Visa
-                                </div>
-                                <div class="item" data-value="master">
-                                    <i class="mastercard icon"></i>MasterCard
-                                </div>
-                                <div class="item" data-value="jcb">
-                                    <i class="jcb icon"></i>JCB
-                                </div>
-                                <div class="item" data-value="private">
-                                    <i class="credit card icon"></i>Private Label Card
-                                </div>                            
-                            </div>
-                        </div>
-                    </div>   
-                    <div class="required field">
-                        <label>Cardholder Number (PAN)</label>
-                        {{ text_field('') }}
-                    </div> 
-                </div>#}
                 <div id="pan_div" class="required small field">
                     <label>Cardholder Number (PAN)</label>
                     <div class="ui right labeled input">
-                        {{ text_field('pan') }}
-                        <div class="ui basic label"><img src="public/img/card/visa.png" style="height: 12px !important;"></div>
+                        {{ text_field('pan', 'placeholder': 'Credit Card Number') }}
+                        <div class="ui basic label"><img id="cardLogo" src="public/img/card/private.png" style="height: 12px !important;"></div>
                     </div>
                     <div class="ui basic red pointing prompt label transition hidden" id="pan_alert">
                         <i class="warning icon"></i><span id="pan_msg"></span>
@@ -155,7 +97,7 @@
                     </div>  
                     <div class="required field">
                         <label>Authorization Code</label>
-                        {{ text_field('') }}
+                        {{ text_field('authCode', 'maxlength': 6) }}
                     </div>  
                     <div class="required field">
                         <label>Transaction Amount</label>
@@ -165,8 +107,8 @@
                 <div class="equal width small fields">
                     <div class="required field">    
                         <label>Installment Months</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
+                        <div id="installmentDropdown" class="ui selection dropdown">
+                            <input id="installmentMonth" type="hidden">
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -220,123 +162,46 @@
                 </div>#}
                 <div class="required small field">
                     <label>Sales Slip Pull Reason</label>
-                    <div class="ui selection dropdown">
-                        <input type="hidden" name="card[type]">
+                    <div id="slipPullDropdown" class="ui selection dropdown">
+                        <input id="slipPullReason" type="hidden">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item" data-value="Auth Code is less than 3 chars">Auth Code less than 3 chars</div>
-                            <div class="item" data-value="Auth Code is more than 6 chars">Auth Code is more than 6 chars</div>
-                            <div class="item" data-value="Auth Code None">Auth Code None</div>
-                            <div class="item" data-value="Deleted Slip">Deleted Slip</div>
-                            <div class="item" data-value="Deleted Slip per client request">Del Slip client request</div>
-                            <div class="item" data-value="Deleted Slip due to excess slip">Del Slip Excess</div>
-                            <div class="item" data-value="Illegible Airline Ticket Number">Illegible Airline Ticket Num</div>
-                            <div class="item" data-value="Illegible Auth Code">Illegible Auth Code</div>
-                            <div class="item" data-value="Illegible IPP Terms">Illegible IPP Terms</div>
-                            <div class="item" data-value="Illegible PAN">Illegible PAN</div>
-                            <div class="item" data-value="Illegible Scan Issue">Illegible Scan Issue</div>
-                            <div class="item" data-value="Illegible Transac Amt">Illegible Transac Amt</div>
-                            <div class="item" data-value="Illegible Transac Date">Illegible Transac Date</div>
-                            <div class="item" data-value="IPP MID does not support IPP">IPP MID doesn't support IPP</div>
-                            <div class="item" data-value="IPP Terms Missing">IPP Terms Missing</div>
-                            <div class="item" data-value="IPP terms on Merchant Name is not identical with the terms on the slip">IPP MID not identical on slip</div>
-                            <div class="item" data-value="PAN did not pass the Mod10 validation">PAN Mod10 validation failed</div>
-                            <div class="item" data-value="PAN None">PAN None</div>
-                            <div class="item" data-value="PAN Issuer Identification Number is invalid">PAN starting numbers invalid</div>
-                            <div class="item" data-value="PAN Issuer Identification Number is not supported - 5018 Maestro Card Type">PAN starting numbers-5018</div>
-                            <div class="item" data-value="PAN card type not supported by merchant">PAN type not supported merc</div>
-                            <div class="item" data-value="Supporting Document">Supporting Document</div>
-                            <div class="item" data-value="Transac Date Future date">Transac Date Future date</div>
-                            <div class="item" data-value="Transac Date Invalid date">Transac Date Invalid date</div>
-                            <div class="item" data-value="Transac Type DCC">Transac Type DCC</div>
-                            <div class="item" data-value="Transac Type Invalid">Transac Type Invalid</div>
-                            <div class="item" data-value="Transac Amount None">Trans Amt None</div>
-                            <div class="item" data-value="Transac Date None">Trans Date None</div>
-                            <div class="item" data-value="Transac Date Older than 11 months">Trans date older than 11mns</div>
-                            <div class="item" data-value="Transac Type CUP">Trans Type CUP</div>
-                            <div class="item" data-value="Transaction Amounts confusion - 2 (or more) different amounts in one transaction">Trans amts more than 2 amts</div>
-                            <div class="item" data-value="Auth Code provided are 2 (or more) which are unidentical">Multi Authcodes not same</div>
-                            <div class="item" data-value="Auth Code with duplicate">Authcode with duplicate</div>
-                            <div class="item" data-value="Transac Date Format Invalid for this region">Trans date format invalid</div>
-                            <div class="item" data-value="0">&nbsp;</div>
-                        </div>
+                        <div class="menu"></div>
                     </div>
                 </div>    
-                {#<div class="required field">    
-                    <label>Filename</label> 
-                    {{ text_field('') }}
-                </div>   
-                <div class="field"> 
-                    <div class="ui checkbox">
-                        {{ check_field('') }}
-                        <label>Exception</label>
-                    </div> 
-                </div>
-                <div class="field">     
-                    <div class="ui checkbox">
-                        {{ check_field('') }}
-                        <label>With Inquiry</label>
-                    </div> 
-                </div>#}
-
+                
                 <div class="ui error message"></div>
 
                 <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>More</button>
                 <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
                 <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>  
                 <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Comp/Exit</button>                                  
-                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and process another" data-position="right center">Comp/Next</button>                 
+                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and process another" data-position="bottom center">Comp/Next</button>                 
                 <div style="margin: 5px 0 20px 0; float: right;">    
-                    <button class="ui small green button" data-tooltip="Save changes and process another" data-position="right center">Save/Next</button>
-                    <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="bottom center">Save/Exit</button>
+                    <button class="ui small green button" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
+                    <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
                     <a href="../gpap" class="ui small button">Exit</a>
-                </div>       
-                
-                {#<a href="../gpap" class="ui small button" style="float:right;">Exit</a>#}
-                {#<div class="ui small primary buttons" style="float:right; padding-right: 10px;">
-                    <button class="ui button"><i class="save icon"></i>Save and Next</button>
-                    <div class="ui floating dropdown icon button">
-                        <i class="dropdown icon"></i>
-                        <div class="menu">                              
-                            <div class="item">Complete and Next</div>
-                            <div class="item">Complete and Exit</div>
-                            <div class="item">Save and Exit</div>
-                        </div>
-                    </div>       
-                </div>#}                                                            
+                </div>                                                                                            
 
             </form>    
 
         </div>
     </div>
-    <div class="twelve wide column">
-        
-            {#<div class="ui compact menu">
-                <a class="active item" title="Pointer"><i class="mouse pointer icon"></i></a>
-                <a class="item" title="Zoom In"><i class="zoom in icon"></i></a>
-                <a class="item" title="Zoom Out"><i class="zoom out icon"></i></a>
-                <a class="item" title="Magnify"><i class="eye icon"></i></a>
-                <a class="item" title="Pan"><i class="hand pointer icon"></i></a>
-            </div>#}
-            {#<iframe src = "/ViewerJS/#../ftp/0.pdf" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>#}
-            
-            {#<iframe src = "http://localhost:82/imageviewer/" width='100%' height='800px' allowfullscreen webkitallowfullscreen frameBorder="0"></iframe>#}
-            
-            <div id="viewer" style="width: 100%; height: 850px; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
-            <div class="ui large label filename">Scan0001.tif</div>
-            <div class="command">           
-                <div class="ui small basic icon buttons">
-                    <button id="preBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
-                    <div class="ui large label">Page 1 of 1</div>
-                    <button id="nextBtn" class="ui disabled button" data-tooltip="Next" data-position="bottom center"><i class="chevron right icon"></i></button>
-                    <button id="restoreBtn" class="ui button" data-tooltip="Full View" data-position="bottom center"><i class="maximize icon"></i></button>
-                    <button id="rotateLeftBtn" class="ui button" data-tooltip="Rotate Left" data-position="bottom center"><i class="undo icon"></i></button>
-                    <button id="rotateRightBtn" class="ui button" data-tooltip="Rotate Right" data-position="bottom center"><i class="repeat icon"></i></button>
-                    <button id="zOutBtn" class="ui button" data-tooltip="Zoom Out" data-position="bottom center"><i class="zoom out icon"></i></button>
-                    <button id="zoomBtn" class="ui button" data-tooltip="Zoom In" data-position="bottom center"><i class="zoom icon"></i></button>
-                </div>
-            </div>    
+    <div class="twelve wide column">                                
+        <div id="viewer" style="width: 100%; height: 850px; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
+        <div class="ui large label filename"></div>
+        <div class="command">           
+            <div class="ui small basic icon buttons">
+                <button id="preBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
+                <div class="ui large label">Page 1 of 1</div>
+                <button id="nextBtn" class="ui disabled button" data-tooltip="Next" data-position="bottom center"><i class="chevron right icon"></i></button>
+                <button id="restoreBtn" class="ui button" data-tooltip="Full View" data-position="bottom center"><i class="maximize icon"></i></button>
+                <button id="rotateLeftBtn" class="ui button" data-tooltip="Rotate Left" data-position="bottom center"><i class="undo icon"></i></button>
+                <button id="rotateRightBtn" class="ui button" data-tooltip="Rotate Right" data-position="bottom center"><i class="repeat icon"></i></button>
+                <button id="zOutBtn" class="ui button" data-tooltip="Zoom Out" data-position="bottom center"><i class="zoom out icon"></i></button>
+                <button id="zoomBtn" class="ui button" data-tooltip="Zoom In" data-position="bottom center"><i class="zoom icon"></i></button>
+            </div>
+        </div>    
     </div>
 </div>
 
