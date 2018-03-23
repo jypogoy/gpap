@@ -1,41 +1,22 @@
+var imgServer = '/ftp';
+var imgArray;
+var imgActive;
+var imgNavIndex = 0;
+var degree = 0;
+var imageOrigSize; 
+
 $(function () {                  
+    
+    renderImages();            
 
-    var imageOrigSize;    
-    //var xhr = createCORSRequest('GET', 'http://sdtdev.amdatex.com:82/20100101-BN-001/Airline/scan0001-5.tif');
-    var url = '/ftp/tiff/';
-    var img = 'scan0002.tif';
-    var xhr = createCORSRequest('GET', url + img);    
-    if (!xhr) {
-        //console.error('---- CORS not supported! ----');
-    } else {
-        //console.log('---- CORS supported! ----');
-    }
+    $('#prevBtn').click(function() {
+        navPrevImage();
+    });
 
-    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    // xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    // xhr.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
-    xhr.onload = function (e) {
-        var tiff = new Tiff({buffer: xhr.response});
-        var canvas = tiff.toCanvas();
-        $('.filename').append(img);
-        $('#viewer').append(canvas);
-        $('canvas').width($('canvas').width() / 2);        
-        $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
-        $('canvas').mousedown(function(e) { // Replace mouse pointers
-            $('canvas').css({ 'cursor' : 'move' });
-            $(this).mousemove(function(e) {
-                // Do nothing.
-            }).mouseup(function(e) {
-                $('canvas').off('mousemove');
-            });
-        }).mouseup(function(e) {
-            $('canvas').css({ 'cursor' : 'default' });
-        });
-        imageOrigSize = $('canvas').width();
-    };
-    xhr.send();        
+    $('#nextBtn').click(function() {
+        navNextImage();
+    });
 
-    var degree = 0;
     $('#restoreBtn').on('click' , function() {
         $('canvas').width(imageOrigSize);
         performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
@@ -111,6 +92,87 @@ $(function () {
 
     $('.loader').fadeOut();
 });
+
+function renderImages() {
+    $.post('../image/list/' + $('#batchId').val(), function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any image.');
+        } else {
+            imgArray = data;
+            imgActive = imgArray[imgNavIndex].path; // Render the first image, usually the header
+        }                
+    })
+    .done(function (msg) {
+        var xhr = createCORSRequest('GET', imgServer + imgActive);
+        xhr.onload = function (e) {                                   
+            $('.filename').empty();
+            $('.filename').append(imgActive); // Display the relative file path
+            $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
+            
+            if(imgNavIndex == 0) {
+                $('#prevBtn').addClass('disabled');
+                $('#nextBtn').removeClass('disabled');
+            }
+
+            if(imgNavIndex == (imgArray.length - 1)) {
+                $('#nextBtn').addClass('disabled');
+                $('#prevBtn').removeClass('disabled');
+            }
+            
+            var tiff = new Tiff({buffer: xhr.response});
+            var canvas = tiff.toCanvas();                            
+                        
+            var canvasEl = $('canvas')[0];
+            if (canvasEl) {
+                var context = canvasEl.getContext('2d');
+                // Clear canvas
+                context.clearRect(0, 0, canvasEl.width, canvasEl.height);
+                // Clear path
+                context.beginPath();
+                
+            } else {
+                $('#viewer').append(canvas);   
+            }                                 
+
+            //$('canvas').width($('canvas').width() / 2);       
+            $('canvas').width(1200); 
+            $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
+            $('canvas').mousedown(function(e) { // Replace mouse pointers
+                $('canvas').css({ 'cursor' : 'move' });
+                $(this).mousemove(function(e) {
+                    // Do nothing.
+                }).mouseup(function(e) {
+                    $('canvas').off('mousemove');
+                });
+            }).mouseup(function(e) {
+                $('canvas').css({ 'cursor' : 'default' });
+            });
+            
+            imageOrigSize = $('canvas').width();   
+        };
+        xhr.send();        
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+}
+
+function navPrevImage() {
+    imgNavIndex--;     
+    setCurrentPage();
+    renderImages();    
+}
+
+function navNextImage() {
+    imgNavIndex++;    
+    setCurrentPage();
+    renderImages();    
+}
+
+function setCurrentPage() {
+    $('#currentPage').empty();
+    $('#currentPage').html(imgNavIndex + 1);
+}
 
 function performRotate(degree) {
     // For webkit browsers: e.g. Chrome

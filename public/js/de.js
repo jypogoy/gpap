@@ -59,7 +59,7 @@ $(function () {
             $('#' + this.id + '_div').addClass('error');           
             $('#' + this.id + '_alert').addClass('visible');
             $('#' + this.id + '_msg').html('Invalid Credit Card number');
-            $('#cardLogo').attr('src', 'public/img/card/private.png')
+            $('#cardLogo').attr('src', '../public/img/card/private.png')
             $(this).select();
         } else {
             $('#' + this.id + '_div').removeClass('error');       
@@ -67,19 +67,19 @@ $(function () {
             var cardType = getCardType($(this).val());
             switch (cardType) {
                 case 'Visa':
-                    $('#cardLogo').attr('src', 'public/img/card/visa.png')
+                    $('#cardLogo').attr('src', '../public/img/card/visa.png')
                     break;
                 
                 case 'Mastercard':
-                    $('#cardLogo').attr('src', 'public/img/card/mastercard.png')
+                    $('#cardLogo').attr('src', '../public/img/card/mastercard.png')
                     break;    
 
                 case 'JCB':
-                    $('#cardLogo').attr('src', 'public/img/card/jcb.png')
+                    $('#cardLogo').attr('src', '../public/img/card/jcb.png')
                     break;     
             
                 default:
-                    $('#cardLogo').attr('src', 'public/img/card/private.png')
+                    $('#cardLogo').attr('src', '../public/img/card/private.png')
                     break;
             }
         }
@@ -122,13 +122,13 @@ $(function () {
             //TODO
         }
     });
-
+    
     getTransactionTypes();
     getPullReasons();
 });
 
 function searchMerchant($merchantId) {
-    $.post('merchant/get/' + $merchantId, function (data) {
+    $.post('../merchant/get/' + $merchantId, function (data) {
         if (!data) {
             toastr.warning('The search did not match any merchant.');                    
             $('#merchantName').val('');
@@ -151,7 +151,7 @@ function searchMerchant($merchantId) {
 }
 
 function getCurrencies($regionCode) {
-    $.post('currency/getbyregion/' + $regionCode, function (data) {
+    $.post('../currency/getbyregion/' + $regionCode, function (data) {
         if (!data) {
             toastr.warning('The search did not match any currency.'); 
         } else {
@@ -171,7 +171,7 @@ function getCurrencies($regionCode) {
 }
 
 function getTransactionTypes() {
-    $.post('transactiontype/list', function (data) {
+    $.post('../transactiontype/list', function (data) {
         if (!data) {
             toastr.warning('The search did not match any transaction type.'); 
         } else {
@@ -193,7 +193,7 @@ function getTransactionTypes() {
 
 function getPullReasons() {
     // Retrieve all reasons for pulling a batch.
-    $.post('pullreason/getbylevel/Batch', function (data) {
+    $.post('../pullreason/getbylevel/Batch', function (data) {
         if (!data) {
             toastr.warning('The search did not match any pull reason.'); 
         } else {
@@ -213,7 +213,7 @@ function getPullReasons() {
     });   
     
     // Retrieve all reasons for pulling a slip or transaction.
-    $.post('pullreason/getbylevel/Slip', function (data) {
+    $.post('../pullreason/getbylevel/Slip', function (data) {
         if (!data) {
             toastr.warning('The search did not match any pull reason.'); 
         } else {

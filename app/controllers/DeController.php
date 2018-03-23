@@ -9,11 +9,30 @@ class DeController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
+    public function indexAction($batchId=null)
     {
-        $form = new CaptureForm();
-        $this->view->form = $form;
-        $this->view->setTemplateAfter('de');
+        if (!$this->request->isPost()) {
+            
+            $batch = Batch::findFirstById($batchId); 
+
+            $this->view->batch = $batch;
+            $this->view->setTemplateAfter('de');
+        } else {
+            return $this->response->redirect('');
+        }
+    }
+
+    public function startAction($batchId)
+    {
+        if (!$this->request->isPost()) {
+            
+            $batch = Batch::findById($batchId); 
+
+            $this->view->batch = $batch;
+            $this->view->setTemplateAfter('de');
+        } else {
+            return $this->response->redirect('');
+        }
     }
 
 }

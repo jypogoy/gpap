@@ -1,3 +1,5 @@
+{{ hidden_field('batchId', 'value': batch.id) }}
+
 <div class="ui stackable grid">
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">
@@ -7,7 +9,7 @@
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="shopping cart icon"></i>Merchant Header (Deposit Slip)</h4>
 
                 <div class="required small field">
-                    <label>Merchant ID</label>
+                    <label>Merchant ID </label>
                     {{ text_field('merchantId', 'maxlength': '16', 'placeholder': 'Type in the Merchant ID and press <Enter> to validate') }}
                 </div>  
                 <div class="required small field">
@@ -79,7 +81,7 @@
                     <label>Cardholder Number (PAN)</label>
                     <div class="ui right labeled input">
                         {{ text_field('pan', 'placeholder': 'Credit Card Number') }}
-                        <div class="ui basic label"><img id="cardLogo" src="public/img/card/private.png" style="height: 12px !important;"></div>
+                        <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
                     </div>
                     <div class="ui basic red pointing prompt label transition hidden" id="pan_alert">
                         <i class="warning icon"></i><span id="pan_msg"></span>
@@ -172,15 +174,15 @@
                 
                 <div class="ui error message"></div>
 
-                <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="bottom center"><i class="plus icon"></i>More</button>
-                <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="bottom center"><i class="chevron up icon"></i></button>
-                <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="bottom center"><i class="chevron down icon"></i></button>  
-                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and exit to Home Page" data-position="bottom center">Comp/Exit</button>                                  
-                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and process another" data-position="bottom center">Comp/Next</button>                 
+                <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="top center"><i class="plus icon"></i>More</button>
+                <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="top center"><i class="chevron up icon"></i></button>
+                <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="top center"><i class="chevron down icon"></i></button>  
+                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  
+                <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
                 <div style="margin: 5px 0 20px 0; float: right;">    
                     <button class="ui small green button" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
                     <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
-                    <a href="../gpap" class="ui small button">Exit</a>
+                    <a href="/gpap" class="ui small button">Exit</a>
                 </div>                                                                                            
 
             </form>    
@@ -192,8 +194,8 @@
         <div class="ui large label filename"></div>
         <div class="command">           
             <div class="ui small basic icon buttons">
-                <button id="preBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
-                <div class="ui large label">Page 1 of 1</div>
+                <button id="prevBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
+                <div class="ui large label">Page <span id="currentPage">1</span> of <span id="lastPage">...</span></div>
                 <button id="nextBtn" class="ui disabled button" data-tooltip="Next" data-position="bottom center"><i class="chevron right icon"></i></button>
                 <button id="restoreBtn" class="ui button" data-tooltip="Full View" data-position="bottom center"><i class="maximize icon"></i></button>
                 <button id="rotateLeftBtn" class="ui button" data-tooltip="Rotate Left" data-position="bottom center"><i class="undo icon"></i></button>
@@ -209,4 +211,4 @@
 
 {{ stylesheet_link('css/viewer.css') }}
 {{ javascript_include('js/viewer.js') }}
-{{ javascript_include('js/de_form.js') }}
+{{ javascript_include('js/de.js') }}

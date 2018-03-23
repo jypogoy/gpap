@@ -2,6 +2,11 @@
 
 $router = $di->getRouter();
 
-// Define your routes here
+$router->add(
+    '/{controller}/{id:\d+}',
+    [
+        'action' => 'index'
+    ]
+);
 
 $router->handle();

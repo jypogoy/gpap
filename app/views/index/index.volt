@@ -10,7 +10,7 @@
             </div>            
         </div>
         <div class="right aligned column">
-            <a href="de" class="ui primary button data-process-btn"><i class="plus icon"></i>Get Batch</a>
+            <a class="ui primary button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
         </div>
     </div>     
 </form> 
@@ -18,81 +18,35 @@
 <table class="ui sortable selectable celled striped table">
     <thead>
         <tr>
-            <th>ORDER</th>
-            <th>START TIME</th>
-            <th>END TIME</th>
-            <th class="data-process-btn"></th>
+            <th>REGION</th>
+            <th>RECODING DATE</th>                    
+            <th>TRANSACTION TYPE</th>
+            <th>SEQUENCE</th>
+            <th>BATCH</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td>PH</td>
+            <td>03-12-2018</td>
+            <td>Normal</td>
             <td>0001</td>
-            <td>03-12-2018 12:22:00 PM</td>
-            <td>03-12-2018 12:48:00 PM</td>
+            <td>1</td>
             <td class="data-process-btn">
-                <a href="de" data-tooltip="Review" data-position="bottom center">
+                <a href="de/1" data-tooltip="Review" data-position="bottom center">
                     <i class="edit orange icon"></i>
                 </a>
                 <a data-tooltip="Complete" data-position="bottom center">
                     <i class="check green icon"></i>
-                </a>                        
+                </a>                
             </td>
         </tr>
-        <tr>
-            <td>0002</td>
-            <td>03-12-2018 12:22:00 PM</td>
-            <td>03-12-2018 12:48:00 PM</td>
-            <td class="data-process-btn">
-                <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="edit orange icon"></i>
-                </a>
-                <a data-tooltip="Complete" data-position="bottom center">
-                    <i class="check green icon"></i>
-                </a>                        
-            </td>
-        </tr>
-        <tr>
-            <td>0003</td>
-            <td>03-12-2018 12:22:00 PM</td>
-            <td>03-12-2018 12:48:00 PM</td>
-            <td class="data-process-btn">
-                <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="edit orange icon"></i>
-                </a>
-                <a data-tooltip="Complete" data-position="bottom center">
-                    <i class="check green icon"></i>
-                </a>                        
-            </td>
-        </tr>
-        <tr>
-            <td>0004</td>
-            <td>03-12-2018 12:22:00 PM</td>
-            <td>03-12-2018 12:48:00 PM</td>
-            <td class="data-process-btn">
-                <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="edit orange icon"></i>
-                </a>
-                <a data-tooltip="Complete" data-position="bottom center">
-                    <i class="check green icon"></i>
-                </a>                        
-            </td>
-        </tr>
-        <tr>
-            <td>0005</td>
-            <td>03-12-2018 12:22:00 PM</td>
-            <td>03-12-2018 12:48:00 PM</td>
-            <td class="data-process-btn">
-                <a href="de" data-tooltip="Review" data-position="bottom center">
-                    <i class="edit orange icon"></i>
-                </a>
-                <a data-tooltip="Complete" data-position="bottom center">
-                    <i class="check green icon"></i>
-                </a>                        
-            </td>
-        </tr>
-    </tbody>
+    </tbody>    
 </table>
 
 <div class="ui active loader"></div>
+
+{% include 'de/batch_modal.volt' %} 
 
 {{ javascript_include('js/home.js') }}
