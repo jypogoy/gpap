@@ -93,6 +93,7 @@ $(function () {
     $('.loader').fadeOut();
 });
 
+var prevContext;
 function renderImages() {
     $.post('../image/list/' + $('#batchId').val(), function (data) {
         if (!data) {
@@ -126,13 +127,21 @@ function renderImages() {
             if (canvasEl) {
                 var context = canvasEl.getContext('2d');
                 // Clear canvas
-                context.clearRect(0, 0, canvasEl.width, canvasEl.height);
+                //context.clearRect(0, 0, canvasEl.width, canvasEl.height);
+                //context.drawImage(canvas, 0, 0);
+
+                var data = context.getImageData(0, 0, canvasEl.width - 1, canvasEl.height - 1);
+                console.log(prevContext)
+                console.log(data)
+                prevContext.putImageData(data, 0, 0);
                 // Clear path
-                context.beginPath();
-                
-            } else {
-                $('#viewer').append(canvas);   
-            }                                 
+                //context.beginPath();
+                $('#viewer').remove(canvasEl);
+            }
+            
+            $('#viewer').append(canvas);                   
+            
+            prevContext = context;
 
             //$('canvas').width($('canvas').width() / 2);       
             $('canvas').width(1200); 

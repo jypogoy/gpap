@@ -157,7 +157,7 @@ function getCurrencies($regionCode) {
         } else {
             var menuWrapper = $('#currencyDropdown .menu');
             $(menuWrapper).empty();
-            data.forEach(currency => {
+            $.each(data, function(i, currency) {
                 $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
             });
         }                
@@ -171,14 +171,14 @@ function getCurrencies($regionCode) {
 }
 
 function getTransactionTypes() {
-    $.post('../transactiontype/list', function (data) {
+    $.post('../transaction_type/list', function (data) {
         if (!data) {
             toastr.warning('The search did not match any transaction type.'); 
         } else {
             var menuWrapper = $('#transTypeDropdown .menu');
-            $(menuWrapper).empty();  
-            data.forEach(rec => {
-                $('<div class="item" data-value="' + rec.id + '">' + rec.type + '</div>').appendTo(menuWrapper);                    
+            $(menuWrapper).empty();
+            $.each(data, function(i, transType) {
+                $('<div class="item" data-value="' + transType.id + '">' + transType.type + '</div>').appendTo(menuWrapper);
             });
             $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper); 
         }                
@@ -193,14 +193,14 @@ function getTransactionTypes() {
 
 function getPullReasons() {
     // Retrieve all reasons for pulling a batch.
-    $.post('../pullreason/getbylevel/Batch', function (data) {
+    $.post('../pull_reason/getbylevel/Batch', function (data) {
         if (!data) {
             toastr.warning('The search did not match any pull reason.'); 
         } else {
             var menuWrapper = $('#merchantPullDropdown .menu');
             $(menuWrapper).empty();  
-            data.forEach(rec => {
-                $('<div class="item" data-value="' + rec.id + '">' + rec.title + ' - ' + rec.reason + '</div>').appendTo(menuWrapper);                    
+            $.each(data, function(i, pullReason) {
+                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + ' - ' + pullReason.reason + '</div>').appendTo(menuWrapper);                             
             });
             $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper);
         }                
@@ -213,14 +213,14 @@ function getPullReasons() {
     });   
     
     // Retrieve all reasons for pulling a slip or transaction.
-    $.post('../pullreason/getbylevel/Slip', function (data) {
+    $.post('../pull_reason/getbylevel/Slip', function (data) {
         if (!data) {
             toastr.warning('The search did not match any pull reason.'); 
         } else {
             var menuWrapper = $('#slipPullDropdown .menu');
-            $(menuWrapper).empty();  
-            data.forEach(rec => {
-                $('<div class="item" data-value="' + rec.id + '">' + rec.title + (rec.reason != null ? ' - ' + rec.reason : '') + '</div>').appendTo(menuWrapper);                    
+            $(menuWrapper).empty(); 
+            $.each(data, function(i, pullReason) {
+                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + (pullReason.reason != null ? ' - ' + pullReason.reason : '') + '</div>').appendTo(menuWrapper);                    
             });
             $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper); 
         }                
