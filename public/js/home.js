@@ -42,11 +42,10 @@ function loadAvailableBatches() {
             $('.modal.batch').modal('hide');           
         } else {
             $('#batchTable tbody tr').remove();
-            for (let i = 0; i < data.length; i++) {
-                const rec = data[i];
+            $.each(data, function(i, rec) {
                 $('#batchTable tbody').append(
                     '<tr>' +
-                        '<td></td>' + 
+                        '<td>' + rec.Zip + '</td>' + 
                         '<td>2</td>' + 
                         '<td>3</td>' +
                         '<td>4</td>' +
@@ -56,8 +55,8 @@ function loadAvailableBatches() {
                                 '<i class="large play circle icon"></i>' +
                             '</a>' +
                         '</td>' +
-                    '</tr>');                                              
-            }   
+                    '</tr>');  
+            }); 
         }                
     })
     .done(function (msg) {
