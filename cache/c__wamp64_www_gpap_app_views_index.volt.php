@@ -29,6 +29,7 @@
         <?= $this->tag->javascriptInclude('semantic/calendar.min.js') ?>
         <?= $this->tag->javascriptInclude('toastr/toastr.min.js') ?>
         <?= $this->tag->javascriptInclude('js/tiff.min.js') ?>   
+        <?= $this->tag->javascriptInclude('js/hashmap.js') ?> 
 
         <?= $this->tag->javascriptInclude('js/app.js') ?>
         <?= $this->tag->javascriptInclude('js/util.js') ?>

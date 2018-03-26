@@ -79,7 +79,4 @@ class Batch extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
-    public $zip;
-    
-    public $transactionType;
 }

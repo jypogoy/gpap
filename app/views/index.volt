@@ -29,6 +29,7 @@
         {{ javascript_include('semantic/calendar.min.js') }}
         {{ javascript_include('toastr/toastr.min.js') }}
         {{ javascript_include('js/tiff.min.js') }}   
+        {{ javascript_include('js/hashmap.js') }} 
 
         {{ javascript_include('js/app.js') }}
         {{ javascript_include('js/util.js') }}

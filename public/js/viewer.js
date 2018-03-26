@@ -105,8 +105,8 @@ function renderImages() {
     })
     .done(function (msg) {
         var xhr = createCORSRequest('GET', imgServer + imgActive);
-        xhr.onload = function (e) {      
-                                         
+        xhr.onload = function (e) {                  
+            
             $('.filename').empty();
             $('.filename').append(imgActive); // Display the relative file path
             $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
@@ -121,6 +121,11 @@ function renderImages() {
                 $('#prevBtn').removeClass('disabled');
             }
             
+            if(xhr.status == 404)  {
+                toastr.error('Image ' +  imgActive + ' does not exists!');
+                return;
+            } 
+
             var tiff = new Tiff({ buffer: xhr.response });
             var canvas = tiff.toCanvas();                            
             var context = canvas.getContext('2d');            
@@ -170,7 +175,7 @@ function renderImages() {
                 $('canvas').css({ 'cursor' : 'default' });
             });
             
-            imageOrigSize = $('canvas').width();   
+            imageOrigSize = $('canvas').width();
         };
         xhr.send();        
     })

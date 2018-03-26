@@ -10,29 +10,19 @@ class DeController extends ControllerBase
     }
 
     public function indexAction($batchId=null)
-    {
-        if (!$this->request->isPost()) {
-            
-            $batch = Batch::findFirstById($batchId); 
+    {        
+        $batch = Batch::findFirstById($batchId); 
 
-            $this->view->batch = $batch;
-            $this->view->setTemplateAfter('de');
-        } else {
-            return $this->response->redirect('');
-        }
+        $this->view->batch = $batch;
+        $this->view->setTemplateAfter('de');
     }
 
     public function startAction($batchId)
-    {
-        if (!$this->request->isPost()) {
-            
-            $batch = Batch::findById($batchId); 
+    {        
+        $batch = Batch::findById($batchId); 
 
-            $this->view->batch = $batch;
-            $this->view->setTemplateAfter('de');
-        } else {
-            return $this->response->redirect('');
-        }
+        $this->view->batch = $batch;
+        $this->view->setTemplateAfter('de');
     }
 
 }

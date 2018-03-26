@@ -9,8 +9,8 @@
                 <h4 class="ui dividing header" style="color: darkblue;"><i class="shopping cart icon"></i>Merchant Header (Deposit Slip)</h4>
 
                 <div class="required small field">
-                    <label>Merchant ID </label>
-                    {{ text_field('merchantId', 'maxlength': '16', 'placeholder': 'Type in the Merchant ID and press <Enter> to validate') }}
+                    <label>Merchant Number </label>
+                    {{ text_field('merchantNumber', 'maxlength': '16', 'placeholder': 'Type in the Merchant Number and press <Enter> to validate') }}
                 </div>  
                 <div class="required small field">
                     <label>Merchant Name</label>
@@ -50,7 +50,7 @@
                         {{ text_field('depositAmount') }}
                     </div>                                         
                 </div>    
-                <div class="required field">
+                <div id="merchantPullDropdownField" class="required field">
                     <label>Merchant Pull Reason</label>
                     <div id="merchantPullDropdown" class="ui selection dropdown">
                         <input id="merchantPullReason" type="hidden">
@@ -66,7 +66,7 @@
                     <div class="required field">
                         <label>Transaction Type</label>
                         <div id="transTypeDropdown" class="ui selection dropdown">
-                            <input id="transactionType" type="hidden">
+                            <input id="transactionType" type="hidden" class="slip-field">
                             <div class="default text">Choose a type</div>
                             <i class="dropdown icon"></i>
                             <div class="menu"></div>
@@ -74,13 +74,13 @@
                     </div>   
                     <div class="required field">
                         <label>Region</label>
-                        {{ text_field('regionCode', 'disabled' : true) }}
+                        {{ text_field('regionCode', 'class': 'slip-field') }}
                     </div> 
                 </div>
                 <div id="pan_div" class="required small field">
                     <label>Cardholder Number (PAN)</label>
                     <div class="ui right labeled input">
-                        {{ text_field('pan', 'placeholder': 'Credit Card Number') }}
+                        {{ text_field('pan', 'placeholder': 'Credit Card Number', 'class': 'slip-field') }}
                         <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
                     </div>
                     <div class="ui basic red pointing prompt label transition hidden" id="pan_alert">
@@ -93,24 +93,24 @@
                         <div class="ui calendar" id="transactionDate">
                             <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            {{ text_field('', 'placeholder': 'Date') }}
+                            {{ text_field('transactionDate', 'placeholder': 'Date', 'class': 'slip-field') }}
                             </div>
                         </div>
                     </div>  
                     <div class="required field">
                         <label>Authorization Code</label>
-                        {{ text_field('authCode', 'maxlength': 6) }}
+                        {{ text_field('authCode', 'maxlength': 6, 'class': 'slip-field') }}
                     </div>  
                     <div class="required field">
                         <label>Transaction Amount</label>
-                        {{ text_field('transactionAmount') }}
+                        {{ text_field('transactionAmount', 'class': 'slip-field') }}
                     </div>     
                 </div>    
                 <div class="equal width small fields">
                     <div class="required field">    
                         <label>Installment Months</label>
                         <div id="installmentDropdown" class="ui selection dropdown">
-                            <input id="installmentMonth" type="hidden">
+                            <input id="installmentMonth" type="hidden" class="slip-field">
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="field">    
                         <label>Airline Ticket Number</label> 
-                        {{ text_field('') }} 
+                        {{ text_field('ticketNum', 'class': 'slip-field') }} 
                     </div>
                 </div>
                 {#<h4 class="ui dividing header" style="color: darkblue;"><i class="random icon"></i>VI Transaction</h4>
@@ -165,7 +165,7 @@
                 <div class="required small field">
                     <label>Sales Slip Pull Reason</label>
                     <div id="slipPullDropdown" class="ui selection dropdown">
-                        <input id="slipPullReason" type="hidden">
+                        <input id="slipPullReason" type="hidden" class="slip-field">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu"></div>
@@ -174,7 +174,7 @@
                 
                 <div class="ui error message"></div>
 
-                <button class="ui small orange button" data-tooltip="Add a new Slip" data-position="top center"><i class="plus icon"></i>More</button>
+                <button class="ui small orange button more-btn" data-tooltip="Add a new Slip" data-position="top center"><i class="plus icon"></i>More</button>
                 <button class="ui small orange icon button" data-tooltip="Previous Slip" data-position="top center"><i class="chevron up icon"></i></button>
                 <button class="ui small orange icon button" data-tooltip="Next Slip" data-position="top center"><i class="chevron down icon"></i></button>  
                 <button class="ui small blue button" style="float: right;" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  

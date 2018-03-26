@@ -1,5 +1,12 @@
 $(function () {          
 
+    var slipMap = new HashMap();
+
+    $('.more-btn').click(function(e) {
+        e.preventDefault();
+        console.log($('.slip-field'))
+    });
+
     $('form').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) { 
@@ -8,7 +15,7 @@ $(function () {
         }
     });
 
-    $('#merchantId').on('keyup', function(e) {
+    $('#merchantNumber').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
             searchMerchant($(this).val());
@@ -40,10 +47,15 @@ $(function () {
         }
     });        
 
+ 
     $('#merchantPullDropdown').dropdown({
         onChange: function() {
-            var value = $(this).dropdown('get value');
-            //if (value)
+            var value = $(this).dropdown('get value');            
+            if (value > 0) {
+                $('#merchantPullDropdownField').nextAll('.field, .fields').addClass('disabled');
+            } else {
+                $('#merchantPullDropdownField').nextAll('.field, .fields').removeClass('disabled');
+            }
         }
     });
 
@@ -127,8 +139,8 @@ $(function () {
     getPullReasons();
 });
 
-function searchMerchant($merchantId) {
-    $.post('../merchant/get/' + $merchantId, function (data) {
+function searchMerchant($merchantNumber) {
+    $.post('../merchant/get/' + $merchantNumber, function (data) {
         if (!data) {
             toastr.warning('The search did not match any merchant.');                    
             $('#merchantName').val('');
@@ -138,7 +150,7 @@ function searchMerchant($merchantId) {
             $('#currencyDropdown').append('<div class="default text">Choose a code</div>');
         } else {
             $('#merchantName').val(data.dba_name);
-            $('#regionCode').val(data.country_code);
+            //$('#regionCode').val(data.country_code);
             getCurrencies(data.country_code);
         }                
     })

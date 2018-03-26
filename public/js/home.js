@@ -36,27 +36,28 @@ var BatchModal = {
 
 function loadAvailableBatches() {
     $.post('batch/listavailable/', function (data) {
-        console.log(data)
         if (!data) {
             toastr.warning('The search did not match any batch.');
             $('.modal.batch').modal('hide');           
         } else {
-            $('#batchTable tbody tr').remove();
-            $.each(data, function(i, rec) {
-                $('#batchTable tbody').append(
-                    '<tr>' +
-                        '<td>' + rec.Zip + '</td>' + 
-                        '<td>2</td>' + 
-                        '<td>3</td>' +
-                        '<td>4</td>' +
-                        '<td>' + rec.id + '</td>' +
-                        '<td>' +
-                            '<a href="de/' + rec.id + '" class="ui icon" data-tooltip="Start" data-position="bottom center">' +
-                                '<i class="large play circle icon"></i>' +
-                            '</a>' +
-                        '</td>' +
-                    '</tr>');  
-            }); 
+            $('.content').empty();
+            $('.content').append(data);
+            // $('#batchTable tbody tr').remove();
+            // $.each(data, function(i, rec) {
+            //     $('#batchTable tbody').append(
+            //         '<tr>' +
+            //             '<td>' + rec.zip + '</td>' + 
+            //             '<td>2</td>' + 
+            //             '<td>3</td>' +
+            //             '<td>4</td>' +
+            //             '<td>' + rec.id + '</td>' +
+            //             '<td>' +
+            //                 '<a href="de/' + rec.id + '" class="ui icon" data-tooltip="Start" data-position="bottom center">' +
+            //                     '<i class="large play circle icon"></i>' +
+            //                 '</a>' +
+            //             '</td>' +
+            //         '</tr>');  
+            // }); 
         }                
     })
     .done(function (msg) {
