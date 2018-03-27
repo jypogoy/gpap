@@ -3,7 +3,7 @@
     <div class="header">
         <i class="tags icon"></i>Available Batches
     </div>
-    <div class="content">  
+    <div class="content" style="height: 500px !important; overflow: scroll;">  
         <table id="batchTable" class="ui sortable selectable celled striped table">
             <thead>
                 <tr>

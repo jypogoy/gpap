@@ -15,8 +15,12 @@ a {
     margin-top: 7em;
 }
 
-.main.wide {
+/* .main.wide {
     margin-top: 2em;
+    padding: 5px;
+} */
+
+.main.wide {
     padding: 5px;
 }
 

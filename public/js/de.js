@@ -1,10 +1,77 @@
+var slipPage = 1;
+var slipMap;    
+
 $(function () {          
 
-    var slipMap = new HashMap();
+    slipMap = new HashMap(); 
+
+    saveSlip(); // Alwas add a fresh record on the map
+
+    $('#currentSlipPage').html(slipPage);
+    $('#totalSlips').html(slipMap.count());    
 
     $('.more-btn').click(function(e) {
         e.preventDefault();
-        console.log($('.slip-field'))
+        
+        saveSlip(); // Save the current content
+        clearSlipForm();        
+        
+        slipPage = slipMap.count() + 1;
+        saveSlip(); // Save a fresh entry
+        
+        $('#currentSlipPage').html(slipPage);        
+        $('#totalSlips').html(slipMap.count());
+        $('.prev-slip-btn').removeClass('disabled');   
+        $('.next-slip-btn').addClass('disabled');     
+
+        refreshTransTypeDependentFields();
+    });
+
+    $('.prev-slip-btn').click(function(e) {
+        e.preventDefault();
+        navigateToPrevSlip();
+    });
+
+    // var prevInt;
+    // $('.prev-slip-btn').mousedown(function() {        
+    //     prevInt = setInterval(navigateToPrevSlip, 100);
+    // }).mouseup(function() {
+    //     clearInterval(prevInt);
+    // });
+
+    $('.next-slip-btn').click(function(e) {
+        e.preventDefault();
+        navigateToNextSlip();
+    });
+
+    // var nextInt;
+    // $('.next-slip-btn').mousedown(function() {        
+    //     nextInt = setInterval(navigateToNextSlip, 100);
+    // }).mouseup(function() {
+    //     clearInterval(nextInt);
+    // });        
+
+    $('.delete-slip-btn').click(function(e) {
+        e.preventDefault();
+        $('.custom-text').html('<p>Are you sure you want to delete the current Sales Slip? Click OK to proceed.</p>');    
+        $('.ui.tiny.modal.delete')
+        .modal({
+            inverted : true,
+            closable : true,
+            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
+            onDeny : function(){
+                // Do nothing
+            },
+            onApprove : function() {
+                slipMap.remove(slipPage);
+                if (slipMap - 1 <= 0) {
+                    navigateToNextSlip();
+                } else {
+                    navigateToPrevSlip();
+                }
+            }
+        })
+        .modal('show');        
     });
 
     $('form').on('keyup keypress', function(e) {
@@ -15,25 +82,35 @@ $(function () {
         }
     });
 
-    $('#merchantNumber').on('keyup', function(e) {
+    $('#merchant_number').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
             searchMerchant($(this).val());
             padZero($(this));
         }
+        this.value = this.value.replace(/[^0-9]/, '');
     });
     
-    $('#currencyDropdown').dropdown({
+    $('#currency_code_dropdown').dropdown({
         onChange: function() {
-            //TODO
+            var value = $(this).dropdown('get value');            
+            if (value > 0) {
+                // TODO
+            } else {
+                $(this).dropdown('restore defaults');
+            }
         }
     });
 
     $('#dcn').blur(function() {
         padZero($(this));
-    });    
+    });   
+    
+    $('#dcn').keyup(function() {
+        this.value = this.value.replace(/[^0-9]/, '');
+    });   
 
-    $('#depositDate').calendar({ 
+    $('#deposit_date_cal').calendar({ 
         type: 'date',
         monthFirst: true,
         formatter: {
@@ -48,25 +125,31 @@ $(function () {
     });        
 
  
-    $('#merchantPullDropdown').dropdown({
+    $('#merchant_pull_reason_dropdown').dropdown({
         onChange: function() {
             var value = $(this).dropdown('get value');            
             if (value > 0) {
-                $('#merchantPullDropdownField').nextAll('.field, .fields').addClass('disabled');
+                $('#merchant_pull_reason_field').nextAll('.field, .fields').addClass('disabled');
             } else {
-                $('#merchantPullDropdownField').nextAll('.field, .fields').removeClass('disabled');
+                $('#merchant_pull_reason_field').nextAll('.field, .fields').removeClass('disabled');
+                $(this).dropdown('restore defaults');
             }
         }
     });
 
-    $('#transTypeDropdown').dropdown({
-        onChange: function() {
-            //TODO
+    $('#transaction_type_dropdown').dropdown({
+        onChange: function() {            
+            refreshTransTypeDependentFields();
+            var value = $(this).dropdown('get value');            
+            if (value > 0) {
+                // TODO
+            } else {
+                $(this).dropdown('restore defaults');
+            }
         }
     });
 
-    
-    $('#pan').blur(function() {
+    $('#credit_card_number').blur(function() {
         if (!validateCard($(this).val())) {
             $('#' + this.id + '_div').addClass('error');           
             $('#' + this.id + '_alert').addClass('visible');
@@ -97,7 +180,11 @@ $(function () {
         }
     });
 
-    $('#transactionDate').calendar({ 
+    $('#credit_card_number').keyup(function() {
+        this.value = this.value.replace(/[^0-9]/, '');
+    });
+
+    $('#transaction_date_cal').calendar({ 
         type: 'date',
         monthFirst: true,
         formatter: {
@@ -111,136 +198,67 @@ $(function () {
         }
     });
 
-    $('#authCode').blur(function() {
+    $('#authorization_code').blur(function() {
         padZero($(this));
     }); 
 
-    $('#depositAmount').blur(function() {
+    $('#deposit_amount').blur(function() {
         toCurrency($(this));
     });  
 
-    $('#transactionAmount').blur(function() {
+    $('#deposit_amount').keyup(function() {
+        this.value = this.value.replace(/[^0-9.]/, '');
+    });
+
+    $('#region_code').keyup(function() {
+        this.value = this.value.toUpperCase();
+        this.value = this.value.replace(/[^a-zA-Z]/, '');
+    });
+
+    $('#transaction_amount').blur(function() {
         toCurrency($(this));
     }); 
 
-    $('#installmentDropdown').dropdown({
+    $('#transaction_amount').keyup(function() {
+        this.value = this.value.replace(/[^0-9.]/, '');
+    });
+
+    $('#installment_months_dropdown').dropdown({
         onChange: function() {
-            //TODO
+            var value = $(this).dropdown('get value');            
+            if (value > 0) {
+                // TODO
+            } else {
+                $(this).dropdown('restore defaults');
+            }
         }
     });
 
-    $('#slipPullDropdown').dropdown({
+    $('#slip_pull_reason_dropdown').dropdown({
         onChange: function() {
-            //TODO
+            var value = $(this).dropdown('get value');            
+            if (value > 0) {
+                // TODO
+            } else {
+                $(this).dropdown('restore defaults');
+            }
+        }
+    });
+
+    $('#other_exception_dropdown').dropdown({
+        onChange: function() {
+            var value = $(this).dropdown('get value');            
+            if (value == 0) {
+                $(this).dropdown('restore defaults');
+            } else if (value.indexOf('Others') != -1) {
+                $('#other_exception_detail').parent().removeClass('hidden');
+            } else {
+                $('#other_exception_detail').parent().addClass('hidden');
+                $('#other_exception_detail').focus();
+            }
         }
     });
     
     getTransactionTypes();
     getPullReasons();
 });
-
-function searchMerchant($merchantNumber) {
-    $.post('../merchant/get/' + $merchantNumber, function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any merchant.');                    
-            $('#merchantName').val('');
-            $('#regionCode').val('');
-            $('#currencyDropdown .menu').empty();
-            $('#currencyDropdown .text').remove();
-            $('#currencyDropdown').append('<div class="default text">Choose a code</div>');
-        } else {
-            $('#merchantName').val(data.dba_name);
-            //$('#regionCode').val(data.country_code);
-            getCurrencies(data.country_code);
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
-
-function getCurrencies($regionCode) {
-    $.post('../currency/getbyregion/' + $regionCode, function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any currency.'); 
-        } else {
-            var menuWrapper = $('#currencyDropdown .menu');
-            $(menuWrapper).empty();
-            $.each(data, function(i, currency) {
-                $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
-            });
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
-
-function getTransactionTypes() {
-    $.post('../transaction_type/list', function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any transaction type.'); 
-        } else {
-            var menuWrapper = $('#transTypeDropdown .menu');
-            $(menuWrapper).empty();
-            $.each(data, function(i, transType) {
-                $('<div class="item" data-value="' + transType.id + '">' + transType.type + '</div>').appendTo(menuWrapper);
-            });
-            $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper); 
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
-
-function getPullReasons() {
-    // Retrieve all reasons for pulling a batch.
-    $.post('../pull_reason/getbylevel/Batch', function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any pull reason.'); 
-        } else {
-            var menuWrapper = $('#merchantPullDropdown .menu');
-            $(menuWrapper).empty();  
-            $.each(data, function(i, pullReason) {
-                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + ' - ' + pullReason.reason + '</div>').appendTo(menuWrapper);                             
-            });
-            $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper);
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });   
-    
-    // Retrieve all reasons for pulling a slip or transaction.
-    $.post('../pull_reason/getbylevel/Slip', function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any pull reason.'); 
-        } else {
-            var menuWrapper = $('#slipPullDropdown .menu');
-            $(menuWrapper).empty(); 
-            $.each(data, function(i, pullReason) {
-                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + (pullReason.reason != null ? ' - ' + pullReason.reason : '') + '</div>').appendTo(menuWrapper);                    
-            });
-            $('<div class="item" data-value="0">&nbsp;</div>').appendTo(menuWrapper); 
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
