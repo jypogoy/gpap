@@ -1,7 +1,7 @@
 var slipPage = 1;
 var slipMap;    
 
-$(function () {          
+$(function() {          
 
     slipMap = new HashMap(); 
 
@@ -9,106 +9,6 @@ $(function () {
 
     $('#currentSlipPage').html(slipPage);
     $('#totalSlips').html(slipMap.count());    
-
-    $('.more-btn').click(function(e) {
-        e.preventDefault();
-        
-        saveSlip(); // Save the current content
-        clearSlipForm();        
-        
-        slipPage = slipMap.count() + 1;
-        saveSlip(); // Save a fresh entry
-        
-        $('#currentSlipPage').html(slipPage);        
-        $('#totalSlips').html(slipMap.count());
-        $('.prev-slip-btn').removeClass('disabled');   
-        $('.next-slip-btn').addClass('disabled');     
-
-        refreshTransTypeDependentFields();
-    });
-
-    $('.prev-slip-btn').click(function(e) {
-        e.preventDefault();
-        navigateToPrevSlip();
-    });
-
-    // var prevInt;
-    // $('.prev-slip-btn').mousedown(function() {        
-    //     prevInt = setInterval(navigateToPrevSlip, 100);
-    // }).mouseup(function() {
-    //     clearInterval(prevInt);
-    // });
-
-    $('.next-slip-btn').click(function(e) {
-        e.preventDefault();
-        navigateToNextSlip();
-    });
-
-    // var nextInt;
-    // $('.next-slip-btn').mousedown(function() {        
-    //     nextInt = setInterval(navigateToNextSlip, 100);
-    // }).mouseup(function() {
-    //     clearInterval(nextInt);
-    // });        
-
-    $('.delete-slip-btn').click(function(e) {
-        e.preventDefault();
-        $('.custom-text').html('<p>Are you sure you want to delete the current transaction? Click OK to proceed.</p>');    
-        $('.ui.tiny.modal.delete')
-        .modal({
-            inverted : true,
-            closable : true,
-            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
-            onDeny : function(){
-                // Do nothing
-            },
-            onApprove : function() {
-                slipMap.remove(slipPage);
-                if (slipMap - 1 <= 0) {
-                    navigateToNextSlip();
-                } else {
-                    navigateToPrevSlip();
-                }
-            }
-        })
-        .modal('show');        
-    });
-
-    $('form').on('keyup keypress', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) { 
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    $('#merchant_number').on('keyup', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13 && $(this).val().length > 0) { 
-            searchMerchant($(this).val());
-            padZero($(this));
-        }
-        this.value = this.value.replace(/[^0-9]/, '');
-    });
-    
-    $('#currency_code_dropdown').dropdown({
-        onChange: function() {
-            var value = $(this).dropdown('get value');            
-            if (value > 0) {
-                // TODO
-            } else {
-                $(this).dropdown('restore defaults');
-            }
-        }
-    });
-
-    $('#dcn').blur(function() {
-        padZero($(this));
-    });   
-    
-    $('#dcn').keyup(function() {
-        this.value = this.value.replace(/[^0-9]/, '');
-    });   
 
     $('#deposit_date_cal').calendar({ 
         type: 'date',
@@ -123,16 +23,22 @@ $(function () {
             }
         }
     });        
-
  
+    var headerRequiredFields = $('#headerDataForm').find('.required');
     $('#batch_pull_reason_dropdown').dropdown({
         onChange: function() {
-            var value = $(this).dropdown('get value');            
+            var value = $(this).dropdown('get value');        
             if (value > 0) {
-                $('#batch_pull_reason_field').nextAll('.field, .fields').addClass('disabled');
+                $('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
+                $(headerRequiredFields).removeClass('required');
+                Form.resetErrors(true);
+                Form.resetErrors(false);
+                $('.slip-controls').addClass('hidden');
             } else {
-                $('#batch_pull_reason_field').nextAll('.field, .fields').removeClass('disabled');
+                $('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
                 $(this).dropdown('restore defaults');
+                $(headerRequiredFields).addClass('required');
+                $('.slip-controls').removeClass('hidden');
             }
         }
     });
@@ -142,46 +48,11 @@ $(function () {
             refreshTransTypeDependentFields();
             var value = $(this).dropdown('get value');            
             if (value > 0) {
-                // TODO
+                $('#transaction_type_wrapper').removeClass('error');
             } else {
                 $(this).dropdown('restore defaults');
             }
         }
-    });
-
-    $('#credit_card_number').blur(function() {
-        if (!validateCard($(this).val())) {
-            $('#' + this.id + '_div').addClass('error');           
-            $('#' + this.id + '_alert').addClass('visible');
-            $('#' + this.id + '_msg').html('Invalid Credit Card number');
-            $('#cardLogo').attr('src', '../public/img/card/private.png')
-            $(this).select();
-        } else {
-            $('#' + this.id + '_div').removeClass('error');       
-            $('#' + this.id + '_alert').removeClass('visible');
-            var cardType = getCardType($(this).val());
-            switch (cardType) {
-                case 'Visa':
-                    $('#cardLogo').attr('src', '../public/img/card/visa.png')
-                    break;
-                
-                case 'Mastercard':
-                    $('#cardLogo').attr('src', '../public/img/card/mastercard.png')
-                    break;    
-
-                case 'JCB':
-                    $('#cardLogo').attr('src', '../public/img/card/jcb.png')
-                    break;     
-            
-                default:
-                    $('#cardLogo').attr('src', '../public/img/card/private.png')
-                    break;
-            }
-        }
-    });
-
-    $('#credit_card_number').keyup(function() {
-        this.value = this.value.replace(/[^0-9]/, '');
     });
 
     $('#transaction_date_cal').calendar({ 
@@ -198,49 +69,29 @@ $(function () {
         }
     });
 
-    $('#authorization_code').blur(function() {
-        padZero($(this));
-    }); 
-
-    $('#deposit_amount').blur(function() {
-        toCurrency($(this));
-    });  
-
-    $('#deposit_amount').keyup(function() {
-        this.value = this.value.replace(/[^0-9.]/, '');
-    });
-
-    $('#region_code').keyup(function() {
-        this.value = this.value.toUpperCase();
-        this.value = this.value.replace(/[^a-zA-Z]/, '');
-    });
-
-    $('#transaction_amount').blur(function() {
-        toCurrency($(this));
-    }); 
-
-    $('#transaction_amount').keyup(function() {
-        this.value = this.value.replace(/[^0-9.]/, '');
-    });
-
     $('#installment_months_dropdown').dropdown({
         onChange: function() {
             var value = $(this).dropdown('get value');            
-            if (value > 0) {
-                // TODO
-            } else {
-                $(this).dropdown('restore defaults');
+            if (value == 0) {       
+                $(this).dropdown('restore defaults');         
+            } else {                
+                $('#installment_months_wrapper').removeClass('error');
             }
         }
     });
 
+    var slipRequiredFields = $('#headerDataForm').find('.required');
     $('#slip_pull_reason_dropdown').dropdown({
         onChange: function() {
-            var value = $(this).dropdown('get value');            
+            var value = $(this).dropdown('get value');        
             if (value > 0) {
-                // TODO
+                $('#batch_pull_reason_field').nextAll('.field, .fields').addClass('disabled');
+                $(slipRequiredFields).removeClass('required');
+                Form.resetErrors('headerDataForm');
             } else {
+                $('#batch_pull_reason_field').nextAll('.field, .fields').removeClass('disabled');
                 $(this).dropdown('restore defaults');
+                $(slipRequiredFields).addClass('required');
             }
         }
     });
@@ -261,9 +112,6 @@ $(function () {
     
     getTransactionTypes();
     getPullReasons();
-
-    $('.save-exit-btn').click(function(e) {
-        e.preventDefault();
-        save(false);
-    });
+    getExceptions();
+    getInstallmentMonths();
 });

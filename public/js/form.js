@@ -4,39 +4,52 @@ $(function () {
 });
 
 var Form = {
-    validate: function (isAjax, isSaveNew) {  
-        var isValid = true;
-        var form;        
-        $('form *').filter(':input:visible').each(function () {            
-            var el = this;
-            if (!form) form = el.closest('form');
-            if ($("#" + el.id + "_div").hasClass('required')) {
-                if ($.trim(el.value) == '') {
-                    $(form).find("#" + el.id + "_div").addClass('error');
-                    $(form).find("#" + el.id + "_alert").removeClass('hidden');
-                    $(form).find("#" + el.id + "_alert").addClass('visible');
+    clear: function(isHeader) {
+        if (isHeader) {
+            $('.header-field').val('');
+            $('.header-field').prop('checked', false);
+            $('.header-dropdown').dropdown('restore defaults');
+        } else {
+            $('.slip-field').val('');
+            $('.slip-field').prop('checked', false);
+            $('.slip-dropdown').dropdown('restore defaults');
+        }
+    },
+    validate: function(isHeader) {  
+        var isValid = true;    
+        var inputClass = isHeader ? '.header-field' : '.slip-field';
+        $.each($(inputClass), function(i, field) {
+            var wrapper = $('#' + field.id + '_wrapper');
+            if ($(wrapper).hasClass('required')) {
+                if (field.value == '') {
+                    $(wrapper).addClass('error');
                     isValid = false;
-                } else {    
-                    $(form).find("#" + el.id + "_div").removeClass('error');
-                    $(form).find("#" + el.id + "_alert").addClass('hidden');
-                    $(form).find("#" + el.id + "_alert").removeClass('visible');
+                } else {
+                    $(wrapper).removeClass('error');
                 }
-            }    
-        });        
-        
+            }
+        });
+
         $('.error').find('input:text, input:password, textarea').first().focus();
         if (!isValid) return false;
-
-        $('#saveNew').val(isSaveNew);
-        
-        if (!isAjax) form[0].submit();          
+          
         return isValid;
     },
-    setFocus: function () {
+    hasError: function() {
+        return $('form').find('*').hasClass('error');
+    },
+    resetErrors: function(isHeader) {
+        var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
+        $('#' + formId).find('*').removeClass('error');
+    },
+    setFocusOnError: function() {
+        $('.error').find('input:text, input:password, textarea').first().focus();
+    },
+    setFocus: function() {
         //$("form input:text, input:password, textarea").first().focus(); 
         $('form').find("input:visible:first").focus(); 
     },
-    reset: function (isEdit) {
+    reset: function(isEdit) {
         $('form *').filter(':input:visible, select').each(function () {
             var el = this;    
             var form = el.closest('form');                     

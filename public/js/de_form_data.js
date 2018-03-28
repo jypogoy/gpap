@@ -13,82 +13,88 @@ function saveSlip() {
 
 function navigateToNextSlip() {           
         
-    saveSlip();    
+    if (Form.validate(false)) {
     
-    if (slipPage <= slipMap.count()) slipPage++;      
-    if (slipPage == slipMap.count()) $('.next-slip-btn').addClass('disabled'); 
+        saveSlip();    
+    
+        if (slipPage <= slipMap.count()) slipPage++;      
+        if (slipPage == slipMap.count()) $('.next-slip-btn').addClass('disabled'); 
 
-    var slipValueMap = slipMap.get(slipPage);
-    if (slipValueMap) {
-        slipValueMap.forEach(function(value, key) {            
-            if($('#' + key).is(':checkbox')) {
-                if (value == true) {
-                    $('#' + key).prop('checked', true);
+        var slipValueMap = slipMap.get(slipPage);
+        if (slipValueMap) {
+            slipValueMap.forEach(function(value, key) {            
+                if($('#' + key).is(':checkbox')) {
+                    if (value == true) {
+                        $('#' + key).prop('checked', true);
+                    } else {
+                        $('#' + key).prop('checked', false);
+                    }
                 } else {
-                    $('#' + key).prop('checked', false);
-                }
-            } else {
-                $('#' + key).val(value);   
-            }           
-            var parent = $('#' + key).parent();
-            if (parent.hasClass('dropdown')) {
-                if (value == '') {
-                    parent.dropdown('restore defaults');
-                } else {
-                    parent.dropdown('set selected', value);
-                }                
-            }            
-        });
-        $('.delete-slip-btn').removeClass('disabled');
-    } else {
-        clearSlipForm();
-        $('.delete-slip-btn').addClass('disabled');      
-        //if (slipPage < (slipMap.count() + 1)) navigateToNextSlip(); // Loop until the next slip is found after delete     
-    }    
-    
-    $('#currentSlipPage').html(slipPage);
-    $('.prev-slip-btn').removeClass('disabled');     
-    refreshTransTypeDependentFields();     
+                    $('#' + key).val(value);   
+                }           
+                var parent = $('#' + key).parent();
+                if (parent.hasClass('dropdown')) {
+                    if (value == '') {
+                        parent.dropdown('restore defaults');
+                    } else {
+                        parent.dropdown('set selected', value);
+                    }                
+                }            
+            });
+            $('.delete-slip-btn').removeClass('disabled');
+        } else {
+            Form.clear(false)();
+            $('.delete-slip-btn').addClass('disabled');      
+            //if (slipPage < (slipMap.count() + 1)) navigateToNextSlip(); // Loop until the next slip is found after delete     
+        }    
+        
+        $('#currentSlipPage').html(slipPage);
+        $('.prev-slip-btn').removeClass('disabled');     
+        refreshTransTypeDependentFields();     
+    }
 }
 
 function navigateToPrevSlip() {   
     
-    saveSlip();    
+    if (Form.validate(false)) {
+   
+        saveSlip();    
 
-    if (slipPage > 1) slipPage--;
-    if (slipPage == 1) $('.prev-slip-btn').addClass('disabled'); 
+        if (slipPage > 1) slipPage--;
+        if (slipPage == 1) $('.prev-slip-btn').addClass('disabled'); 
 
-    var slipValueMap = slipMap.get(slipPage);
-    if (slipValueMap) {
-        slipValueMap.forEach(function(value, key) {
-            if($('#' + key).is(':checkbox')) {
-                if (value == true) {
-                    $('#' + key).prop('checked', true);
+        var slipValueMap = slipMap.get(slipPage);
+        if (slipValueMap) {
+            slipValueMap.forEach(function(value, key) {
+                if($('#' + key).is(':checkbox')) {
+                    if (value == true) {
+                        $('#' + key).prop('checked', true);
+                    } else {
+                        $('#' + key).prop('checked', false);
+                    }
                 } else {
-                    $('#' + key).prop('checked', false);
+                    $('#' + key).val(value);   
+                } 
+                var parent = $('#' + key).parent();
+                if (parent.hasClass('dropdown')) {
+                    if (value == '') {
+                        parent.dropdown('restore defaults');
+                    } else {
+                        parent.dropdown('set selected', value);
+                    }  
                 }
-            } else {
-                $('#' + key).val(value);   
-            } 
-            var parent = $('#' + key).parent();
-            if (parent.hasClass('dropdown')) {
-                if (value == '') {
-                    parent.dropdown('restore defaults');
-                } else {
-                    parent.dropdown('set selected', value);
-                }  
-            }
-        });
-        $('.delete-slip-btn').removeClass('disabled');
-    } else {
-        clearSlipForm();
-        $('.delete-slip-btn').addClass('disabled');
-        if (slipPage < (slipMap.count() + 1)) navigateToNextSlip(); // Loop until the next slip is found after delete    
+            });
+            $('.delete-slip-btn').removeClass('disabled');
+        } else {
+            Form.clear(false)();
+            $('.delete-slip-btn').addClass('disabled');
+            if (slipPage < (slipMap.count() + 1)) navigateToNextSlip(); // Loop until the next slip is found after delete    
+        }
+        
+        $('#currentSlipPage').html(slipPage);
+        $('.next-slip-btn').removeClass('disabled');
+        refreshTransTypeDependentFields();
     }
-    
-    $('#currentSlipPage').html(slipPage);
-    $('.next-slip-btn').removeClass('disabled');
-    refreshTransTypeDependentFields();
 } 
 
 function refreshTransTypeDependentFields() {
@@ -108,27 +114,16 @@ function refreshTransTypeDependentFields() {
     }
 }
 
-function clearHeaderForm() {
-    $('.header-field').val('');
-    $('.header-field').prop('checked', false);
-    $('.header-dropdown').dropdown('restore defaults');
-}
-
-function clearSlipForm() {
-    $('.slip-field').val('');
-    $('.slip-field').prop('checked', false);
-    $('.slip-dropdown').dropdown('restore defaults');
-}
-
 function searchMerchant($merchantNumber) {
     $.post('../merchant/get/' + $merchantNumber, function (data) {
         if (!data) {
             toastr.warning('The search did not match any merchant.');                    
-            clearHeaderForm();
+            Form.clear(true);
         } else {
             $('#merchant_name').val(data.dba_name);
             //$('#regionCode').val(data.country_code);
             getCurrencies(data.country_code);
+            Form.resetErrors(true);
         }                
     })
     .done(function (msg) {
@@ -223,6 +218,48 @@ function getPullReasons() {
     });
 }
 
+function getExceptions() {
+    $.post('../otherexception/list', function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any exception.'); 
+        } else {
+            var menuWrapper = $('#other_exception_dropdown .menu');
+            $(menuWrapper).empty();  
+            $.each(data, function(i, exception) {
+                $('<div class="item" data-value="' + exception.id + '">' + exception.title + '</div>').appendTo(menuWrapper);                             
+            });
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
+        }                
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });       
+}
+
+function getInstallmentMonths() {
+    $.post('../installmentmonths/list', function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any months.'); 
+        } else {
+            var menuWrapper = $('#installment_months_dropdown .menu');
+            $(menuWrapper).empty();  
+            $.each(data, function(i, month) {
+                $('<div class="item" data-value="' + month.id + '">' + month.title + '</div>').appendTo(menuWrapper);                             
+            });
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
+        }                
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });       
+}
+
 function gatherHeaderValues() {
     var fields = $('.header-field');
     var data = {};
@@ -234,11 +271,10 @@ function gatherHeaderValues() {
             data[field.id] = field.value;
         }
     });
-    console.log(data)
     return data;
 }
 
-function save(isSaveNew) {
+function saveBatch(isSaveNew) {
     $.post('../merchant_header/save', gatherHeaderValues(), function (msg) {
         if(msg.indexOf('success')) {
             toastr.success(msg);
@@ -254,6 +290,6 @@ function save(isSaveNew) {
     });
 }
 
-function complete() {
+function completeBatch(isCompleteNew) {
 
 }

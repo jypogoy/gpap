@@ -65,10 +65,10 @@ class Transaction extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=10, nullable=true)
+     * @var integer
+     * @Column(type="integer", length=2, nullable=true)
      */
-    public $installment_months;
+    public $installment_months_id;
 
     /**
      *
@@ -133,6 +133,7 @@ class Transaction extends \Phalcon\Mvc\Model
     {
         $this->setSchema("gpap");
         $this->setSource("transaction");
+        $this->belongsTo('installment_months_id', '\InstallmentMonths', 'id', ['alias' => 'InstallmentMonths']);
         $this->belongsTo('merchant_header_id', '\MerchantHeader', 'id', ['alias' => 'MerchantHeader']);
         $this->belongsTo('pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
         $this->belongsTo('transaction_type_id', '\TransactionType', 'id', ['alias' => 'TransactionType']);

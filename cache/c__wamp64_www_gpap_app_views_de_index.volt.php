@@ -4,20 +4,27 @@
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">
         
-            <?= $this->tag->form(['', 'role' => 'form', 'id' => 'dataForm', 'class' => 'ui form', 'autocomplete' => 'off']) ?>
+            <?= $this->tag->form(['', 'id' => 'headerDataForm', 'class' => 'ui form', 'autocomplete' => 'off']) ?>
 
-                <h4 class="ui dividing header" style="color: darkblue;"><i class="shopping cart icon"></i>Merchant Header (Deposit Slip)</h4>
+                <h4 class="ui dividing header" style="color: darkblue;">
+                    <div class="ui grid">
+                        <div class="ten wide column">
+                            <i class="shopping cart icon"></i>Merchant Header (Deposit Slip)
+                        </div>
+                        <div class="six wide column" style="text-align: right;">Batch <?= $batch->id ?></div>
+                    </div>        
+                </h4>
 
-                <div class="required small field">
+                <div id="merchant_number_wrapper" class="required small field">
                     <label>Merchant Number </label>
                     <?= $this->tag->textField(['merchant_number', 'class' => 'header-field', 'maxlength' => '16', 'placeholder' => 'Type in the Merchant Number and press <Enter> to validate']) ?>
                 </div>  
-                <div class="required small field">
+                <div id="merchant_name_wrapper" class="required small field">
                     <label>Merchant Name</label>
                     <?= $this->tag->textField(['merchant_name', 'class' => 'header-field', 'disabled' => true]) ?>
                 </div>  
                 <div class="equal width small fields">
-                    <div class="required field">
+                    <div id="currency_code_wrapper" class="required field">
                         <label>Currency Code</label>                        
                         <div id="currency_code_dropdown" class="ui selection dropdown header-dropdown">
                             <input id="currency_code" type="hidden" class="header-field">
@@ -26,13 +33,13 @@
                             <div class="menu"></div>
                         </div>
                     </div>                        
-                    <div class="required field">
+                    <div id="dcn_wrapper" class="required field">
                         <label>DCN</label>
                         <?= $this->tag->textField(['dcn', 'class' => 'header-field', 'maxlength' => 7]) ?>
                     </div>                       
                 </div>    
                 <div class="two small fields">
-                    <div class="required field">
+                    <div id="deposit_date_wrapper" class="required field">
                         <label>Deposit Date</label>
                         <div class="ui calendar" id="deposit_date_cal">
                             <div class="ui input left icon">
@@ -41,25 +48,34 @@
                             </div>
                         </div>
                     </div>    
-                    <div class="required field">
+                    <div id="deposit_amount_wrapper" class="required field">
                         <label>Deposit Amount</label>
-                        <?= $this->tag->textField(['deposit_amount', 'maxlength' => '13']) ?>
+                        <?= $this->tag->textField(['deposit_amount', 'maxlength' => '13', 'class' => 'header-field']) ?>
                     </div>                                         
                 </div>    
-                <div id="merchant_pull_reason_field" class="required small field">
-                    <label>Merchant Pull Reason</label>
-                    <div id="merchant_pull_reason_dropdown" class="ui selection dropdown header-dropdown">
-                        <input id="merchant_pull_reason" type="hidden" class="header-field">
+                <div id="batch_pull_reason_wrapper" class="small field">
+                    <label>Batch Pull Reason</label>
+                    <div id="batch_pull_reason_dropdown" class="ui selection dropdown header-dropdown">
+                        <input id="batch_pull_reason" type="hidden" class="header-field">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu"></div>
                     </div>                    
                 </div> 
 
-                <h4 class="ui dividing header" style="color: darkblue;">Sales Slip (<span id="currentSlipPage">1</span> of <span id="totalSlips">...</span>)</h4>
+            </form>
+
+            <?= $this->tag->form(['', 'id' => 'transactionDataForm', 'class' => 'ui form', 'autocomplete' => 'off']) ?>
+
+                <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
+                    <div class="ui equal width grid">
+                        <div class="column"><i class="random icon"></i>Transaction</div>
+                        <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
+                    </div>
+                </h4>
                 
                 <div class="equal width small fields">
-                    <div class="required field">
+                    <div id="transaction_type_wrapper" class="required field">
                         <label>Transaction Type</label>
                         <div id="transaction_type_dropdown" class="ui selection dropdown slip-dropdown">
                             <input type="hidden" id="transaction_type" class="slip-field">
@@ -68,23 +84,11 @@
                             <div class="menu"></div>
                         </div>
                     </div>   
-                    <div class="required field">
+                    <div id="region_code_wrapper" class="required field">
                         <label>Region</label>
                         <?= $this->tag->textField(['region_code', 'class' => 'slip-field', 'maxlength' => 2]) ?>
                     </div> 
-                </div>
-                <div class="two small fields"> 
-                    <div id="credit_card_number_div" class="required field">
-                        <label>Cardholder Number (PAN)</label>
-                        <div class="ui right labeled input">
-                            <?= $this->tag->textField(['credit_card_number', 'maxlength' => '19', 'placeholder' => 'Credit Card Number', 'class' => 'slip-field']) ?>
-                            <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
-                        </div>
-                        <div class="ui basic red pointing prompt label transition hidden" id="credit_card_number_alert">
-                            <i class="warning icon"></i><span id="credit_card_number_msg"></span>
-                        </div>
-                    </div> 
-                    <div class="required field">
+                    <div id="transaction_date_wrapper" class="required field">
                         <label>Transaction Date</label>
                         <div class="ui calendar" id="transaction_date_cal">
                             <div class="ui input left icon">
@@ -92,68 +96,51 @@
                             <?= $this->tag->textField(['transaction_date', 'placeholder' => 'Date', 'class' => 'slip-field']) ?>
                             </div>
                         </div>
-                    </div>  
+                    </div> 
+                </div>
+               <div id="credit_card_number_wrapper" class="small required field">
+                    <label>Cardholder Number (PAN)</label>
+                    <div class="ui right labeled input">
+                        <?= $this->tag->textField(['credit_card_number', 'maxlength' => '19', 'placeholder' => 'Credit Card Number', 'class' => 'slip-field']) ?>
+                        <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
+                    </div>
+                    <div class="ui basic red pointing prompt label transition hidden" id="credit_card_number_alert">
+                        <i class="warning icon"></i><span id="credit_card_number_msg"></span>
+                    </div>
                 </div>    
                 <div class="equal width small fields">                        
-                    <div class="required field">
+                    <div id="authorization_code_wrapper" class="required field">
                         <label>Authorization Code</label>
                         <?= $this->tag->textField(['authorization_code', 'maxlength' => 6, 'class' => 'slip-field']) ?>
                     </div>  
-                    <div class="required field">
+                    <div id="transaction_amount_wrapper" class="required field">
                         <label>Transaction Amount</label>
                         <?= $this->tag->textField(['transaction_amount', 'maxlength' => '9', 'class' => 'slip-field']) ?>
                     </div>    
-                    <div class="required field">    
+                    <div id="installment_months_wrapper" class="required field">    
                         <label>Installment Months</label>
                         <div id="installment_months_dropdown" class="ui selection dropdown slip-dropdown">
                             <input type="hidden" id="installment_months" class="slip-field">
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="2">2 Months</div>
-                                <div class="item" data-value="3">3 Months</div>
-                                <div class="item" data-value="4">4 Months</div>
-                                <div class="item" data-value="6">6 Months</div>
-                                <div class="item" data-value="8">8 Months</div>
-                                <div class="item" data-value="9">9 Months</div>
-                                <div class="item" data-value="10">10 Months</div>
-                                <div class="item" data-value="11">11 Months</div>
-                                <div class="item" data-value="12">12 Months</div>
-                                <div class="item" data-value="13">13 Months</div>
-                                <div class="item" data-value="14">14 Months</div>
-                                <div class="item" data-value="15">15 Months</div>
-                                <div class="item" data-value="17">17 Months</div>
-                                <div class="item" data-value="18">18 Months</div>
-                                <div class="item" data-value="19">19 Months</div>
-                                <div class="item" data-value="21">21 Months</div>
-                                <div class="item" data-value="22">22 Months</div>
-                                <div class="item" data-value="23">23 Months</div>
-                                <div class="item" data-value="24">24 Months</div>
-                                <div class="item" data-value="25">25 Months</div>
-                                <div class="item" data-value="30">30 Months</div>
-                                <div class="item" data-value="33">33 Months</div>
-                                <div class="item" data-value="36">36 Months</div>
-                                <div class="item" data-value="48">48 Months</div>
-                                <div class="item" data-value="60">60 Months</div>
-                                <div class="item" data-value="0">- None -</div>
-                            </div>
+                            <div class="menu"></div>
                         </div>
                     </div> 
                 </div>    
                 <div id="other_fields_div" class="equal width small hidden fields">                    
-                    <div class="hidden field">    
+                    <div id="ticket_number_wrapper" class="hidden field">    
                         <label>Airline Ticket Number</label> 
                         <?= $this->tag->textField(['ticket_number', 'maxlength' => '13', 'class' => 'airline-field slip-field']) ?> 
                     </div>
-                    <div class="hidden field">    
+                    <div id="merchant_order_number_wrapper" class="hidden field">    
                         <label>Merchant Order Number</label> 
                         <?= $this->tag->textField(['merchant_order_number', 'maxlength' => '25', 'class' => 'vi-field slip-field']) ?>
                     </div>
-                    <div class="hidden field">    
+                    <div id="customer_reference_wrapper" class="hidden field">    
                         <label>Customer Reference</label> 
                         <?= $this->tag->textField(['customer_reference', 'maxlength' => '17', 'class' => 'vi-field slip-field']) ?>
                     </div>
-                    <div class="hidden field">    
+                    <div id="commodity_code_wrapper" class="hidden field">    
                         <label>Commodity Code</label> 
                         <?= $this->tag->textField(['commodity_code', 'maxlength' => '4', 'class' => 'vi-field slip-field']) ?>
                     </div>
@@ -167,15 +154,15 @@
                         <label>Variance</label> 
                         <?= $this->tag->textField(['variance', 'disabled' => true, 'value' => '0.00']) ?>
                     </div>
-                    <div class="field"> 
+                    <div id="variance_exception_wrapper" class="field"> 
                         <div class="ui checkbox">
                             <input type="checkbox" id="variance_exception" class="slip-field">
                             <label><strong><small>Variance Exception</small></strong></label>
                         </div>
                     </div>    
                 </div>          
-                <div class="required small field">
-                    <label>Sales Slip Pull Reason</label>
+                <div id="slip_pull_reason_wrapper" class="small field">
+                    <label>Transaction Pull Reason</label>
                     <div id="slip_pull_reason_dropdown" class="ui selection dropdown slip-dropdown">
                         <input type="hidden" id="slip_pull_reason" class="slip-field">
                         <div class="default text">Choose a reason</div>
@@ -183,55 +170,35 @@
                         <div class="menu"></div>
                     </div>
                 </div>                 
-                <div class="small field">    
+                <div id="other_exception_wrapper" class="small field">    
                     <label>Other Exceptions</label>
                     <div id="other_exception_dropdown" class="ui selection dropdown slip-dropdown">
                         <input type="hidden" id="other_exception" class="slip-field">
                         <div class="default text">Choose an exception</div>
                         <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item" data-value="Merchant Number">Merchant Number</div>
-                            <div class="item" data-value="Currency Code">Currency Code</div>
-                            <div class="item" data-value="DCN">DCN</div>
-                            <div class="item" data-value="Trailer Batch Amount">Trailer Batch Amount</div>
-                            <div class="item" data-value="Transaction Type">Transaction Type</div>
-                            <div class="item" data-value="Region">Region</div>
-                            <div class="item" data-value="Card Number">Card Number</div>
-                            <div class="item" data-value="Transaction Date">Transaction Date</div>
-                            <div class="item" data-value="Authorization Code">Authorization Code</div>
-                            <div class="item" data-value="Transaction Amount">Transaction Amount</div>
-                            <div class="item" data-value="Installment Months">Installment Months</div>
-                            <div class="item" data-value="Airline Ticket Number">Airline Ticket Number</div>
-                            <div class="item" data-value="Customer Reference Identifier">Customer Reference Identifier</div>
-                            <div class="item" data-value="Merchant Order Number">Merchant Order Number</div>
-                            <div class="item" data-value="Commodity Code">Commodity Code</div>
-                            <div class="item" data-value="Others">Others</div>
-                            <div class="item" data-value="0">- None -</div>
-                        </div>
+                        <div class="menu"></div>
                     </div>
                 </div>     
-                <div class="small hidden field">    
+                <div id="other_exception_detail_wrapper" class="small hidden field">    
                     <label>Other Exception Detail</label>
                     <?= $this->tag->textField(['other_exception_detail', 'maxlength' => '30', 'class' => 'slip-field']) ?> 
                 </div>    
 
-                <div class="ui error message"></div>
-
                 
                         
 
-                <button class="ui small blue button" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
-                <button class="ui small blue button" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  
-                <div class="ui small basic icon buttons" style="float: right;">
+                <button class="ui small blue button complete-next-btn" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
+                <button class="ui small blue button complete-exit-btn" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  
+                <div class="ui small basic icon buttons slip-controls" style="float: right;">
                     <button class="ui icon button more-btn" data-tooltip="Add a new Slip" data-position="top center"><i class="plus blue icon"></i></button>
                     <button class="ui icon disabled button prev-slip-btn" data-tooltip="Previous Slip" data-position="top center"><i class="chevron left green icon"></i></button>
                     <button class="ui icon disabled button next-slip-btn" data-tooltip="Next Slip" data-position="top center"><i class="chevron right green icon"></i></button>  
-                    <button class="ui icon disabled button delete-slip-btn" data-tooltip="Delete Slip" data-position="top center"><i class="remove red icon"></i></button>  
-                    <button class="ui icon button reset-slip-btn" data-tooltip="Clear All" data-position="top center"><i class="recycle orange icon"></i></button>  
+                    <button class="ui icon button delete-slip-btn" data-tooltip="Delete Slip" data-position="top center"><i class="remove red icon"></i></button>  
+                    <button class="ui icon button reset-slip-btn" data-tooltip="Reset Transaction" data-position="top center"><i class="recycle orange icon"></i></button>  
                 </div>
                 <div style="margin: 5px 0 0 0;">    
-                    <button class="ui small green button" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
-                    <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
+                    <button class="ui small green button save-next-btn" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
+                    <button class="ui small green button save-exit-btn" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
                     <a href="/gpap" class="ui small button">Exit</a>
                 </div>                                                                                    
 
@@ -257,11 +224,12 @@
     </div>
 </div>
 
-<?= $this->modals->getConfirmation('delete', 'Sales Slip') ?>
+<?= $this->modals->getConfirmation('delete', 'Transaction') ?>
 
 <div class="ui active loader"></div>
 
 <?= $this->tag->stylesheetLink('css/viewer.css') ?>
 <?= $this->tag->javascriptInclude('js/viewer.js') ?>
 <?= $this->tag->javascriptInclude('js/de.js') ?>
-<?= $this->tag->javascriptInclude('js/de_form_actions.js') ?>
+<?= $this->tag->javascriptInclude('js/de_form_data.js') ?>
+<?= $this->tag->javascriptInclude('js/de_form_events.js') ?>
