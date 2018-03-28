@@ -187,7 +187,7 @@ function getPullReasons() {
         if (!data) {
             toastr.warning('The search did not match any pull reason.'); 
         } else {
-            var menuWrapper = $('#merchant_pull_reason_dropdown .menu');
+            var menuWrapper = $('#batch_pull_reason_dropdown .menu');
             $(menuWrapper).empty();  
             $.each(data, function(i, pullReason) {
                 $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + ' - ' + pullReason.reason + '</div>').appendTo(menuWrapper);                             
@@ -221,4 +221,39 @@ function getPullReasons() {
     .fail(function (xhr, status, error) {
         toastr.error(error);
     });
+}
+
+function gatherHeaderValues() {
+    var fields = $('.header-field');
+    var data = {};
+    data.batch_id = $('#batchId').val();
+    $.each(fields, function(i, field) {        
+        if (field.id.indexOf('date') != -1) {
+            data[field.id] = $.datepicker.formatDate('yy-mm-dd', new Date(field.value));
+        } else {
+            data[field.id] = field.value;
+        }
+    });
+    console.log(data)
+    return data;
+}
+
+function save(isSaveNew) {
+    $.post('../merchant_header/save', gatherHeaderValues(), function (msg) {
+        if(msg.indexOf('success')) {
+            toastr.success(msg);
+        } else {
+            toastr.error(msg);
+        }
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+}
+
+function complete() {
+
 }

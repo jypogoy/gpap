@@ -6,7 +6,13 @@
         
             {{ form('', 'role': 'form', 'id' : 'dataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
 
-                <h4 class="ui dividing header" style="color: darkblue;"><i class="shopping cart icon"></i>Merchant Header (Deposit Slip)</h4>
+                <h4 class="ui dividing header" style="color: darkblue;">
+                    <div class="ui equal width grid">
+                        <div class="column">
+                            <i class="shopping cart icon"></i>Merchant Header (Deposit Slip)
+                        </div>
+                    </div>        
+                </h4>
 
                 <div class="required small field">
                     <label>Merchant Number </label>
@@ -43,20 +49,25 @@
                     </div>    
                     <div class="required field">
                         <label>Deposit Amount</label>
-                        {{ text_field('deposit_amount', 'maxlength': '13') }}
+                        {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field') }}
                     </div>                                         
                 </div>    
-                <div id="merchant_pull_reason_field" class="required small field">
-                    <label>Merchant Pull Reason</label>
-                    <div id="merchant_pull_reason_dropdown" class="ui selection dropdown header-dropdown">
-                        <input id="merchant_pull_reason" type="hidden" class="header-field">
+                <div id="batch_pull_reason_field" class="required small field">
+                    <label>Batch Pull Reason</label>
+                    <div id="batch_pull_reason_dropdown" class="ui selection dropdown header-dropdown">
+                        <input id="batch_pull_reason" type="hidden" class="header-field">
                         <div class="default text">Choose a reason</div>
                         <i class="dropdown icon"></i>
                         <div class="menu"></div>
                     </div>                    
                 </div> 
 
-                <h4 class="ui dividing header" style="color: darkblue;">Sales Slip (<span id="currentSlipPage">1</span> of <span id="totalSlips">...</span>)</h4>
+                <h4 class="ui dividing header" style="color: darkblue;">
+                    <div class="ui equal width grid">
+                        <div class="column"><i class="random icon"></i>Transaction</div>
+                        <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
+                    </div>
+                </h4>
                 
                 <div class="equal width small fields">
                     <div class="required field">
@@ -72,18 +83,6 @@
                         <label>Region</label>
                         {{ text_field('region_code', 'class': 'slip-field', 'maxlength': 2) }}
                     </div> 
-                </div>
-                <div class="two small fields"> 
-                    <div id="credit_card_number_div" class="required field">
-                        <label>Cardholder Number (PAN)</label>
-                        <div class="ui right labeled input">
-                            {{ text_field('credit_card_number', 'maxlength': '19', 'placeholder': 'Credit Card Number', 'class': 'slip-field') }}
-                            <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
-                        </div>
-                        <div class="ui basic red pointing prompt label transition hidden" id="credit_card_number_alert">
-                            <i class="warning icon"></i><span id="credit_card_number_msg"></span>
-                        </div>
-                    </div> 
                     <div class="required field">
                         <label>Transaction Date</label>
                         <div class="ui calendar" id="transaction_date_cal">
@@ -92,7 +91,17 @@
                             {{ text_field('transaction_date', 'placeholder': 'Date', 'class': 'slip-field') }}
                             </div>
                         </div>
-                    </div>  
+                    </div> 
+                </div>
+               <div id="credit_card_number_div" class="required field">
+                    <label>Cardholder Number (PAN)</label>
+                    <div class="ui right labeled input">
+                        {{ text_field('credit_card_number', 'maxlength': '19', 'placeholder': 'Credit Card Number', 'class': 'slip-field') }}
+                        <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
+                    </div>
+                    <div class="ui basic red pointing prompt label transition hidden" id="credit_card_number_alert">
+                        <i class="warning icon"></i><span id="credit_card_number_msg"></span>
+                    </div>
                 </div>    
                 <div class="equal width small fields">                        
                     <div class="required field">
@@ -110,31 +119,31 @@
                             <div class="default text">Choose a plan</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <div class="item" data-value="2">2 Months</div>
-                                <div class="item" data-value="3">3 Months</div>
-                                <div class="item" data-value="4">4 Months</div>
-                                <div class="item" data-value="6">6 Months</div>
-                                <div class="item" data-value="8">8 Months</div>
-                                <div class="item" data-value="9">9 Months</div>
-                                <div class="item" data-value="10">10 Months</div>
-                                <div class="item" data-value="11">11 Months</div>
-                                <div class="item" data-value="12">12 Months</div>
-                                <div class="item" data-value="13">13 Months</div>
-                                <div class="item" data-value="14">14 Months</div>
-                                <div class="item" data-value="15">15 Months</div>
-                                <div class="item" data-value="17">17 Months</div>
-                                <div class="item" data-value="18">18 Months</div>
-                                <div class="item" data-value="19">19 Months</div>
-                                <div class="item" data-value="21">21 Months</div>
-                                <div class="item" data-value="22">22 Months</div>
-                                <div class="item" data-value="23">23 Months</div>
-                                <div class="item" data-value="24">24 Months</div>
-                                <div class="item" data-value="25">25 Months</div>
-                                <div class="item" data-value="30">30 Months</div>
-                                <div class="item" data-value="33">33 Months</div>
-                                <div class="item" data-value="36">36 Months</div>
-                                <div class="item" data-value="48">48 Months</div>
-                                <div class="item" data-value="60">60 Months</div>
+                                <div class="item" data-value="2 Months">2 Months</div>
+                                <div class="item" data-value="3 Months">3 Months</div>
+                                <div class="item" data-value="4 Months">4 Months</div>
+                                <div class="item" data-value="6 Months">6 Months</div>
+                                <div class="item" data-value="8 Months">8 Months</div>
+                                <div class="item" data-value="9 Months">9 Months</div>
+                                <div class="item" data-value="10 Months">10 Months</div>
+                                <div class="item" data-value="11 Months">11 Months</div>
+                                <div class="item" data-value="12 Months">12 Months</div>
+                                <div class="item" data-value="13 Months">13 Months</div>
+                                <div class="item" data-value="14 Months">14 Months</div>
+                                <div class="item" data-value="15 Months">15 Months</div>
+                                <div class="item" data-value="17 Months">17 Months</div>
+                                <div class="item" data-value="18 Months">18 Months</div>
+                                <div class="item" data-value="19 Months">19 Months</div>
+                                <div class="item" data-value="21 Months">21 Months</div>
+                                <div class="item" data-value="22 Months">22 Months</div>
+                                <div class="item" data-value="23 Months">23 Months</div>
+                                <div class="item" data-value="24 Months">24 Months</div>
+                                <div class="item" data-value="25 Months">25 Months</div>
+                                <div class="item" data-value="30 Months">30 Months</div>
+                                <div class="item" data-value="33 Months">33 Months</div>
+                                <div class="item" data-value="36 Months">36 Months</div>
+                                <div class="item" data-value="48 Months">48 Months</div>
+                                <div class="item" data-value="60 Months">60 Months</div>
                                 <div class="item" data-value="0">- None -</div>
                             </div>
                         </div>
@@ -175,7 +184,7 @@
                     </div>    
                 </div>          
                 <div class="required small field">
-                    <label>Sales Slip Pull Reason</label>
+                    <label>Transaction Pull Reason</label>
                     <div id="slip_pull_reason_dropdown" class="ui selection dropdown slip-dropdown">
                         <input type="hidden" id="slip_pull_reason" class="slip-field">
                         <div class="default text">Choose a reason</div>
@@ -226,8 +235,8 @@
                     <a href="/gpap" class="ui small button">Exit</a>
                 </div>#}        
 
-                <button class="ui small blue button" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
-                <button class="ui small blue button" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  
+                <button class="ui small blue button complete-next-btn" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
+                <button class="ui small blue button complete-exit-btn" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                  
                 <div class="ui small basic icon buttons" style="float: right;">
                     <button class="ui icon button more-btn" data-tooltip="Add a new Slip" data-position="top center"><i class="plus blue icon"></i></button>
                     <button class="ui icon disabled button prev-slip-btn" data-tooltip="Previous Slip" data-position="top center"><i class="chevron left green icon"></i></button>
@@ -236,8 +245,8 @@
                     <button class="ui icon button reset-slip-btn" data-tooltip="Clear All" data-position="top center"><i class="recycle orange icon"></i></button>  
                 </div>
                 <div style="margin: 5px 0 0 0;">    
-                    <button class="ui small green button" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
-                    <button class="ui small green button" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
+                    <button class="ui small green button save-next-btn" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
+                    <button class="ui small green button save-exit-btn" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
                     <a href="/gpap" class="ui small button">Exit</a>
                 </div>                                                                                    
 
@@ -263,7 +272,7 @@
     </div>
 </div>
 
-{{ modals.getConfirmation('delete', 'Sales Slip') }}
+{{ modals.getConfirmation('delete', 'Transaction') }}
 
 <div class="ui active loader"></div>
 

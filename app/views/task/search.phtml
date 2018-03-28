@@ -1,0 +1,69 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["task/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["task/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created Of By</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $task): ?>
+            <tr>
+                <td><?php echo $task->id ?></td>
+            <td><?php echo $task->name ?></td>
+            <td><?php echo $task->description ?></td>
+            <td><?php echo $task->created_by ?></td>
+
+                <td><?php echo $this->tag->linkTo(["task/edit/" . $task->id, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["task/delete/" . $task->id, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("task/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("task/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("task/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("task/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

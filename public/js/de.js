@@ -53,7 +53,7 @@ $(function () {
 
     $('.delete-slip-btn').click(function(e) {
         e.preventDefault();
-        $('.custom-text').html('<p>Are you sure you want to delete the current Sales Slip? Click OK to proceed.</p>');    
+        $('.custom-text').html('<p>Are you sure you want to delete the current transaction? Click OK to proceed.</p>');    
         $('.ui.tiny.modal.delete')
         .modal({
             inverted : true,
@@ -125,13 +125,13 @@ $(function () {
     });        
 
  
-    $('#merchant_pull_reason_dropdown').dropdown({
+    $('#batch_pull_reason_dropdown').dropdown({
         onChange: function() {
             var value = $(this).dropdown('get value');            
             if (value > 0) {
-                $('#merchant_pull_reason_field').nextAll('.field, .fields').addClass('disabled');
+                $('#batch_pull_reason_field').nextAll('.field, .fields').addClass('disabled');
             } else {
-                $('#merchant_pull_reason_field').nextAll('.field, .fields').removeClass('disabled');
+                $('#batch_pull_reason_field').nextAll('.field, .fields').removeClass('disabled');
                 $(this).dropdown('restore defaults');
             }
         }
@@ -261,4 +261,9 @@ $(function () {
     
     getTransactionTypes();
     getPullReasons();
+
+    $('.save-exit-btn').click(function(e) {
+        e.preventDefault();
+        save(false);
+    });
 });
