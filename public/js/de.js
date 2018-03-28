@@ -1,7 +1,7 @@
 var slipPage = 1;
 var slipMap;    
 
-$(function() {          
+$(function() {              
 
     slipMap = new HashMap(); 
 
@@ -114,4 +114,6 @@ $(function() {
     getPullReasons();
     getExceptions();
     getInstallmentMonths();
+    
+    $('#merchant_number').focus();
 });

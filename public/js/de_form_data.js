@@ -275,11 +275,41 @@ function gatherHeaderValues() {
 }
 
 function saveBatch(isSaveNew) {
-    $.post('../merchant_header/save', gatherHeaderValues(), function (msg) {
-        if(msg.indexOf('success')) {
-            toastr.success(msg);
+   
+    saveSlip(); // Save the current content
+   
+    $.post('../merchant_header/save', gatherHeaderValues(), function (headerId) {
+        if($.isNumeric(headerId)) { // Check if the newly created header id was created.
+            slipMap.forEach(function(fieldValueMap, index) {
+                
+                var data = {};
+                data['merchant_header_id'] = headerId;
+                data['sequence'] = index;
+                fieldValueMap.forEach(function(value, id) {
+                    console.log(id + ' : ' + value)
+                    if (id.indexOf('date') != -1) {
+                        data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
+                    } else {
+                        data[id] = value;
+                    }      
+                });
+
+                $.post('../transaction/save', data, function (msg) {
+                    if (msg.indexOf('success')) {
+                        toastr.success(msg);    
+                    } else {
+                        toastr.error(msg);
+                    }
+                })
+                .done(function (msg) {
+                    // Do nothing...
+                })
+                .fail(function (xhr, status, error) {
+                    toastr.error(error);
+                });
+            });
         } else {
-            toastr.error(msg);
+            toastr.error(headerId);
         }
     })
     .done(function (msg) {

@@ -25,7 +25,7 @@ $(function() {
         onChange: function() {
             var value = $(this).dropdown('get value');            
             if (value > 0) {
-                Form.validate(true);
+                if (this.value != '') $('#currency_code_wrapper').removeClass('error');
             } else {
                 $(this).dropdown('restore defaults');
             }
@@ -34,7 +34,7 @@ $(function() {
 
     $('#dcn').blur(function() {
         padZero($(this));
-        Form.validate(true);
+        if (this.value != '') $('#dcn_wrapper').removeClass('error');
     });   
     
     $('#dcn').keyup(function() {
@@ -200,8 +200,9 @@ $(function() {
     //------------- Form Control Events ---------------------------------
     $('.save-exit-btn').click(function(e) {
         e.preventDefault();
-        var headerValidationResult = Form.validate(true);
-        var slipValidationResult = Form.validate(false);
-        if(headerValidationResult && slipValidationResult) saveBatch(false);
+        // var headerValidationResult = Form.validate(true);
+        // var slipValidationResult = Form.validate(false);
+        // if(headerValidationResult && slipValidationResult) 
+        saveBatch(false);
     });
 });

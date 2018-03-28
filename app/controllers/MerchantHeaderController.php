@@ -37,7 +37,6 @@ class MerchantHeaderController extends ControllerBase
         $header->deposit_amount = $this->request->getPost('deposit_amount') == '' ? null : $this->request->getPost('deposit_amount');
         $header->pull_reason_id = $this->request->getPost('batch_pull_reason') == '' ? null : $this->request->getPost('batch_pull_reason');
 
-        $successMsg = "Header was saved successfully.";
 
         if (!$header->save()) {
             $errorMsg;
@@ -47,7 +46,7 @@ class MerchantHeaderController extends ControllerBase
             return $errorMsg;
         }
 
-        return $successMsg;
+        return $header->id;
     }
     
 }

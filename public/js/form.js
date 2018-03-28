@@ -1,5 +1,4 @@
 $(function () {
-    Form.setFocus();    
     $("form .alert").hide();
 });
 
@@ -44,10 +43,6 @@ var Form = {
     },
     setFocusOnError: function() {
         $('.error').find('input:text, input:password, textarea').first().focus();
-    },
-    setFocus: function() {
-        //$("form input:text, input:password, textarea").first().focus(); 
-        $('form').find("input:visible:first").focus(); 
     },
     reset: function(isEdit) {
         $('form *').filter(':input:visible, select').each(function () {

@@ -23,6 +23,13 @@ class Transaction extends \Phalcon\Mvc\Model
     /**
      *
      * @var integer
+     * @Column(type="integer", length=3, nullable=false)
+     */
+    public $sequence;
+
+    /**
+     *
+     * @var integer
      * @Primary
      * @Column(type="integer", length=3, nullable=false)
      */
@@ -31,35 +38,35 @@ class Transaction extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=2, nullable=false)
+     * @Column(type="string", length=2, nullable=true)
      */
     public $region_code;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=19, nullable=false)
+     * @Column(type="string", length=19, nullable=true)
      */
     public $card_number;
 
     /**
      *
      * @var string
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      */
     public $transaction_date;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=6, nullable=false)
+     * @Column(type="string", length=6, nullable=true)
      */
     public $authorization_code;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=9, nullable=false)
+     * @Column(type="integer", length=9, nullable=true)
      */
     public $transaction_amount;
 
