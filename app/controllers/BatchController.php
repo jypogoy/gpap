@@ -35,5 +35,15 @@ class BatchController extends ControllerBase
         echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
     }
 
+    public function getAction($id)
+    {
+        $this->view->disable();
+        
+        $batch = Batch::findById($id);
+
+        $this->response->setJsonContent($batch);
+        $this->response->send(); 
+    }
+    
 }
 

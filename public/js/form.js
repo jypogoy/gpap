@@ -9,9 +9,9 @@ var Form = {
             $('.header-field').prop('checked', false);
             $('.header-dropdown').dropdown('restore defaults');
         } else {
-            $('.slip-field').val('');
-            $('.slip-field').prop('checked', false);
-            $('.slip-dropdown').dropdown('restore defaults');
+            $('.slip-field:not(.auto-fill)').val('');
+            $('.slip-field:not(.auto-fill)').prop('checked', false);
+            $('.slip-dropdown:not(.auto-fill)').dropdown('restore defaults');
         }
     },
     validate: function(isHeader) {  
@@ -29,7 +29,7 @@ var Form = {
             }
         });
 
-        $('.error').find('input:text, input:password, textarea').first().focus();
+        $('.error').find('input:text, input:password, textarea, div').first().focus();
         if (!isValid) return false;
           
         return isValid;
@@ -58,5 +58,9 @@ var Form = {
             }            
         }); 
         this.setFocus();
+    },
+    setFocus: function(isHeader) {
+        var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
+        $('#' + formId).find('input:text, input:password, textarea').first().focus();
     }
 }

@@ -65,8 +65,8 @@ class Transaction extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var double
-     * @Column(type="double", length=9, nullable=true)
+     * @var integer
+     * @Column(type="integer", length=9, nullable=true)
      */
     public $transaction_amount;
 
@@ -110,7 +110,7 @@ class Transaction extends \Phalcon\Mvc\Model
      * @var integer
      * @Column(type="integer", length=3, nullable=true)
      */
-    public $slip_pull_reason_id;
+    public $pull_reason_id;
 
     /**
      *
@@ -142,7 +142,7 @@ class Transaction extends \Phalcon\Mvc\Model
         $this->setSource("transaction");
         $this->belongsTo('installment_months_id', '\InstallmentMonths', 'id', ['alias' => 'InstallmentMonths']);
         $this->belongsTo('merchant_header_id', '\MerchantHeader', 'id', ['alias' => 'MerchantHeader']);
-        $this->belongsTo('slip_pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
+        $this->belongsTo('pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
         $this->belongsTo('transaction_type_id', '\TransactionType', 'id', ['alias' => 'TransactionType']);
     }
 

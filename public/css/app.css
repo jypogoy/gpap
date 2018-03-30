@@ -38,6 +38,11 @@ a {
     bottom: auto; 
 }
 
+.toast {
+    opacity: 1 !important;
+    width: 350px !important;
+}
+
 .toastr-custom-pos {
     margin-top: 5em;
 }

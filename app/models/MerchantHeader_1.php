@@ -22,43 +22,43 @@ class MerchantHeader extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=16, nullable=true)
+     * @var integer
+     * @Column(type="integer", length=16, nullable=false)
      */
     public $merchant_number;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=250, nullable=true)
+     * @Column(type="string", length=250, nullable=false)
      */
     public $merchant_name;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=3, nullable=true)
+     * @Column(type="integer", length=3, nullable=false)
      */
     public $currency_id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=7, nullable=true)
+     * @Column(type="string", length=7, nullable=false)
      */
     public $dcn;
 
     /**
      *
      * @var string
-     * @Column(type="string", nullable=true)
+     * @Column(type="string", nullable=false)
      */
     public $deposit_date;
 
     /**
      *
-     * @var double
-     * @Column(type="double", length=13, nullable=true)
+     * @var integer
+     * @Column(type="integer", length=13, nullable=false)
      */
     public $deposit_amount;
 
@@ -67,7 +67,7 @@ class MerchantHeader extends \Phalcon\Mvc\Model
      * @var integer
      * @Column(type="integer", length=3, nullable=true)
      */
-    public $batch_pull_reason_id;
+    public $pull_reason_id;
 
     /**
      * Initialize method for model.
@@ -78,7 +78,7 @@ class MerchantHeader extends \Phalcon\Mvc\Model
         $this->setSource("merchant_header");
         $this->hasMany('id', 'Transaction', 'merchant_header_id', ['alias' => 'Transaction']);
         $this->belongsTo('currency_id', '\Currency', 'id', ['alias' => 'Currency']);
-        $this->belongsTo('batch_pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
+        $this->belongsTo('pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
         $this->belongsTo('batch_id', '\Batch', 'id', ['alias' => 'Batch']);
     }
 

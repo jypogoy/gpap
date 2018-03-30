@@ -21,11 +21,11 @@ $(function() {
         if (this.value != '') $('#merchant_number_wrapper').removeClass('error');
     });
 
-    $('#currency_code_dropdown').dropdown({
+    $('#currency_id_dropdown').dropdown({
         onChange: function() {
             var value = $(this).dropdown('get value');            
             if (value > 0) {
-                if (this.value != '') $('#currency_code_wrapper').removeClass('error');
+                if (this.value != '') $('#currency_id_wrapper').removeClass('error');
             } else {
                 $(this).dropdown('restore defaults');
             }
@@ -69,7 +69,7 @@ $(function() {
         if (this.value != '') $('#transaction_date_wrapper').removeClass('error');
     });
 
-    $('#credit_card_number').blur(function() {
+    $('#card_number').blur(function() {
         if (!validateCard($(this).val())) {
             $('#' + this.id + '_wrapper').addClass('error');           
             $('#' + this.id + '_alert').addClass('visible');
@@ -131,16 +131,36 @@ $(function() {
             
             $('#currentSlipPage').html(slipPage);        
             $('#totalSlips').html(slipMap.count());
+            $('.first-slip-btn').removeClass('disabled');   
             $('.prev-slip-btn').removeClass('disabled');   
             $('.next-slip-btn').addClass('disabled');     
+            $('.last-slip-btn').addClass('disabled');     
 
             refreshTransTypeDependentFields();
+            $(slipRequiredFields).addClass('required');
+            $('#other_exception_detail_wrapper').addClass('hidden');
+            Form.setFocus(false);
         }        
+    });
+
+    $('.first-slip-btn').click(function(e) {
+        e.preventDefault();
+        navigate('first'); // See de_data_navigation.js
     });
 
     $('.prev-slip-btn').click(function(e) {
         e.preventDefault();
-        navigateToPrevSlip();
+        navigate('prev'); // See de_data_navigation.js
+    });
+
+    $('.next-slip-btn').click(function(e) {
+        e.preventDefault();
+        navigate('next'); // See de_data_navigation.js
+    });
+
+    $('.last-slip-btn').click(function(e) {
+        e.preventDefault();
+        navigate('last'); // See de_data_navigation.js
     });
 
     // var prevInt;
@@ -148,12 +168,7 @@ $(function() {
     //     prevInt = setInterval(navigateToPrevSlip, 100);
     // }).mouseup(function() {
     //     clearInterval(prevInt);
-    // });
-
-    $('.next-slip-btn').click(function(e) {
-        e.preventDefault();
-        navigateToNextSlip();
-    });
+    // });    
 
     // var nextInt;
     // $('.next-slip-btn').mousedown(function() {        
@@ -195,14 +210,21 @@ $(function() {
         e.preventDefault();
         Form.clear(false);
         Form.resetErrors(false);
+        $(slipRequiredFields).addClass('required');
     });
 
     //------------- Form Control Events ---------------------------------
     $('.save-exit-btn').click(function(e) {
         e.preventDefault();
-        // var headerValidationResult = Form.validate(true);
-        // var slipValidationResult = Form.validate(false);
-        // if(headerValidationResult && slipValidationResult) 
-        saveBatch(false);
+        var headerValidationResult = Form.validate(true);        
+        var slipValidationResult = true;
+        if ($('#pull_reason_id').val() == 0 || $('#pull_reason_id').val() == '') {
+            slipValidationResult = Form.validate(false);
+        }
+        if(headerValidationResult) {            
+            if (headerValidationResult && slipValidationResult) {
+                saveBatch(false);
+            }            
+        }
     });
 });

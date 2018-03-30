@@ -95,7 +95,7 @@ $(function () {
 
 var prevContext;
 function renderImages() {
-    $.post('../image/list/' + $('#batchId').val(), function (data) {
+    $.post('../image/list/' + $('#batch_id').val(), function (data) {
         if (!data) {
             toastr.warning('The search did not match any image.');
         } else {
@@ -104,80 +104,84 @@ function renderImages() {
         }                
     })
     .done(function (msg) {
-        var xhr = createCORSRequest('GET', imgServer + imgActive);
-        xhr.onload = function (e) {                  
-            
-            $('.filename').empty();
-            $('.filename').append(imgActive); // Display the relative file path
-            $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
-            
-            if(imgNavIndex == 0) {
-                $('#prevBtn').addClass('disabled');
-                $('#nextBtn').removeClass('disabled');
-            }
-
-            if(imgNavIndex == (imgArray.length - 1)) {
-                $('#nextBtn').addClass('disabled');
-                $('#prevBtn').removeClass('disabled');
-            }
-            
-            if(xhr.status == 404)  {
-                toastr.error('Image ' +  imgActive + ' does not exists!');
-                return;
-            } 
-
-            var tiff = new Tiff({ buffer: xhr.response });
-            var canvas = tiff.toCanvas();                            
-            var context = canvas.getContext('2d');            
-
-            var canvasEl = $('canvas')[0];
-            if (canvasEl) { 
-                $(canvasEl).remove();
-            }
-
-            $('#viewer').append(canvas);
-
-            //  var canvasEl = $('canvas')[0];
-            //  if (canvasEl) {                
-            //     var prevContext = canvasEl.getContext('2d');
+        if (msg.indexOf('undefined') != -1) {
+            toastr.error(msg);
+        } else {
+            var xhr = createCORSRequest('GET', imgServer + imgActive);
+            xhr.onload = function (e) {                  
                 
-            //     console.log(context);
-            //     console.log(prevContext);
-
-            //     // Clear canvas
-            //     prevContext.clearRect(0, 0, canvasEl.width, canvasEl.height);
-            //     prevContext.drawImage(canvas, 0, 0);
-            //     // Clear path
-            //     prevContext.beginPath();     
-
-            //     // console.log($(canvasEl).position().left)
-            //     // console.log($(canvasEl).position().top)
-            //     var data = context.getImageData(0, 0, canvas.width, canvas.height);
-            //     prevContext.putImageData(data, 0, 0);                   
+                $('.filename').empty();
+                $('.filename').append(imgActive); // Display the relative file path
+                $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
                 
-                
-            // } else {
-            //     $('#viewer').append(canvas);
-            // }
+                if(imgNavIndex == 0) {
+                    $('#prevBtn').addClass('disabled');
+                    $('#nextBtn').removeClass('disabled');
+                }
 
-            //  prevContext = context;            
-                        
-            $('canvas').width($('canvas').width() / 2);       
-            $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
-            $('canvas').mousedown(function(e) { // Replace mouse pointers
-                $('canvas').css({ 'cursor' : 'move' });
-                $(this).mousemove(function(e) {
-                    // Do nothing.
+                if(imgNavIndex == (imgArray.length - 1)) {
+                    $('#nextBtn').addClass('disabled');
+                    $('#prevBtn').removeClass('disabled');
+                }
+                
+                if(xhr.status == 404)  {
+                    toastr.error('Image ' +  imgActive + ' does not exists!');
+                    return;
+                } 
+
+                var tiff = new Tiff({ buffer: xhr.response });
+                var canvas = tiff.toCanvas();                            
+                var context = canvas.getContext('2d');            
+
+                var canvasEl = $('canvas')[0];
+                if (canvasEl) { 
+                    $(canvasEl).remove();
+                }
+
+                $('#viewer').append(canvas);
+
+                //  var canvasEl = $('canvas')[0];
+                //  if (canvasEl) {                
+                //     var prevContext = canvasEl.getContext('2d');
+                    
+                //     console.log(context);
+                //     console.log(prevContext);
+
+                //     // Clear canvas
+                //     prevContext.clearRect(0, 0, canvasEl.width, canvasEl.height);
+                //     prevContext.drawImage(canvas, 0, 0);
+                //     // Clear path
+                //     prevContext.beginPath();     
+
+                //     // console.log($(canvasEl).position().left)
+                //     // console.log($(canvasEl).position().top)
+                //     var data = context.getImageData(0, 0, canvas.width, canvas.height);
+                //     prevContext.putImageData(data, 0, 0);                   
+                    
+                    
+                // } else {
+                //     $('#viewer').append(canvas);
+                // }
+
+                //  prevContext = context;            
+                            
+                $('canvas').width($('canvas').width() / 2);       
+                $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
+                $('canvas').mousedown(function(e) { // Replace mouse pointers
+                    $('canvas').css({ 'cursor' : 'move' });
+                    $(this).mousemove(function(e) {
+                        // Do nothing.
+                    }).mouseup(function(e) {
+                        $('canvas').off('mousemove');
+                    });
                 }).mouseup(function(e) {
-                    $('canvas').off('mousemove');
+                    $('canvas').css({ 'cursor' : 'default' });
                 });
-            }).mouseup(function(e) {
-                $('canvas').css({ 'cursor' : 'default' });
-            });
-            
-            imageOrigSize = $('canvas').width();
-        };
-        xhr.send();        
+                
+                imageOrigSize = $('canvas').width();
+            };
+            xhr.send();        
+        }
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);

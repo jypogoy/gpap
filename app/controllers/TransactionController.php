@@ -30,19 +30,19 @@ class TransactionController extends ControllerBase
         $transaction = new Transaction();
         $transaction->merchant_header_id = $this->request->getPost('merchant_header_id');
         $transaction->sequence = $this->request->getPost('sequence');
-        $transaction->transaction_type_id = $this->request->getPost('transaction_type') == '' ? null : $this->request->getPost('transaction_type');
+        $transaction->transaction_type_id = $this->request->getPost('transaction_type_id') == '' ? null : $this->request->getPost('transaction_type_id');
         $transaction->region_code = $this->request->getPost('region_code') == '' ? null : $this->request->getPost('region_code');
-        $transaction->card_number = $this->request->getPost('credit_card_number ') == '' ? null : $this->request->getPost('credit_card_number ');
+        $transaction->card_number = $this->request->getPost('card_number') == '' ? null : $this->request->getPost('card_number');
         $transaction->transaction_date = $this->request->getPost('transaction_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('transaction_date');
         $transaction->authorization_code = $this->request->getPost('authorization_code') == '' ? null : $this->request->getPost('authorization_code');
         $transaction->transaction_amount = $this->request->getPost('transaction_amount') == '' ? null : $this->request->getPost('transaction_amount');
-        $transaction->installment_months_id = $this->request->getPost(' ') == '' ? null : $this->request->getPost('installment_months');
-        $transaction->airline_ticket_number = $this->request->getPost('ticket_number ') == '' ? null : $this->request->getPost('ticket_number ');
-        $transaction->customer_reference_identifier = $this->request->getPost('customer_reference') == '' ? null : $this->request->getPost('customer_reference');
+        $transaction->installment_months_id = $this->request->getPost('installment_months_id') == '' ? null : $this->request->getPost('installment_months_id');
+        $transaction->airline_ticket_number = $this->request->getPost('airline_ticket_number') == '' ? null : $this->request->getPost('airline_ticket_number');
+        $transaction->customer_reference_identifier = $this->request->getPost('customer_reference_identifier') == '' ? null : $this->request->getPost('customer_reference_identifier');
         $transaction->merchant_order_number = $this->request->getPost('merchant_order_number') == '' ? null : $this->request->getPost('merchant_order_number');
         $transaction->commodity_code = $this->request->getPost('commodity_code') == '' ? null : $this->request->getPost('commodity_code');
-        $transaction->pull_reason_id = $this->request->getPost('slip_pull_reason') == '' ? null : $this->request->getPost('slip_pull_reason');
-        $transaction->exception_id = $this->request->getPost('other_exception') == '' ? null : $this->request->getPost('other_exception');
+        $transaction->slip_pull_reason_id = $this->request->getPost('slip_pull_reason_id') == '' ? null : $this->request->getPost('slip_pull_reason_id');
+        $transaction->exception_id = $this->request->getPost('exception_id') == '' ? null : $this->request->getPost('exception_id');
         $transaction->variance_exception = $this->request->getPost('variance_exception') == '' ? 0 : ($this->request->getPost('variance_exception') ? 1 : 0);
         $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
 
