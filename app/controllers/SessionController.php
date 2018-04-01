@@ -9,7 +9,7 @@ class SessionController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('Sign Up/Sign In');
+        $this->tag->setTitle('Sign In');
         parent::initialize();
     }
 
@@ -19,14 +19,15 @@ class SessionController extends ControllerBase
             $this->tag->setDefault('email', 'demo');
             $this->tag->setDefault('password', 'phalcon');
         }
+        $this->view->setTemplateAfter('session');
     }
 
     /**
      * Register an authenticated user into session data
      *
-     * @param Users $user
+     * @param User $user
      */
-    private function _registerSession(Users $user)
+    private function _registerSession(User $user)
     {
         $this->session->set('auth', [
             'id' => $user->id,
@@ -50,15 +51,15 @@ class SessionController extends ControllerBase
             //     'bind' => ['email' => $email, 'password' => sha1($password)]
             // ]);
 
-            $user = new Users();
-            $user->id = 'JYP';
-            $user->name = 'Jeffrey';
+            $user = new User();
+            $user->id = '4';
+            $user->name = 'Jeffrey Pogoy';
 
             // if ($user != false) {
                 $this->_registerSession($user);
                 $this->flash->success('Welcome ' . $user->name);
 
-                return $this->response->redirect('boards');
+                return $this->response->redirect('home');
             // }
 
             // $this->flash->error('Wrong email/password');
@@ -80,7 +81,10 @@ class SessionController extends ControllerBase
     public function endAction()
     {
         $this->session->remove('auth');
-        $this->flash->success('Goodbye!');
+        $this->flash->success('You have successfully signed out. Goodbye!');
+        
+        // Destroy the whole session
+        $this->session->destroy();
 
         return $this->dispatcher->forward(
             [

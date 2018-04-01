@@ -1,6 +1,6 @@
 <?php
 
-class Task extends \Phalcon\Mvc\Model
+class UserTask extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -8,23 +8,25 @@ class Task extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(type="integer", length=3, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     public $id;
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=45, nullable=false)
+     * @var integer
+     * @Primary
+     * @Column(type="integer", length=1, nullable=false)
      */
-    public $name;
+    public $user_id;
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=45, nullable=true)
+     * @var integer
+     * @Primary
+     * @Column(type="integer", length=3, nullable=false)
      */
-    public $description;
+    public $task_id;
 
     /**
      * Initialize method for model.
@@ -32,9 +34,9 @@ class Task extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("gpap");
-        $this->setSource("task");
-        $this->hasMany('id', 'Activity', 'task_id', ['alias' => 'Activity']);
-        $this->hasMany('id', 'UserTask', 'task_id', ['alias' => 'UserTask']);
+        $this->setSource("user_task");
+        $this->belongsTo('task_id', '\Task', 'id', ['alias' => 'Task']);
+        $this->belongsTo('user_id', '\User', 'userID', ['alias' => 'User']);
     }
 
     /**
@@ -44,14 +46,14 @@ class Task extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'task';
+        return 'user_task';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Task[]|Task|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return UserTask[]|UserTask|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -62,7 +64,7 @@ class Task extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Task|\Phalcon\Mvc\Model\ResultInterface
+     * @return UserTask|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

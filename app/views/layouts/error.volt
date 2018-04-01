@@ -7,6 +7,8 @@
 
 <div class="ui main stackable container">
     {{ flash.output() }}
-    {{ content() }}    
-    <div class="footer text-muted"><p>&copy; ADEC Innovations, Copyright 2018, All rights reserved.</p></div>
+    {{ content() }}   
+    <div class="ui centered grid">
+        <div class="footer text-muted"><p>&copy; ADEC Innovations, Copyright 2018, All rights reserved.</p></div>     
+    </div>
 </div>

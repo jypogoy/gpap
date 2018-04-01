@@ -11,21 +11,27 @@ class Elements extends Component
 {
     private $_headerMenu = [
         'left' => [
-            'index' => [
-                'caption' => 'Home',
-                'action' => 'index',
+            'home' => [
+                'caption'   => 'Home',
+                'action'    => 'home',
                 'iconClass' => 'home icon'
             ],
-            'index' => [
-                'caption' => 'Home',
-                'action' => 'index',
-                'iconClass' => 'home icon'
-            ]
+            'about' => [
+                'caption'   => 'About',
+                'action'    => 'index',
+                'iconClass' => 'info circle icon'
+            ],
+            // 'contact' => [
+            //     'caption'   => 'Contact',
+            //     'action'    => 'index',
+            //     'iconClass' => 'volume control phone icon'
+            // ]
         ],
         'right' => [
-            'session' => [
-                'caption' => 'Log In/Sign Up',
-                'action' => 'index'
+            'session'       => [
+                'caption'   => 'Log In',
+                'action'    => 'index',
+                'iconClass' => 'plug icon'
             ]
         ]
     ];
@@ -46,18 +52,22 @@ class Elements extends Component
         if ($auth) {
             $this->_headerMenu['right']['session'] = [
                 'caption' => 'Log Out',
-                'action' => 'end'
+                'action' => 'end',
+                'iconClass' => 'power off icon'
             ];
         } else {
-            // unset($this->_headerMenu['left']['boards']);
-            // unset($this->_headerMenu['left']['admin']);
+            unset($this->_headerMenu['left']['home']);
         }
 
         $controllerName = $this->view->getControllerName();
         foreach ($this->_headerMenu as $position => $menu) {
-            if ($position == 'right') {
-                echo '<div class="right menu">';
-            }    
+            if ($position == 'right') {                
+                echo '<div class="right menu">';   
+                $auth = $this->session->get('auth');
+                if ($auth) {            
+                    echo '<div class="item"><img class="ui avatar image" src="public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth[name] . '</span></div>';
+                }
+            }                
             foreach ($menu as $controller => $option) {
                 if ($controllerName == $controller) {
                     echo $this->tag->linkTo([$controller != 'index' ? $controller . ($controller == 'session' ? '/' . $option['action'] : '') : '', (isset($option['iconClass']) ? '<i class="' . $option['iconClass'] . '"></i>' : '') . $option['caption'], 'class' => 'active item']);

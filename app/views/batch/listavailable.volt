@@ -23,6 +23,8 @@
                 </a>
             </td>
         </tr>
+        {% else %}
+        <tr><td colspan="6">No records found.</td></tr> 
         {% endfor %}
     </tbody>    
 </table>

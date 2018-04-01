@@ -1,6 +1,6 @@
 <?php
 
-class MerchantHeader extends \Phalcon\Mvc\Model
+class DataEntry extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -16,6 +16,14 @@ class MerchantHeader extends \Phalcon\Mvc\Model
      *
      * @var integer
      * @Primary
+     * @Column(type="integer", length=1, nullable=false)
+     */
+    public $user_id;
+
+    /**
+     *
+     * @var integer
+     * @Primary
      * @Column(type="integer", length=11, nullable=false)
      */
     public $batch_id;
@@ -23,51 +31,24 @@ class MerchantHeader extends \Phalcon\Mvc\Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=16, nullable=false)
-     */
-    public $merchant_number;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=250, nullable=false)
-     */
-    public $merchant_name;
-
-    /**
-     *
-     * @var integer
+     * @Primary
      * @Column(type="integer", length=3, nullable=false)
      */
-    public $currency_id;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=7, nullable=false)
-     */
-    public $dcn;
+    public $task_id;
 
     /**
      *
      * @var string
      * @Column(type="string", nullable=false)
      */
-    public $deposit_date;
+    public $started_at;
 
     /**
      *
-     * @var integer
-     * @Column(type="integer", length=13, nullable=false)
+     * @var string
+     * @Column(type="string", nullable=true)
      */
-    public $deposit_amount;
-
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=3, nullable=true)
-     */
-    public $pull_reason_id;
+    public $ended_at;
 
     /**
      * Initialize method for model.
@@ -75,11 +56,10 @@ class MerchantHeader extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("gpap");
-        $this->setSource("merchant_header");
-        $this->hasMany('id', 'Transaction', 'merchant_header_id', ['alias' => 'Transaction']);
-        $this->belongsTo('currency_id', '\Currency', 'id', ['alias' => 'Currency']);
-        $this->belongsTo('pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
+        $this->setSource("data_entry");
+        $this->belongsTo('task_id', '\Task', 'id', ['alias' => 'Task']);
         $this->belongsTo('batch_id', '\Batch', 'id', ['alias' => 'Batch']);
+        $this->belongsTo('user_id', '\User', 'userID', ['alias' => 'User']);
     }
 
     /**
@@ -89,14 +69,14 @@ class MerchantHeader extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'merchant_header';
+        return 'data_entry';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return MerchantHeader[]|MerchantHeader|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return DataEntry[]|DataEntry|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -107,7 +87,7 @@ class MerchantHeader extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return MerchantHeader|\Phalcon\Mvc\Model\ResultInterface
+     * @return DataEntry|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

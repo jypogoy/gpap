@@ -11,10 +11,21 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-        if (!$this->request->isPost()) {
-            $this->flash->notice('This is a sample application.
-                Please don\'t provide any personal information. Thanks!');
+        $auth = $this->session->get('auth');
+        
+        if ($auth) {
+            $this->dispatcher->forward([
+                'controller' => "home",
+                'action' => 'index'
+            ]);
+        } else {
+            $this->dispatcher->forward([
+                'controller' => "session",
+                'action' => 'index'
+            ]);
         }
+
+        return;
     }
 
 }

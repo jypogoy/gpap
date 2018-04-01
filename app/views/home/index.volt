@@ -1,4 +1,7 @@
-{#<h2><i class="tasks icon"></i>My Work In Progress</h2>
+{{ hidden_field('user_id', 'value': user['id'] ) }}
+{{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
+
+<h2><i class="tasks icon"></i>My Work In Progress</h2>
 
 <form class="ui form" id="listForm" action="boards" method="post">
     <div class="ui equal width stackable grid">
@@ -9,6 +12,7 @@
                 <button type="submit" class="ui teal submit button">Submit</button>
             </div>            
         </div>
+        <div class="right aligned column user-tasks"></div>
         <div class="right aligned column">
             <a class="ui primary button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
         </div>
@@ -26,22 +30,8 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>PH</td>
-            <td>03-12-2018</td>
-            <td>Normal</td>
-            <td>0001</td>
-            <td>1</td>
-            <td class="data-process-btn">
-                <a href="de/1" data-tooltip="Review" data-position="bottom center">
-                    <i class="edit orange icon"></i>
-                </a>
-                <a data-tooltip="Complete" data-position="bottom center">
-                    <i class="check green icon"></i>
-                </a>                
-            </td>
-        </tr>
+    <tbody class="deListBody">
+        <tr><td colspan="6">Fetching record...</td></tr>        
     </tbody>    
 </table>
 
@@ -49,4 +39,4 @@
 
 {% include 'de/batch_modal.volt' %} 
 
-{{ javascript_include('js/home.js') }}#}
+{{ javascript_include('js/home.js') }}

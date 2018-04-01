@@ -3,33 +3,25 @@
 class BatchController extends ControllerBase
 {
 
-    public function initialize() {
+    public function initialize() 
+    {
         
     }
 
-    public function listByAssignee($userId)
-    {
-        $batches = Batch::find(
-            [
-                "conditions" => "is_completed = 0"
-            ]
-        ); 
-    }
-
-    public function listAvailableAction()
+    public function listAvailableAction($taskName)
     {
         $this->view->disable();
         
         $batches = Batch::find(
             [
-                "conditions" => "is_completed = 0"
+                "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
             ]
         );        
 
         // $batches = Batch::query()
         //     ->innerJoin('Zip')
         //     ->innerJoin('TransactionType')
-        //     ->where('is_completed = 0')
+        //     ->where('is_completed =i 0')
         //     ->execute();
 
         echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
