@@ -1,6 +1,6 @@
 {% for entry in entries %}
     <tr>
-        <td>{{ entry.Batch.Zip.Region.name }}</td>    
+        <td>{{ entry.Batch.Zip.Region.code }}</td>    
         <td>{{ entry.Batch.Zip.rec_date }}</td>
         <td>{{ entry.Batch.TransactionType.type }}</td> 
         <td>{{ entry.Batch.Zip.sequence }}</td>

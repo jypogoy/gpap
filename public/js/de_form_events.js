@@ -218,12 +218,26 @@ $(function() {
         e.preventDefault();
         var headerValidationResult = Form.validate(true);        
         var slipValidationResult = true;
-        if ($('#pull_reason_id').val() == 0 || $('#pull_reason_id').val() == '') {
+        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
             slipValidationResult = Form.validate(false);
         }
         if(headerValidationResult) {            
             if (headerValidationResult && slipValidationResult) {
-                saveBatch(false);
+                saveBatch(false); // See de_data_recording.js
+            }            
+        }
+    });
+
+    $('.save-next-btn').click(function(e) {
+        e.preventDefault();
+        var headerValidationResult = Form.validate(true);        
+        var slipValidationResult = true;
+        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
+            slipValidationResult = Form.validate(false);
+        }
+        if(headerValidationResult) {            
+            if (headerValidationResult && slipValidationResult) {
+                saveBatch(true); // See de_data_recording.js
             }            
         }
     });

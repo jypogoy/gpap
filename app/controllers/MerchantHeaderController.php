@@ -27,7 +27,16 @@ class MerchantHeaderController extends ControllerBase
             return $this->response->redirect('');
         }
 
-        $header = new MerchantHeader();
+        // Update any existing header content.
+        $header = MerchantHeader::findFirst(
+            [
+                "conditions" => "batch_id = " . $this->request->getPost('batch_id')
+            ]
+        );
+
+        // Set a new instance if no existing record found.
+        if (!$header) $header = new MerchantHeader();
+        
         $header->batch_id = $this->request->getPost('batch_id');
         $header->merchant_number = $this->request->getPost('merchant_number') == '' ? null : $this->request->getPost('merchant_number');
         $header->merchant_name = $this->request->getPost('merchant_name') == '' ? null : $this->request->getPost('merchant_name');
@@ -36,8 +45,7 @@ class MerchantHeaderController extends ControllerBase
         $header->deposit_date = $this->request->getPost('deposit_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('deposit_date');
         $header->deposit_amount = $this->request->getPost('deposit_amount') == '' ? null : $this->request->getPost('deposit_amount');
         $header->batch_pull_reason_id = $this->request->getPost('batch_pull_reason_id') == '' ? null : $this->request->getPost('batch_pull_reason_id');
-
-
+        
         if (!$header->save()) {
             $errorMsg;
             foreach ($task->getMessages() as $message) {

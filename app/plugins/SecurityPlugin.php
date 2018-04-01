@@ -47,8 +47,8 @@ class SecurityPlugin extends Plugin
 			//Private area resources
 			$privateResources = [
 				'home'      => 	['index'],
-				'de'		=>	['index', 'start'],
-				'batch'		=>	['listavailable', 'get'],
+				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
+				'batch'		=>	['listavailable', 'get', 'getavailable'],
 				'currency'	=>	['getbyregion'],
 				'image'		=>	['list'],
 				'installment_months'	=>	['list'],
@@ -56,7 +56,7 @@ class SecurityPlugin extends Plugin
 				'merchant_header'	=>	['getbybatch', 'save'],
 				'other_exception'	=>	['list'],
 				'pull_reason'	=>	['getbylevel'],
-				'transaction'	=>	['getbyheader', 'save'],
+				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask']

@@ -10,7 +10,7 @@ $(function() {
 
     slipMap = new HashMap();    
 
-    saveSlip(); // Alwas add a fresh record on the map
+    saveSlip(); // Always add a fresh record on the map. See de_data_navigation.js
 
     $('#currentSlipPage').html(slipPage);
     $('#totalSlips').html(slipMap.count());    
@@ -97,11 +97,11 @@ $(function() {
         }
     });
     
+    // See de_data_retrieval.js
     getTransactionTypes();
     getPullReasons();
     getInstallmentMonths();
-    getExceptions();
-    
+    getExceptions();    
     getContents();
 
     $('#merchant_number').focus();
@@ -111,6 +111,7 @@ function overrideHeader(pullReasonId) {
     if (pullReasonId && pullReasonId > 0) {
         $('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
         $(headerRequiredFields).removeClass('required');
+        $(slipRequiredFields).removeClass('required');
         Form.resetErrors(true);
         Form.resetErrors(false);
         $('.slip-controls').addClass('hidden');
@@ -118,6 +119,7 @@ function overrideHeader(pullReasonId) {
         $('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
+        $(slipRequiredFields).addClass('required');
         $('.slip-controls').removeClass('hidden');
     }
 }

@@ -1,11 +1,13 @@
 {{ hidden_field('batch_id', 'value': batch.id) }}
 {{ hidden_field('region', 'value': batch.zip.region_code) }}
 {{ hidden_field('merchant_header_id') }}
+{{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
+{{ hidden_field('session_task_name', 'value': session.get('taskName')) }}
 
 <div class="ui stackable grid">
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">
-        
+            
             {% include 'de/header_form.volt' %}
             {% include 'de/transaction_form.volt' %}
             
@@ -24,9 +26,9 @@
                 <button class="ui small blue button complete-exit-btn" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                                  
                 <button class="ui small green button save-next-btn" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
                 <button class="ui small green button save-exit-btn" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
-                <div style="margin: 5px 0 0 0; float: right;">                        
+                {#<div style="margin: 5px 0 0 0; float: right;">                        
                     <a href="/gpap" class="ui small button">Exit</a>
-                </div>
+                </div>#}
             </div>
         </div>
     </div>

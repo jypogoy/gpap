@@ -10,13 +10,17 @@ class DataEntryController extends ControllerBase
     public function getByUserTaskAction($taskId)
     {
         $this->view->disable();
-        $this->session->set('taskId', $taskId); // Keep reference of the selected task.
-        
+
+        $task = Task::findFirst($taskId);
+        $this->session->set('taskId', $taskId); // Keep reference of the selected task.        
+        $this->session->set('taskName', $task->name);    
+
         $userId = $this->session->get('auth')['id'];
         
         $entries = DataEntry::find(
             [
-                "conditions" => "user_id = " . $userId . " and task_id = " . $taskId
+                "conditions" => "user_id = " . $userId . " and task_id = " . $taskId,
+                "order"      => "started_at DESC"   
             ]
         );
 

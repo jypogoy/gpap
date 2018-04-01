@@ -1,13 +1,51 @@
+var withHeaderContent = false;
+var withSlipContent = false;
+
 function getContents() {
-    $.post('../merchant_header/getbybatch/' + $('#batch_id').val(), function (data) {
-        if (!data || data.length == 0) {
-            toastr.warning('This batch does not have any header content.');
+    $.post('../merchant_header/getbybatch/' + $('#batch_id').val(), function (headerData) {
+        if (!headerData || headerData.length == 0) {
+            //toastr.warning('This batch does not have any header content.');
         } else {
-            $('#merchant_header_id').val(data.id);
-            $.each(data, function(key, value) {
-                setFieldValue(key, value); // See de_data_navigation.js
+            withHeaderContent = true;
+            $('#merchant_header_id').val(headerData.id);
+            
+            // Load information of dependent fields e.g. currency
+            // Get the region or country code.
+            $.post('../merchant/get/' + parseInt(headerData.merchant_number), function (merchantData) {   
+                // Get all currencies with the region.
+                $.post('../currency/getbyregion/' + merchantData.country_code, function (data) {   
+                  
+                    // Populate currencies allowed by the recorded merchant.            
+                    var menuWrapper = $('#currency_id_dropdown .menu');
+                    $(menuWrapper).empty();
+                    $.each(data, function(i, currency) {
+                        $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
+                    });
+                    $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+
+                    // Reinstantiate the currency dropdown to apply changes. See de_form_events.js for similar code                
+                    $('#currency_id_dropdown').dropdown({
+                        onChange: function() {
+                            var value = $(this).dropdown('get value');            
+                            if (value > 0) {
+                                if (this.value != '') $('#currency_id_wrapper').removeClass('error');
+                            } else {
+                                $(this).dropdown('restore defaults');
+                            }
+                        }
+                    });
+
+                    // Fill header fields with values.
+                    $.each(headerData, function(key, value) {
+                        setFieldValue(key, value); // See de_data_navigation.js
+                    });
+        
+                    // Load transactions
+                    getSlipContents(headerData.id);         
+                })
+
             });
-            getSlipContents(data.id);            
+
         }            
     })
     .done(function (msg) {
@@ -21,8 +59,9 @@ function getContents() {
 function getSlipContents(headerId) {
     $.post('../transaction/getbyheader/' + headerId, function (data) {
         if (!data || data.length == 0) {
-            toastr.warning('This batch does not have any transactions.');
+            //toastr.warning('This batch does not have any transactions.');
         } else {     
+            withSlipContent = true;
             slipMap.clear(); // Make sure to clear the field map as it is populated initially with blank.
             $.each(data, function(id, fieldValueArray) {
                 var slipValueMap = new HashMap();

@@ -21,12 +21,29 @@ class TransactionController extends ControllerBase
         $this->response->send();        
     }
 
+    public function deletePreviousAction($headerId)
+    {
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        // Delete any existing transaction content.
+        $existingTrans = Transaction::findFirst(
+            [
+                "conditions" => "merchant_header_id = " . $headerId
+            ]
+        );
+
+        if ($existingTrans) $existingTrans->delete();
+    }
+
     public function saveAction()
     {
         if (!$this->request->isPost()) {
             return $this->response->redirect('');
         }
 
+        // Record a new header content.
         $transaction = new Transaction();
         $transaction->merchant_header_id = $this->request->getPost('merchant_header_id');
         $transaction->sequence = $this->request->getPost('sequence');

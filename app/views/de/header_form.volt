@@ -3,9 +3,9 @@
     <h4 class="ui dividing header" style="color: darkblue;">
         <div class="ui grid">
             <div class="ten wide column">
-                <i class="shopping cart icon"></i>Merchant Header (Deposit Slip)
+                <i class="shopping cart icon"></i>Merchant Header
             </div>
-            <div class="six wide column" style="text-align: right;">Batch {{ batch.id }}</div>
+            <div class="six wide column" style="text-align: right;">Batch {{ batch.id }} - {{ session.get('taskName') }}</div>
         </div>        
     </h4>
 

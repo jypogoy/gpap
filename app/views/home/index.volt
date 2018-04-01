@@ -35,6 +35,8 @@
     </tbody>    
 </table>
 
+{{ alert.getRedirectMessage() }}
+
 <div class="ui active loader"></div>
 
 {% include 'de/batch_modal.volt' %} 

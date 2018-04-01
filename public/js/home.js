@@ -9,7 +9,7 @@ $(function () {
     $('.get-batch').click(function(e) {        
         loadAvailableBatches();
     });
-
+    
     getUserTasks();        
 
 });
@@ -82,7 +82,10 @@ function loadUserEntries(taskId) {
 }
 
 var BatchModal = {
-    show : function () {                
+    show : function () {         
+        
+        $('#modal_task_label').html($('#task_id_dropdown').dropdown('get text'));
+        
         $('.modal.batch')
         .modal('setting',
         {
@@ -112,22 +115,6 @@ function loadAvailableBatches() {
         } else {
             $('.content').empty();
             $('.content').append(data);
-            // $('#batchTable tbody tr').remove();
-            // $.each(data, function(i, rec) {
-            //     $('#batchTable tbody').append(
-            //         '<tr>' +
-            //             '<td>' + rec.zip + '</td>' + 
-            //             '<td>2</td>' + 
-            //             '<td>3</td>' +
-            //             '<td>4</td>' +
-            //             '<td>' + rec.id + '</td>' +
-            //             '<td>' +
-            //                 '<a href="de/' + rec.id + '" class="ui icon" data-tooltip="Start" data-position="bottom center">' +
-            //                     '<i class="large play circle icon"></i>' +
-            //                 '</a>' +
-            //             '</td>' +
-            //         '</tr>');  
-            // }); 
         }                
     })
     .done(function (msg) {

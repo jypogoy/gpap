@@ -69,6 +69,7 @@ function fillFields(map) {
 }
 
 function setFieldValue(key, value) {
+    // Set value for checkboxes and input elements.
     if($('#' + key).is(':checkbox')) {
         if (value == true) {
             $('#' + key).prop('checked', true);
@@ -78,14 +79,16 @@ function setFieldValue(key, value) {
     } else {
         $('#' + key).val(value);   
     }           
-    var parent = $('#' + key).parent();
-    if (parent.hasClass('dropdown')) {
+    // Set value for dropdown or comboboxes.  
+    var dropDownEl = $('#' + key + '_dropdown');
+    if (dropDownEl.length > 0) {
         if (value == '') {
-            parent.dropdown('restore defaults');
+            $(dropDownEl).dropdown('restore defaults');
         } else {
-            parent.dropdown('set selected', value);
-        }                
-    }
+            $(dropDownEl).dropdown('set selected', value);
+        } 
+    }               
+    // Enable or disable input forms depending on pull reason.
     if (key == 'batch_pull_reason_id') {
         overrideHeader(value); // See de.js
     }  
