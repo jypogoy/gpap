@@ -14,7 +14,7 @@
         </div>
         <div class="right aligned column user-tasks"></div>
         <div class="right aligned column">
-            <a class="ui primary button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
+            <a class="ui primary hidden button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
         </div>
     </div>     
 </form> 
@@ -36,6 +36,7 @@
 </table>
 
 {{ alert.getRedirectMessage() }}
+{{ modals.getConfirmation('complete', 'batch') }}
 
 <div class="ui active loader"></div>
 

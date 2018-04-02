@@ -30,8 +30,8 @@ class SessionController extends ControllerBase
     private function _registerSession(User $user)
     {
         $this->session->set('auth', [
-            'id' => $user->id,
-            'name' => $user->name
+            'id' => $user->userID,
+            'name' => $user->userFirstName . ' ' . $user->userLastName
         ]);
     }
 
@@ -43,7 +43,7 @@ class SessionController extends ControllerBase
     {
         if ($this->request->isPost()) {
 
-            $email = $this->request->getPost('email');
+            $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
 
             // $user = Users::findFirst([
@@ -51,18 +51,34 @@ class SessionController extends ControllerBase
             //     'bind' => ['email' => $email, 'password' => sha1($password)]
             // ]);
 
-            $user = new User();
-            $user->id = '4';
-            $user->name = 'Jeffrey Pogoy';
+            $user = User::findFirstByUserName($username);    
+
+            if ($user) {
+                if ($this->security->checkHash($password, $user->userPassword)) {
+                    // The password is valid
+                    $this->_registerSession($user);
+                    $this->flash->success('Welcome ' . $user->userName);
+
+                    return $this->response->redirect('home');
+                }
+            } else {
+                // To protect against timing attacks. Regardless of whether a user exists or not, the script will take roughly the same amount as it will always be computing a hash.
+                $this->security->hash(rand());
+            }
+
+            // $user = new User();
+            // $user->id = '2';
+            // $user->name = 'Jeffrey Pogoy';
 
             // if ($user != false) {
-                $this->_registerSession($user);
-                $this->flash->success('Welcome ' . $user->name);
+                // $this->_registerSession($user);
+                // $this->flash->success('Welcome ' . $user->name);
 
-                return $this->response->redirect('home');
+                // return $this->response->redirect('home');
             // }
 
-            // $this->flash->error('Wrong email/password');
+            // The validation has failed
+            $this->flash->error('Wrong username or password');
         }
 
         return $this->dispatcher->forward(

@@ -191,7 +191,7 @@ $(function() {
             onApprove : function() {
                 if (slipPage == 1) {
                     Form.clear(false);
-                    saveSlip(); // Save a fresh entry
+                    saveSlip(); // Save a fresh entry. See de_data_navigation.js
                 } else {
                     slipMap.remove(slipPage);
                     if (slipMap.count() - 1 <= 0) {
@@ -235,7 +235,8 @@ $(function() {
         if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
             slipValidationResult = Form.validate(false);
         }
-        if(headerValidationResult) {            
+        if(headerValidationResult) {       
+                 
             if (headerValidationResult && slipValidationResult) {
                 saveBatch(true); // See de_data_recording.js
             }            

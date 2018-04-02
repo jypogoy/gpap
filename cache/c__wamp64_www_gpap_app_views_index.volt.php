@@ -20,8 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     </head>
-    <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <body>    
         <?= $this->tag->javascriptInclude('js/jquery-3.3.1.min.js') ?>        
         <?= $this->getContent() ?>                
         <?= $this->tag->javascriptInclude('jqueryui/jquery-ui.min.js') ?>       

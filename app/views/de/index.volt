@@ -37,6 +37,10 @@
     </div>
 </div>
 
+<div id="dialog" title="Basic dialog"  class="ui segment>
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+
 {{ modals.getConfirmation('delete', 'Transaction') }}
 
 <div class="ui active loader"></div>

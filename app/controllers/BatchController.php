@@ -50,5 +50,6 @@ class BatchController extends ControllerBase
         $this->response->setJsonContent($batch);
         $this->response->send(); 
     }
+    
 }
 

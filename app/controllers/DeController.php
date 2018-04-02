@@ -9,7 +9,7 @@ class DeController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction($batchId=null)
+    public function indexAction($batchId = null)
     {        
         $batch = Batch::findFirstById($batchId); 
 
@@ -23,7 +23,7 @@ class DeController extends ControllerBase
             ]
         );
 
-        // Create an activity unless nothing has been recorded.
+        // Create an activity if nothing has been recorded.
         if (!$existingEntry) {            
 
             // Write information for data entry activity.
@@ -81,6 +81,10 @@ class DeController extends ControllerBase
 
     public function completeAction()
     {
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
         $entryId = $this->request->getPost('entry_id');
         $batchId = $this->request->getPost('batch_id');        
 
@@ -113,7 +117,7 @@ class DeController extends ControllerBase
         }        
 
         if (!$batch->save()) {
-            foreach ($task->getMessages() as $message) {
+            foreach ($batch->getMessages() as $message) {
                 $this->flash->error($message);
             }
 
@@ -123,6 +127,14 @@ class DeController extends ControllerBase
             ]);
 
             return;
+        }
+
+        if ($this->request->getPost('isFromHome')) {
+            $this->flash->success("Batch <b>" . $batchId . "</b>  was completed successfully.");
+            $this->dispatcher->forward([
+                'controller' => "home",
+                'action' => 'index'
+            ]);
         }
     }
     

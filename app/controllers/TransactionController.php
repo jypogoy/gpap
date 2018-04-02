@@ -13,7 +13,8 @@ class TransactionController extends ControllerBase
         
         $transactions = Transaction::find(
             [
-                "conditions" => "merchant_header_id = " . $headerId
+                "conditions" => "merchant_header_id = " . $headerId,
+                "order"      => "sequence ASC"
             ]
         );
 
@@ -28,13 +29,30 @@ class TransactionController extends ControllerBase
         }
 
         // Delete any existing transaction content.
-        $existingTrans = Transaction::findFirst(
+        $existingTrans = Transaction::find(
             [
                 "conditions" => "merchant_header_id = " . $headerId
             ]
         );
 
-        if ($existingTrans) $existingTrans->delete();
+        if ($existingTrans) {
+            if (!$existingTrans->delete()) {
+                foreach ($existingTrans->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+
+                $this->dispatcher->forward([
+                    'controller' => "home",
+                    'action' => 'index'
+                ]);
+
+                return;
+            } else {
+                echo 1;
+            }
+        }  else {
+            echo 0;
+        }      
     }
 
     public function saveAction()
@@ -60,7 +78,7 @@ class TransactionController extends ControllerBase
         $transaction->commodity_code = $this->request->getPost('commodity_code') == '' ? null : $this->request->getPost('commodity_code');
         $transaction->slip_pull_reason_id = $this->request->getPost('slip_pull_reason_id') == '' ? null : $this->request->getPost('slip_pull_reason_id');
         $transaction->exception_id = $this->request->getPost('exception_id') == '' ? null : $this->request->getPost('exception_id');
-        $transaction->variance_exception = $this->request->getPost('variance_exception') == '' ? 0 : ($this->request->getPost('variance_exception') ? 1 : 0);
+        $transaction->variance_exception = $this->request->getPost('variance_exception') == '1' ? 1 : 0;
         $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
 
         $successMsg = "Transaction was saved successfully.";

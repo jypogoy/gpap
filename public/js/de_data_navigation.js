@@ -8,6 +8,7 @@ function saveSlip() {
            slipValueMap.set(field.id, field.value);
         }        
     });        
+    
     slipMap.set(slipPage, slipValueMap);
 }
 

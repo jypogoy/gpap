@@ -11,16 +11,16 @@
                 <div class="field">
                 <div class="ui left icon input">
                     <i class="user icon"></i>
-                    <input type="text" name="username" placeholder="Username">
+                    <input type="text" name="username" placeholder="Username" tabindex="1" autofocus="true">
                 </div>
                 </div>
                 <div class="field">
                 <div class="ui left icon input">
                     <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password" placeholder="Password" tabindex="2" >
                 </div>
                 </div>
-                {{ submit_button('Login', 'class': 'ui fluid large teal submit button') }}
+                {{ submit_button('Login', 'class': 'ui fluid large teal submit button', 'tabindex': 3) }}
             </div>
 
             <div class="ui error message"></div>

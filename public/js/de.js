@@ -5,6 +5,8 @@ var headerRequiredFields;
 
 $(function() {              
 
+    $( "#dialog" ).dialog();
+
     slipRequiredFields = $('#transactionDataForm').find('.required');
     headerRequiredFields = $('#headerDataForm').find('.required');
 

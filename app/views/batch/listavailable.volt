@@ -19,7 +19,7 @@
             <td>{{ batch.id }}</td>
             <td>
                 <a href="de/{{ batch.id }}" class="ui icon" data-tooltip="Start" data-position="bottom center">
-                    <i class="large play circle icon"></i>
+                    <i class="large play circle green icon"></i>Start
                 </a>
             </td>
         </tr>

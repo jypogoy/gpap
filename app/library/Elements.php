@@ -65,7 +65,7 @@ class Elements extends Component
                 echo '<div class="right menu">';   
                 $auth = $this->session->get('auth');
                 if ($auth) {            
-                    echo '<div class="item"><img class="ui avatar image" src="public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth[name] . '</span></div>';
+                    echo '<div class="item"><img class="ui avatar image" src="/gpap/public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth['name'] . '</span></div>';                    
                 }
             }                
             foreach ($menu as $controller => $option) {

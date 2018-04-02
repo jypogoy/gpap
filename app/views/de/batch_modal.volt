@@ -1,9 +1,9 @@
-<div class="ui medium modal batch">
+<div class="ui medium modal available batch">
     <i class="close icon"></i>
     <div class="header">
         <i class="tags icon"></i>Available Batches for <span id="modal_task_label"></span>
     </div>
-    <div class="content" style="height: 500px !important; overflow: scroll;">  
+    <div class="content available-batch-content" style="height: 500px !important; overflow: scroll;">  
         <table id="batchTable" class="ui sortable selectable celled striped table">
             <thead>
                 <tr>
