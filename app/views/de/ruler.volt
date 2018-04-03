@@ -1,1 +1,1 @@
-<ul class="ruler" data-items="12"></ul>
+<ul class="ruler hidden" data-items="12"></ul>

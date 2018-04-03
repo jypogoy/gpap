@@ -1,9 +1,8 @@
 {{ hidden_field('batch_id', 'value': batch.id) }}
 {{ hidden_field('region', 'value': batch.zip.region_code) }}
-{{ hidden_field('merchant_header_id') }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
 {{ hidden_field('session_task_name', 'value': session.get('taskName')) }}
-asd
+
 <div class="ui stackable grid">
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">

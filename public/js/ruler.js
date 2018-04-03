@@ -1,3 +1,5 @@
+var shown = false;
+
 $(function() {
 
     // Build "dynamic" rulers by adding items    
@@ -13,9 +15,9 @@ $(function() {
 
     changeRulerSpacing('2cm'); // Set initial size
 
-    $("#spacing").change(function() {
-        changeRulerSpacing($(this).val());
-    });
+    // $("#spacing").change(function() {
+    //     changeRulerSpacing($(this).val());
+    // });
 
     $('.ruler').draggable();
 
@@ -30,6 +32,16 @@ $(function() {
         $('.ruler').css({ 'cursor' : 'pointer' });
     });
 });
+
+function toggleShow() {
+    if (shown) {
+        shown = false;
+        $('.ruler').addClass('hidden');
+    } else {
+        shown = true;
+        $('.ruler').removeClass('hidden');
+    }
+}
 
 // Change the spacing programatically
 function changeRulerSpacing(spacing) {

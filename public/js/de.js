@@ -5,8 +5,6 @@ var headerRequiredFields;
 
 $(function() {              
 
-    
-
     slipRequiredFields = $('#transactionDataForm').find('.required');
     headerRequiredFields = $('#headerDataForm').find('.required');
 
@@ -38,17 +36,17 @@ $(function() {
         }
     });
 
-    $('#transaction_type_id_dropdown').dropdown({
-        onChange: function() {            
-            refreshTransTypeDependentFields();
-            var value = $(this).dropdown('get value');            
-            if (value > 0) {
-                $('#transaction_type_id_wrapper').removeClass('error');
-            } else {
-                $(this).dropdown('restore defaults');
-            }
-        }
-    });
+    // $('#transaction_type_id_dropdown').dropdown({
+    //     onChange: function() {            
+    //         refreshTransTypeDependentFields();
+    //         var value = $(this).dropdown('get value');            
+    //         if (value > 0) {
+    //             $('#transaction_type_id_wrapper').removeClass('error');
+    //         } else {
+    //             $(this).dropdown('restore defaults');
+    //         }
+    //     }
+    // });
 
     $('#transaction_date_cal').calendar({ 
         type: 'date',
@@ -100,13 +98,14 @@ $(function() {
     });
     
     // See de_data_retrieval.js
-    getTransactionTypes();
+    //getTransactionTypes();
     getPullReasons();
     getInstallmentMonths();
     getExceptions();    
     getContents();
 
     $('#merchant_number').focus();
+    $('.dropdown.icon').removeAttr('tabIndex');
 });
 
 function overrideHeader(pullReasonId) {
@@ -116,12 +115,16 @@ function overrideHeader(pullReasonId) {
         $(slipRequiredFields).removeClass('required');
         Form.resetErrors(true);
         Form.resetErrors(false);
-        $('.slip-controls').addClass('hidden');
+        $('.slip-field:not(.auto-fill)').attr('disabled', true);
+        $('.slip-dropdown').addClass('disabled');
+        $('.slip-controls').addClass('hidden');        
     } else {
         $('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
         $(slipRequiredFields).addClass('required');
+        $('.slip-field:not(.auto-fill)').removeAttr('disabled');
+        $('.slip-dropdown').removeClass('disabled');
         $('.slip-controls').removeClass('hidden');
     }
 }

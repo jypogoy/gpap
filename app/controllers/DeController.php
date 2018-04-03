@@ -88,7 +88,7 @@ class DeController extends ControllerBase
         $entryId = $this->request->getPost('entry_id');
         $batchId = $this->request->getPost('batch_id');        
 
-        $entry = DataEntry::findById($entryId);
+        $entry = DataEntry::findFirstByid($entryId);
         $entry->ended_at = new \Phalcon\Db\RawValue("NOW()");
 
         if (!$entry->save()) {
@@ -104,7 +104,7 @@ class DeController extends ControllerBase
             return;
         }
 
-        $batch = Batch::findById($batchId);
+        $batch = Batch::findFirstByid($batchId);
 
         $taskId = $this->session->get('taskId');
 
@@ -134,8 +134,10 @@ class DeController extends ControllerBase
             $this->dispatcher->forward([
                 'controller' => "home",
                 'action' => 'index'
-            ]);
+            ]);            
         }
+        
+        return;
     }
     
     public function redirectNoNextAction($taskName)

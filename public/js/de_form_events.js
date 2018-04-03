@@ -23,13 +23,31 @@ $(function() {
 
     $('#currency_id_dropdown').dropdown({
         onChange: function() {
-            var value = $(this).dropdown('get value');            
-            if (value > 0) {
-                if (this.value != '') $('#currency_id_wrapper').removeClass('error');
+            var value = $(this).dropdown('get value');    
+            if (value == 34) { // Other
+                $(this).addClass('hidden');
+                $('#other_currency_wrapper').removeClass('hidden');
+                $('#currency_id_wrapper').addClass('hidden');
+                $('#other_currency').focus();
             } else {
-                $(this).dropdown('restore defaults');
+                $('#other_currency_wrapper').addClass('hidden');
+                $('#currency_id_wrapper').removeClass('hidden');
+                if (value > 0) {
+                    if (this.value != '') $('#currency_id_wrapper').removeClass('error');
+                } else {
+                    $(this).dropdown('restore defaults');
+                }
             }
         }
+    });
+
+    $('#otherCurrencyBtn').click(function(e) {
+        e.preventDefault();
+        $('#other_currency_wrapper').addClass('hidden');
+        $('#other_currency').val('');
+        $('#currency_id_wrapper').removeClass('hidden');
+        $('#currency_id_dropdown').removeClass('hidden');
+        $('#currency_id_dropdown').dropdown('restore defaults');
     });
 
     $('#dcn').blur(function() {
@@ -75,7 +93,6 @@ $(function() {
             $('#' + this.id + '_alert').addClass('visible');
             $('#' + this.id + '_msg').html('Invalid Credit Card number');
             $('#cardLogo').attr('src', '../public/img/card/private.png')
-            $(this).select();
         } else {
             $('#' + this.id + '_wrapper').removeClass('error');       
             $('#' + this.id + '_alert').removeClass('visible');

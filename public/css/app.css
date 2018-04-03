@@ -208,3 +208,7 @@ input[type="text"]:disabled {
 input[readonly] {
     color:blue !important;
 }
+
+.uppercase {
+    text-transform: uppercase;
+}

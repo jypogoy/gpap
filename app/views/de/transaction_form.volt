@@ -10,12 +10,14 @@
     <div class="equal width small fields">
         <div id="transaction_type_id_wrapper" class="required field">
             <label>Transaction Type</label>
-            <div id="transaction_type_id_dropdown" class="ui selection dropdown slip-dropdown">
+            {{ hidden_field('transaction_type_id', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.id) }}
+            {{ text_field('transaction_type_type', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.type, 'disabled': true) }}
+            {#<div id="transaction_type_id_dropdown" class="ui selection dropdown slip-dropdown">
                 <input type="hidden" id="transaction_type_id" class="slip-field">
                 <div class="default text">Choose a type</div>
                 <i class="dropdown icon"></i>
                 <div class="menu"></div>
-            </div>
+            </div>#}
         </div>   
         <div id="region_code_wrapper" class="required field">
             <label>Region</label>

@@ -9,6 +9,7 @@ function gatherHeaderValues() {
             data[field.id] = field.value;
         }
     });
+    data.id = $('#merchant_header_id').val();
     return data;
 }
 

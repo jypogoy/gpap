@@ -19,7 +19,7 @@ var Form = {
         var inputClass = isHeader ? '.header-field' : '.slip-field';
         $.each($(inputClass), function(i, field) {
             var wrapper = $('#' + field.id + '_wrapper');
-            if ($(wrapper).hasClass('required')) {
+            if ($(wrapper).hasClass('required') && !$(wrapper).hasClass('hidden')) {
                 if (field.value == '') {
                     $(wrapper).addClass('error');
                     isValid = false;
@@ -40,6 +40,7 @@ var Form = {
     resetErrors: function(isHeader) {
         var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
         $('#' + formId).find('*').removeClass('error');
+        $('#' + formId).find('.prompt').removeClass('visible');
     },
     setFocusOnError: function() {
         $('.error').find('input:text, input:password, textarea').first().focus();

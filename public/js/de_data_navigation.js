@@ -89,6 +89,13 @@ function setFieldValue(key, value) {
             $(dropDownEl).dropdown('set selected', value);
         } 
     }               
+
+    // Important: Hide currency selection when in Other and show the input box.
+    if (key.indexOf('currency') != -1 && value == 34) { // Other        
+        $('#other_currency_wrapper').removeClass('hidden');
+        $('#currency_id_wrapper').addClass('hidden');
+    }
+
     // Enable or disable input forms depending on pull reason.
     if (key == 'batch_pull_reason_id') {
         overrideHeader(value); // See de.js
@@ -106,7 +113,8 @@ function setFieldValue(key, value) {
 }
 
 function refreshTransTypeDependentFields() {
-    var option = $('#transaction_type_id_dropdown').dropdown('get text');
+    //var option = $('#transaction_type_id_dropdown').dropdown('get text');
+    var option = $('#transaction_type_type').val();
     if (option.indexOf('Airline') != -1) {
         $('#other_fields_div').removeClass('hidden');
         $('.airline-field').parent().removeClass('hidden');

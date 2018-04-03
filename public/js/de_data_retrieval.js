@@ -7,45 +7,55 @@ function getContents() {
             //toastr.warning('This batch does not have any header content.');
         } else {
             withHeaderContent = true;
-            $('#merchant_header_id').val(headerData.id);
-            
-            // Load information of dependent fields e.g. currency
-            // Get the region or country code.
-            $.post('../merchant/get/' + parseInt(headerData.merchant_number), function (merchantData) {   
-                // Get all currencies with the region.
-                $.post('../currency/getbyregion/' + merchantData.country_code, function (data) {   
-                  
-                    // Populate currencies allowed by the recorded merchant.            
-                    var menuWrapper = $('#currency_id_dropdown .menu');
-                    $(menuWrapper).empty();
-                    $.each(data, function(i, currency) {
-                        $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
-                    });
-                    $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+            $('#merchant_header_id').val(headerData.id);            
+            if (headerData.merchant_number) {
+                // Load information of dependent fields e.g. currency
+                // Get the region or country code.            
+                $.post('../merchant/get/' + parseInt(headerData.merchant_number), function (merchantData) {   
+                    // Get all currencies with the region.
+                    $.post('../currency/getbyregion/' + merchantData.country_code, function (data) {   
+                    
+                        // Populate currencies allowed by the recorded merchant.            
+                        var menuWrapper = $('#currency_id_dropdown .menu');
+                        $(menuWrapper).empty();
+                        
+                        $.each(data, function(i, currency) {
+                            $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
+                        });
+                        $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper); 
+                        $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
 
-                    // Reinstantiate the currency dropdown to apply changes. See de_form_events.js for similar code                
-                    $('#currency_id_dropdown').dropdown({
-                        onChange: function() {
-                            var value = $(this).dropdown('get value');            
-                            if (value > 0) {
-                                if (this.value != '') $('#currency_id_wrapper').removeClass('error');
-                            } else {
-                                $(this).dropdown('restore defaults');
+                        // Reinstantiate the currency dropdown to apply changes. See de_form_events.js for similar code                
+                        $('#currency_id_dropdown').dropdown({
+                            onChange: function() {
+                                var value = $(this).dropdown('get value');    
+                                if (value == 34) { // Other
+                                    $(this).addClass('hidden');
+                                    $('#other_currency_wrapper').removeClass('hidden');
+                                    $('#currency_id_wrapper').addClass('hidden');
+                                    $('#other_currency').focus();
+                                } else {
+                                    $('#other_currency_wrapper').addClass('hidden');
+                                    $('#currency_id_wrapper').removeClass('hidden');
+                                    if (value > 0) {
+                                        if (this.value != '') $('#currency_id_wrapper').removeClass('error');
+                                    } else {
+                                        $(this).dropdown('restore defaults');
+                                    }
+                                }
                             }
-                        }
-                    });
-
-                    // Fill header fields with values.
-                    $.each(headerData, function(key, value) {
-                        setFieldValue(key, value); // See de_data_navigation.js
-                    });
-        
-                    // Load transactions
-                    getSlipContents(headerData.id);         
-                })
-
+                        });                                                  
+                    })
+                });
+            }
+            
+            // Fill header fields with values.
+            $.each(headerData, function(key, value) {
+                setFieldValue(key, value); // See de_data_navigation.js
             });
 
+            // Load transactions
+            getSlipContents(headerData.id);   
         }            
     })
     .done(function (msg) {
@@ -89,7 +99,7 @@ function getSlipContents(headerId) {
         }                  
     })
     .done(function (msg) {
-        // Do nothing...
+        refreshTransTypeDependentFields();
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
@@ -126,6 +136,7 @@ function getCurrencies(regionCode) {
             $.each(data, function(i, currency) {
                 $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
             });
+            $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper); 
             $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
         }                
     })
@@ -137,26 +148,26 @@ function getCurrencies(regionCode) {
     });
 }
 
-function getTransactionTypes() {
-    $.post('../transaction_type/list', function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any transaction type.'); 
-        } else {
-            var menuWrapper = $('#transaction_type_id_dropdown .menu');
-            $(menuWrapper).empty();
-            $.each(data, function(i, transType) {
-                $('<div class="item" data-value="' + transType.id + '">' + transType.type + '</div>').appendTo(menuWrapper);
-            });
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
+// function getTransactionTypes() {
+//     $.post('../transaction_type/list', function (data) {
+//         if (!data) {
+//             toastr.warning('The search did not match any transaction type.'); 
+//         } else {
+//             var menuWrapper = $('#transaction_type_id_dropdown .menu');
+//             $(menuWrapper).empty();
+//             $.each(data, function(i, transType) {
+//                 $('<div class="item" data-value="' + transType.id + '">' + transType.type + '</div>').appendTo(menuWrapper);
+//             });
+//             $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+//         }                
+//     })
+//     .done(function (msg) {
+//         // Do nothing...
+//     })
+//     .fail(function (xhr, status, error) {
+//         toastr.error(error);
+//     });
+// }
 
 function getPullReasons() {
     // Retrieve all reasons for pulling a batch.

@@ -1,5 +1,7 @@
 <?php
 
+use Phalcon\Filter;
+
 class MerchantHeaderController extends ControllerBase
 {
 
@@ -33,6 +35,8 @@ class MerchantHeaderController extends ControllerBase
                 "conditions" => "batch_id = " . $this->request->getPost('batch_id')
             ]
         );
+        
+        //$header = MerchantHeader::findById($this->request->getPost('id'), 'int');
 
         // Set a new instance if no existing record found.
         if (!$header) $header = new MerchantHeader();
@@ -41,6 +45,7 @@ class MerchantHeaderController extends ControllerBase
         $header->merchant_number = $this->request->getPost('merchant_number') == '' ? null : $this->request->getPost('merchant_number');
         $header->merchant_name = $this->request->getPost('merchant_name') == '' ? null : $this->request->getPost('merchant_name');
         $header->currency_id = $this->request->getPost('currency_id') == '' ? null : $this->request->getPost('currency_id');
+        $header->other_currency = $this->request->getPost('other_currency') == '' ? null : $this->request->getPost('other_currency');
         $header->dcn = $this->request->getPost('dcn') == '' ? null : $this->request->getPost('dcn');
         $header->deposit_date = $this->request->getPost('deposit_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('deposit_date');
         $header->deposit_amount = $this->request->getPost('deposit_amount') == '' ? null : $this->request->getPost('deposit_amount');

@@ -90,6 +90,8 @@ $(function () {
         return false;
     });    
 
+    $('.dropdown').dropdown();
+
     $('.loader').fadeOut();
 });
 

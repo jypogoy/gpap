@@ -19,7 +19,7 @@ class DataEntryController extends ControllerBase
         
         $entries = DataEntry::find(
             [
-                "conditions" => "user_id = " . $userId . " and task_id = " . $taskId,
+                "conditions" => "user_id = " . $userId . " AND task_id = " . $taskId,
                 "order"      => "started_at DESC"   
             ]
         );

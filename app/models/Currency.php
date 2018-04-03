@@ -27,12 +27,20 @@ class Currency extends \Phalcon\Mvc\Model
     public $alpha_code;
 
     /**
+     *
+     * @var string
+     * @Column(type="string", length=45, nullable=true)
+     */
+    public $remarks;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("gpap");
         $this->setSource("currency");
+        $this->hasMany('id', 'MerchantHeader', 'currency_id', ['alias' => 'MerchantHeader']);
         $this->hasMany('id', 'RegionCurrency', 'currency_id', ['alias' => 'RegionCurrency']);
     }
 

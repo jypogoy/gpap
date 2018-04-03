@@ -9,6 +9,8 @@
         </div>        
     </h4>
 
+    {{ hidden_field('merchant_header_id') }}
+
     <div id="merchant_number_wrapper" class="required small field">
         <label>Merchant Number </label>
         {{ text_field('merchant_number', 'class': 'header-field', 'maxlength': '16', 'placeholder': 'Type in the Merchant Number and press <Enter> to validate') }}
@@ -26,7 +28,14 @@
                 <i class="dropdown icon"></i>
                 <div class="menu"></div>
             </div>
-        </div>                        
+        </div>
+        <div id="other_currency_wrapper" class="required hidden field">
+            <label>Currency Code</label>                        
+            <div class="ui action input">
+                <input type="text" id="other_currency" class="uppercase header-field" maxlength="3">
+                <button id="otherCurrencyBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>
+            </div>
+        </div>                    
         <div id="dcn_wrapper" class="required field">
             <label>DCN</label>
             {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}

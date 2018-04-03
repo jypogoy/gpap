@@ -10,13 +10,28 @@
         <button id="rotateRightBtn" class="ui button" data-tooltip="Rotate Right" data-position="bottom center"><i class="repeat icon"></i></button>
         <button id="zOutBtn" class="ui button" data-tooltip="Zoom Out" data-position="bottom center"><i class="zoom out icon"></i></button>
         <button id="zoomBtn" class="ui button" data-tooltip="Zoom In" data-position="bottom center"><i class="zoom icon"></i></button>
-        <button id="rulerBtn" class="ui button" data-tooltip="Ruler Spacing" data-position="bottom center">
+        {#<button id="rulerSpacingBtn" class="ui button" data-tooltip="Ruler Spacing" data-position="bottom center">
             <select id="spacing">
                 <option>2cm</option>
                 <option>1in</option>
                 <option>1.5in</option>
             </select>
-        </button>
+        </button>#}
+        <div class="ui icon top left pointing dropdown button">
+            Ruler
+            <div class="menu">
+                <div class="item" onclick="toggleShow()">Show/Hide</div>
+                <div class="item">
+                    <i class="dropdown icon"></i>
+                    <span class="text">Spacing</span>
+                    <div class="menu">
+                        <div class="item" onclick="changeRulerSpacing('2cm')">2 cm</div>
+                        <div class="item" onclick="changeRulerSpacing('1in')">1 in</div>
+                        <div class="item" onclick="changeRulerSpacing('1.5in')">1.5 in</div>
+                    </div>    
+                </div>       
+            </div>
+        </div>
     </div>
 </div>  
 
