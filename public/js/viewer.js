@@ -186,6 +186,7 @@ function renderImages() {
     .fail(function (xhr, status, error) {
         toastr.error(error);
     });
+
 }
 
 function navPrevImage() {

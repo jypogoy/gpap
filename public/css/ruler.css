@@ -1,0 +1,72 @@
+.ruler, .ruler li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+}
+/* IE6-7 Fix */
+.ruler, .ruler li {
+    *display: inline;
+}
+.ruler {
+    background: lightyellow;
+    box-shadow: 0 -1px 1em hsl(60, 60%, 84%) inset;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    /* color: #ccc; */
+    color: #363535;
+    margin: 0;
+    height: 3em;
+    padding-right: 1cm;
+    white-space: nowrap;
+    cursor: pointer;
+
+    position : absolute;
+	z-index : 10;
+    top : 20px;
+    left: 20px;
+}
+.ruler li {
+    padding-left: 1cm;
+    width: 2em;
+    margin: .64em -1em -.64em;
+    text-align: center;
+    position: relative;
+    text-shadow: 1px 1px hsl(60, 60%, 84%);
+}
+.ruler li:before {
+    content: '';
+    position: absolute;
+    /* border-left: 1px solid #ccc; */
+    border-left: 1px solid #999;
+    height: .64em;
+    top: -.64em;
+    right: 1em;
+}
+
+/* Make me pretty! */
+/* body {
+    font: 12px Ubuntu, Arial, sans-serif;
+    margin: 20px;
+}
+
+div {
+    margin-top: 2em;
+}   */
+
+.ruler-command {
+	position : absolute;
+	z-index : 10;
+	top : 20px;
+    left : 200px;
+    background-color: beige !important;
+}
+
+.ruler-command > .button {
+    z-index : 100;
+    opacity: 0.8;
+}
+
+.ruler-command > .button > i {
+	z-index : 100;
+}

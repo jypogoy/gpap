@@ -3,7 +3,7 @@
 {{ hidden_field('merchant_header_id') }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
 {{ hidden_field('session_task_name', 'value': session.get('taskName')) }}
-
+asd
 <div class="ui stackable grid">
     <div class="four wide column">
         <div class="ui raised segment" style="height: 100%;">
@@ -35,10 +35,6 @@
     <div class="twelve wide column">                                
         {% include 'de/viewer.volt' %}    
     </div>
-</div>
-
-<div id="dialog" title="Basic dialog"  class="ui segment>
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
 </div>
 
 {{ modals.getConfirmation('delete', 'Transaction') }}
