@@ -18,6 +18,14 @@ class MerchantHeader extends \Phalcon\Mvc\Model
      * @Primary
      * @Column(type="integer", length=11, nullable=false)
      */
+    public $data_entry_id;
+
+    /**
+     *
+     * @var integer
+     * @Primary
+     * @Column(type="integer", length=11, nullable=false)
+     */
     public $batch_id;
 
     /**
@@ -87,6 +95,7 @@ class MerchantHeader extends \Phalcon\Mvc\Model
         $this->belongsTo('currency_id', '\Currency', 'id', ['alias' => 'Currency']);
         $this->belongsTo('batch_pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
         $this->belongsTo('batch_id', '\Batch', 'id', ['alias' => 'Batch']);
+        $this->belongsTo('data_entry_id', '\DataEntry', 'id', ['alias' => 'DataEntry']);
     }
 
     /**

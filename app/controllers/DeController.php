@@ -17,14 +17,14 @@ class DeController extends ControllerBase
         $taskId = $this->session->get('taskId');
 
         // Look for existing activity to maintain single record of batch on a particular task.
-        $existingEntry = DataEntry::findFirst(
+        $entry = DataEntry::findFirst(
             [
                 "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
             ]
         );
 
         // Create an activity if nothing has been recorded.
-        if (!$existingEntry) {            
+        if (!$entry) {            
 
             // Write information for data entry activity.
             $entry = new DataEntry();
@@ -67,6 +67,7 @@ class DeController extends ControllerBase
             }
         }
 
+        $this->view->dataEntry = $entry;
         $this->view->batch = $batch;
         $this->view->setTemplateAfter('de');
     }
@@ -127,17 +128,9 @@ class DeController extends ControllerBase
             ]);
 
             return;
-        }
-
-        if ($this->request->getPost('isFromHome')) {
-            $this->flash->success("Batch <b>" . $batchId . "</b>  was completed successfully.");
-            $this->dispatcher->forward([
-                'controller' => "home",
-                'action' => 'index'
-            ]);            
-        }
+        }        
         
-        return;
+        return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
     }
     
     public function redirectNoNextAction($taskName)

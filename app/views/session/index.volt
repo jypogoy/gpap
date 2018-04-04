@@ -6,7 +6,7 @@
             <img src="/gpap/public/img/gpap_logo.jpeg" class="image"/>
             <div class="content">Log-in to your account</div>
         </h2>
-        {{ form('session/start', 'role': 'form', 'class' : 'ui large form') }}
+        {{ form('session/start', 'role': 'form', 'class' : 'ui large form', 'autocomplete' : 'off') }}
             <div class="ui piled segment">
                 <div class="field">
                 <div class="ui left icon input">

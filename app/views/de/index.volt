@@ -1,3 +1,4 @@
+{{ hidden_field('data_entry_id', 'value': dataEntry.id) }}
 {{ hidden_field('batch_id', 'value': batch.id) }}
 {{ hidden_field('region', 'value': batch.zip.region_code) }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}

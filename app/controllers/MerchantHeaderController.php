@@ -9,13 +9,16 @@ class MerchantHeaderController extends ControllerBase
         
     }
 
-    public function getByBatchAction($batchId)
+    public function getAction()
     {                
         $this->view->disable();
         
+        $deId = $this->request->getPost('data_entry_id');
+        $batchId = $this->request->getPost('batch_id');
+
         $header = MerchantHeader::findFirst(
             [
-                "conditions" => "batch_id = " . $batchId
+                "conditions" => "data_entry_id = " . $deId . " AND batch_id = " . $batchId
             ]
         );
 
@@ -29,10 +32,13 @@ class MerchantHeaderController extends ControllerBase
             return $this->response->redirect('');
         }
 
+        $deId = $this->request->getPost('data_entry_id');
+        $batchId = $this->request->getPost('batch_id');
+
         // Update any existing header content.
         $header = MerchantHeader::findFirst(
             [
-                "conditions" => "batch_id = " . $this->request->getPost('batch_id')
+                "conditions" => "data_entry_id = " . $deId . " AND batch_id = " . $batchId
             ]
         );
         
@@ -41,6 +47,7 @@ class MerchantHeaderController extends ControllerBase
         // Set a new instance if no existing record found.
         if (!$header) $header = new MerchantHeader();
         
+        $header->data_entry_id = $this->request->getPost('data_entry_id');
         $header->batch_id = $this->request->getPost('batch_id');
         $header->merchant_number = $this->request->getPost('merchant_number') == '' ? null : $this->request->getPost('merchant_number');
         $header->merchant_name = $this->request->getPost('merchant_name') == '' ? null : $this->request->getPost('merchant_name');

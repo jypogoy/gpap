@@ -53,13 +53,13 @@ class SecurityPlugin extends Plugin
 				'image'		=>	['list'],
 				'installment_months'	=>	['list'],
 				'merchant'	=>	['get'],
-				'merchant_header'	=>	['getbybatch', 'save'],
+				'merchant_header'	=>	['get', 'save'],
 				'other_exception'	=>	['list'],
 				'pull_reason'	=>	['getbylevel'],
 				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
-				'data_entry'	=>	['getbyusertask']
+				'data_entry'	=>	['getbyusertask', 'getbycountertask']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);

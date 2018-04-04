@@ -14,6 +14,7 @@ $(function () {
 
 });
 
+var activeTaskId;
 function getUserTasks() {
     $.post('user_task/getbyuser/' + $('#user_id').val(), function (data) {   
         if (!data) {
@@ -33,8 +34,7 @@ function getUserTasks() {
                 
                 // Check if task filtering was previously done to avoid redundancy.
                 var sessionTaskId = $('#session_task_id').val();
-                
-                var activeTaskId;
+                                
                 if (sessionTaskId != 'undefined' && sessionTaskId != '' && sessionTaskId > 0) {
                     activeTaskId = sessionTaskId;
                     $('#task_id').val(sessionTaskId);
@@ -143,7 +143,7 @@ function loadAvailableBatches() {
     });
 }
 
-function complete(entryId, batchId) {
+function complete(fromHome, actionEl, entryId, batchId) {
     
     $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + batchId + '</strong>? Click OK to proceed.</p>');
 
@@ -159,9 +159,22 @@ function complete(entryId, batchId) {
             var data = {};
             data.entry_id = entryId;
             data.batch_id = batchId;
-            data.isFromHome = true;
-            $.post('de/complete/', data,function (data) {
-                // Do nothing...             
+            $.post('de/complete/', data,function (msg) {  
+                if (msg.indexOf('success') != -1) {       
+                    if (fromHome) {
+                        var row = $(actionEl).closest('tr');
+                        row.effect('highlight', {}, 500, function(){ // See app.css for highlight class
+                            $(this).fadeOut('fast', function(){            
+                                var table = $(this).closest('table');
+                                $(this).remove();        
+                                loadUserEntries(activeTaskId);
+                            });
+                        });                          
+                    }
+                    toastr.success(msg);         
+                } else {
+                    toastr.success('Unable to complete the selected batch.');
+                }       
             });
         }
     })

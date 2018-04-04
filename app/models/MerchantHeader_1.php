@@ -44,6 +44,13 @@ class MerchantHeader extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
+     * @Column(type="string", length=3, nullable=true)
+     */
+    public $other_currency;
+
+    /**
+     *
+     * @var string
      * @Column(type="string", length=7, nullable=true)
      */
     public $dcn;

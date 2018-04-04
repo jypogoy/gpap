@@ -1,8 +1,58 @@
 var withHeaderContent = false;
 var withSlipContent = false;
 
+var e1HeaderMap = new HashMap();
+var e1SlipMap = new HashMap();
+function getE1Contents() {
+    // Get the data entry 1 record.
+    var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.task_id = $('#session_task_id').val();
+    $.post('../data_entry/getbycountertask/', params, function (dataEntryData) {
+        // Retrieve header contents.
+        params = {};
+        params.batch_id = $('#batch_id').val();
+        params.data_entry_id = dataEntryData.id;
+        $.post('../merchant_header/get/', params, function (headerData) {
+            if (headerData || headerData.length > 0) {                
+                // Add values to header map.
+                $.each(headerData, function(key, value) {
+                    e1HeaderMap.set(key, value);
+                });    
+                // Retrieve transactions.
+                getSlips(headerData.id);   
+            }            
+        })
+    });
+    // Retrieve related transactions.
+    function getSlips(headerId) {
+        $.post('../transaction/getbyheader/' + headerId, function (data) {
+            if (data || data.length > 0) {
+                $.each(data, function(id, fieldValueArray) {
+                    var slipValueMap = new HashMap();
+                    var key;
+                    $.each(fieldValueArray, function(id, value) {
+                        if (id == 'sequence') {
+                            key = value;                        
+                        } else {
+                            slipValueMap.set(id, value);
+                        }                    
+                    });
+                    e1SlipMap.set(parseInt(key), slipValueMap);
+                });                 
+            }       
+            
+            console.log(e1HeaderMap);
+            console.log(e1SlipMap);
+        })
+    }
+}
+
 function getContents() {
-    $.post('../merchant_header/getbybatch/' + $('#batch_id').val(), function (headerData) {
+    var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.data_entry_id = $('#data_entry_id').val();
+    $.post('../merchant_header/get/', params, function (headerData) {
         if (!headerData || headerData.length == 0) {
             //toastr.warning('This batch does not have any header content.');
         } else {

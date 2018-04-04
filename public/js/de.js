@@ -104,6 +104,8 @@ $(function() {
     getExceptions();    
     getContents();
 
+    if ($('#session_task_name').val().indexOf('Verify') != -1) getE1Contents();
+
     $('#merchant_number').focus();
     $('.dropdown.icon').removeAttr('tabIndex');
 });

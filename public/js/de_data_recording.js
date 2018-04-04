@@ -1,7 +1,8 @@
 function gatherHeaderValues() {
     var fields = $('.header-field');
     var data = {};
-    data.batch_id = $('#batch_id').val();
+    data.data_entry_id = $('#data_entry_id').val();
+    data.batch_id = $('#batch_id').val();    
     $.each(fields, function(i, field) {        
         if (field.id.indexOf('date') != -1) {
             data[field.id] = $.datepicker.formatDate('yy-mm-dd', new Date(field.value));
