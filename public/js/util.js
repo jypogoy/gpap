@@ -103,3 +103,10 @@ function checkWebStorageSupport() {
       return false;
   }
 }
+
+function formatDate(date) {
+    var day = new Array(2 - date.getDate().toString().length + 1).join('0') + date.getDate();            
+    var month = new Array(2 - (date.getMonth() + 1).toString().length + 1).join('0') + (date.getMonth() + 1);
+    var year = date.getFullYear().toString().substr(-2);
+    return month + '/' + day + '/' + year;
+}

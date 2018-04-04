@@ -46,3 +46,4 @@
 {{ javascript_include('js/de_data_recording.js') }}
 {{ javascript_include('js/de_data_navigation.js') }}
 {{ javascript_include('js/de_form_events.js') }}
+{{ javascript_include('js/de_verify.js') }}

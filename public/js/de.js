@@ -21,10 +21,7 @@ $(function() {
         formatter: {
             date: function (date, settings) {
                 if (!date) return '';
-                var day = new Array(2 - date.getDate().toString().length + 1).join('0') + date.getDate();            
-                var month = new Array(2 - (date.getMonth() + 1).toString().length + 1).join('0') + (date.getMonth() + 1);
-                var year = date.getFullYear().toString().substr(-2);
-                return month + '/' + day + '/' + year;
+                return formatDate(date);
             }
         }
     });        
@@ -104,7 +101,7 @@ $(function() {
     getExceptions();    
     getContents();
 
-    if ($('#session_task_name').val().indexOf('Verify') != -1) getE1Contents();
+    if ($('#session_task_name').val().indexOf('Verify') != -1) getRawContents();
 
     $('#merchant_number').focus();
     $('.dropdown.icon').removeAttr('tabIndex');

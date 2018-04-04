@@ -11,7 +11,7 @@ $(function() {
     $('#merchant_number').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
-            searchMerchant($(this).val());
+            searchMerchant($(this).val()); // See de_data_retrieval.js
             padZero($(this));
         }
         this.value = this.value.replace(/[^0-9]/, '');

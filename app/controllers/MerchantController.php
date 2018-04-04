@@ -11,9 +11,15 @@ class MerchantController extends ControllerBase
     {                
         $this->view->disable();
         
-        $merchant = Merchant::findFirst(
+        // $merchant = Merchant::findFirst(
+        //     [
+        //         "conditions" => "account_number = " . $merchantId
+        //     ]
+        // );
+
+        $merchant = Demographic::findFirst(
             [
-                "conditions" => "account_number = " . $merchantId
+                "conditions" => "merchant = " . $merchantId
             ]
         );
 
