@@ -38,6 +38,7 @@
 </div>
 
 {{ modals.getConfirmation('delete', 'Transaction') }}
+{{ modals.getConfirmation('complete', 'Batch') }}
 
 <div class="ui active loader"></div>
 

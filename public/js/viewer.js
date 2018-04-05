@@ -1,4 +1,4 @@
-var imgServer = '/images';
+var imgServer = '/ftp';
 var imgArray;
 var imgActive;
 var imgNavIndex = 0;

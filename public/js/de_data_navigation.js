@@ -129,3 +129,18 @@ function refreshTransTypeDependentFields() {
         $('.vi-field').parent().addClass('hidden');
     }
 }
+
+function calculateAmount() {
+    var totalAmount = 0;
+    slipMap.forEach(function(valueMap, page) {
+        valueMap.forEach(function(value, fieldId) {
+            if (fieldId.indexOf('amount') != -1) {                
+                totalAmount = totalAmount + parseInt(value);
+            }
+        });
+    });
+    totalAmount = numToCurrency(totalAmount); // See util.js
+    $('#total_transaction_amount').val(totalAmount);
+    var variance = numToCurrency(totalAmount - $('#deposit_amount').val());
+    $('#variance').val(variance);
+}

@@ -14,7 +14,7 @@ function gatherHeaderValues() {
     return data;
 }
 
-function saveBatch(isSaveNew) {
+function saveBatch(isSaveNew, isComplete) {
 
     saveSlip(); // Save the current content. See de_data_navigation.js
    
@@ -43,9 +43,7 @@ function saveBatch(isSaveNew) {
                                 data[id] = value;
                             }      
                         });
-                    
-                        // FOR CONFIRMATION: IS TRANSACTION ID ALWAYS REQUIRED?                        
-                    
+                        
                         // Write the transaction details.
                         $.post('../transaction/save', data, function (msg) {
                             if (msg.indexOf('success')) {
@@ -68,25 +66,47 @@ function saveBatch(isSaveNew) {
         }
     })
     .done(function() {
-        if (isSaveNew) {
-            $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : ''), function (data) {
-                if (data) {
-                    window.location = '../de/' + data.id;
+        if (isComplete) {
+            var data = {};
+            data.entry_id = $('#data_entry_id').val();
+            data.batch_id = $('#batch_id').val();
+            $.post('../de/complete/', data,function (msg) {  
+                if (msg.indexOf('success') != -1) {                                               
+                    toastr.success(msg);  
+                    if (isSaveNew) {
+                        getNewBatch();
+                    } else {
+                        window.location = '../de/redirectsuccess/' + true;
+                    }       
                 } else {
-                    window.location = '../de/redirectnonext/' + $('#session_task_name').val();
-                }                
-            })
-            .done(function (msg) {
-                // Do nothing...
-            })
-            .fail(function (xhr, status, error) {
-                toastr.error(error);
+                    toastr.success('Unable to complete the selected batch.');
+                }       
             });
         } else {
-            window.location = '../de/redirectsuccess/' + true;
-        }
+            if (isSaveNew) {
+                getNewBatch();
+            } else {
+                window.location = '../de/redirectsuccess/' + true;
+            }
+        }       
     });    
 
+}
+
+function getNewBatch() {
+    $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : ''), function (data) {
+        if (data) {
+            window.location = '../de/' + data.id;
+        } else {
+            window.location = '../de/redirectnonext/' + $('#session_task_name').val();
+        }                
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
 }
 
 function saveBatch2(isSaveNew) {    

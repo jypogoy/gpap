@@ -6,6 +6,10 @@ function toCurrency(el) {
     el.val(parseFloat(Math.round(el.val() * 100) / 100).toFixed(2));
 }
 
+function numToCurrency(value) {
+    return parseFloat(Math.round(value * 100) / 100).toFixed(2);
+}
+
 function createCORSRequest(method, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'arraybuffer';

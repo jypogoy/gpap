@@ -162,6 +162,8 @@ function getSlipContents(headerId) {
                 $('.next-slip-btn').removeClass('disabled'); 
                 $('.last-slip-btn').removeClass('disabled'); 
             }
+
+            calculateAmount(); // See de_data_navigation.js
         }                  
     })
     .done(function (msg) {

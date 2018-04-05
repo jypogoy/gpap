@@ -18,7 +18,7 @@ $(function() {
     });
     
     $('#merchant_number').blur(function() {
-        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');
+        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');        
     });
 
     $('#currency_id_dropdown').dropdown({
@@ -64,7 +64,7 @@ $(function() {
     });  
     
     $('#deposit_amount').blur(function() {
-        toCurrency($(this));
+        toCurrency($(this)); // See util.js
         if (this.value != '') $('#deposit_amount_wrapper').removeClass('error');
     });  
 
@@ -117,18 +117,20 @@ $(function() {
         }
     });
 
-    $('#credit_card_number').keyup(function() {
+    $('#card_number').keyup(function() {
         this.value = this.value.replace(/[^0-9]/, '');
     });
 
     $('#authorization_code').blur(function() {
-        padZero($(this));
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
+        this.value = this.value.toUpperCase();
     }); 
 
     $('#transaction_amount').blur(function() {
-        toCurrency($(this));
+        toCurrency($(this)); // See util.js
         if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
+        saveSlip(); // Make sure to save the current slip to apply amount.
+        calculateAmount();
     }); 
 
     $('#transaction_amount').keyup(function() {
@@ -231,32 +233,53 @@ $(function() {
     });
 
     //------------- Form Control Events ---------------------------------
+    $('.complete-exit-btn').click(function(e) {
+        e.preventDefault();
+        preSave(false, true);
+    });
+
+    $('.complete-next-btn').click(function(e) {
+        e.preventDefault();
+        preSave(true, true);
+    });
+    
     $('.save-exit-btn').click(function(e) {
         e.preventDefault();
-        var headerValidationResult = Form.validate(true);        
-        var slipValidationResult = true;
-        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
-            slipValidationResult = Form.validate(false);
-        }
-        if(headerValidationResult) {            
-            if (headerValidationResult && slipValidationResult) {
-                saveBatch(false); // See de_data_recording.js
-            }            
-        }
+        preSave(false, false);
     });
 
     $('.save-next-btn').click(function(e) {
-        e.preventDefault();
-        var headerValidationResult = Form.validate(true);        
-        var slipValidationResult = true;
-        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
-            slipValidationResult = Form.validate(false);
-        }
-        if(headerValidationResult) {       
-                 
-            if (headerValidationResult && slipValidationResult) {
-                saveBatch(true); // See de_data_recording.js
-            }            
-        }
+        preSave(true, false);
     });
 });
+
+function preSave(isSaveNew, isComplete) {
+    var headerValidationResult = Form.validate(true);        
+    var slipValidationResult = true;
+    if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
+        slipValidationResult = Form.validate(false);
+    }
+    if(headerValidationResult) {            
+        if (headerValidationResult && slipValidationResult) {
+            if (isComplete) {
+                $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
+
+                $('.modal:not(div.Transaction)')
+                .modal({
+                    inverted : true,
+                    closable : true,
+                    observeChanges : true, // <-- Helps retain the modal position on succeeding show.
+                    onDeny : function(){
+                        // Do nothing
+                    },
+                    onApprove : function() {
+                        saveBatch(isSaveNew, true); // See de_data_recording.js
+                    }
+                })
+                .modal('show');
+            } else {
+                saveBatch(isSaveNew, false); // See de_data_recording.js
+            }            
+        }            
+    }
+}

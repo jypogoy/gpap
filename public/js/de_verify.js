@@ -21,11 +21,11 @@ function applySlipChecks() {
             if (field.id.indexOf('date') != -1) {
                 var date =new Date(rawValue);                        
                 rawValue = formatDate(date); // See util.js
-                if(field.value !== rawValue) {                                                    
+                if(rawValue && field.value !== rawValue) {                                                    
                     showMessage(field.id, rawValue, rawValue);
                 }
             } else {
-                if(field.value !== rawValue) {                                                    
+                if(rawValue && field.value !== rawValue) {                                                    
                     showMessage(field.id, rawValue, rawValue);
                 }
             }
@@ -35,7 +35,7 @@ function applySlipChecks() {
         $(dropdown).blur(function(e) {
             $('#' + field.id + '_alert').remove();
             var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
-            if ($(dropdown).dropdown('get value') !== rawValue) {                    
+            if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
                 if (field.id == 'installment_months_id') {    
                     var data = installMonthsMap.get(rawValue);                    
                     if (data) showMessage(field.id, rawValue, data.title);

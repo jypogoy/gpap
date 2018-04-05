@@ -36,7 +36,7 @@
 </table>
 
 {{ alert.getRedirectMessage() }}
-{{ modals.getConfirmation('complete', 'batch') }}
+{{ modals.getConfirmation('complete', 'Batch') }}
 
 <div class="ui active loader"></div>
 
