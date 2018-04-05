@@ -1,4 +1,4 @@
-var imgServer = '/ftp';
+var imgServer = '/images';
 var imgArray;
 var imgActive;
 var imgNavIndex = 0;
@@ -140,32 +140,7 @@ function renderImages() {
                     $(canvasEl).remove();
                 }
 
-                $('#viewer').append(canvas);
-
-                //  var canvasEl = $('canvas')[0];
-                //  if (canvasEl) {                
-                //     var prevContext = canvasEl.getContext('2d');
-                    
-                //     console.log(context);
-                //     console.log(prevContext);
-
-                //     // Clear canvas
-                //     prevContext.clearRect(0, 0, canvasEl.width, canvasEl.height);
-                //     prevContext.drawImage(canvas, 0, 0);
-                //     // Clear path
-                //     prevContext.beginPath();     
-
-                //     // console.log($(canvasEl).position().left)
-                //     // console.log($(canvasEl).position().top)
-                //     var data = context.getImageData(0, 0, canvas.width, canvas.height);
-                //     prevContext.putImageData(data, 0, 0);                   
-                    
-                    
-                // } else {
-                //     $('#viewer').append(canvas);
-                // }
-
-                //  prevContext = context;            
+                $('#viewer').append(canvas);                
                             
                 $('canvas').width($('canvas').width() / 2);       
                 $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
