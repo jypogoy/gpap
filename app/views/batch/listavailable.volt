@@ -1,4 +1,4 @@
-<table id="batchTable" class="ui sortable selectable celled striped table">
+<table id="batchTable" class="ui selectable celled striped table">
     <thead>
         <tr>
             <th>REGION</th>
@@ -18,7 +18,7 @@
             <td>{{ batch.Zip.sequence }}</td>
             <td>{{ batch.id }}</td>
             <td>
-                <a href="de/{{ batch.id }}" class="ui icon" data-tooltip="Start" data-position="bottom center">
+                <a onclick="begin({{ batch.id }}); return false;" class="ui icon" data-tooltip="Start" data-position="bottom center">
                     <i class="large play circle green icon"></i>Start
                 </a>
             </td>

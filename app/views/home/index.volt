@@ -14,12 +14,13 @@
         </div>
         <div class="right aligned column user-tasks"></div>
         <div class="right aligned column">
-            <a class="ui primary hidden button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
+            <a class="ui primary hidden button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>   
+            {#<div class="floating ui green label" style="margin-left: -30px !important; margin-top: 10px !important;">22</div>#}         
         </div>
     </div>     
 </form> 
 
-<table class="ui sortable selectable celled striped table">
+<table class="ui selectable celled striped table">
     <thead>
         <tr>
             <th>REGION</th>
@@ -41,5 +42,7 @@
 <div class="ui active loader"></div>
 
 {% include 'de/batch_modal.volt' %} 
+
+<form id="beginForm"></form>
 
 {{ javascript_include('js/home.js') }}

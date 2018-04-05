@@ -48,7 +48,7 @@ class SecurityPlugin extends Plugin
 			$privateResources = [
 				'home'      => 	['index'],
 				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
-				'batch'		=>	['listavailable', 'get', 'getavailable'],
+				'batch'		=>	['listavailable', 'get', 'getavailable', 'listwithvariance'],
 				'currency'	=>	['getbyregion'],
 				'image'		=>	['list', 'get'],
 				'installment_months'	=>	['list'],

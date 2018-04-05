@@ -50,6 +50,20 @@ class BatchController extends ControllerBase
         $this->response->setJsonContent($batch);
         $this->response->send(); 
     }
-    
+
+    public function listWithVarianceAction()
+    {
+        $this->view->disable();
+
+        $phql = "SELECT Batch.* FROM Transaction " .
+                "INNER JOIN MerchantHeader ON MerchantHeader.id = Transaction.merchant_header_id " . 
+                "INNER JOIN Batch ON Batch.id =  MerchantHeader.batch_id " .
+                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' " .
+                "GROUP BY Batch.id";
+
+        $batches = $this->modelsManager->executeQuery($phql);
+
+        echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);
+    }
 }
 

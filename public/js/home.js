@@ -126,21 +126,39 @@ var BatchModal = {
 
 function loadAvailableBatches() {
     var activeTaskName = $('#task_id_dropdown').dropdown('get text');
-    $.post('batch/listavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any batch.');
-            BatchModal.hide();      
-        } else {
-            $('.available-batch-content').empty();
-            $('.available-batch-content').append(data);
-        }                
-    })
-    .done(function (msg) {
-        BatchModal.show();
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
+    if (activeTaskName.indexOf('Balancing') != -1) {
+        $.post('batch/listwithvariance/', function (data) {
+            if (!data) {
+                toastr.warning('The search did not match any batch.');
+                BatchModal.hide();      
+            } else {
+                $('.available-batch-content').empty();
+                $('.available-batch-content').append(data);
+            }                
+        })
+        .done(function (msg) {
+            BatchModal.show();
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });
+    } else {
+        $.post('batch/listavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (data) {
+            if (!data) {
+                toastr.warning('The search did not match any batch.');
+                BatchModal.hide();      
+            } else {
+                $('.available-batch-content').empty();
+                $('.available-batch-content').append(data);
+            }                
+        })
+        .done(function (msg) {
+            BatchModal.show();
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });
+    }
 }
 
 function complete(fromHome, actionEl, entryId, batchId) {
@@ -179,4 +197,11 @@ function complete(fromHome, actionEl, entryId, batchId) {
         }
     })
     .modal('show');
+}
+
+function begin(batchId) {
+    var form = $('#beginForm');
+    $(form).attr('action', 'de/' + batchId);    
+    $(form).attr('method', 'POST');
+    $(form).submit();
 }

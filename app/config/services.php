@@ -9,6 +9,7 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Mvc\Model\Manager as ModelsManager;
 
 /**
  * Register the events manager
@@ -130,6 +131,13 @@ $di->setShared('db', function () {
  */
 $di->setShared('modelsMetadata', function () {
     return new MetaDataAdapter();
+});
+
+/**
+ * 
+ */
+$di->set('modelsManager', function () {
+    return new ModelsManager();
 });
 
 /**

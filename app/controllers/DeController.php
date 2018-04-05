@@ -11,6 +11,11 @@ class DeController extends ControllerBase
 
     public function indexAction($batchId = null)
     {        
+        if (!$this->request->isPost()) {
+            $this->flashSession->error('Direct access to data entry URL is not permitted!');
+            return $this->response->redirect('');
+        }
+        
         $batch = Batch::findFirstById($batchId); 
 
         $userId = $this->session->get('auth')['id'];
