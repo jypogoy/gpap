@@ -103,7 +103,7 @@ function countAvailableByTask() {
     var activeTaskName = $('#task_id_dropdown').dropdown('get text');
     if (activeTaskName.indexOf('Balancing') != -1) {
         $.post('batch/countwithvariance', function (count) {
-            $('#batchCount').html(count.total);
+            $('#batchCount').html(count ? count.total : 0);
         })
         .done(function (msg) {
             // Do nothing...

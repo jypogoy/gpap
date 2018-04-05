@@ -13,42 +13,44 @@ $(function() {
 });
 
 function applySlipChecks() {
-    $.each(slipFields, function(i, field) {                      
-        // Input fields
-        $(field).blur(function(e) {                
-            $('#' + field.id + '_alert').remove();
-            var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
-            if (field.id.indexOf('date') != -1) {
-                var date =new Date(rawValue);                        
-                rawValue = formatDate(date); // See util.js
-                if(rawValue && field.value !== rawValue) {                                                    
-                    showMessage(field.id, rawValue, rawValue);
+    if (rawSlipMap.count() > 0) {
+        $.each(slipFields, function(i, field) {                      
+            // Input fields
+            $(field).blur(function(e) {                
+                $('#' + field.id + '_alert').remove();
+                var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
+                if (field.id.indexOf('date') != -1) {
+                    var date =new Date(rawValue);                        
+                    rawValue = formatDate(date); // See util.js
+                    if(rawValue && field.value !== rawValue) {                                                    
+                        showMessage(field.id, rawValue, rawValue);
+                    }
+                } else {
+                    if(rawValue && field.value !== rawValue) {                                                    
+                        showMessage(field.id, rawValue, rawValue);
+                    }
                 }
-            } else {
-                if(rawValue && field.value !== rawValue) {                                                    
-                    showMessage(field.id, rawValue, rawValue);
+            });
+            // Dropdown or comboboxes
+            var dropdown = $('#' + field.id + '_dropdown');
+            $(dropdown).blur(function(e) {
+                $('#' + field.id + '_alert').remove();
+                var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
+                if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
+                    if (field.id == 'installment_months_id') {    
+                        var data = installMonthsMap.get(rawValue);                    
+                        if (data) showMessage(field.id, rawValue, data.title);
+                    } else if (field.id == 'slip_pull_reason_id') {
+                        var data = slipPullReasonMap.get(rawValue);   
+                        if (data) showMessage(field.id, data.id, data.title + '-' + data.reason);
+                    } else if (field.id == 'exception_id') {
+                        var data = exceptionMap.get(rawValue);   
+                        if (data) showMessage(field.id, data.id, data.title);
+                    }
                 }
-            }
+            });
         });
-        // Dropdown or comboboxes
-        var dropdown = $('#' + field.id + '_dropdown');
-        $(dropdown).blur(function(e) {
-            $('#' + field.id + '_alert').remove();
-            var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
-            if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
-                if (field.id == 'installment_months_id') {    
-                    var data = installMonthsMap.get(rawValue);                    
-                    if (data) showMessage(field.id, rawValue, data.title);
-                } else if (field.id == 'slip_pull_reason_id') {
-                    var data = slipPullReasonMap.get(rawValue);   
-                    if (data) showMessage(field.id, data.id, data.title + '-' + data.reason);
-                } else if (field.id == 'exception_id') {
-                    var data = exceptionMap.get(rawValue);   
-                    if (data) showMessage(field.id, data.id, data.title);
-                }
-            }
-        });
-    });
+    }
 }
 
 function applyHeaderChecks(fields) {
@@ -60,11 +62,11 @@ function applyHeaderChecks(fields) {
             if (field.id.indexOf('date') != -1) {
                 var date =new Date(rawValue);                        
                 rawValue = formatDate(date); // See util.js
-                if(field.value !== rawValue) {                                                    
+                if(rawValue && field.value !== rawValue) {                                                    
                     showMessage(field.id, rawValue, rawValue);
                 }
             } else {
-                if(field.value !== rawValue) {                                                    
+                if(rawValue && field.value !== rawValue) {                                                    
                     showMessage(field.id, rawValue, rawValue);
                 }
             }
