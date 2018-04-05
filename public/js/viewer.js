@@ -1,4 +1,4 @@
-var imgServer = '/ftp';
+var imgServer = '/GPAPdocs';
 var imgArray;
 var imgActive;
 var imgNavIndex = 0;
@@ -110,6 +110,7 @@ function renderImages() {
             toastr.error(msg);
         } else {
             var xhr = createCORSRequest('GET', imgServer + imgActive);
+            //var xhr = createCORSRequest('GET', '../image/get');
             xhr.onload = function (e) {                  
                 
                 $('.filename').empty();

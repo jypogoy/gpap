@@ -50,7 +50,7 @@ class SecurityPlugin extends Plugin
 				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
 				'batch'		=>	['listavailable', 'get', 'getavailable'],
 				'currency'	=>	['getbyregion'],
-				'image'		=>	['list'],
+				'image'		=>	['list', 'get'],
 				'installment_months'	=>	['list'],
 				'merchant'	=>	['get'],
 				'merchant_header'	=>	['get', 'save'],
