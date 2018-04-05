@@ -41,13 +41,43 @@ class BatchController extends ControllerBase
     {
         $this->view->disable();
         
-        $batch = Batch::findFirst(
+        $batches = Batch::findFirst(
             [
                 "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
             ]
         );        
 
-        $this->response->setJsonContent($batch);
+        $this->response->setJsonContent($batches);
+        $this->response->send(); 
+    }
+
+    public function countAvailableAction($taskName)
+    {
+        $this->view->disable();
+        
+        $count = Batch::count(
+            [
+                "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
+            ]
+        );        
+
+        $this->response->setJsonContent($count);
+        $this->response->send(); 
+    }
+
+    public function countWithVarianceAction()
+    {
+        $this->view->disable();
+
+        $phql = "SELECT COUNT(*) AS total FROM Transaction " .
+                "INNER JOIN MerchantHeader ON MerchantHeader.id = Transaction.merchant_header_id " . 
+                "INNER JOIN Batch ON Batch.id =  MerchantHeader.batch_id " .
+                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' " .
+                "GROUP BY Batch.id";
+
+        $count = $this->modelsManager->executeQuery($phql)->getFirst();
+
+        $this->response->setJsonContent($count);
         $this->response->send(); 
     }
 

@@ -78,7 +78,7 @@ class TransactionController extends ControllerBase
         $transaction->commodity_code = $this->request->getPost('commodity_code') == '' ? null : $this->request->getPost('commodity_code');
         $transaction->slip_pull_reason_id = $this->request->getPost('slip_pull_reason_id') == '' ? null : $this->request->getPost('slip_pull_reason_id');
         $transaction->exception_id = $this->request->getPost('exception_id') == '' ? null : $this->request->getPost('exception_id');
-        $transaction->variance_exception = $this->request->getPost('variance_exception') || $this->request->getPost('variance_exception') == '1' ? 1 : 0;
+        $transaction->variance_exception = $this->request->getPost('variance_exception') == 'true' || $this->request->getPost('variance_exception') == '1' ? 1 : 0;
         $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
 
         $successMsg = "Transaction was saved successfully.";

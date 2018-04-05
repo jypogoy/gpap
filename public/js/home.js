@@ -58,10 +58,12 @@ function getUserTasks() {
                     $('.deListBody').append('<tr><td colspan="6">No records found.</td></tr>');
                 }        
                 $('.get-batch').removeClass('hidden');
+                $('#batchCount').removeClass('hidden');
             } else {
                 toastr.info('You do not have any assigned tasks.'); 
                 $('.user-tasks').empty();
                 $('.get-batch').addClass('hidden');
+                $('#batchCount').addClass('hidden');
                 $('.deListBody').empty();  
                 $('.deListBody').append('<tr><td colspan="6">No records found.</td></tr>');
             }    
@@ -90,11 +92,36 @@ function loadUserEntries(taskId) {
         }                
     })
     .done(function (msg) {
-        // Do nothing...
+        countAvailableByTask();
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
     });   
+}
+
+function countAvailableByTask() {
+    var activeTaskName = $('#task_id_dropdown').dropdown('get text');
+    if (activeTaskName.indexOf('Balancing') != -1) {
+        $.post('batch/countwithvariance', function (count) {
+            $('#batchCount').html(count.total);
+        })
+        .done(function (msg) {
+            // Do nothing...
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        }); 
+    } else {
+        $.post('batch/countavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (count) {
+            $('#batchCount').html(count);
+        })
+        .done(function (msg) {
+            // Do nothing...
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });   
+    }
 }
 
 var BatchModal = {
