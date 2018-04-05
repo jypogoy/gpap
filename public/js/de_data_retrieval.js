@@ -29,6 +29,9 @@ function getRawContents() {
                 $.each(headerData, function(key, value) {
                     rawHeaderMap.set(key, value);
                 });    
+                
+                applyHeaderChecks(); // See de_verify.js
+
                 // Retrieve transactions.
                 getSlips(headerData.id);   
             }            
@@ -49,7 +52,9 @@ function getRawContents() {
                         }                    
                     });
                     rawSlipMap.set(parseInt(key), slipValueMap);
-                });                 
+                });               
+                  
+                applySlipChecks(); // See de_verify.js
             }
         })
     }

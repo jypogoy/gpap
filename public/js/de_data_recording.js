@@ -96,7 +96,7 @@ function saveBatch(isSaveNew, isComplete) {
 function getNewBatch() {
     $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : ''), function (data) {
         if (data) {
-            window.location = '../de/' + data.id;
+            redirectBack(data.id)
         } else {
             window.location = '../de/redirectnonext/' + $('#session_task_name').val();
         }                
@@ -187,6 +187,9 @@ function saveBatch2(isSaveNew) {
     }); 
 }
 
-function completeBatch(isCompleteNew) {
-
+function redirectBack(batchId) {
+    var form = $('#redirectForm');
+    $(form).attr('action', '../de/' + batchId);    
+    $(form).attr('method', 'POST');
+    $(form).submit();
 }

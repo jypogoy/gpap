@@ -77,8 +77,12 @@ function setFieldValue(key, value) {
         } else {
             $('#' + key).prop('checked', false);
         }
-    } else {
-        $('#' + key).val(value);   
+    } else {        
+        $('#' + key).val(value);
+        var calEl = $('#' + key + '_cal');
+        if (calEl) { // If calendar element exists
+            $(calEl).calendar('set date', value);
+        }
     }           
     // Set value for dropdown or comboboxes.  
     var dropDownEl = $('#' + key + '_dropdown');

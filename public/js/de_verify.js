@@ -5,12 +5,48 @@ $(function() {
 
     if ($('#session_task_name').val().indexOf('Verify') != -1) {
         headerFields = $('.header-field');
-        slipFields = $('.slip-field');    
-        applyHeaderChecks();    
-        applySlipChecks();
+        slipFields = $('.slip-field');                        
     }
 
 });
+
+function applyHeaderChecks(fields) {
+    $.each(headerFields, function(i, field) {                      
+        // Input fields
+        $(field).blur(function(e) {                
+            $('#' + field.id + '_alert').remove();
+            var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object         
+            if (field.id.indexOf('date') != -1) {
+                if (rawValue && rawValue.length > 0) {
+                    var date =new Date(rawValue);                        
+                    rawValue = formatDate(date); // See util.js
+                    if(field.value !== rawValue) {                                                    
+                        showMessage(field.id, rawValue, rawValue);
+                    }
+                }
+            } else {
+                if(rawValue && field.value !== rawValue) {                                                    
+                    showMessage(field.id, rawValue, rawValue);
+                }
+            }
+        });
+        // Dropdown or comboboxes
+        var dropdown = $('#' + field.id + '_dropdown');
+        $(dropdown).blur(function(e) {
+            $('#' + field.id + '_alert').remove();
+            var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object    
+            if ($(dropdown).dropdown('get value') !== rawValue) {                    
+                if (field.id == 'currency_id') {    
+                    var data = currencyMap.get(rawValue);                    
+                    if (data) showMessage(field.id, rawValue, data.alpha_code);
+                } else if (field.id == 'batch_pull_reason_id') {
+                    var data = batchPullReasonMap.get(rawValue);   
+                    if (data) showMessage(field.id, data.id, data.title + '-' + data.reason);
+                }
+            }
+        });
+    });
+}
 
 function applySlipChecks() {
     if (rawSlipMap.count() > 0) {
@@ -20,10 +56,12 @@ function applySlipChecks() {
                 $('#' + field.id + '_alert').remove();
                 var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
                 if (field.id.indexOf('date') != -1) {
-                    var date =new Date(rawValue);                        
-                    rawValue = formatDate(date); // See util.js
-                    if(rawValue && field.value !== rawValue) {                                                    
-                        showMessage(field.id, rawValue, rawValue);
+                    if (rawValue && rawValue.length > 0) {
+                        var date =new Date(rawValue);                        
+                        rawValue = formatDate(date); // See util.js
+                        if(field.value !== rawValue) {                                                    
+                            showMessage(field.id, rawValue, rawValue);
+                        }
                     }
                 } else {
                     if(rawValue && field.value !== rawValue) {                                                    
@@ -51,42 +89,6 @@ function applySlipChecks() {
             });
         });
     }
-}
-
-function applyHeaderChecks(fields) {
-    $.each(headerFields, function(i, field) {                      
-        // Input fields
-        $(field).blur(function(e) {                
-            $('#' + field.id + '_alert').remove();
-            var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object         
-            if (field.id.indexOf('date') != -1) {
-                var date =new Date(rawValue);                        
-                rawValue = formatDate(date); // See util.js
-                if(rawValue && field.value !== rawValue) {                                                    
-                    showMessage(field.id, rawValue, rawValue);
-                }
-            } else {
-                if(rawValue && field.value !== rawValue) {                                                    
-                    showMessage(field.id, rawValue, rawValue);
-                }
-            }
-        });
-        // Dropdown or comboboxes
-        var dropdown = $('#' + field.id + '_dropdown');
-        $(dropdown).blur(function(e) {
-            $('#' + field.id + '_alert').remove();
-            var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object    
-            if ($(dropdown).dropdown('get value') !== rawValue) {                    
-                if (field.id == 'currency_id') {    
-                    var data = currencyMap.get(rawValue);                    
-                    if (data) showMessage(field.id, rawValue, data.alpha_code);
-                } else if (field.id == 'batch_pull_reason_id') {
-                    var data = batchPullReasonMap.get(rawValue);   
-                    if (data) showMessage(field.id, data.id, data.title + '-' + data.reason);
-                }
-            }
-        });
-    });
 }
 
 function showMessage(fieldId, value, msg) {

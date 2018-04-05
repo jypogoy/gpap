@@ -40,6 +40,8 @@
 {{ modals.getConfirmation('delete', 'Transaction') }}
 {{ modals.getConfirmation('complete', 'Batch') }}
 
+<form id="redirectForm"></form>
+
 <div class="ui active loader"></div>
 
 {{ javascript_include('js/de.js') }}
