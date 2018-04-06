@@ -88,8 +88,8 @@ class BatchController extends ControllerBase
         $phql = "SELECT Batch.* FROM Transaction " .
                 "INNER JOIN MerchantHeader ON MerchantHeader.id = Transaction.merchant_header_id " . 
                 "INNER JOIN Batch ON Batch.id =  MerchantHeader.batch_id " .
-                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' " .
-                "GROUP BY Batch.id";
+                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' ";
+                //"GROUP BY Batch.id";
 
         $batches = $this->modelsManager->executeQuery($phql);
 
