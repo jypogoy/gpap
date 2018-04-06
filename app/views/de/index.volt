@@ -10,7 +10,7 @@
             
             {% include 'de/header_form.volt' %}
             {% include 'de/transaction_form.volt' %}
-            
+                    
             <div class="ui small basic icon buttons slip-controls" style="margin-top: 10px;">
                 <button class="ui icon button more-btn" data-tooltip="Add a new Slip" data-position="top center"><i class="plus blue icon"></i></button>
                 <button class="ui icon disabled button first-slip-btn" data-tooltip="First Slip" data-position="top center"><i class="arrow left green icon"></i></button>
@@ -20,6 +20,8 @@
                 <button class="ui icon button delete-slip-btn" data-tooltip="Delete Slip" data-position="top center"><i class="remove red icon"></i></button>  
                 <button class="ui icon button reset-slip-btn" data-tooltip="Reset Transaction" data-position="top center"><i class="recycle orange icon"></i></button>  
             </div>
+
+            {% include 'de/summary_form.volt' %}
 
             <div style="margin-top: 10px;">
                 <button class="ui small blue button complete-next-btn" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 

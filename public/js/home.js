@@ -103,7 +103,7 @@ function countAvailableByTask() {
     var activeTaskName = $('#task_id_dropdown').dropdown('get text');
     if (activeTaskName.indexOf('Balancing') != -1) {
         $.post('batch/countwithvariance', function (count) {
-            $('#batchCount').html(count ? count.total : 0);
+            $('#batchCount').html(count ? count : 0);
         })
         .done(function (msg) {
             // Do nothing...
@@ -159,12 +159,17 @@ function loadAvailableBatches() {
                 toastr.warning('The search did not match any batch.');
                 BatchModal.hide();      
             } else {
-                $('.available-batch-content').empty();
-                $('.available-batch-content').append(data);
+                if (data.indexOf('No records') != -1) {
+                    toastr.info('There are no more available batches for ' + activeTaskName + '.');                    
+                } else {
+                    $('.available-batch-content').empty();
+                    $('.available-batch-content').append(data);
+                    BatchModal.show();
+                }
             }                
         })
         .done(function (msg) {
-            BatchModal.show();
+            // Do nothing...
         })
         .fail(function (xhr, status, error) {
             toastr.error(error);
@@ -175,12 +180,17 @@ function loadAvailableBatches() {
                 toastr.warning('The search did not match any batch.');
                 BatchModal.hide();      
             } else {
-                $('.available-batch-content').empty();
-                $('.available-batch-content').append(data);
+                if (data.indexOf('No records') != -1) {
+                    toastr.info('There are no more available batches for ' + activeTaskName + '.');                    
+                } else {
+                    $('.available-batch-content').empty();
+                    $('.available-batch-content').append(data);
+                    BatchModal.show();
+                }                
             }                
         })
         .done(function (msg) {
-            BatchModal.show();
+            // Do nothing...
         })
         .fail(function (xhr, status, error) {
             toastr.error(error);
@@ -218,7 +228,7 @@ function complete(fromHome, actionEl, entryId, batchId) {
                     }
                     toastr.success(msg);         
                 } else {
-                    toastr.success('Unable to complete the selected batch.');
+                    toastr.error('Unable to complete Batch <strong>' + batchId + '</strong>.');
                 }       
             });
         }

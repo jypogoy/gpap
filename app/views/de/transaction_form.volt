@@ -79,23 +79,7 @@
             <label>Commodity Code</label> 
             {{ text_field('commodity_code', 'maxlength': '4', 'class': 'vi-field slip-field') }}
         </div>
-    </div>      
-    <div class="equal width small fields"> 
-        <div class="field">    
-            <label>Total Trans Amount</label> 
-            {{ text_field('total_transaction_amount', 'disabled': true, 'value': '0.00') }}
-        </div>
-        <div class="field">    
-            <label>Variance</label> 
-            {{ text_field('variance', 'disabled': true, 'value': '0.00') }}
-        </div>
-        <div id="variance_exception_wrapper" class="field"> 
-            <div class="ui checkbox">
-                <input type="checkbox" id="variance_exception" class="slip-field">
-                <label><strong><small>Variance Exception</small></strong></label>
-            </div>
-        </div>    
-    </div>          
+    </div>                 
     <div id="slip_pull_reason_id_wrapper" class="small field">
         <label>Transaction Pull Reason</label>
         <div id="slip_pull_reason_id_dropdown" class="ui selection dropdown slip-dropdown">

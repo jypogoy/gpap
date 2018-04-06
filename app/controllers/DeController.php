@@ -17,6 +17,7 @@ class DeController extends ControllerBase
         }
         
         $batch = Batch::findFirstById($batchId); 
+        $batch->is_exception = (int) $batch->is_exception;
 
         $userId = $this->session->get('auth')['id'];
         $taskId = $this->session->get('taskId');
@@ -98,6 +99,9 @@ class DeController extends ControllerBase
         $entry->ended_at = new \Phalcon\Db\RawValue("NOW()");
 
         if (!$entry->save()) {
+            
+            $this->db->rollback();
+
             foreach ($entry->getMessages() as $message) {
                 $this->flash->error($message);
             }
@@ -111,6 +115,7 @@ class DeController extends ControllerBase
         }
 
         $batch = Batch::findFirstByid($batchId);
+        $batch->is_exception = (int) $batch->is_exception;
 
         $taskId = $this->session->get('taskId');
 
@@ -123,6 +128,9 @@ class DeController extends ControllerBase
         }        
 
         if (!$batch->save()) {
+
+            $this->db->rollback();
+
             foreach ($batch->getMessages() as $message) {
                 $this->flash->error($message);
             }
@@ -140,7 +148,7 @@ class DeController extends ControllerBase
     
     public function redirectNoNextAction($taskName)
     {
-        $this->flashSession->success("There are no more available batches for " . $taskName);
+        $this->flashSession->notice("There are no more available batches for " . $taskName . ".");
         return $this->response->redirect('home');
     }
 

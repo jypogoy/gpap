@@ -16,8 +16,8 @@ function gatherHeaderValues() {
 
 function saveBatch(isSaveNew, isComplete) {
 
-    saveSlip(); // Save the current content. See de_data_navigation.js
-   
+    saveSlip(); // Save the current content. See de_data_navigation.js   
+        
     $.ajax()
     .then(function() { // Write the header.
         return $.post('../merchant_header/save', gatherHeaderValues(), function(headerId) {
@@ -79,7 +79,7 @@ function saveBatch(isSaveNew, isComplete) {
                         window.location = '../de/redirectsuccess/' + true;
                     }       
                 } else {
-                    toastr.success('Unable to complete the selected batch.');
+                    toastr.error('Unable to complete the this batch.');
                 }       
             });
         } else {
@@ -94,7 +94,7 @@ function saveBatch(isSaveNew, isComplete) {
 }
 
 function getNewBatch() {
-    $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : ''), function (data) {
+    $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (data) {
         if (data) {
             redirectBack(data.id)
         } else {
@@ -105,6 +105,7 @@ function getNewBatch() {
         // Do nothing...
     })
     .fail(function (xhr, status, error) {
+        console.log(error)
         toastr.error(error);
     });
 }

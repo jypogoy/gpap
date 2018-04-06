@@ -8,6 +8,20 @@ class BatchController extends ControllerBase
         
     }
 
+    public function exceptionAction()
+    {
+        $this->view->disable();
+
+        $batchId = $this->request->getPost('batch_id');
+        $isException = $this->request->getPost('is_exception');
+
+        $batch = Batch::findFirstById($batchId);    
+
+        $batch->is_exception = $isException == 'true' ? 1 : null;
+
+        echo $batch->save();
+    }
+
     public function listAvailableAction($taskName)
     {
         $this->view->disable();
@@ -17,13 +31,7 @@ class BatchController extends ControllerBase
                 "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
             ]
         );        
-
-        // $batches = Batch::query()
-        //     ->innerJoin('Zip')
-        //     ->innerJoin('TransactionType')
-        //     ->where('is_completed =i 0')
-        //     ->execute();
-
+    
         echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
     }
 
@@ -69,15 +77,13 @@ class BatchController extends ControllerBase
     {
         $this->view->disable();
 
-        $phql = "SELECT COUNT(*) AS total FROM Transaction " .
-                "INNER JOIN MerchantHeader ON MerchantHeader.id = Transaction.merchant_header_id " . 
-                "INNER JOIN Batch ON Batch.id =  MerchantHeader.batch_id " .
-                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' " .
-                "GROUP BY Batch.id";
+        $batches = Batch::find(
+            [
+                "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete'"
+            ]
+        );
 
-        $count = $this->modelsManager->executeQuery($phql)->getFirst();
-
-        $this->response->setJsonContent($count);
+        $this->response->setJsonContent(count($batches));
         $this->response->send(); 
     }
 
@@ -85,13 +91,11 @@ class BatchController extends ControllerBase
     {
         $this->view->disable();
 
-        $phql = "SELECT Batch.* FROM Transaction " .
-                "INNER JOIN MerchantHeader ON MerchantHeader.id = Transaction.merchant_header_id " . 
-                "INNER JOIN Batch ON Batch.id =  MerchantHeader.batch_id " .
-                "WHERE Transaction.variance_exception = 1 AND Batch.entry_status = 'Complete' AND Batch.verify_status = 'Complete' ";
-                //"GROUP BY Batch.id";
-
-        $batches = $this->modelsManager->executeQuery($phql);
+        $batches = Batch::find(
+            [
+                "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete'"
+            ]
+        );
 
         echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);
     }

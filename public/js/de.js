@@ -115,7 +115,7 @@ $(function() {
     if ($('#session_task_name').val().indexOf('Verify') != -1) getRawContents();
 
     $('#merchant_number').focus();
-    $('.dropdown.icon').removeAttr('tabIndex');
+    $('.dropdown.icon').removeAttr('tabIndex');    
 });
 
 function overrideHeader(pullReasonId) {

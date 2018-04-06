@@ -31,6 +31,20 @@ class Batch extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
+     * @Column(type="string", nullable=true)
+     */
+    public $entry_status;
+
+    /**
+     *
+     * @var string
+     * @Column(type="string", nullable=true)
+     */
+    public $verify_status;
+
+    /**
+     *
+     * @var string
      * @Column(type="string", length=25, nullable=true)
      */
     public $created_by;
@@ -43,6 +57,7 @@ class Batch extends \Phalcon\Mvc\Model
         $this->setSchema("gpap");
         $this->setSource("batch");
         $this->hasMany('id', 'Image', 'batch_id', ['alias' => 'Image']);
+        $this->hasMany('id', 'MerchantHeader', 'batch_id', ['alias' => 'MerchantHeader']);
         $this->belongsTo('zip_id', '\Zip', 'id', ['alias' => 'Zip']);
         $this->belongsTo('trans_type_id', '\TransactionType', 'id', ['alias' => 'TransactionType']);
     }

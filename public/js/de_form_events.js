@@ -66,6 +66,7 @@ $(function() {
     $('#deposit_amount').blur(function() {
         toCurrency($(this)); // See util.js
         if (this.value != '') $('#deposit_amount_wrapper').removeClass('error');
+        calculateAmount(); // See de_data_navigation.js
     });  
 
     $('#deposit_amount').keyup(function() {
@@ -130,7 +131,7 @@ $(function() {
         toCurrency($(this)); // See util.js
         if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
         saveSlip(); // Make sure to save the current slip to apply amount.
-        calculateAmount();
+        calculateAmount(); // See de_data_navigation.js
     }); 
 
     $('#transaction_amount').keyup(function() {
@@ -231,6 +232,16 @@ $(function() {
         Form.resetErrors(false);
         $(slipRequiredFields).addClass('required');
     });
+
+    //------------- Summary Events ---------------------------------
+    $('#variance_exception').change(function() {
+        var batchId = $('#batch_id').val();
+        if (this.checked) {
+            setAsException(batchId, true); // See de_data_navigation.js
+        } else {
+            setAsException(batchId, false);
+        }
+    });    
 
     //------------- Form Control Events ---------------------------------
     $('.complete-exit-btn').click(function(e) {

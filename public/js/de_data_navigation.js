@@ -138,13 +138,22 @@ function calculateAmount() {
     var totalAmount = 0;
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
-            if (fieldId.indexOf('amount') != -1) {                
+            if (fieldId.indexOf('amount') != -1 && value) {
                 totalAmount = totalAmount + parseInt(value);
             }
         });
     });
-    totalAmount = numToCurrency(totalAmount); // See util.js
+    totalAmount = numToCurrency(totalAmount); // See util.js    
     $('#total_transaction_amount').val(totalAmount);
     var variance = numToCurrency(totalAmount - $('#deposit_amount').val());
     $('#variance').val(variance);
+}
+
+function setAsException(batchId, isException) {
+    var params = {};
+    params.batch_id = batchId;
+    params.is_exception = isException;
+    $.post('../batch/exception/', params, function (success) {
+        // Do nothing...
+    });    
 }

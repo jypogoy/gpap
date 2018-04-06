@@ -122,13 +122,6 @@ class Transaction extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=1, nullable=true)
-     */
-    public $variance_exception;
-
-    /**
-     *
-     * @var string
      * @Column(type="string", length=30, nullable=true)
      */
     public $other_exception_detail;
