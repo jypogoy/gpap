@@ -18,7 +18,16 @@ class TransactionController extends ControllerBase
             ]
         );
 
-        $this->response->setJsonContent($transactions);
+        $decryptTrans = array();
+
+        // Decrypt card information.
+        foreach ($transactions as $transaction) {
+            $cc = preg_replace("/[^0-9,.]/", "", $this->crypt->decrypt($transaction->card_number));
+            if ($transaction->card_number) $transaction->card_number = $cc;
+            array_push($decryptTrans, $transaction);
+        }
+
+        $this->response->setJsonContent($decryptTrans);
         $this->response->send();        
     }
 
@@ -67,7 +76,14 @@ class TransactionController extends ControllerBase
         $transaction->sequence = $this->request->getPost('sequence');
         $transaction->transaction_type_id = $this->request->getPost('transaction_type_id') == '' ? null : $this->request->getPost('transaction_type_id');
         $transaction->region_code = $this->request->getPost('region_code') == '' ? null : $this->request->getPost('region_code');
-        $transaction->card_number = $this->request->getPost('card_number') == '' ? null : $this->request->getPost('card_number');
+
+        //- Encrypt card information
+        if ($this->request->getPost('card_number') == '') {
+            $transaction->card_number = null;
+        } else {
+            $transaction->card_number = $this->crypt->encrypt($this->request->getPost('card_number'));
+        }        
+
         $transaction->transaction_date = $this->request->getPost('transaction_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('transaction_date');
         $transaction->authorization_code = $this->request->getPost('authorization_code') == '' ? null : $this->request->getPost('authorization_code');
         $transaction->transaction_amount = $this->request->getPost('transaction_amount') == '' ? null : $this->request->getPost('transaction_amount');

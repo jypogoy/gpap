@@ -10,6 +10,7 @@ use Phalcon\Flash\Direct as Flash;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
+use Phalcon\Crypt;
 
 /**
  * Register the events manager
@@ -161,6 +162,22 @@ $di->setShared('session', function () {
 
     return $session;
 });
+
+$di->set(
+    "crypt",
+    function () {
+        $crypt = new Crypt();
+
+        // Set a global encryption key
+        $crypt->setKey(
+            '%31.1e$i86e$f!8jz'
+        );
+
+        return $crypt;
+    },
+    true
+);
+
 
 $di->set('elements', function () {
     return new Elements();
