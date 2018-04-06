@@ -59,7 +59,7 @@ class SecurityPlugin extends Plugin
 				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
-				'data_entry'	=>	['getbyusertask', 'getbycountertask']
+				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);

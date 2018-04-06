@@ -96,10 +96,21 @@ $(function() {
     
     // See de_data_retrieval.js
     //getTransactionTypes();
-    getPullReasons();
-    getInstallmentMonths();
-    getExceptions();    
-    getContents();
+        
+    
+    if ($('#session_task_name').val().indexOf('Balancing') != -1) {
+        getLastCompleted($('#batch_id').val()).then(function(data) {
+            getPullReasons();
+            getInstallmentMonths();
+            getExceptions();
+            getContents(data);
+        });
+    } else {
+        getPullReasons();
+        getInstallmentMonths();
+        getExceptions();
+        getContents();
+    }        
 
     if ($('#session_task_name').val().indexOf('Verify') != -1) getRawContents();
 

@@ -44,5 +44,23 @@ class DataEntryController extends ControllerBase
         $this->response->send();      
     }
 
+    public function getByLastCompletedAction($batchId)
+    {
+        $this->view->disable();
+
+        //$batchId = $this->request->getPost('batch_id');
+        
+        $entry = DataEntry::findFirst(
+            [
+                "conditions" => "batch_id = " . $batchId . " AND ended_at IS NOT NULL",
+                "order"      => "id DESC",
+                "limit"      => 1      
+            ]
+        );
+
+        $this->response->setJsonContent($entry);
+        $this->response->send();
+    }
+
 }
 

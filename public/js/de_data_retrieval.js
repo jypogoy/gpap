@@ -60,17 +60,52 @@ function getRawContents() {
     }
 }
 
-function getContents() {
+function getLastCompleted(bastchId) {
+
+    var deferred = $.Deferred();
+
+    $.ajax({
+        'url': '../data_entry/getbylastcompleted/' + bastchId,
+        'success': function(data) {
+            deferred.resolve(data);
+        },
+        'error': function(error) {
+            deferred.reject(error);
+        }
+    });
+
+    return deferred.promise();
+
+    // $.post('../data_entry/getbylastcompleted/' + bastchId, function (data) {
+    //     if (!data) {
+    //         toastr.warning('The search did not match any last completed entry.');
+    //     } else {
+    //         console.log(data)
+    //     }                
+    // })
+    // .done(function (msg) {
+    //     // Do nothing...
+    // })
+    // .fail(function (xhr, status, error) {
+    //     toastr.error(error);
+    // });
+}
+
+function getContents(lastCompletedEntry) {    
 
     currencyMap = new HashMap();
     batchPullReasonMap = new HashMap();
     installMonthsMap = new HashMap();
     slipPullReasonMap = new HashMap();
     exceptionMap = new HashMap();
+    var dataEntryId = $('#data_entry_id').val();
 
     var params = {};
     params.batch_id = $('#batch_id').val();
-    params.data_entry_id = $('#data_entry_id').val();
+    params.data_entry_id = dataEntryId;    
+
+    if (!dataEntryId && lastCompletedEntry) params.data_entry_id = lastCompletedEntry.id;    
+
     $.post('../merchant_header/get/', params, function (headerData) {
         if (!headerData || headerData.length == 0) {
             //toastr.warning('This batch does not have any header content.');
