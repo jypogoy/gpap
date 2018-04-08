@@ -154,7 +154,9 @@ $(function() {
             $('.first-slip-btn').removeClass('disabled');   
             $('.prev-slip-btn').removeClass('disabled');   
             $('.next-slip-btn').addClass('disabled');     
-            $('.last-slip-btn').addClass('disabled');     
+            $('.last-slip-btn').addClass('disabled');
+            $('.insert-slip-btn').removeClass('disabled');
+            $('.delete-slip-btn').removeClass('disabled');     
 
             refreshTransTypeDependentFields();
             $(slipRequiredFields).addClass('required');
