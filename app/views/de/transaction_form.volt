@@ -50,7 +50,7 @@
         </div>  
         <div id="transaction_amount_wrapper" class="required field">
             <label>Transaction Amount</label>
-            {{ text_field('transaction_amount', 'maxlength': '9', 'class': 'slip-field') }}
+            {{ text_field('transaction_amount', 'maxlength': '9', 'class': 'slip-field balancing-enabled') }}
         </div>    
         <div id="installment_months_id_wrapper" class="required field">    
             <label>Installment Months</label>

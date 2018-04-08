@@ -53,7 +53,7 @@
         </div>    
         <div id="deposit_amount_wrapper" class="required field">
             <label>Deposit Amount</label>
-            {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field') }}
+            {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
         </div>                                         
     </div>    
     <div id="batch_pull_reason_id_wrapper" class="small field">

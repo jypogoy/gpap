@@ -75,20 +75,6 @@ function getLastCompleted(bastchId) {
     });
 
     return deferred.promise();
-
-    // $.post('../data_entry/getbylastcompleted/' + bastchId, function (data) {
-    //     if (!data) {
-    //         toastr.warning('The search did not match any last completed entry.');
-    //     } else {
-    //         console.log(data)
-    //     }                
-    // })
-    // .done(function (msg) {
-    //     // Do nothing...
-    // })
-    // .fail(function (xhr, status, error) {
-    //     toastr.error(error);
-    // });
 }
 
 function getContents(lastCompletedEntry) {    
@@ -104,7 +90,7 @@ function getContents(lastCompletedEntry) {
     params.batch_id = $('#batch_id').val();
     params.data_entry_id = dataEntryId;    
 
-    if (!dataEntryId && lastCompletedEntry) params.data_entry_id = lastCompletedEntry.id;    
+    if (lastCompletedEntry) params.data_entry_id = lastCompletedEntry.id;    
 
     $.post('../merchant_header/get/', params, function (headerData) {
         if (!headerData || headerData.length == 0) {
@@ -191,6 +177,7 @@ function getSlipContents(headerId) {
                 });
                 slipMap.set(parseInt(key), slipValueMap);
             }); 
+
             // Load initial index as result can be multiple.
             slipMap.get(slipPage).forEach(function(value, key) {
                 setFieldValue(key, value); // See de_data_navigation.js
@@ -201,6 +188,7 @@ function getSlipContents(headerId) {
             if (data.length > 1) {
                 $('.next-slip-btn').removeClass('disabled'); 
                 $('.last-slip-btn').removeClass('disabled'); 
+                $('.delete-slip-btn').removeClass('disabled'); 
             }
 
             calculateAmount(); // See de_data_navigation.js

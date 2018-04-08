@@ -23,21 +23,25 @@ function navigate(direction) {
             if (slipPage == slipMap.count()) {
                 $('.next-slip-btn').addClass('disabled'); 
                 $('.last-slip-btn').addClass('disabled'); 
+                $('.insert-slip-btn').removeClass('disabled'); 
             }
         } else if (direction == 'prev') {
             if (slipPage > 1) slipPage--;
             if (slipPage == 1) {
                 $('.first-slip-btn').addClass('disabled');
                 $('.prev-slip-btn').addClass('disabled');
+                $('.insert-slip-btn').addClass('disabled'); 
             }    
         } else if (direction == 'first') {
             slipPage = 1;    
             $('.first-slip-btn').addClass('disabled');
-            $('.prev-slip-btn').addClass('disabled');              
+            $('.prev-slip-btn').addClass('disabled');    
+            $('.insert-slip-btn').addClass('disabled');           
         } else if (direction == 'last') {
             slipPage = slipMap.count();
             $('.next-slip-btn').addClass('disabled'); 
             $('.last-slip-btn').addClass('disabled'); 
+            $('.insert-slip-btn').removeClass('disabled'); 
         }
 
         var slipValueMap = slipMap.get(slipPage);
@@ -46,8 +50,7 @@ function navigate(direction) {
             $('.delete-slip-btn').removeClass('disabled');
         } else {
             Form.clear(false);
-            $('.delete-slip-btn').addClass('disabled');      
-            //if (slipPage < (slipMap.count() + 1)) navigateToNextSlip(); // Loop until the next slip is found after delete     
+            $('.delete-slip-btn').addClass('disabled');
         }    
         
         $('#currentSlipPage').html(slipPage);      
@@ -56,6 +59,7 @@ function navigate(direction) {
         if (direction == 'next' || direction == 'last') {
             $('.first-slip-btn').removeClass('disabled');  
             $('.prev-slip-btn').removeClass('disabled');   
+            $('.insert-slip-btn').removeClass('disabled'); 
         } else if (direction == 'prev' || direction == 'first') {
             $('.next-slip-btn').removeClass('disabled');
             $('.last-slip-btn').removeClass('disabled');

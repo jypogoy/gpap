@@ -97,13 +97,13 @@ $(function() {
     // See de_data_retrieval.js
     //getTransactionTypes();
         
-    
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(data) {
             getPullReasons();
             getInstallmentMonths();
             getExceptions();
             getContents(data);
+            preBalancing();
         });
     } else {
         getPullReasons();
@@ -147,4 +147,12 @@ function overrideSlip(pullReasonId) {
         $('#slip_pull_reason_id_dropdown').dropdown('restore defaults');
         $(slipRequiredFields).addClass('required');
     }
+}
+
+function preBalancing() {    
+    $('.header-field:not(.balancing-enabled)').attr('disabled', true);
+    $('.header-dropdown').addClass('disabled');
+    $('.slip-field:not(.balancing-enabled)').attr('disabled', true);
+    $('.slip-dropdown').addClass('disabled');
+    $('.balancing-enabled').prev().css('color', 'orange');
 }

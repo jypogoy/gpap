@@ -197,9 +197,60 @@ $(function() {
     //     clearInterval(nextInt);
     // });        
 
+    $('.insert-slip-btn').click(function(e) {
+        e.preventDefault();
+        
+        // Make sure to save the current slip to keep any changes prior to inserting.
+        saveSlip();
+        
+        // Keep copy of all left and right values of the current position.
+        var beforeMap = new HashMap();
+        var afterMap = new HashMap();
+        var afterKey = slipPage;
+        slipMap.forEach(function(value, key) {
+            if (key < slipPage) {
+                beforeMap.set(key, value);
+            }
+            if (key >= afterKey) {       
+                afterKey++; // Make sure add 1 to key immediately to signify next value.                 
+                afterMap.set(afterKey, value);                                        
+            }
+        });
+
+        // Clear all values.
+        slipMap.clear();
+                
+        // Rebuild left values
+        beforeMap.forEach(function(value, key) {
+            slipMap.set(key, value);
+        });        
+
+        // Rebuild right values
+        afterMap.forEach(function(value, key) {
+            slipMap.set(key, value);
+        });
+
+        // Insert a new value in the map using the new and current position.
+        saveSlip();
+        
+        $('#totalSlips').html(slipMap.count());
+
+        // Clear form and restore required field markers.
+        Form.clear(false);
+        $(slipRequiredFields).addClass('required');
+
+        $('.prev-slip-btn').removeClass('disabled'); 
+        $('.first-slip-btn').removeClass('disabled'); 
+        $('.next-slip-btn').removeClass('disabled'); 
+        $('.last-slip-btn').removeClass('disabled');         
+        $('.delete-slip-btn').removeClass('disabled'); 
+        
+        Form.setFocus(false);
+    });
+
     $('.delete-slip-btn').click(function(e) {
         e.preventDefault();
-        $('.custom-text').html('<p>Are you sure you want to delete the current transaction? Click OK to proceed.</p>');    
+        $('.custom-text').html('<p>Are you sure you want to delete transaction <strong>' + slipPage + '</strong>? Click OK to proceed.</p>');    
         $('.ui.tiny.modal.delete')
         .modal({
             inverted : true,
@@ -209,17 +260,55 @@ $(function() {
                 // Do nothing
             },
             onApprove : function() {
-                if (slipPage == 1) {
-                    Form.clear(false);
-                    saveSlip(); // Save a fresh entry. See de_data_navigation.js
-                } else {
-                    slipMap.remove(slipPage);
-                    if (slipMap.count() - 1 <= 0) {
-                        navigateToNextSlip();
-                    } else {
-                        navigateToPrevSlip();
+                // Keep copy of all left and right values of the current position.
+                var beforeMap = new HashMap();
+                var afterMap = new HashMap();
+                var afterKey = slipPage;
+                slipMap.forEach(function(value, key) {
+                    if (key < slipPage) {
+                        beforeMap.set(key, value);
                     }
+                    if (key > afterKey) {                        
+                        afterMap.set(afterKey, value);                        
+                        afterKey++;
+                    }
+                });
+                
+                // Clear all values.
+                slipMap.clear();
+                
+                // Rebuild values
+                beforeMap.forEach(function(value, key) {
+                    slipMap.set(key, value);
+                });
+                afterMap.forEach(function(value, key) {
+                    slipMap.set(key, value);
+                });
+                
+                if (slipPage > slipMap.count() && slipPage > 1) {
+                    slipPage--;
+                    $('#currentSlipPage').html(slipPage);
                 }
+                $('#totalSlips').html(slipMap.count());
+
+                Form.clear(false);
+
+                // Load the next value.
+                slipMap.get(slipPage).forEach(function(value, key) {
+                    setFieldValue(key, value); // See de_data_navigation.js
+                }); 
+                
+                if (slipPage == slipMap.count()) {
+                    $('.next-slip-btn').addClass('disabled'); 
+                    $('.last-slip-btn').addClass('disabled'); 
+                }
+
+                if (slipMap.count() == 1) {
+                    $('.prev-slip-btn').addClass('disabled'); 
+                    $('.first-slip-btn').addClass('disabled'); 
+                    $('.delete-slip-btn').addClass('disabled'); 
+                }
+
                 toastr.success('Transaction was deleted successfully.');                
             }
         })
