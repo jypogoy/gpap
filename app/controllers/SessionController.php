@@ -109,4 +109,9 @@ class SessionController extends ControllerBase
             ]
         );
     }
+
+    public function forgotPasswordAction()
+    {
+        $this->view->setTemplateAfter('session');
+    }
 }

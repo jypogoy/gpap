@@ -9,19 +9,21 @@
         {{ form('session/start', 'role': 'form', 'class' : 'ui large form', 'autocomplete' : 'off') }}
             <div class="ui piled segment">
                 <div class="field">
-                <div class="ui left icon input">
-                    <i class="user icon"></i>
-                    <input type="text" name="username" placeholder="Username" tabindex="1" autofocus="true">
-                </div>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="username" placeholder="Username" tabindex="1" autofocus="true">
+                    </div>
                 </div>
                 <div class="field">
-                <div class="ui left icon input">
-                    <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="Password" tabindex="2" >
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Password" tabindex="2" >
+                    </div>
                 </div>
-                </div>
-                {{ submit_button('Login', 'class': 'ui fluid large teal submit button', 'tabindex': 3) }}
-            </div>
+                {{ submit_button('Login', 'class': 'ui fluid large teal submit button', 'tabindex': 3) }}                
+            </div>            
+
+            <a href="/gpap/session/forgotpassword" style="position: absolute; top: 190px; right: 15px;">Forgot password?</a>
 
             <div class="ui error message"></div>
 
