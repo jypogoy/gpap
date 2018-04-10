@@ -23,8 +23,6 @@
                 {{ submit_button('Login', 'class': 'ui fluid large teal submit button', 'tabindex': 3) }}                
             </div>            
 
-            <a href="/gpap/session/forgotpassword" style="position: absolute; top: 190px; right: 15px;">Forgot password?</a>
-
             <div class="ui error message"></div>
 
         </form>
