@@ -103,7 +103,7 @@ $(function() {
             getInstallmentMonths();
             getExceptions();
             getContents(data);
-            preBalancing();
+            prepBalancingFields();
         });
     } else {
         getPullReasons();
@@ -137,6 +137,9 @@ function overrideHeader(pullReasonId) {
         $('.slip-dropdown').removeClass('disabled');
         $('.slip-controls').removeClass('hidden');
     }
+    if ($('#session_task_name').val().indexOf('Balancing') != -1) {
+        prepBalancingFields();
+    }
 }
 
 function overrideSlip(pullReasonId) {
@@ -149,7 +152,7 @@ function overrideSlip(pullReasonId) {
     }
 }
 
-function preBalancing() {    
+function prepBalancingFields() {    
     $('.header-field:not(.balancing-enabled)').attr('disabled', true);
     $('.header-dropdown').addClass('disabled');
     $('.slip-field:not(.balancing-enabled)').attr('disabled', true);

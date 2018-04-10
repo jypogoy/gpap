@@ -313,7 +313,7 @@ $(function() {
 
                 calculateAmount(); // See de_data_navigation.js
 
-                toastr.success('Transaction was deleted successfully.');                
+                //toastr.success('Transaction was deleted successfully.');                
             }
         })
         .modal('show');        
