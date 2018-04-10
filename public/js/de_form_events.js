@@ -311,6 +311,8 @@ $(function() {
                     $('.delete-slip-btn').addClass('disabled'); 
                 }
 
+                calculateAmount(); // See de_data_navigation.js
+
                 toastr.success('Transaction was deleted successfully.');                
             }
         })
