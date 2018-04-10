@@ -3,5 +3,7 @@ $(function () {
         "positionClass" : "toast-top-center toastr-custom-pos"
     };
 
-    $('.ui.checkbox').checkbox();        
+    $('.ui.checkbox').checkbox();       
+    
+    $('.user-profile-dropdown').dropdown();
 });

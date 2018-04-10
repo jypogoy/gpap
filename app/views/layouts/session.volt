@@ -7,5 +7,5 @@
 
 <div class="ui main stackable container">
     {{ flash.output() }}
-    {{ content() }}        
+    {{ content() }}
 </div>

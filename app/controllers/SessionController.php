@@ -19,6 +19,13 @@ class SessionController extends ControllerBase
             $this->tag->setDefault('email', 'demo');
             $this->tag->setDefault('password', 'phalcon');
         }
+
+        // Redirect to home if already logged in.
+        $auth = $this->session->get('auth');
+        if ($auth) {
+            return $this->response->redirect('home');
+        }
+
         $this->view->setTemplateAfter('session');
     }
 
@@ -110,8 +117,45 @@ class SessionController extends ControllerBase
         );
     }
 
-    public function forgotPasswordAction()
+    public function changePasswordAction()
     {
+        $this->tag->setTitle('Change Password');
         $this->view->setTemplateAfter('session');
     }
+
+    public function updatePasswordAction()
+    {
+        $validator = new PasswordValidator();
+        $messages = $validator->validate($_POST);
+
+        $this->view->messages = $messages;
+
+        foreach ($messages as $message) {
+            $this->flashSession->error($message);
+        }
+
+        return $this->dispatcher->forward(
+            [
+                "controller" => "session",
+                "action"     => "changepassword"
+            ]
+        );
+    }
+
+    public function nonDictAction()
+    {
+        $this->view->disable();
+
+        $keyword = $this->request->getPost('keyword');
+
+        $match = Dictionary::find(
+            [
+                "conditions" => "dictionaryWord LIKE '%" . $keyword . "%'"
+            ]
+        );
+        
+        $x = $match->count();
+        echo $match->count() > 0 ? true : false;
+    }
+
 }

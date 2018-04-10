@@ -28,6 +28,26 @@ class Alert extends Component
         }              
     }
 
+    public function countFlashMessages()
+    {
+        return count($this->flashSession->getMessages());
+    }
+
+    public function listFlashMessages($isOrdered)
+    {
+        $messages = $this->flashSession->getMessages();        
+        if (!is_null($messages)) {
+            $messageList = '<' . ($isOrdered ? 'ol' : 'ul') . '>';
+            foreach ($messages as $type => $message) {
+                foreach ($message as $text) {
+                    $messageList = $messageList . '<li>' . $text . '</li>';
+                }
+            }
+            $messageList = $messageList . '</' . ($isOrdered ? 'ol' : 'ul') . '>';
+            echo $messageList;
+        }
+    }
+
     public function getRedirectMessage() 
     {
         $messages = $this->flashSession->getMessages();

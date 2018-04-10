@@ -59,7 +59,8 @@ class SecurityPlugin extends Plugin
 				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
-				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted']
+				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
+				'session'    => ['changepassword', 'updatepassword', 'nondict'],
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
@@ -70,7 +71,7 @@ class SecurityPlugin extends Plugin
 				'index'      =>	['index'],
 				'about'      => ['index'],
 				'errors'     => ['show401', 'show404', 'show500'],
-				'session'    => ['index', 'register', 'start', 'end', 'forgotpassword'],
+				'session'    => ['index', 'register', 'start', 'end'],
 				'contact'    => ['index']
 			];
 			foreach ($publicResources as $resource => $actions) {

@@ -60,12 +60,19 @@ class Elements extends Component
         }
 
         $controllerName = $this->view->getControllerName();
+        $actionName = $this->view->getActionName();
         foreach ($this->_headerMenu as $position => $menu) {
             if ($position == 'right') {                
                 echo '<div class="right menu">';   
                 $auth = $this->session->get('auth');
                 if ($auth) {            
-                    echo '<div class="item"><img class="ui avatar image" src="/gpap/public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth['name'] . '</span></div>';                    
+                    echo '<div class="ui pointing dropdown link item user-profile-dropdown">' . 
+                            '<img class="ui avatar image" src="/gpap/public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth['name'] . '</span>' . 
+                            '<i class="dropdown icon"></i>' .
+                            '<div class="menu">' .
+                                '<div class="' . ($actionName == 'changepassword' ? 'disabled' : '') . ' item"><a href="/gpap/session/changepassword"><i class="key icon"></i>Change Password</a></div>' .
+                            '</div>' .
+                        '</div>';                    
                 }
             }                
             foreach ($menu as $controller => $option) {
