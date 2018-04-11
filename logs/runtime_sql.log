@@ -1,0 +1,7 @@
+[Wed, 11 Apr 18 14:23:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Wed, 11 Apr 18 14:23:22 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Wed, 11 Apr 18 14:24:14 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Wed, 11 Apr 18 14:24:14 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Wed, 11 Apr 18 14:28:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Wed, 11 Apr 18 14:28:54 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Wed, 11 Apr 18 14:28:54 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 1

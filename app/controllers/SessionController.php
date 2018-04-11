@@ -7,6 +7,8 @@
  */
 class SessionController extends ControllerBase
 {
+    private $logger;
+
     public function initialize()
     {
         $this->tag->setTitle('Sign In');
@@ -66,6 +68,9 @@ class SessionController extends ControllerBase
                     $this->_registerSession($user);
                     $this->flash->success('Welcome ' . $user->userName);
 
+                    // Log successful access                    
+                    $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in.');
+
                     return $this->response->redirect('home');
                 }
             } else {
@@ -118,9 +123,10 @@ class SessionController extends ControllerBase
     }
 
     public function changePasswordAction()
-    {
+    {        
         $this->tag->setTitle('Change Password');
         $this->view->setTemplateAfter('session');
+        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Change Password page.'); 
     }
 
     public function updatePasswordAction()
@@ -140,22 +146,6 @@ class SessionController extends ControllerBase
                 "action"     => "changepassword"
             ]
         );
-    }
-
-    public function nonDictAction()
-    {
-        $this->view->disable();
-
-        $keyword = $this->request->getPost('keyword');
-
-        $match = Dictionary::find(
-            [
-                "conditions" => "dictionaryWord LIKE '%" . $keyword . "%'"
-            ]
-        );
-        
-        $x = $match->count();
-        echo $match->count() > 0 ? true : false;
     }
 
 }

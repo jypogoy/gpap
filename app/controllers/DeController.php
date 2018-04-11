@@ -16,66 +16,76 @@ class DeController extends ControllerBase
             return $this->response->redirect('');
         }
         
-        $batch = Batch::findFirstById($batchId); 
-        $batch->is_exception = (int) $batch->is_exception;
+        try {
+            $batch = Batch::findFirstById($batchId); 
+            $batch->is_exception = (int) $batch->is_exception;
 
-        $userId = $this->session->get('auth')['id'];
-        $taskId = $this->session->get('taskId');
+            $userId = $this->session->get('auth')['id'];
+            $taskId = $this->session->get('taskId');
 
-        // Look for existing activity to maintain single record of batch on a particular task.
-        $entry = DataEntry::findFirst(
-            [
-                "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
-            ]
-        );
+            $task = Task::findFirst($taskId);    
 
-        // Create an activity if nothing has been recorded.
-        if (!$entry) {            
+            // Look for existing activity to maintain single record of batch on a particular task.
+            $entry = DataEntry::findFirst(
+                [
+                    "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
+                ]
+            );
 
-            // Write information for data entry activity.
-            $entry = new DataEntry();
-            $entry->user_id = $userId;
-            $entry->batch_id = $batchId;
-            $entry->task_id = $taskId;
+            // Create an activity if nothing has been recorded.
+            if (!$entry) {            
 
-            if (!$entry->save()) {
-                foreach ($entry->getMessages() as $message) {
-                    $this->flash->error($message);
+                // Write information for data entry activity.
+                $entry = new DataEntry();
+                $entry->user_id = $userId;
+                $entry->batch_id = $batchId;
+                $entry->task_id = $taskId;
+
+                if (!$entry->save()) {
+                    foreach ($entry->getMessages() as $message) {
+                        $this->flash->error($message);
+                    }
+
+                    $this->dispatcher->forward([
+                        'controller' => "home",
+                        'action' => 'index'
+                    ]);
+
+                    return;
+                }
+                
+                // Determine task then set status to 'Doing' or in progress.            
+                if (strpos($task->name, 'Entry') !== false) {
+                    $batch->entry_status = 'Doing';
+                } else {
+                    $batch->verify_status = 'Doing';
                 }
 
-                $this->dispatcher->forward([
-                    'controller' => "home",
-                    'action' => 'index'
-                ]);
+                if (!$batch->save()) {
+                    foreach ($batch->getMessages() as $message) {
+                        $this->flash->error($message);
+                    }
 
-                return;
-            }
-            
-            // Determine task then set status to 'Doing' or in progress.
-            $task = Task::findFirst($taskId);
-            if (strpos($task->name, 'Entry') !== false) {
-                $batch->entry_status = 'Doing';
-            } else {
-                $batch->verify_status = 'Doing';
+                    $this->dispatcher->forward([
+                        'controller' => "home",
+                        'action' => 'index'
+                    ]);
+
+                    return;
+                }                            
             }
 
-            if (!$batch->save()) {
-                foreach ($batch->getMessages() as $message) {
-                    $this->flash->error($message);
-                }
+            $this->view->dataEntry = $entry;
+            $this->view->batch = $batch;
+            $this->view->setTemplateAfter('de');        
 
-                $this->dispatcher->forward([
-                    'controller' => "home",
-                    'action' => 'index'
-                ]);
+            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . $task->name . ' on Batch ' .  $batchId . '.'); 
 
-                return;
-            }
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
         }
 
-        $this->view->dataEntry = $entry;
-        $this->view->batch = $batch;
-        $this->view->setTemplateAfter('de');
+        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
     }
 
     public function startAction($batchId)
@@ -92,58 +102,63 @@ class DeController extends ControllerBase
             return $this->response->redirect('');
         }
 
-        $entryId = $this->request->getPost('entry_id');
-        $batchId = $this->request->getPost('batch_id');        
+        try {
+            $entryId = $this->request->getPost('entry_id');
+            $batchId = $this->request->getPost('batch_id');        
 
-        $entry = DataEntry::findFirstByid($entryId);
-        $entry->ended_at = new \Phalcon\Db\RawValue("NOW()");
+            $entry = DataEntry::findFirstByid($entryId);
+            $entry->ended_at = new \Phalcon\Db\RawValue("NOW()");
 
-        if (!$entry->save()) {
+            if (!$entry->save()) {
+                
+                $this->db->rollback();
+
+                foreach ($entry->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+
+                $this->dispatcher->forward([
+                    'controller' => "home",
+                    'action' => 'index'
+                ]);
+
+                return;
+            }
+
+            $batch = Batch::findFirstByid($batchId);
+            $batch->is_exception = (int) $batch->is_exception;
+
+            $taskId = $this->session->get('taskId');
+
+            // Determine task then set status to 'Complete'.
+            $task = Task::findFirst($taskId);
+            if (strpos($task->name, 'Entry') !== false) {
+                $batch->entry_status = 'Complete';
+            } else {
+                $batch->verify_status = 'Complete';
+            }        
+
+            if (!$batch->save()) {
+
+                $this->db->rollback();
+
+                foreach ($batch->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+
+                $this->dispatcher->forward([
+                    'controller' => "home",
+                    'action' => 'index'
+                ]);
+
+                return;
+            }        
             
-            $this->db->rollback();
+            return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
 
-            foreach ($entry->getMessages() as $message) {
-                $this->flash->error($message);
-            }
-
-            $this->dispatcher->forward([
-                'controller' => "home",
-                'action' => 'index'
-            ]);
-
-            return;
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
         }
-
-        $batch = Batch::findFirstByid($batchId);
-        $batch->is_exception = (int) $batch->is_exception;
-
-        $taskId = $this->session->get('taskId');
-
-        // Determine task then set status to 'Complete'.
-        $task = Task::findFirst($taskId);
-        if (strpos($task->name, 'Entry') !== false) {
-            $batch->entry_status = 'Complete';
-        } else {
-            $batch->verify_status = 'Complete';
-        }        
-
-        if (!$batch->save()) {
-
-            $this->db->rollback();
-
-            foreach ($batch->getMessages() as $message) {
-                $this->flash->error($message);
-            }
-
-            $this->dispatcher->forward([
-                'controller' => "home",
-                'action' => 'index'
-            ]);
-
-            return;
-        }        
-        
-        return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
     }
     
     public function redirectNoNextAction($taskName)

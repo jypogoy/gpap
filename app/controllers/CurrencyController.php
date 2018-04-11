@@ -11,16 +11,21 @@ class CurrencyController extends ControllerBase
     {
         $this->view->disable();
         
-        $region = Region::findFirst(
-            [
-                "conditions" => "code = '" . $regionCode . "'"
-            ]
-        );
+        try {
+            $region = Region::findFirst(
+                [
+                    "conditions" => "code = '" . $regionCode . "'"
+                ]
+            );
 
-        $currencies = $region->getCurrency();
+            $currencies = $region->getCurrency();
 
-        $this->response->setJsonContent($currencies);
-        $this->response->send();     
+            $this->response->setJsonContent($currencies);
+            $this->response->send();     
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }

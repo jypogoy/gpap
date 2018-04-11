@@ -12,14 +12,19 @@ class ImageController extends ControllerBase
     {                
         $this->view->disable();
         
-        $images = Image::find(
-            [
-                "conditions" => "batch_id = " . $batchId
-            ]
-        );
+        try {
+            $images = Image::find(
+                [
+                    "conditions" => "batch_id = " . $batchId
+                ]
+            );
 
-        $this->response->setJsonContent($images);
-        $this->response->send();        
+            $this->response->setJsonContent($images);
+            $this->response->send();        
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
     public function getAction()

@@ -11,6 +11,8 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Crypt;
+use Phalcon\Logger\Adapter\File as FileLogger;
+use Phalcon\Logger\Formatter\Line as FormatterLine;
 
 /**
  * Register the events manager
@@ -101,11 +103,11 @@ $di->setShared('db', function () {
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
         'charset'  => $config->database->charset,
-        // 'options'  => array(
-        //     PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
-        //     PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
-        //     PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
-        // )
+        'options'  => array(
+            PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
+            PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
+            PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
+        )
     ];
 
     if ($config->database->adapter == 'Postgresql') {
@@ -114,8 +116,9 @@ $di->setShared('db', function () {
 
     $connection = new $class($params);
 
-    // Logger to view executed queries in runtime    
-    $logger = new \Phalcon\Logger\Adapter\File($config->path->tmp.'sql.log');
+    // Logger to view executed queries in runtime  
+    $path = rtrim($config->get('log_settings')->path, '\\/') . DIRECTORY_SEPARATOR;  
+    $logger = new \Phalcon\Logger\Adapter\File($path . $config->log_filenames->sql);
     $eventsManager = new \Phalcon\Events\Manager();
     $eventsManager->attach('db', function($event, $connection) use ($logger) {
         if ($event->getType() == 'beforeQuery') $logger->log($connection->getSQLStatement());
@@ -126,6 +129,44 @@ $di->setShared('db', function () {
     return $connection;
 });
 
+/**
+ * Logger service
+ */
+$di->set('logger', function ($filename = null) {
+    $config = $this->getConfig();
+    $format   = $config->get('log_settings')->format;
+    //$filename = trim($filename ?: $config->get('log_filenames')->common, '\\/');
+    $path     = rtrim($config->get('log_settings')->path, '\\/') . DIRECTORY_SEPARATOR;
+    $formatter = new FormatterLine($format, $config->get('log_settings')->date);    
+    $logger    = new FileLogger($path . $filename);
+    $logger->setFormatter($formatter);
+    $logger->setLogLevel($config->get('log_settings')->logLevel);
+    return $logger;
+});
+
+$di->set('sessionLogger', function () {
+    $config = $this->getConfig();
+    $filename = trim($config->get('log_filenames')->session, '\\/');
+    return $this->get('logger', array($filename));
+});
+
+$di->set('commonLogger', function () {
+    $config = $this->getConfig();
+    $filename = trim($config->get('log_filenames')->common, '\\/');
+    return $this->get('logger', array($filename));
+});
+
+$di->set('deLogger', function () {
+    $config = $this->getConfig();
+    $filename = trim($config->get('log_filenames')->de, '\\/');
+    return $this->get('logger', array($filename));
+});
+
+$di->set('errorLogger', function () {
+    $config = $this->getConfig();
+    $filename = trim($config->get('log_filenames')->error, '\\/');
+    return $this->get('logger', array($filename));
+});
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
@@ -163,6 +204,9 @@ $di->setShared('session', function () {
     return $session;
 });
 
+/**
+ * Crypt service
+ */
 $di->set(
     "crypt",
     function () {
@@ -177,7 +221,6 @@ $di->set(
     },
     true
 );
-
 
 $di->set('elements', function () {
     return new Elements();

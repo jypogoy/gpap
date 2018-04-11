@@ -11,10 +11,15 @@ class InstallmentMonthsController extends ControllerBase
     {
         $this->view->disable();
         
-        $months = InstallmentMonths::find();
+        try {
+            $months = InstallmentMonths::find();
 
-        $this->response->setJsonContent($months);
-        $this->response->send();     
+            $this->response->setJsonContent($months);
+            $this->response->send();    
+            
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }

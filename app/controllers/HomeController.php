@@ -11,7 +11,8 @@ class HomeController extends ControllerBase
 
     public function indexAction()
     {
-        $this->view->user = $this->session->get('auth');        
+        $this->view->user = $this->session->get('auth');       
+        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Home page.'); 
     }
 
 }

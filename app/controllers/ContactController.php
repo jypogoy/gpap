@@ -11,7 +11,7 @@ class ContactController extends ControllerBase
 
     public function indexAction()
     {
-        
+        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Contact page.'); 
     }
 
 }

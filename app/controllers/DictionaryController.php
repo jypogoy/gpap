@@ -22,13 +22,17 @@ class DictionaryController extends ControllerBase
     {
         $this->view->disable();
 
-        $phql = "SELECT POSITION(dictionaryWord IN '" . $word . "') AS m FROM Dictionary HAVING m = 1";
-        //$phql = "SELECT * FROM Dictionary";
+        try {
+            $phql = "SELECT POSITION(dictionaryWord IN '" . $word . "') AS m FROM Dictionary HAVING m = 1";
+            
+            $result = $this->modelsManager->executeQuery($phql);
 
-        $result = $this->modelsManager->executeQuery($phql);
+            $this->response->setJsonContent($result);
+            $this->response->send(); 
 
-        $this->response->setJsonContent($result);
-        $this->response->send(); 
+        } catch (\Exception $e) {
+            $this->exceptionLogger->error($e);
+        }
     }
 
 }
