@@ -70,7 +70,7 @@ class Elements extends Component
                             '<img class="ui avatar image" src="/gpap/public/img/avatar/avatar.png"><span style="padding-left: 10px;">' . $auth['name'] . '</span>' . 
                             '<i class="dropdown icon"></i>' .
                             '<div class="menu">' .
-                                '<div class="' . ($actionName == 'changepassword' ? 'disabled' : '') . ' item"><a href="/gpap/session/changepassword"><i class="key icon"></i>Change Password</a></div>' .
+                                '<a href="/gpap/session/changepassword"><div class="' . ($actionName == 'changepassword' ? 'disabled' : '') . ' item"><i class="key icon"></i>Change Password</div></a>' .
                             '</div>' .
                         '</div>';                    
                 }

@@ -1,39 +1,37 @@
 $(function() {
 
     function checkMatch(value) {
-        var deferred = $.Deferred();
+        var d = $.Deferred();
 
         $.post('../session/nondict/', { 'keyword': value }, function (hasMatch) {
-            deferred.resolve(hasMatch);
+            d.resolve(hasMatch);
         });
 
-        return deferred.promise();
+        return d.promise();
+    }
+
+    function getDictionary() {
+        var d = $.Deferred();
+
+        $.post('../dictionary/list', function (dict) {
+            d.resolve(dict);
+        });
+
+        return d.promise();
     }
 
     $.fn.form.settings.rules.nonDict = function(value) {
         var isDict = true;
-        // $.ajax({
-        //     async : false,
-        //     url: '../session/nondict/',
-        //     type : "POST",
-        //     async: false,
-        //     data : {
-        //         keyword : value
-        //     },
-        //     success: function(data) {
-        //         if (data == "0") {
-        //             isDict = true;
-        //         } else {
-        //             isDict = false;
-        //         }
-        //     }
-        // });
         
-        $.when(checkMatch(value)).done(function(data) {
-            console.log(data)
-            if (data) isDict = true;
+        $.when(getDictionary()).done(function(dict) {
+            $.each(dict, function(i, word) {
+                console.log(value + ' : ' + word.dictionaryWord)
+                if (value.indexOf(word.dictionaryWord) != -1) {
+                    console.log('Match')
+                }
+            });
         });
-        console.log(isDict)
+        
         return isDict;
 
         
