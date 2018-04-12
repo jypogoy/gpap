@@ -148,7 +148,8 @@ $di->set('logger', function ($filename = null) {
 $di->set('sessionLogger', function () {
     $config = $this->getConfig();
     $filename = trim($config->get('log_filenames')->session, '\\/');
-    return $this->get('logger', array($filename));
+    $logger    = new FileAdapter($config->get('log_settings')->path . $config->get('log_filenames')->session);
+    return $logger;
 });
 
 $di->set('commonLogger', function () {
