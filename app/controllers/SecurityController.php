@@ -24,7 +24,7 @@ class SecurityController extends ControllerBase
             $this->response->send();     
             
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -89,7 +89,7 @@ class SecurityController extends ControllerBase
             $this->sessionLogger->info($this->session->get('auth')['name'] . ' changed password.'); 
 
         }catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 }
