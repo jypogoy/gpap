@@ -11,20 +11,19 @@ class MerchantController extends ControllerBase
     {                
         $this->view->disable();
         
-        // $merchant = Merchant::findFirst(
-        //     [
-        //         "conditions" => "account_number = " . $merchantId
-        //     ]
-        // );
-
-        $merchant = Demographic::findFirst(
-            [
-                "conditions" => "merchant = " . $merchantId
-            ]
-        );
-
-        $this->response->setJsonContent($merchant);
-        $this->response->send();        
+        try {
+            $merchant = Demographic::findFirst(
+                [
+                    "conditions" => "merchant = " . $merchantId
+                ]
+            );
+        
+            $this->response->setJsonContent($merchant);
+            $this->response->send();     
+        
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }   
     }
     
 }

@@ -57,8 +57,10 @@ class DeController extends ControllerBase
                 // Determine task then set status to 'Doing' or in progress.            
                 if (strpos($task->name, 'Entry') !== false) {
                     $batch->entry_status = 'Doing';
-                } else {
+                } else if (strpos($task->name, 'Verify') !== false) {
                     $batch->verify_status = 'Doing';
+                } else {
+                    $batch->balance_status = 'Doing';
                 }
 
                 if (!$batch->save()) {
@@ -134,9 +136,11 @@ class DeController extends ControllerBase
             $task = Task::findFirst($taskId);
             if (strpos($task->name, 'Entry') !== false) {
                 $batch->entry_status = 'Complete';
-            } else {
+            } else if (strpos($task->name, 'Verify') !== false) {
                 $batch->verify_status = 'Complete';
-            }        
+            } else {
+                $batch->balance_status = 'Complete';
+            }       
 
             if (!$batch->save()) {
 
@@ -152,8 +156,8 @@ class DeController extends ControllerBase
                 ]);
 
                 return;
-            }        
-            
+            }                                 
+
             return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
 
         } catch (\Exception $e) {            
@@ -164,12 +168,14 @@ class DeController extends ControllerBase
     public function redirectNoNextAction($taskName)
     {
         $this->flashSession->notice("There are no more available batches for " . $taskName . ".");
+        $this->deLogger->info($this->session->get('auth')['name'] . ' requested batch for ' . strtoupper($taskName) . '. No available batch found.'); 
         return $this->response->redirect('home');
     }
 
     public function redirectSuccessAction($isSave)
     {
         $this->flashSession->success("Batch was " . ($isSave ? "saved" : "completed") . " successfully.");
+        $this->deLogger->info($this->session->get('auth')['name'] . ($isSave ? ' saved' : ' completed') . ' a batch successfully.');
         return $this->response->redirect('home');
     }
 

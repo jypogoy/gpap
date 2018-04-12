@@ -11,10 +11,15 @@ class TransactionTypeController extends ControllerBase
     {
         $this->view->disable();
         
-        $types = TransactionType::find();
+        try {
+            $types = TransactionType::find();
 
-        $this->response->setJsonContent($types);
-        $this->response->send();     
+            $this->response->setJsonContent($types);
+            $this->response->send();     
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }

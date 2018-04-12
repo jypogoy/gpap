@@ -11,10 +11,15 @@ class OtherExceptionController extends ControllerBase
     {
         $this->view->disable();
         
-        $exceptions = OtherException::find();
+        try {
+            $exceptions = OtherException::find();
 
-        $this->response->setJsonContent($exceptions);
-        $this->response->send();     
+            $this->response->setJsonContent($exceptions);
+            $this->response->send();     
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }

@@ -60,8 +60,8 @@ class SecurityPlugin extends Plugin
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
-				'session'    	=> 	['changepassword', 'updatepassword'],
-				'security'		=>	['getlastsixpasswords', 'passwordchangedsameday', 'passworddictionaryCheck', 'passwordtrivialcheck']
+				'session'    	=> 	['changepassword'],
+				'security'		=>	['getlastsixpasswords', 'passwordchangedsameday', 'passworddictionaryCheck', 'passwordtrivialcheck', 'updatepassword']
 			];
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);

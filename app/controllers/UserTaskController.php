@@ -11,13 +11,18 @@ class UserTaskController extends ControllerBase
     {
         $this->view->disable();
         
-        $userTasks = UserTask::find(
-            [
-                "conditions" => "user_id = " . $userId
-            ]
-        );
+        try {
+            $userTasks = UserTask::find(
+                [
+                    "conditions" => "user_id = " . $userId
+                ]
+            );
 
-        echo $this->view->partial('home/user_tasks_selection', [ 'userTasks' => $userTasks ]);
+            echo $this->view->partial('home/user_tasks_selection', [ 'userTasks' => $userTasks ]);
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }

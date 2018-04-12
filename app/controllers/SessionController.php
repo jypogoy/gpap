@@ -127,25 +127,6 @@ class SessionController extends ControllerBase
         $this->tag->setTitle('Change Password');
         $this->view->setTemplateAfter('session');
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Change Password page.'); 
-    }
-
-    public function updatePasswordAction()
-    {
-        $validator = new PasswordValidator();
-        $messages = $validator->validate($_POST);
-
-        $this->view->messages = $messages;
-
-        foreach ($messages as $message) {
-            $this->flashSession->error($message);
-        }
-
-        return $this->dispatcher->forward(
-            [
-                "controller" => "session",
-                "action"     => "changepassword"
-            ]
-        );
-    }
+    }    
 
 }

@@ -45,6 +45,13 @@ class Batch extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
+     * @Column(type="string", length=1, nullable=true)
+     */
+    public $is_exception;
+
+    /**
+     *
+     * @var string
      * @Column(type="string", length=25, nullable=true)
      */
     public $created_by;

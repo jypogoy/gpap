@@ -9,7 +9,7 @@ var exceptionMap;
 
 var rawHeaderMap; // <field_id, value>
 var rawSlipMap; // <index, map<field_id, value>>  
-function getRawContents() {    
+function getRawContents() {  // Only called during Verify to get the previous task values e.g. Entry 1  
 
     rawHeaderMap = new HashMap();
     rawSlipMap = new HashMap();    
@@ -77,22 +77,36 @@ function getLastCompleted(bastchId) {
     return deferred.promise();
 }
 
-function getContents(lastCompletedEntry) {    
+function checkHeaderIfExists() { // Only executed on Balancing to help decide whether to use the previous entry id or the newly recorded task.
+    var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.data_entry_id = $('#data_entry_id').val();;    
 
-    currencyMap = new HashMap();
-    batchPullReasonMap = new HashMap();
-    installMonthsMap = new HashMap();
-    slipPullReasonMap = new HashMap();
-    exceptionMap = new HashMap();
+    var d = $.Deferred();
+
+    $.post('../merchant_header/get/', params, function (headerData) {
+        d.resolve(headerData);
+    });
+
+    return d.promise();
+}
+
+function getContents(lastCompletedEntry, existingHeader) {    
+
+    // Initialization of maps moved to de.js
+
     var dataEntryId = $('#data_entry_id').val();
 
     var params = {};
     params.batch_id = $('#batch_id').val();
     params.data_entry_id = dataEntryId;    
 
-    if (lastCompletedEntry) params.data_entry_id = lastCompletedEntry.id;    
+    // For Balancing Only: Replace currrent activity ID to help fetch previous task's activity record.
+    if (lastCompletedEntry && !existingHeader) {
+        params.data_entry_id = lastCompletedEntry.id;            
+    }
 
-    $.post('../merchant_header/get/', params, function (headerData) {
+    $.post('../merchant_header/get/', params, function (headerData) {                   
         if (!headerData || headerData.length == 0) {
             //toastr.warning('This batch does not have any header content.');
         } else {
@@ -145,12 +159,17 @@ function getContents(lastCompletedEntry) {
             $.each(headerData, function(key, value) {
                 setFieldValue(key, value); // See de_data_navigation.js
             });
+            
+            // For Balancing Only: Revert back to current task's activity ID to correct saving of records.
+            if (lastCompletedEntry) {
+                $('#data_entry_id').val(dataEntryId);
+            }
 
             // Load transactions
             getSlipContents(headerData.id);   
         }            
     })
-    .done(function (msg) {
+    .done(function (headerData) {
         // Do nothing...
     })
     .fail(function (xhr, status, error) {

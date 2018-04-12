@@ -31,7 +31,7 @@ class BatchController extends ControllerBase
             echo $result;
         
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -49,13 +49,14 @@ class BatchController extends ControllerBase
             echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
     public function getAction($id)
     {
         $this->view->disable();
+        
         try {
             $batch = Batch::findById($id);
 
@@ -63,7 +64,7 @@ class BatchController extends ControllerBase
             $this->response->send(); 
             
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
     
@@ -81,8 +82,10 @@ class BatchController extends ControllerBase
             $this->response->setJsonContent($batches);
             $this->response->send(); 
         
+            $this->deLogger->info($this->session->get('auth')['name'] . ' requested another batch for ' . strtoupper($taskName) . '.'); 
+
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -101,7 +104,7 @@ class BatchController extends ControllerBase
             $this->response->send(); 
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -112,7 +115,7 @@ class BatchController extends ControllerBase
         try {
             $batches = Batch::find(
                 [
-                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete'"
+                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL"
                 ]
             );
 
@@ -120,7 +123,7 @@ class BatchController extends ControllerBase
             $this->response->send(); 
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -131,14 +134,14 @@ class BatchController extends ControllerBase
         try {
             $batches = Batch::find(
                 [
-                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete'"
+                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL"
                 ]
             );
 
             echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 }

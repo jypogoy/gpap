@@ -95,14 +95,20 @@ $(function() {
     });
     
     // See de_data_retrieval.js
-    //getTransactionTypes();
-        
+    currencyMap = new HashMap();
+    batchPullReasonMap = new HashMap();
+    installMonthsMap = new HashMap();
+    slipPullReasonMap = new HashMap();
+    exceptionMap = new HashMap();
+
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
-        getLastCompleted($('#batch_id').val()).then(function(data) {
+        getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {
             getPullReasons();
             getInstallmentMonths();
             getExceptions();
-            getContents(data);
+            checkHeaderIfExists().then(function(header) {
+                getContents(lastCompletedData, header);
+            });            
             prepBalancingFields();
         });
     } else {

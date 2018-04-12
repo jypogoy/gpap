@@ -103,11 +103,11 @@ $di->setShared('db', function () {
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
         'charset'  => $config->database->charset,
-        'options'  => array(
-            PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
-            PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
-            PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
-        )
+        // 'options'  => array(
+        //     PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
+        //     PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
+        //     PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
+        // )
     ];
 
     if ($config->database->adapter == 'Postgresql') {
@@ -198,6 +198,14 @@ $di->set('flash', function () {
  * Start the session the first time some component request the session service
  */
 $di->setShared('session', function () {
+
+    // Set the max lifetime of a session with 'ini_set()' to one hour
+    //ini_set('session.gc_maxlifetime', 3600);
+
+    // Each client should remember their session id for EXACTLY 1 hour
+    //session_set_cookie_params(3600);
+
+    // Start session with Phalcon
     $session = new SessionAdapter();
     $session->start();
 

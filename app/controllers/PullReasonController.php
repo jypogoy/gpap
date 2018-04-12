@@ -11,14 +11,19 @@ class PullReasonController extends ControllerBase
     {
         $this->view->disable();
         
-        $reasons = PullReason::find(
-            [
-                "conditions" => "level = '" . $level . "'"
-            ]
-        );
+        try {
+            $reasons = PullReason::find(
+                [
+                    "conditions" => "level = '" . $level . "'"
+                ]
+            );
 
-        $this->response->setJsonContent($reasons);
-        $this->response->send();     
+            $this->response->setJsonContent($reasons);
+            $this->response->send();     
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
 }
