@@ -80,17 +80,18 @@ class UserPrevPassword extends \Phalcon\Mvc\Model
     public static function findLastSix($conditions, $params = null)
     {
         $sql = "SELECT DISTINCT userPassword, userID " .
-                "FROM UserPrevPassword " .
+                "FROM user_prev_password ";
                 "WHERE $conditions " .
-                "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) " ;
-                // "   AND CURRENT_TIMESTAMP() " .
-                // " UNION " .
-                // "SELECT DISTINCT userPassword, userid " .
-                // "  FROM user " .
-                // " WHERE userid = :userId2: ";
+                "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
+                "UNION " .
+                "SELECT DISTINCT userPassword, userid " .
+                "FROM user " .
+                "WHERE userid = :userId2: ";
 
         $prevPassword = new UserPrevPassword();
 
-        return new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
+        $x = new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
+
+        return ''; 
     }
 }

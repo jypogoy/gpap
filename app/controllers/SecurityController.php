@@ -20,7 +20,7 @@ class SecurityController extends ControllerBase
                 ]
             ); 
 
-            $this->response->setJsonContent($result);
+            $this->response->setJsonContent($passwords);
             $this->response->send();     
             
         } catch (\Exception $e) {            
