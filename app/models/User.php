@@ -1,7 +1,11 @@
 <?php
 
+use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
+
 class User extends \Phalcon\Mvc\Model
 {
+
+    protected $db;
 
     /**
      *
@@ -105,6 +109,8 @@ class User extends \Phalcon\Mvc\Model
         $this->setSource("user");
         $this->hasMany('userID', 'UserPrevPassword', 'userID', ['alias' => 'UserPrevPassword']);
         $this->hasMany('userID', 'UserRole', 'userID', ['alias' => 'UserRole']);
+
+        $this->db = $this->getDI()->get('db');
     }
 
     /**
@@ -137,6 +143,37 @@ class User extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+
+    public static function findLastSixPasswords($conditions, $params = null)
+    {
+        $sql = "SELECT DISTINCT userPassword, userID " .
+                "FROM user_prev_password " .
+                "WHERE $conditions " .
+                "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
+                "UNION " .
+                "SELECT DISTINCT userPassword, userid " .
+                "FROM user " .
+                "WHERE $conditions";
+
+        $prevPassword = new UserPrevPassword();
+
+        return new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
+    }
+
+    public static function passwordChangedOnSameDay($conditions, $params = null)
+    {
+        $sql = "SELECT COUNT(userid) " .
+                "FROM `user` " .
+                "WHERE DATEDIFF(now(),userlastpasswordchange) = 0 " .
+                "AND $conditions";
+
+        $user = new User();
+
+        $count = new ResultSet($user->getReadConnection()->query($sql, $params));
+
+        return $count;
     }
 
 }

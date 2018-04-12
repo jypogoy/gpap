@@ -127,12 +127,20 @@ class Transaction extends \Phalcon\Mvc\Model
     public $other_exception_detail;
 
     /**
+     *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=false)
+     */
+    public $image_id;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("gpap");
         $this->setSource("transaction");
+        $this->belongsTo('image_id', '\Image', 'id', ['alias' => 'Image']);
         $this->belongsTo('installment_months_id', '\InstallmentMonths', 'id', ['alias' => 'InstallmentMonths']);
         $this->belongsTo('merchant_header_id', '\MerchantHeader', 'id', ['alias' => 'MerchantHeader']);
         $this->belongsTo('slip_pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);

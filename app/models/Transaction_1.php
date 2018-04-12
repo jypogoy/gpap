@@ -45,7 +45,7 @@ class Transaction extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=19, nullable=true)
+     * @Column(type="string", length=60, nullable=true)
      */
     public $card_number;
 
@@ -136,7 +136,6 @@ class Transaction extends \Phalcon\Mvc\Model
         $this->belongsTo('installment_months_id', '\InstallmentMonths', 'id', ['alias' => 'InstallmentMonths']);
         $this->belongsTo('merchant_header_id', '\MerchantHeader', 'id', ['alias' => 'MerchantHeader']);
         $this->belongsTo('slip_pull_reason_id', '\PullReason', 'id', ['alias' => 'PullReason']);
-        $this->belongsTo('transaction_type_id', '\TransactionType', 'id', ['alias' => 'TransactionType']);
     }
 
     /**

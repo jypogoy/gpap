@@ -12,10 +12,13 @@ class SecurityController extends ControllerBase
     {
         $this->view->disable();
 
+        $this->db = $this->getDI()->get('db');
+
         try {
-            $passwords = UserPrevPassword::findLastSix(
+            $passwords = User::findLastSixPasswords(
                 'userID = ?',
                 [
+                    $userId,
                     $userId
                 ]
             ); 
@@ -28,9 +31,24 @@ class SecurityController extends ControllerBase
         }
     }
 
-    public function passwordChangedSameDayAction()
+    public function passwordChangedSameDayAction($userId)
     {
         $this->view->disable();
+
+        try {
+            $count = User::passwordChangedOnSameDay(
+                'userid = ?',
+                [
+                    $userId
+                ]
+            ); 
+
+            $this->response->setJsonContent($count);
+            $this->response->send();     
+            
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 
     public function passwordDictionaryCheckAction()

@@ -1,7 +1,5 @@
 <?php
 
-use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
-
 class UserPrevPassword extends \Phalcon\Mvc\Model
 {
 
@@ -76,22 +74,5 @@ class UserPrevPassword extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
-
-    public static function findLastSix($conditions, $params = null)
-    {
-        $sql = "SELECT DISTINCT userPassword, userID " .
-                "FROM user_prev_password ";
-                "WHERE $conditions " .
-                "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
-                "UNION " .
-                "SELECT DISTINCT userPassword, userid " .
-                "FROM user " .
-                "WHERE userid = :userId2: ";
-
-        $prevPassword = new UserPrevPassword();
-
-        $x = new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
-
-        return ''; 
-    }
+    
 }
