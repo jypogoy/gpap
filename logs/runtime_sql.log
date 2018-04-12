@@ -1,20 +1,20 @@
-[Thu, 12 Apr 18 07:24:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:32 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Thu, 12 Apr 18 07:24:32 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userMiddleName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`userEmail`, `user`.`userTeam`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] DESCRIBE `gpap`.`task`
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
-[Thu, 12 Apr 18 07:24:34 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] DESCRIBE `gpap`.`task`
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] DESCRIBE `gpap`.`batch`
-[Thu, 12 Apr 18 07:24:35 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Thu, 12 Apr 18 07:32:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:05 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Thu, 12 Apr 18 07:32:05 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userMiddleName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`userEmail`, `user`.`userTeam`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Thu, 12 Apr 18 07:32:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Thu, 12 Apr 18 07:32:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL

@@ -45,7 +45,7 @@ return new \Phalcon\Config([
     ],
     'log_enabled'   => true,
     'log_settings'   => [
-        'path'     => BASE_PATH . '/logs/',
+        'path'     => BASE_PATH . '/logs',
         'format'   => '%date% [%type%] %message%',
         'date'     => 'D j H:i:s',
         'logLevel' => Logger::DEBUG
