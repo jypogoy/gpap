@@ -11,7 +11,8 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Crypt;
-use Phalcon\Logger\Adapter\File as FileLogger;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\File as FileAdapter;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
 
 /**
@@ -138,7 +139,7 @@ $di->set('logger', function ($filename = null) {
     //$filename = trim($filename ?: $config->get('log_filenames')->common, '\\/');
     $path     = rtrim($config->get('log_settings')->path, '\\/') . DIRECTORY_SEPARATOR;
     $formatter = new FormatterLine($format, $config->get('log_settings')->date);    
-    $logger    = new FileLogger($path . $filename);
+    $logger    = new FileAdapter($path . $filename);
     $logger->setFormatter($formatter);
     $logger->setLogLevel($config->get('log_settings')->logLevel);
     return $logger;
