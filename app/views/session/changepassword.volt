@@ -31,4 +31,6 @@
 
 </div>
 
+{{ javascript_include('js/change_password_data.js') }}
+{{ javascript_include('js/change_password_rules.js') }}
 {{ javascript_include('js/change_password.js') }}

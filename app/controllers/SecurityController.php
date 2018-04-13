@@ -8,11 +8,14 @@ class SecurityController extends ControllerBase
 
     }
 
-    public function getLastSixPasswordsAction($userId)
+    /**
+     * Retrieves most recent six passwords of a user.
+     */
+    public function checkByLastSixPasswordsAction($newPassword)
     {
-        $this->view->disable();
-
-        $this->db = $this->getDI()->get('db');
+        $this->view->disable();        
+        $userId = $this->session->get('auth')['id'];
+        $hasMatch = false;
 
         try {
             $passwords = User::findLastSixPasswords(
@@ -23,42 +26,112 @@ class SecurityController extends ControllerBase
                 ]
             ); 
 
-            $this->response->setJsonContent($passwords);
+            // Match new password hash with the recorded passwords.
+            $encNewPassword = $this->security->hash($newPassword);            
+            foreach ($passwords as $password) {
+                if($this->security->checkHash($encNewPassword, $password->userPassword)) {
+                    $hasMatch = true;
+                    break;
+                }
+            }
+
+            $this->response->setJsonContent($hasMatch);
             $this->response->send();     
             
-        } catch (\Exception $e) {            
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        } catch (\error $e) {            
+            $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
 
+    /**
+     * Retrieves count of passwords made within the day.
+     */
     public function passwordChangedSameDayAction($userId)
     {
         $this->view->disable();
 
         try {
-            $count = User::passwordChangedOnSameDay(
-                'userid = ?',
+            $passwords = User::find(
                 [
-                    $userId
+                    "conditions" => "DATEDIFF(now(),userLastPasswordChange) = 0 AND userID = ?1",
+                    "bind"       => [
+                        1   =>  $userId
+                    ]
                 ]
-            ); 
-
-            $this->response->setJsonContent($count);
+            );
+                                    
+            $this->response->setJsonContent(count($passwords));
             $this->response->send();     
             
-        } catch (\Exception $e) {            
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        } catch (\error $e) {            
+            $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
 
-    public function passwordDictionaryCheckAction()
+    /**
+     * Retrieves count of matching words from the dictionary.
+     */
+    public function passwordDictionaryCheckAction($password)
     {
         $this->view->disable();
+
+        try {
+            $passwords = User::passwordDictCheck(
+                [
+                    $password, $password, $password, $password
+                ]
+            );
+                                    
+            $this->response->setJsonContent(count($passwords));
+            $this->response->send();     
+            
+        } catch (\error $e) {            
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
     }
 
-    public function passwordTrivialCheckAction()
+    /**
+     * Retrieves count any matching trivial words from the dictionary.
+     */
+    public function passwordTrivialCheckAction($password)
     {
         $this->view->disable();
+
+        try {
+            $passwords = User::trivialCheck(
+                [
+                    $password, $password, $password, $password
+                ]
+            );
+                                    
+            $this->response->setJsonContent(count($passwords));
+            $this->response->send();     
+            
+        } catch (\error $e) {            
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
+    }
+
+    /**
+     * Validates if password is same with personal information such as first and last name.
+     */
+    public function passwordPersonalInfoCheckAction($password)
+    {
+        $this->view->disable();
+
+        try {
+            $passwords = User::personalInfoCheck(
+                [
+                    $password
+                ]
+            );
+
+            $this->response->setJsonContent(count($passwords));
+            $this->response->send();   
+
+        } catch (\error $e) {
+            $this->errorLogger->error($e);
+        }
     }
 
     public function updatePasswordAction()
@@ -106,8 +179,8 @@ class SecurityController extends ControllerBase
 
             $this->sessionLogger->info($this->session->get('auth')['name'] . ' changed password.'); 
 
-        }catch (\Exception $e) {            
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }catch (\error $e) {            
+            $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
 }

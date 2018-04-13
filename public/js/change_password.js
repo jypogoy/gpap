@@ -1,42 +1,5 @@
 $(function() {
-
-    function checkMatch(value) {
-        var d = $.Deferred();
-
-        $.post('../session/nondict/', { 'keyword': value }, function (hasMatch) {
-            d.resolve(hasMatch);
-        });
-
-        return d.promise();
-    }
-
-    function getDictionary() {
-        var d = $.Deferred();
-
-        $.post('../dictionary/list', function (dict) {
-            d.resolve(dict);
-        });
-
-        return d.promise();
-    }
-
-    $.fn.form.settings.rules.nonDict = function(value) {
-        var isDict = true;
-        
-        $.when(getDictionary()).done(function(dict) {
-            $.each(dict, function(i, word) {
-                console.log(value + ' : ' + word.dictionaryWord)
-                if (value.indexOf(word.dictionaryWord) != -1) {
-                    console.log('Match')
-                }
-            });
-        });
-        
-        return isDict;
-
-        
-    };
-
+    
     $('.ui.form')
     .form({
         fields: {
@@ -57,8 +20,24 @@ $(function() {
                         prompt : 'Current password should be alphanumeric and contains at least 1 upper case letter and a special character'
                     },
                     {
-                        type   : 'nonDict',
+                        type   : 'byLastSix',
+                        prompt : 'Current password is already used.'
+                    },
+                    {
+                        type   : 'withinDayChange',
+                        prompt : 'Cannot change password anymore.'
+                    },
+                    {
+                        type   : 'onDict',
                         prompt : 'Current password should not contain common dictionary words.'
+                    },
+                    {
+                        type   : 'trivial',
+                        prompt : 'Current password should not contain trivial words.'
+                    },
+                    {
+                        type   : 'personal',
+                        prompt : 'Current password should not contain personal information. i.e. usernames, names.'
                     }
                 ]
             },
@@ -77,6 +56,22 @@ $(function() {
                         type   : 'regExp',
                         value  : '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$',
                         prompt : 'New password should be alphanumeric and contains at least 1 upper case letter and a special character'
+                    },
+                    {
+                        type   : 'byLastSix',
+                        prompt : 'New password is already used.'
+                    },
+                    {
+                        type   : 'onDict',
+                        prompt : 'New password should not contain common dictionary words.'
+                    },
+                    {
+                        type   : 'trivial',
+                        prompt : 'New password should not contain trivial words.'
+                    },
+                    {
+                        type   : 'personal',
+                        prompt : 'New password should not contain personal information. i.e. usernames, names.'
                     }
                 ]
             },

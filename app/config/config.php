@@ -56,5 +56,6 @@ return new \Phalcon\Config([
         'de'        =>  'data_entry.log',
         'sql'       =>  'runtime_sql.log',
         'error'     =>  'error.log',        
-    ]
+    ],
+    'policy_url'    => 'https://gpapde-qa-web.amdatex.com/deccpolicy/'
 ]);

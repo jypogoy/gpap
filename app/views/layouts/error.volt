@@ -9,6 +9,6 @@
     {{ flash.output() }}
     {{ content() }}   
     <div class="ui centered grid">
-        <div class="footer text-muted"><p>&copy; ADEC Innovations, Copyright 2018, All rights reserved.</p></div>     
+        <div class="footer text-muted"><p>&copy; ADEC Innovations, Copyright 2018, All rights reserved. <a href class="policy">Privacy Policy</a></p></div>     
     </div>
 </div>

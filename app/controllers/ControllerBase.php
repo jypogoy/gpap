@@ -8,6 +8,8 @@ class ControllerBase extends Controller
     {
         $this->tag->prependTitle('GPAP DE | ');
         $this->view->setTemplateAfter('main');        
+
+        $this->view->policy_url = $this->config->get('policy_url');
     }
 
     public function _constExceptionMessage(\Exception $e)

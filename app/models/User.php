@@ -162,18 +162,41 @@ class User extends \Phalcon\Mvc\Model
         return new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
     }
 
-    public static function passwordChangedOnSameDay($conditions, $params = null)
+    public static function passwordDictCheck($params = null)
     {
-        $sql = "SELECT COUNT(userid) " .
-                "FROM `user` " .
-                "WHERE DATEDIFF(now(),userlastpasswordchange) = 0 " .
-                "AND $conditions";
+        $sql = "SELECT dictionary.* 
+                FROM dictionary 
+                WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
+                OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
+                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";
 
-        $user = new User();
-
-        $count = new ResultSet($user->getReadConnection()->query($sql, $params));
-
-        return $count;
+        $dictionary = new Dictionary();
+        
+        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
     }
 
+    public static function trivialCheck($params = null)
+    {
+        $sql = "SELECT count(dictionaryid) 
+                FROM dictionary 
+                WHERE isCommon = false 
+                AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
+                OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
+                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0;";
+
+        $dictionary = new Dictionary();
+        
+        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
+    }
+
+    public static function personalInfoCheck($params = null)
+    {
+        $sql = "SELECT POSITION(dictionaryWord IN '?') AS m FROM Dictionary HAVING m = 1";
+
+        $dictionary = new Dictionary();
+        
+        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
+    }
 }
