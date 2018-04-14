@@ -59,7 +59,7 @@ $(function() {
                         prompt : 'New password must be at least {ruleValue} characters.'
                     },
                     {
-                        type   : 'match[current_password]',
+                        type   : 'not[current_password]',
                         prompt : 'Your new password must be different from your current.'
                     },
                     {

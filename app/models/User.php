@@ -110,7 +110,7 @@ class User extends \Phalcon\Mvc\Model
         $this->hasMany('userID', 'UserPrevPassword', 'userID', ['alias' => 'UserPrevPassword']);
         $this->hasMany('userID', 'UserRole', 'userID', ['alias' => 'UserRole']);
 
-        $this->db = $this->getDI()->get('db');
+        //$this->db = $this->getDI()->get('db');
     }
 
     /**
@@ -198,7 +198,7 @@ class User extends \Phalcon\Mvc\Model
 
         $user = new User();
         
-        return $this->getDi()->getShared('db')->query($sql, $params);
+        //return $this->getDi()->getShared('db')->query($sql, $params);
 
         //return new ResultSet(null, $user, $user->getReadConnection()->query($sql, $params));
     }

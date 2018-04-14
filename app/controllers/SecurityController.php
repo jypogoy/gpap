@@ -74,7 +74,7 @@ class SecurityController extends ControllerBase
      */
     public function passwordDictionaryCheckAction($password)
     {
-        $this->view->disable();
+        //$this->view->disable();
         try {
             $sql = "SELECT dictionary.* 
                     FROM dictionary 
@@ -91,7 +91,7 @@ class SecurityController extends ControllerBase
 
             $results = $result->fetchArray()[0];      
 
-            return $results != "0" ? true : false;
+            return $results && $results != "0" ? true : false;
             
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -120,7 +120,7 @@ class SecurityController extends ControllerBase
 
             $results = $result->fetchArray()[0];      
 
-            return $results != "0" ? true : false;
+            return $results && $results != "0" ? true : false;
 
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -132,7 +132,7 @@ class SecurityController extends ControllerBase
      */
     public function passwordPersonalInfoCheckAction($password)
     {
-        $this->view->disable();
+        //$this->view->disable();
         try {
             $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";    
 
@@ -175,6 +175,8 @@ class SecurityController extends ControllerBase
         //         "action"     => "changepassword"
         //     ]
         // );    
+            $this->view->disable();
+        $userId = $this->session->get('auth')['id'];
 
         $currentPassword = $this->request->getPost('current_password');
         $newPassword = $this->request->getPost('new_password');
@@ -211,11 +213,19 @@ class SecurityController extends ControllerBase
                 $this->response->redirect('session/changepassword');
                 return;
             }
-
-            $user = new User();
+                        
+            $user = User::findFirstByUserID($userId);
             
             // Store the password hashed
-            // $user->password = $this->security->hash($newPassword);
+            $user->password = $this->security->hash($newPassword);
+
+            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :creatUserId: WHERE userID = :userId:");
+
+            $result = $query->execute(array(
+                'pass' => $this->security->hash($newPassword),
+                'creatUserId' => $userId,
+                'userId' => $userId                
+            ));
 
             // if (!$user->save()) {
             //     foreach ($user->getMessages() as $message) {
