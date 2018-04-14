@@ -63,6 +63,7 @@ class SecurityPlugin extends Plugin
 				'session'    	=> 	['changepassword'],
 				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
 			];
+
 			foreach ($privateResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
 			}
@@ -75,6 +76,7 @@ class SecurityPlugin extends Plugin
 				'session'    => ['index', 'register', 'start', 'end'],
 				'contact'    => ['index']
 			];
+
 			foreach ($publicResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
 			}
@@ -86,8 +88,8 @@ class SecurityPlugin extends Plugin
 						$acl->allow($role->getName(), $resource, $action);
 					}
 				}
-			}
-
+			}			
+			
 			//Grant access to private area to role Users
 			foreach ($privateResources as $resource => $actions) {
 				foreach ($actions as $action){

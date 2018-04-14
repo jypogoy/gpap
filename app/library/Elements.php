@@ -59,6 +59,11 @@ class Elements extends Component
             unset($this->_headerMenu['left']['home']);
         }
 
+        // For initial login: Remove menu items.
+        if ($this->session->get('initLogin')) { 
+            unset($this->_headerMenu['left']['home']);
+        }
+
         $controllerName = $this->view->getControllerName();
         $actionName = $this->view->getActionName();
         foreach ($this->_headerMenu as $position => $menu) {

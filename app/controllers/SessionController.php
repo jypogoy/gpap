@@ -24,7 +24,7 @@ class SessionController extends ControllerBase
 
         // Redirect to home if already logged in.
         $auth = $this->session->get('auth');
-        if ($auth) {
+        if ($auth) {            
             return $this->response->redirect('home');
         }
 
@@ -91,8 +91,8 @@ class SessionController extends ControllerBase
 
                         // Check if initial login by comparing lastname and password. Must compare hashes.
                         if ($this->security->checkHash($password, $user->userPassword)) {
+                            $this->session->set('initLogin', true);
                             $this->flashSession->notice('Please change your password.');
-                            
                             return $this->response->redirect('session/changepassword');
                         }
 
