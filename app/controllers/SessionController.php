@@ -49,9 +49,7 @@ class SessionController extends ControllerBase
      *
      */
     public function startAction()
-    {
-        // $this->view->disable();
-        // $x = $this->security->hash('Pogoy');
+    {      
         if ($this->request->isPost()) {
 
             $username = $this->request->getPost('username');
@@ -75,13 +73,7 @@ class SessionController extends ControllerBase
             $user = User::findFirstByUserName($username);    
 
             if ($user) {                            
-                if ($this->security->checkHash($password, $user->userPassword)) {                    
-                    // Check if initial login by comparing lastname and password. Must compare hashes.
-                    if ($this->security->checkHash($this->security->hash($password), $user->userLastName)) {
-                        $this->flashSession->info('Please change your password.');
-                        return $this->response->redirect('session/changepassword');
-                    }
-
+                if ($this->security->checkHash($password, $user->userPassword)) {                                    
                     // Lock user if attempts reaches 3.
                     if ($user->userInvalidLoginAttempt > 3) {
                         $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;
@@ -96,6 +88,14 @@ class SessionController extends ControllerBase
                     } else {
                         // The password is valid
                         $this->_registerSession($user);
+
+                        // Check if initial login by comparing lastname and password. Must compare hashes.
+                        if ($this->security->checkHash($password, $user->userPassword)) {
+                            $this->flashSession->notice('Please change your password.');
+                            
+                            return $this->response->redirect('session/changepassword');
+                        }
+
                         $this->flash->success('Welcome ' . $user->userName);
 
                         // Log successful access                    
