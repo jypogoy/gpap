@@ -11,7 +11,7 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="username" placeholder="Username" tabindex="1" autofocus="true">
+                        <input type="text" id="username" name="username" placeholder="Username" tabindex="1" autofocus="true">
                     </div>
                 </div>
                 <div class="field">
@@ -26,7 +26,10 @@
             <div class="ui error message"></div>
 
         </form>
-        <div class="footer text-muted"><p>&copy; ADEC Innovations, Copyright 2018, All rights reserved. <a href class="policy">Privacy Policy</a></p></div>
+        <div class="footer text-muted">
+            <p>&copy; ADEC Innovations, Copyright 2018, All rights reserved.</p>
+            <p><a href class="policy">Privacy Policy</a></p>
+        </div>
     </div>
 
 </div>

@@ -1,17 +1,19 @@
 function checkByLastSix(password) {
     var d = $.Deferred();
+    var params = {};
+    params.password = password;
 
-    $.post('../security/checkbylastsixpasswords/' + password, function (hasMatch) {
+    $.post('../security/checkbylastsixpasswords/', params, function (hasMatch) {
         d.resolve(hasMatch);
     });
 
     return d.promise();
 }
 
-function checkSameDayChange(password) {
+function checkSameDayChange() {
     var d = $.Deferred();
-
-    $.post('../security/passwordchangedsameday/' + password, function (count) {
+    
+    $.post('../security/passwordchangedsameday/', function (count) {
         d.resolve(count);
     });
 
@@ -20,8 +22,10 @@ function checkSameDayChange(password) {
 
 function checkPassDict(password) {
     var d = $.Deferred();
+    var params = {};
+    params.password = password;
 
-    $.post('../security/passworddictionarycheck/' + password, function (count) {
+    $.post('../security/passworddictionarycheck/', params, function (count) {
         d.resolve(count);
     });
 
@@ -30,8 +34,10 @@ function checkPassDict(password) {
 
 function checkTrivial(password) {
     var d = $.Deferred();
+    var params = {};
+    params.password = password;
 
-    $.post('../security/passwordtrivialcheck/' + password, function (count) {
+    $.post('../security/passwordtrivialcheck/', params, function (count) {
         d.resolve(count);
     });
 
@@ -40,8 +46,10 @@ function checkTrivial(password) {
 
 function checkPersonal(password) {
     var d = $.Deferred();
+    var params = {};
+    params.password = password;
 
-    $.post('../security/passwordpersonalinfocheck/' + password, function (count) {
+    $.post('../security/passwordpersonalinfocheck/', params, function (count) {
         d.resolve(count);
     });
 

@@ -72,7 +72,7 @@
 
         <div class="footer text-muted"><p>Effective Date: May 1, 2018</p></div>
     </div>
-    <div class="actions">
+    {#<div class="actions">
         <div class="ui negative button">Close</div>
-    </div>
+    </div>#}
 </div>

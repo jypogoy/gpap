@@ -11,10 +11,11 @@ class SecurityController extends ControllerBase
     /**
      * Retrieves most recent six passwords of a user.
      */
-    public function checkByLastSixPasswordsAction($newPassword)
+    public function checkByLastSixPasswordsAction($password)
     {
-        $this->view->disable();        
+        //$this->view->disable();        
         $userId = $this->session->get('auth')['id'];
+        //$password = $this->request->getPost('password');        
         $hasMatch = false;
 
         try {
@@ -27,16 +28,17 @@ class SecurityController extends ControllerBase
             ); 
 
             // Match new password hash with the recorded passwords.
-            $encNewPassword = $this->security->hash($newPassword);            
+            $encPassword = $this->security->hash($password);            
             foreach ($passwords as $password) {
-                if($this->security->checkHash($encNewPassword, $password->userPassword)) {
+                if($this->security->checkHash($encPassword, $password->userPassword)) {
                     $hasMatch = true;
                     break;
                 }
             }
 
-            $this->response->setJsonContent($hasMatch);
-            $this->response->send();     
+            return $hasMatch;
+            // $this->response->setJsonContent($hasMatch);
+            // $this->response->send();     
             
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -46,9 +48,9 @@ class SecurityController extends ControllerBase
     /**
      * Retrieves count of passwords made within the day.
      */
-    public function passwordChangedSameDayAction($userId)
+    public function passwordChangedSameDayAction()
     {
-        $this->view->disable();
+        $userId = $this->session->get('auth')['id'];
 
         try {
             $passwords = User::find(
@@ -59,9 +61,8 @@ class SecurityController extends ControllerBase
                     ]
                 ]
             );
-                                    
-            $this->response->setJsonContent(count($passwords));
-            $this->response->send();     
+               
+            return count($passwords) > 0 ? true : false;
             
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -74,16 +75,18 @@ class SecurityController extends ControllerBase
     public function passwordDictionaryCheckAction($password)
     {
         $this->view->disable();
-
         try {
-            $passwords = User::passwordDictCheck(
-                [
-                    $password, $password, $password, $password
-                ]
-            );
-                                    
-            $this->response->setJsonContent(count($passwords));
-            $this->response->send();     
+            $sql = "SELECT dictionary.* 
+                    FROM dictionary 
+                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";    
+            
+            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
+            $results = $data->fetchAll();    
+
+            return count($results) > 0 ? true : false;
             
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -95,18 +98,20 @@ class SecurityController extends ControllerBase
      */
     public function passwordTrivialCheckAction($password)
     {
-        $this->view->disable();
-
         try {
-            $passwords = User::trivialCheck(
-                [
-                    $password, $password, $password, $password
-                ]
-            );
-                                    
-            $this->response->setJsonContent(count($passwords));
-            $this->response->send();     
-            
+            $sql = "SELECT count(dictionaryid) 
+                    FROM dictionary 
+                    WHERE isCommon = false 
+                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0";    
+
+            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
+            $results = $data->fetchAll();      
+
+            return count($results) > 0 ? true : false;
+
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
@@ -117,20 +122,17 @@ class SecurityController extends ControllerBase
      */
     public function passwordPersonalInfoCheckAction($password)
     {
-        $this->view->disable();
-
         try {
-            $passwords = User::personalInfoCheck(
-                [
-                    $password
-                ]
-            );
+            $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, 
+            POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";    
 
-            $this->response->setJsonContent(count($passwords));
-            $this->response->send();   
+            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
+            $results = $data->fetchAll();    
+
+            return count($results) > 0 ? true : false;
 
         } catch (\error $e) {
-            $this->errorLogger->error($e);
+            $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
 
@@ -141,26 +143,60 @@ class SecurityController extends ControllerBase
         //     return $this->response->redirect('');
         // }
 
-        $validator = new PasswordValidator();
-        $messages = $validator->validate($_POST);
+        // $validator = new PasswordValidator();
+        // $messages = $validator->validate($_POST);
 
-        $this->view->messages = $messages;
+        // $this->view->messages = $messages;
 
-        foreach ($messages as $message) {
-            $this->flashSession->error($message);
-        }
+        // foreach ($messages as $message) {
+        //     $this->flashSession->error($message);
+        // }
 
-        return $this->dispatcher->forward(
-            [
-                "controller" => "session",
-                "action"     => "changepassword"
-            ]
-        );    
+        // return $this->dispatcher->forward(
+        //     [
+        //         "controller" => "session",
+        //         "action"     => "changepassword"
+        //     ]
+        // );    
 
-        $password = $this->request->getPost('password');
+        $currentPassword = $this->request->getPost('current_password');
+        $newPassword = $this->request->getPost('new_password');
+        $confirmPassword = $this->request->getPost('confirm_password');
         
         try {
+            
+            $used = self::checkByLastSixPasswordsAction($newPassword);
+            if ($used) {
+                $this->flashSession->error('Password is already used.');
+            }
+
+            $changedToday = self::passwordChangedSameDayAction();
+            if ($changedToday) {
+                $this->flashSession->error('Cannot change password anymore.');
+            }
+
+            $inDictionary = self::passwordDictionaryCheckAction($newPassword);
+            if ($inDictionary) {
+                $this->flashSession->error('Password should not contain common dictionary words.');
+            }
+
+            // $isTrivial = self::passwordTrivialCheckAction($newPassword);
+            // if ($isTrivial) {
+            //     $this->flashSession->error('Password should not contain trivial words.');
+            // }
+
+            $isPersonal = self::passwordPersonalInfoCheckAction($newPassword);
+            if ($isPersonal) {
+                $this->flashSession->error('Password should not contain personal information. i.e. usernames, names.');
+            }
+
+            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal) {
+                $this->response->redirect('session/changepassword');
+                return;
+            }
+
             $user = new User();
+            
             // Store the password hashed
             $user->password = $this->security->hash($password);
 
@@ -170,12 +206,16 @@ class SecurityController extends ControllerBase
                 }
 
                 $this->dispatcher->forward([
-                    'ontroller' => 'session',
+                    'controller' => 'session',
                     'action'    => 'changepassword'
                 ]);
 
                 return;
             }
+
+            $msg = 'Your password was updated successfully!';
+            $this->flashSession->success($msg);    
+            $this->response->redirect('home');
 
             $this->sessionLogger->info($this->session->get('auth')['name'] . ' changed password.'); 
 

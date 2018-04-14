@@ -184,7 +184,7 @@ class User extends \Phalcon\Mvc\Model
                 AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
                 OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
                 OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0;";
+                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0";
 
         $dictionary = new Dictionary();
         
@@ -193,10 +193,13 @@ class User extends \Phalcon\Mvc\Model
 
     public static function personalInfoCheck($params = null)
     {
-        $sql = "SELECT POSITION(dictionaryWord IN '?') AS m FROM Dictionary HAVING m = 1";
+        $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, 
+                POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";
 
-        $dictionary = new Dictionary();
+        $user = new User();
         
-        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
+        return $this->getDi()->getShared('db')->query($sql, $params);
+
+        //return new ResultSet(null, $user, $user->getReadConnection()->query($sql, $params));
     }
 }

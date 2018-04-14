@@ -37,7 +37,7 @@ class Alert extends Component
     {
         $messages = $this->flashSession->getMessages();        
         if (!is_null($messages)) {
-            $messageList = '<' . ($isOrdered ? 'ol' : 'ul') . '>';
+            $messageList = '<' . ($isOrdered ? 'ol' : 'ul') . ' class="list">';
             foreach ($messages as $type => $message) {
                 foreach ($message as $text) {
                     $messageList = $messageList . '<li>' . $text . '</li>';

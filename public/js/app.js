@@ -8,20 +8,33 @@ $(function () {
     $('.user-profile-dropdown').dropdown();
 
     $('.policy').click(function(e) {
-        console.log('TEST')
         e.preventDefault();
+        console.log('SHOW')
+        PolicyModal.show();
+    });
+});
+
+var PolicyModal = {
+    show : function () {         
+        
+        $('#modal_task_label').html($('#task_id_dropdown').dropdown('get text'));
+        
         $('.modal.policy')
-        .modal({
+        .modal('setting',
+        {
             inverted : true,
             closable : true,
-            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
             onDeny : function(){
                 // Do nothing
             },
             onApprove : function() {
-                // Do nothing
+                //window.location = 'boards/delete/' + id;
             }
         })
+        .modal('setting', { detachable:false })
         .modal('show');
-    });
-});
+    },
+    hide : function () {
+        $('.modal.policy').modal('hide');
+    }
+}
