@@ -83,10 +83,15 @@ class SecurityController extends ControllerBase
                     OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
                     OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";    
             
-            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
-            $results = $data->fetchAll();    
+            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
+            
+            $result->setFetchMode(
+                \Phalcon\Db::FETCH_NUM
+            );
 
-            return count($results) > 0 ? true : false;
+            $results = $result->fetchArray()[0];      
+
+            return $results != "0" ? true : false;
             
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -107,10 +112,15 @@ class SecurityController extends ControllerBase
                     OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
                     OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0";    
 
-            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
-            $results = $data->fetchAll();      
+            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
 
-            return count($results) > 0 ? true : false;
+            $result->setFetchMode(
+                \Phalcon\Db::FETCH_NUM
+            );
+
+            $results = $result->fetchArray()[0];      
+
+            return $results != "0" ? true : false;
 
         } catch (\error $e) {            
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -122,14 +132,21 @@ class SecurityController extends ControllerBase
      */
     public function passwordPersonalInfoCheckAction($password)
     {
+        $this->view->disable();
         try {
-            $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, 
-            POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";    
+            $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";    
 
-            $data = $this->db->query($sql, [$password, $password, $password, $password]);    
-            $results = $data->fetchAll();    
+            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
+            
+            $result->setFetchMode(
+                \Phalcon\Db::FETCH_OBJ
+            );
 
-            return count($results) > 0 ? true : false;
+            $r = $result->numRows();
+
+            $results = $result->fetchArray()[0];      
+
+            return $results && $results != "0" ? true : false;
 
         } catch (\error $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
@@ -180,10 +197,10 @@ class SecurityController extends ControllerBase
                 $this->flashSession->error('Password should not contain common dictionary words.');
             }
 
-            // $isTrivial = self::passwordTrivialCheckAction($newPassword);
-            // if ($isTrivial) {
-            //     $this->flashSession->error('Password should not contain trivial words.');
-            // }
+            $isTrivial = self::passwordTrivialCheckAction($newPassword);
+            if ($isTrivial) {
+                $this->flashSession->error('Password should not contain trivial words.');
+            }
 
             $isPersonal = self::passwordPersonalInfoCheckAction($newPassword);
             if ($isPersonal) {
@@ -198,20 +215,20 @@ class SecurityController extends ControllerBase
             $user = new User();
             
             // Store the password hashed
-            $user->password = $this->security->hash($password);
+            // $user->password = $this->security->hash($newPassword);
 
-            if (!$user->save()) {
-                foreach ($user->getMessages() as $message) {
-                    $this->flash->error($message);
-                }
+            // if (!$user->save()) {
+            //     foreach ($user->getMessages() as $message) {
+            //         $this->flash->error($message);
+            //     }
 
-                $this->dispatcher->forward([
-                    'controller' => 'session',
-                    'action'    => 'changepassword'
-                ]);
+            //     $this->dispatcher->forward([
+            //         'controller' => 'session',
+            //         'action'    => 'changepassword'
+            //     ]);
 
-                return;
-            }
+            //     return;
+            // }
 
             $msg = 'Your password was updated successfully!';
             $this->flashSession->success($msg);    
