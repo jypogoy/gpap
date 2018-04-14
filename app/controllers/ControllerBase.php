@@ -6,6 +6,14 @@ class ControllerBase extends Controller
 {
     protected function initialize()
     {
+        $f = $this->dispatcher->getActionName();
+        if ($this->session->get('initLogin') 
+            && $this->dispatcher->getActionName() != 'changepassword' 
+            && $this->dispatcher->getActionName() != 'end'
+            && $this->dispatcher->getControllerName() != 'about' ) {
+            return $this->response->redirect('session/changepassword');            
+        }   
+
         $this->tag->prependTitle('GPAP DE | ');
         $this->view->setTemplateAfter('main');        
 
