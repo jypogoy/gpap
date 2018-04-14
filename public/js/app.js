@@ -9,7 +9,6 @@ $(function () {
 
     $('.policy').click(function(e) {
         e.preventDefault();
-        console.log('SHOW')
         PolicyModal.show();
     });
 });

@@ -50,47 +50,73 @@ class SessionController extends ControllerBase
      */
     public function startAction()
     {
+        // $this->view->disable();
+        // $x = $this->security->hash('Pogoy');
         if ($this->request->isPost()) {
 
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
-
+               
             // $user = Users::findFirst([
             //     "(email = :email: OR username = :email:) AND password = :password: AND active = 'Y'",
             //     'bind' => ['email' => $email, 'password' => sha1($password)]
             // ]);
 
+            if (empty($username) || empty($password)) {
+                $this->flash->error('Please specify a valid username and password!');
+                return $this->dispatcher->forward(
+                    [
+                        "controller" => "session",
+                        "action"     => "index",
+                    ]
+                );
+            }
+
             $user = User::findFirstByUserName($username);    
 
-            if ($user) {
-                if ($this->security->checkHash($password, $user->userPassword)) {
-                    // The password is valid
-                    $this->_registerSession($user);
-                    $this->flash->success('Welcome ' . $user->userName);
+            if ($user) {                            
+                if ($this->security->checkHash($password, $user->userPassword)) {                    
+                    // Check if initial login by comparing lastname and password. Must compare hashes.
+                    if ($this->security->checkHash($this->security->hash($password), $user->userLastName)) {
+                        $this->flashSession->info('Please change your password.');
+                        return $this->response->redirect('session/changepassword');
+                    }
 
-                    // Log successful access                    
-                    $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in.');
+                    // Lock user if attempts reaches 3.
+                    if ($user->userInvalidLoginAttempt > 3) {
+                        $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;
+                        $user->save();
+                        $this->flash->error('User account is locked!');
+                        return $this->dispatcher->forward(
+                            [
+                                "controller" => "session",
+                                "action"     => "index",
+                            ]
+                        );
+                    } else {
+                        // The password is valid
+                        $this->_registerSession($user);
+                        $this->flash->success('Welcome ' . $user->userName);
 
-                    return $this->response->redirect('home');
+                        // Log successful access                    
+                        $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in @ ' . $this->utils->getRealIpAddr() . '.');
+
+                        $user->userInvalidLoginAttempt = 0;
+                        $user->save();
+
+                        return $this->response->redirect('home');
+                    }
+                } else {
+                    $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;
+                    $user->save();
+                    $this->flash->error('Wrong username or password!');
                 }
             } else {
                 // To protect against timing attacks. Regardless of whether a user exists or not, the script will take roughly the same amount as it will always be computing a hash.
                 $this->security->hash(rand());
+                $this->flash->error('Wrong username or password!');
             }
 
-            // $user = new User();
-            // $user->id = '2';
-            // $user->name = 'Jeffrey Pogoy';
-
-            // if ($user != false) {
-                // $this->_registerSession($user);
-                // $this->flash->success('Welcome ' . $user->name);
-
-                // return $this->response->redirect('home');
-            // }
-
-            // The validation has failed
-            $this->flash->error('Wrong username or password');
         }
 
         return $this->dispatcher->forward(
@@ -127,6 +153,6 @@ class SessionController extends ControllerBase
         $this->tag->setTitle('Change Password');
         $this->view->setTemplateAfter('session');
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Change Password page.'); 
-    }    
+    }        
 
 }

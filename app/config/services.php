@@ -216,8 +216,7 @@ $di->setShared('session', function () {
 /**
  * Crypt service
  */
-$di->set(
-    "crypt",
+$di->set('crypt',
     function () {
         $crypt = new Crypt();
 
@@ -230,6 +229,10 @@ $di->set(
     },
     true
 );
+
+$di->set('utils', function () {
+    return new Utils();
+});
 
 $di->set('elements', function () {
     return new Elements();

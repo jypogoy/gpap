@@ -1,200 +1,187 @@
-[Sat, 14 Apr 18 06:25:51 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:25:52 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:25:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:25:53 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:25:53 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:29:33 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:29:33 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:29:33 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:29:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:29:34 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:29:34 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:29:39 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:29:40 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:30:39 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:30:55 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:31:38 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:31:39 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
-[Sat, 14 Apr 18 06:32:37 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
-[Sat, 14 Apr 18 06:32:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:32:39 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:32:39 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:32:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:32:42 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:32:42 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:33:30 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:33:30 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:33:30 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:33:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:33:32 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:33:32 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
-[Sat, 14 Apr 18 06:33:38 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
-[Sat, 14 Apr 18 06:33:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:33:39 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:33:39 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:33:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:33:42 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:33:42 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:36:14 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:14 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:36:14 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:36:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:16 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:36:16 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT dictionary.* 
-                    FROM dictionary 
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0
-[Sat, 14 Apr 18 06:36:25 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:36:26 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
-[Sat, 14 Apr 18 06:36:26 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = NOW(), `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
-[Sat, 14 Apr 18 06:36:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:27 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:36:27 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
-[Sat, 14 Apr 18 06:36:50 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:50 +0000][DEBUG] DESCRIBE `gpap`.`user`
-[Sat, 14 Apr 18 06:36:50 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
-[Sat, 14 Apr 18 06:36:51 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
-[Sat, 14 Apr 18 06:36:51 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
-[Sat, 14 Apr 18 06:36:51 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 07:24:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:24:10 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:24:10 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:24:10 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:24:12 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:24:12 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 07:24:12 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 07:26:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:04 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:26:04 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:04 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Sat, 14 Apr 18 07:26:05 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Sat, 14 Apr 18 07:26:06 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Sat, 14 Apr 18 07:40:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:40:03 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:40:03 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:40:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:40:31 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:40:31 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:47:01 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:47:01 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:47:01 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:47:01 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:54:37 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:54:37 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:54:37 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:54:37 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:54:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:54:53 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:54:53 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:54:53 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 07:55:13 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 07:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:57:55 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:57:55 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:58:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:58:35 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 07:58:35 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 07:58:35 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 07:58:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 07:58:36 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 07:58:36 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:01:57 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:02:19 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:02:19 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:02:19 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:02:38 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:02:38 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:02:38 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:02:38 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:02:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:02:42 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:02:42 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:02:42 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:03:23 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:03:23 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:03:23 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:03:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:03:28 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:03:28 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:03:28 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:05:44 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:05:44 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:05:44 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:05:44 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:07:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:07:49 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:07:49 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:07:49 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:07:51 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:07:51 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:07:51 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:09:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:16 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:09:16 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:09:16 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:09:17 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:17 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:09:17 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:09:30 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:30 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:09:30 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:09:30 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:09:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:31 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:09:31 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:09:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:09:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:09:57 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:09:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:09:58 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:09:58 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:10:08 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:10:25 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:10:25 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:10:25 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:10:25 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:10:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:10:26 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:10:26 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:10:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:10:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:10:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:12:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:12:49 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:12:49 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:12:49 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:12:51 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:12:51 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:12:51 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:13:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:13:27 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:13:27 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:13:27 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:13:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:13:28 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:13:28 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:13:38 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:13:38 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:13:38 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:14:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:14:26 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:14:26 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:14:34 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:14:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:14:35 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:14:35 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14
+[Sat, 14 Apr 18 08:15:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:15:20 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:15:20 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:15:20 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:16:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:16:20 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Sat, 14 Apr 18 08:16:20 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Sat, 14 Apr 18 08:16:20 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Sat, 14 Apr 18 08:16:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Sat, 14 Apr 18 08:16:21 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Sat, 14 Apr 18 08:16:21 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 14

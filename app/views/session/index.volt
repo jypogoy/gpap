@@ -11,7 +11,7 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" id="username" name="username" placeholder="Username" tabindex="1" autofocus="true">
+                        <input type="text" id="username" name="username" placeholder="Username" tabindex="1" autofocus="true">                
                     </div>
                 </div>
                 <div class="field">
@@ -23,7 +23,7 @@
                 {{ submit_button('Login', 'class': 'ui fluid large teal submit button', 'tabindex': 3) }}                
             </div>            
 
-            <div class="ui error message"></div>
+            {#<div class="ui error message"></div>#}
 
         </form>
         <div class="footer text-muted">
@@ -35,3 +35,5 @@
 </div>
 
 {% include 'session/policy_modal.volt' %}
+
+{{ javascript_include('js/session.js') }}

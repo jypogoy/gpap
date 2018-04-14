@@ -219,11 +219,11 @@ class SecurityController extends ControllerBase
             // Store the password hashed
             $user->password = $this->security->hash($newPassword);
 
-            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :creatUserId: WHERE userID = :userId:");
+            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
 
             $result = $query->execute(array(
                 'pass' => $this->security->hash($newPassword),
-                'creatUserId' => $userId,
+                'userName' => $user->userName,
                 'userId' => $userId                
             ));
 
@@ -250,4 +250,5 @@ class SecurityController extends ControllerBase
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
+
 }

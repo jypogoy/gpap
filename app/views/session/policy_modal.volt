@@ -7,7 +7,7 @@
         {#<iframe src="http://localhost:82/deccpolicy/" width="100%" height="100%"></iframe>#}
         <h2 class="ui dividing header">Draft PRIVACY POLICY</h2>
         <div class="ui raised segment">
-            <p>This Privacy Policy covers the treatment of personally identifiable information ("Personal Information"), and other information described in this policy, gathered when you are using or accessing the <Application Name>. This Privacy Policy also covers our treatment of any Personal Information that our business partner share with us or that we share with them through this application.</p>
+            <p>This Privacy Policy covers the treatment of personally identifiable information ("Personal Information"), and other information described in this policy, gathered when you are using or accessing the GPAP DECC. This Privacy Policy also covers our treatment of any Personal Information that our business partner share with us or that we share with them through this application.</p>
         </div>
 
         <h2 class="ui dividing header">What information do we collect?</h2>
@@ -67,7 +67,7 @@
 
         <h2 class="ui dividing header">What if I have questions or concerns?</h2>
         <div class="ui raised segment">
-            <p>If you have any questions or concerns regarding privacy using the <Application Name>, please email <a href="mailto:gpap@amdatex.com">gpap@amdatex.com</a></p>
+            <p>If you have any questions or concerns regarding privacy using the GPAP DECC, please email <a href="mailto:gpap@amdatex.com">gpap@amdatex.com</a></p>
         </div>
 
         <div class="footer text-muted"><p>Effective Date: May 1, 2018</p></div>
