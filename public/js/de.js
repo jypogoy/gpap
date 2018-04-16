@@ -3,6 +3,8 @@ var slipMap; // <index, map<field_id, value>>
 var slipRequiredFields;
 var headerRequiredFields;
 
+var merchantInfoMap; // <db_field, db_value>   
+
 $(function() {              
 
     slipRequiredFields = $('#transactionDataForm').find('.required');
@@ -95,6 +97,7 @@ $(function() {
     });
     
     // See de_data_retrieval.js
+    merchantInfoMap = new HashMap();
     currencyMap = new HashMap();
     batchPullReasonMap = new HashMap();
     installMonthsMap = new HashMap();
@@ -103,6 +106,7 @@ $(function() {
 
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {
+            getRegionCurrency();
             getPullReasons();
             getInstallmentMonths();
             getExceptions();
@@ -112,6 +116,7 @@ $(function() {
             prepBalancingFields();
         });
     } else {
+        getRegionCurrency();
         getPullReasons();
         getInstallmentMonths();
         getExceptions();

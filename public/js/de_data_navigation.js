@@ -68,12 +68,12 @@ function navigate(direction) {
 }
 
 function fillFields(map) {
-    map.forEach(function(value, key) {            
+    map.forEach(function(value, key) {     
         setFieldValue(key, value);                 
     });
 }
 
-function setFieldValue(key, value) {
+function setFieldValue(key, value) {    
     // Set value for checkboxes and input elements.
     if($('#' + key).is(':checkbox')) {
         if (value == true) {
@@ -93,7 +93,7 @@ function setFieldValue(key, value) {
     if (dropDownEl.length > 0) {
         if (value == '') {
             $(dropDownEl).dropdown('restore defaults');
-        } else {
+        } else {            
             $(dropDownEl).dropdown('set selected', value);
         } 
     }               

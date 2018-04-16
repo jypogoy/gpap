@@ -1,3 +1,66 @@
+function saveBatch(isSaveNew, isComplete) {
+
+    saveSlip(); // Save the current content. See de_data_navigation.js   
+
+    // Record new header.
+    $.when(writeHeader())
+    .done(function(headerId) {
+        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') { // Record transactions if no specified batch pull reason.
+            // Clear previously recorded transactions to eliminate repitition.
+            $.when(delPreviousTrans(headerId))
+            .done(function(isSuccess) {
+                if (isSuccess) {
+                    // Record new transactions.
+                    $.when(writeSlips(headerId))
+                    .done(function(isSuccess) {
+                        if (!isSuccess) {
+                            toastr.error('Unable to record transactions.');
+                        }
+                    });
+                } else {
+                    toastr.error('Unable to clear previous recorded transactions.');
+                }
+            });
+        }
+
+        if (isComplete) {
+            var data = {};
+            data.entry_id = $('#data_entry_id').val();
+            data.batch_id = $('#batch_id').val();
+            $.post('../de/complete/', data,function (msg) {  
+                if (msg.indexOf('success') != -1) {                                               
+                    toastr.success(msg);  
+                    if (isSaveNew) {
+                        getNewBatch();
+                    } else {
+                        window.location = '../de/redirectsuccess/' + true;
+                    }       
+                } else {
+                    toastr.error('Unable to complete the this batch.');
+                }       
+            });
+        } else {
+            if (isSaveNew) {
+                getNewBatch();
+            } else {
+                window.location = '../de/redirectsuccess/' + true;
+            }
+        }   
+    });
+}
+
+function writeHeader() {
+    var d = $.Deferred();
+
+    $.post('../merchant_header/save', gatherHeaderValues(), function(headerId) {
+        d.resolve(headerId);
+    }).fail(function (xhr, status, error) {
+        toastr.error(error);
+    });  
+
+    return d.promise();
+}
+
 function gatherHeaderValues() {
     var fields = $('.header-field');
     var data = {};
@@ -14,7 +77,47 @@ function gatherHeaderValues() {
     return data;
 }
 
-function saveBatch(isSaveNew, isComplete) {
+function delPreviousTrans(headerId) {
+    var d = $.Deferred();
+
+    $.post('../transaction/deleteprevious/' + headerId, function (result) {
+        d.resolve(result == 1 ? true : false);
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+
+    return d.promise();
+}
+
+function writeSlips(headerId) {
+    var d = $.Deferred();
+
+    slipMap.forEach(function(fieldValueMap, index) {                        
+        var data = {};
+        data['merchant_header_id'] = headerId;
+        data['sequence'] = index;
+        fieldValueMap.forEach(function(value, id) {
+            if (id.indexOf('date') != -1) {
+                data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
+            } else {
+                data[id] = value;
+            }      
+        });
+        
+        // Write the transaction details.
+        $.post('../transaction/save', data, function (result) {
+            d.resolve(result == 1 ? true : false);
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });                                     
+    });
+
+    return d.promise();
+}
+
+function saveBatch1(isSaveNew, isComplete) {
 
     saveSlip(); // Save the current content. See de_data_navigation.js   
         
@@ -108,84 +211,6 @@ function getNewBatch() {
         console.log(error)
         toastr.error(error);
     });
-}
-
-function saveBatch2(isSaveNew) {    
-
-    // Write the header details.
-    $.post('../merchant_header/save', gatherHeaderValues(), function (headerId) {
-        
-        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') { // Record transactions if no specified batch pull reason.
-            
-            if($.isNumeric(headerId)) { // Check if the newly created header id was created.
-                
-                // Make sure to delete previously recorded transactions.
-                $.post('../transaction/deleteprevious/' + headerId, function (msg) {
-                    // Do nothing...
-                })
-                .done(function (msg) {
-                    
-                    slipMap.forEach(function(fieldValueMap, index) {                        
-                        var data = {};
-                        data['merchant_header_id'] = headerId;
-                        data['sequence'] = index;
-                        fieldValueMap.forEach(function(value, id) {
-                            if (id.indexOf('date') != -1) {
-                                data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
-                            } else {
-                                data[id] = value;
-                            }      
-                        });
-                    
-                        // FOR CONFIRMATION: IS TRANSACTION ID ALWAYS REQUIRED?                        
-                    
-                        // Write the transaction details.
-                        $.post('../transaction/save', data, function (msg) {
-                            if (msg.indexOf('success')) {
-                                //toastr.success(msg);    
-                            } else {
-                                toastr.error(msg);
-                            }
-                        })
-                        .done(function (msg) {
-                            // Do nothing...
-                        })
-                        .fail(function (xhr, status, error) {
-                            toastr.error(error);
-                        });                                     
-                    });
-                })
-                .fail(function (xhr, status, error) {
-                    toastr.error(error);
-                });                                       
-                
-            } else {
-                toastr.error(headerId);
-            }
-        }
-
-        if (isSaveNew) {
-            $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : ''), function (data) {
-                if (data) {
-                    window.location = '../de/' + data.id;
-                } else {
-                    window.location = '../de/redirectnonext/' + $('#session_task_name').val();
-                }                
-            })
-            .done(function (msg) {
-                // Do nothing...
-            })
-            .fail(function (xhr, status, error) {
-                toastr.error(error);
-            });
-        } else {
-            window.location = '../de/redirectsuccess/' + isSuccess;
-        }
-
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    }); 
 }
 
 function redirectBack(batchId) {

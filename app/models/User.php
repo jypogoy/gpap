@@ -1,11 +1,12 @@
 <?php
 
+use Phalcon\Di;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class User extends \Phalcon\Mvc\Model
 {
 
-    protected $db;
+    //protected $db;
 
     /**
      *
@@ -146,60 +147,90 @@ class User extends \Phalcon\Mvc\Model
     }
 
 
-    public static function findLastSixPasswords($conditions, $params = null)
-    {
-        $sql = "SELECT DISTINCT userPassword, userID " .
-                "FROM user_prev_password " .
-                "WHERE $conditions " .
-                "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
-                "UNION " .
-                "SELECT DISTINCT userPassword, userid " .
-                "FROM user " .
-                "WHERE $conditions";
-
-        $prevPassword = new UserPrevPassword();
-
-        return new ResultSet(null, $prevPassword, $prevPassword->getReadConnection()->query($sql, $params));
-    }
-
-    public static function passwordDictCheck($params = null)
-    {
-        $sql = "SELECT dictionary.* 
-                FROM dictionary 
-                WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";
-
-        $dictionary = new Dictionary();
+    // public function isLastSixMatch($userId, $password)
+    // {
+    //     $db = Di::getDefault()['db'];
         
-        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
-    }
+    //     $hasMatch = false;
 
-    public static function trivialCheck($params = null)
-    {
-        $sql = "SELECT count(dictionaryid) 
-                FROM dictionary 
-                WHERE isCommon = false 
-                AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0";
+    //     $sql = "SELECT DISTINCT userPassword, userID " .
+    //             "FROM user_prev_password " .
+    //             "WHERE userID = ? " .
+    //             "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
+    //             "UNION " .
+    //             "SELECT DISTINCT userPassword, userid " .
+    //             "FROM user " .
+    //             "WHERE userID = ?";
 
-        $dictionary = new Dictionary();
+    //     $result = $db->query($sql, [$userId, $userId]);        
+    //     $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
+
+    //     // Match new password hash with the recorded passwords.
+    //     $encPassword = $this->security->hash($password);
+    //     // while ($password = $result->fetch()) {
+    //     //     if($security->checkHash($encPassword, $password->userPassword)) {
+    //     //         $hasMatch = true;
+    //     //         break;
+    //     //     }
+    //     // }
+
+    //     return $hasMatch;
+    // }
+
+    // public static function isUpdatedToday($userId)
+    // {
+    //     $count = self::count(
+    //         [
+    //             "conditions" => "DATEDIFF(now(),userLastPasswordChange) = 0 AND userID = ?1",
+    //             "bind"       => [
+    //                 1   =>  $userId
+    //             ]
+    //         ]
+    //     );
+
+    //     return $count > 0 ? true : false;
+    // }
+
+    // public static function isDictMatch($password)
+    // {
+    //     $sql = "SELECT dictionary.*
+    //             FROM dictionary
+    //             WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+    //             OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+    //             OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+    //             OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";
+
+    //     $result = self::$db->query($sql, [$password, $password, $password, $password]);
+
+    //     return $result->numRows() > 0 ? true : false;
+    // }
+
+    // public static function isTrivial($password)
+    // {
+    //     $sql = "SELECT count(dictionaryid) AS total
+    //             FROM dictionary
+    //             WHERE isCommon = false
+    //             AND (INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+    //             OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+    //             OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+    //             OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0";
+
+    //     $result = $db->fetchOne($sql, [$password, $password, $password, $password]);
+                    
+    //     return intval($result->total) > 0 ? true : false;
+    // }
+
+    // public static function isPersonal($userId, $password)
+    // {
+    //     $sql = "SELECT userID,
+    //                 POSITION(userName IN ?) AS m1,
+    //                 POSITION(userLastName IN ?) AS m2,
+    //                 POSITION(userFirstName IN ?) AS m3
+    //             FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+    //             AND userID = " . $userId;
+
+    //     $result = self::$db->query($sql, [$password, $password, $password]);
         
-        return new ResultSet(null, $dictionary, $dictionary->getReadConnection()->query($sql, $params));
-    }
-
-    public static function personalInfoCheck($params = null)
-    {
-        $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, 
-                POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";
-
-        $user = new User();
-        
-        //return $this->getDi()->getShared('db')->query($sql, $params);
-
-        //return new ResultSet(null, $user, $user->getReadConnection()->query($sql, $params));
-    }
+    //     return $result->numRows() > 0 ? true : false;
+    // }
 }

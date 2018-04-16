@@ -103,7 +103,14 @@ function countAvailableByTask() {
     var activeTaskName = $('#task_id_dropdown').dropdown('get text');
     if (activeTaskName.indexOf('Balancing') != -1) {
         $.post('batch/countwithvariance', function (count) {
-            $('#batchCount').html(count ? count : 0);
+            $('#batchCount').html(count);
+            if (count > 0) {                
+                $('#batchCount').addClass('green');
+                $('.get-batch').removeClass('disabled')
+            } else {
+                $('#batchCount').removeClass('green');
+                $('.get-batch').addClass('disabled')
+            }           
         })
         .done(function (msg) {
             // Do nothing...
@@ -114,6 +121,13 @@ function countAvailableByTask() {
     } else {
         $.post('batch/countavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (count) {
             $('#batchCount').html(count);
+            if (count > 0) {                
+                $('#batchCount').addClass('green');
+                $('.get-batch').removeClass('disabled')
+            } else {
+                $('#batchCount').removeClass('green');
+                $('.get-batch').addClass('disabled')
+            }  
         })
         .done(function (msg) {
             // Do nothing...

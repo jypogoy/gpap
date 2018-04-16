@@ -104,11 +104,11 @@ $di->setShared('db', function () {
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
         'charset'  => $config->database->charset,
-        'options'  => array(
-            PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
-            PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
-            PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
-        )
+        // 'options'  => array(
+        //     PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-key.pem',
+        //     PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\client-cert.pem',
+        //     PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Desktop\mysql cert\ca-cert.pem'
+        // )
     ];
 
     if ($config->database->adapter == 'Postgresql') {
@@ -188,10 +188,10 @@ $di->set('modelsManager', function () {
  */
 $di->set('flash', function () {
     return new Flash([
-        'error'   => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice'  => 'alert alert-info',
-        'warning' => 'alert alert-warning'
+        'error'   => 'ui hidden error message',
+        'success' => 'ui hidden success message',
+        'notice'  => 'ui hidden info message',
+        'warning' => 'ui hidden warning message'
     ]);
 });
 

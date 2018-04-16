@@ -53,7 +53,7 @@ class SecurityPlugin extends Plugin
 				'image'		=>	['list', 'get'],
 				'installment_months'	=>	['list'],
 				'merchant'	=>	['get'],
-				'merchant_header'	=>	['get', 'save'],
+				'merchant_header'	=>	['get', 'save', 'getsame'],
 				'other_exception'	=>	['list'],
 				'pull_reason'	=>	['getbylevel'],
 				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],

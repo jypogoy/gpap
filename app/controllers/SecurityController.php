@@ -8,39 +8,160 @@ class SecurityController extends ControllerBase
 
     }
 
+    public function updatePasswordAction()
+    {
+        if (!$this->request->isPost()) {
+            $this->flashSession->error('Cannot update password using URL!');
+            return $this->response->redirect('');
+        }
+
+        $userId = $this->session->get('auth')['id'];
+
+        $currentPassword = $this->request->getPost('current_password');
+        $newPassword = $this->request->getPost('new_password');
+        $confirmPassword = $this->request->getPost('confirm_password');
+
+        try {
+
+            $validPass = self::isPasswordValid($currentPassword);
+            if (!$validPass) {
+                $this->session->set('currentPassword', $currentPassword);
+                $this->session->set('newPassword', $newPassword);
+                $this->session->set('confirmPassword', $confirmPassword);
+                
+                $this->flashSession->error('Your current password is invalid!');
+                $this->response->redirect('session/changepassword');
+                return;
+            }    
+
+            $same = self::isCurrNewPasswordSame($currentPassword, $newPassword);
+            if ($same) {
+                $this->session->set('currentPassword', $currentPassword);
+                $this->session->set('newPassword', $newPassword);
+                $this->session->set('confirmPassword', $confirmPassword);
+                
+                $this->flashSession->error('Your existing and new passwords must not be the same!');
+                $this->response->redirect('session/changepassword');
+                return;
+            }
+
+            $used = self::isLastSixMatch($newPassword);
+            if ($used) {
+                $this->flashSession->error('Password is already used.');
+            }
+
+            $changedToday = self::isUpdatedToday();
+            if ($changedToday) {
+                $this->flashSession->error('Cannot change password anymore.');
+            }
+
+            $inDictionary = self::isDictMatch($newPassword);
+            if ($inDictionary) {
+                $this->flashSession->error('Password should not contain common dictionary words.');
+            }
+
+            $isTrivial = self::isTrivial($newPassword);
+            if ($isTrivial) {
+                $this->flashSession->error('Password should not contain trivial words.');
+            }
+
+            $isPersonal = self::isPersonal($newPassword);
+            if ($isPersonal) {
+                $this->flashSession->error('Password should not contain personal information. i.e. usernames, names.');
+            }
+
+            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal) {
+                $this->session->set('currentPassword', $currentPassword);
+                $this->session->set('newPassword', $newPassword);
+                $this->session->set('confirmPassword', $confirmPassword);
+                $this->response->redirect('session/changepassword');
+                return;
+            }
+
+            $user = User::findFirstByUserID($userId);
+
+            // Store the password hashed
+            $user->password = $this->security->hash($newPassword);
+
+            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
+
+            $result = $query->execute(
+                [
+                    'pass' => $this->security->hash($newPassword),
+                    'userName' => $user->userName,
+                    'userId' => $userId
+                ]
+            );
+
+            // Remove persistent check for initial login.
+            $this->session->remove('initLogin');
+
+            $msg = 'Your password was updated successfully!';
+            $this->flashSession->success($msg);
+            $this->response->redirect('home');
+
+            $this->sessionLogger->info($this->session->get('auth')['name'] . ' changed password.');
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    private function isCurrNewPasswordSame($currentPassword, $newPassword)
+    {
+        return $currentPassword == $newPassword ? true : false;
+    }
+
+    private function isPasswordValid($password)
+    {
+        try {
+            $userId = $this->session->get('auth')['id'];
+
+            $user = User::findFirstByUserID($userId);
+
+            $match = $this->security->checkHash($password, $user->userPassword);
+
+            return $match;
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
     /**
      * Retrieves most recent six passwords of a user.
      */
-    public function checkByLastSixPasswordsAction($password)
+    private function isLastSixMatch($newPassword)
     {
-        //$this->view->disable();        
         $userId = $this->session->get('auth')['id'];
-        //$password = $this->request->getPost('password');        
         $hasMatch = false;
 
         try {
-            $passwords = User::findLastSixPasswords(
-                'userID = ?',
-                [
-                    $userId,
-                    $userId
-                ]
-            ); 
+            $hasMatch = false;
+
+            $sql = "SELECT DISTINCT userPassword, userID " .
+                    "FROM user_prev_password " .
+                    "WHERE userID = ? " .
+                    "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
+                    "UNION " .
+                    "SELECT DISTINCT userPassword, userid " .
+                    "FROM user " .
+                    "WHERE userID = ?";
+
+            $result = $this->db->query($sql, [$userId, $userId]);        
+            $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
 
             // Match new password hash with the recorded passwords.
-            $encPassword = $this->security->hash($password);            
-            foreach ($passwords as $password) {
-                if($this->security->checkHash($encPassword, $password->userPassword)) {
+            while ($password = $result->fetch()) {
+                if($this->security->checkHash($newPassword, $password->userPassword)) {
                     $hasMatch = true;
                     break;
                 }
             }
 
             return $hasMatch;
-            // $this->response->setJsonContent($hasMatch);
-            // $this->response->send();     
-            
-        } catch (\error $e) {            
+
+        } catch (\Exception $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
@@ -48,12 +169,12 @@ class SecurityController extends ControllerBase
     /**
      * Retrieves count of passwords made within the day.
      */
-    public function passwordChangedSameDayAction()
+    private function isUpdatedToday()
     {
         $userId = $this->session->get('auth')['id'];
 
         try {
-            $passwords = User::find(
+            $count = User::count(
                 [
                     "conditions" => "DATEDIFF(now(),userLastPasswordChange) = 0 AND userID = ?1",
                     "bind"       => [
@@ -61,10 +182,10 @@ class SecurityController extends ControllerBase
                     ]
                 ]
             );
-               
-            return count($passwords) > 0 ? true : false;
-            
-        } catch (\error $e) {            
+
+            return $count > 0 ? true : false;
+
+        } catch (\Exception $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
@@ -72,28 +193,21 @@ class SecurityController extends ControllerBase
     /**
      * Retrieves count of matching words from the dictionary.
      */
-    public function passwordDictionaryCheckAction($password)
-    {
-        //$this->view->disable();
+    private function isDictMatch($password)
+    {        
         try {
-            $sql = "SELECT dictionary.* 
-                    FROM dictionary 
+            $sql = "SELECT dictionary.*
+                    FROM dictionary
                     WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";    
-            
-            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
-            
-            $result->setFetchMode(
-                \Phalcon\Db::FETCH_NUM
-            );
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";
 
-            $results = $result->fetchArray()[0];      
+            $result = $this->db->query($sql, [$password, $password, $password, $password]);
 
-            return $results && $results != "0" ? true : false;
-            
-        } catch (\error $e) {            
+            return $result->numRows() > 0 ? true : false;
+
+        } catch (\Exception $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
@@ -101,28 +215,22 @@ class SecurityController extends ControllerBase
     /**
      * Retrieves count any matching trivial words from the dictionary.
      */
-    public function passwordTrivialCheckAction($password)
-    {
+    private function isTrivial($password)
+    {       
         try {
-            $sql = "SELECT count(dictionaryid) 
-                    FROM dictionary 
-                    WHERE isCommon = false 
-                    AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0 
-                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0 
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0";    
+            $sql = "SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND (INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0";
 
-            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
+            $result = $this->db->fetchOne($sql, [$password, $password, $password, $password]);
+            
+            return intval($result->total) > 0 ? true : false;
 
-            $result->setFetchMode(
-                \Phalcon\Db::FETCH_NUM
-            );
-
-            $results = $result->fetchArray()[0];      
-
-            return $results && $results != "0" ? true : false;
-
-        } catch (\error $e) {            
+        } catch (\Exception $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
@@ -130,123 +238,23 @@ class SecurityController extends ControllerBase
     /**
      * Validates if password is same with personal information such as first and last name.
      */
-    public function passwordPersonalInfoCheckAction($password)
-    {
-        //$this->view->disable();
+    private function isPersonal($password)
+    {        
+        $userId = intval($this->session->get('auth')['id']);
+
         try {
-            $sql = "SELECT POSITION(userID IN '?') AS m1, POSITION(userName IN '?') AS m2, POSITION(userLastName IN '?') AS m3, POSITION(userFirstName IN '?') AS m4 FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0 OR m4 > 0";    
+            $sql = "SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+                    AND userID = " . $userId;
 
-            $result = $this->db->query($sql, [$password, $password, $password, $password]);    
+            $result = $this->db->query($sql, [$password, $password, $password]);
             
-            $result->setFetchMode(
-                \Phalcon\Db::FETCH_OBJ
-            );
+            return $result->numRows() > 0 ? true : false;
 
-            $r = $result->numRows();
-
-            $results = $result->fetchArray()[0];      
-
-            return $results && $results != "0" ? true : false;
-
-        } catch (\error $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
-        }
-    }
-
-    public function updatePasswordAction()
-    {
-        // if (!$this->request->isPost()) {
-        //     $this->flashSession->error('Cannot update password using URL!');
-        //     return $this->response->redirect('');
-        // }
-
-        // $validator = new PasswordValidator();
-        // $messages = $validator->validate($_POST);
-
-        // $this->view->messages = $messages;
-
-        // foreach ($messages as $message) {
-        //     $this->flashSession->error($message);
-        // }
-
-        // return $this->dispatcher->forward(
-        //     [
-        //         "controller" => "session",
-        //         "action"     => "changepassword"
-        //     ]
-        // );    
-            $this->view->disable();
-        $userId = $this->session->get('auth')['id'];
-
-        $currentPassword = $this->request->getPost('current_password');
-        $newPassword = $this->request->getPost('new_password');
-        $confirmPassword = $this->request->getPost('confirm_password');
-        
-        try {
-            
-            $used = self::checkByLastSixPasswordsAction($newPassword);
-            if ($used) {
-                $this->flashSession->error('Password is already used.');
-            }
-
-            $changedToday = self::passwordChangedSameDayAction();
-            if ($changedToday) {
-                $this->flashSession->error('Cannot change password anymore.');
-            }
-
-            $inDictionary = self::passwordDictionaryCheckAction($newPassword);
-            if ($inDictionary) {
-                $this->flashSession->error('Password should not contain common dictionary words.');
-            }
-
-            $isTrivial = self::passwordTrivialCheckAction($newPassword);
-            if ($isTrivial) {
-                $this->flashSession->error('Password should not contain trivial words.');
-            }
-
-            $isPersonal = self::passwordPersonalInfoCheckAction($newPassword);
-            if ($isPersonal) {
-                $this->flashSession->error('Password should not contain personal information. i.e. usernames, names.');
-            }
-
-            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal) {
-                $this->response->redirect('session/changepassword');
-                return;
-            }
-                        
-            $user = User::findFirstByUserID($userId);
-            
-            // Store the password hashed
-            $user->password = $this->security->hash($newPassword);
-
-            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
-
-            $result = $query->execute(array(
-                'pass' => $this->security->hash($newPassword),
-                'userName' => $user->userName,
-                'userId' => $userId                
-            ));
-
-            // if (!$user->save()) {
-            //     foreach ($user->getMessages() as $message) {
-            //         $this->flash->error($message);
-            //     }
-
-            //     $this->dispatcher->forward([
-            //         'controller' => 'session',
-            //         'action'    => 'changepassword'
-            //     ]);
-
-            //     return;
-            // }
-
-            $msg = 'Your password was updated successfully!';
-            $this->flashSession->success($msg);    
-            $this->response->redirect('home');
-
-            $this->sessionLogger->info($this->session->get('auth')['name'] . ' changed password.'); 
-
-        }catch (\error $e) {            
+        } catch (\Exception $e) {
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }

@@ -7,6 +7,10 @@ class HomeController extends ControllerBase
     {
         $this->tag->setTitle('Welcome');
         parent::initialize();
+
+        if ($this->session->get('initLogin')) {
+            return $this->response->redirect('session/changepassword');            
+        } 
     }
 
     public function indexAction()

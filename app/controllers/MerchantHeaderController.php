@@ -79,4 +79,37 @@ class MerchantHeaderController extends ControllerBase
         }
     }
     
+    public function getSameAction()
+    {
+        $this->view->disable();
+
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        $merchantNumber = $this->request->getPost('merchant_number');
+        $dcn = $this->request->getPost('dcn');
+        $depositAmount = $this->request->getPost('deposit_amount');
+        $regionCode = $this->request->getPost('region_code');
+        $taskId = $this->request->getPost('task_id');
+
+        try {
+            $sql = "SELECT COUNT(de.id) AS total
+                    FROM data_entry de 
+                    INNER JOIN merchant_header m ON m.data_entry_id = de.id
+                    INNER JOIN task t ON t.id = de.task_id
+                    INNER JOIN batch b ON b.id = m.batch_id
+                    INNER JOIN zip z ON z.id = b.zip_id
+                    WHERE m.merchant_number = '?' AND m.dcn = '?'
+                    AND m.deposit_amount = '?' AND z.region_code = '?' AND t.id = ?";
+
+            $result = $this->db->fetchOne($sql, [$merchantNumber, $dcn, $depositAmount, $regionCode, intval($taskId)]);
+            //$result = $this->db->fetchOne($sql);
+             
+            echo intval($result['total']) > 0 ? true : false;
+
+        } catch (\Exception $e) {            
+            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
 }

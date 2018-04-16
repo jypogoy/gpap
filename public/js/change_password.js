@@ -15,35 +15,15 @@ $(function() {
                     {
                         type   : 'empty',
                         prompt : 'Current password is required.'
-                    },
-                    {
-                        type   : 'minLength[10]',
-                        prompt : 'Current password must be at least {ruleValue} characters.'
-                    },
-                    {
-                        type   : 'regExp',
-                        value  : '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$',
-                        prompt : 'Current password should be alphanumeric and contains at least 1 upper case letter and a special character.'
-                    },
+                    }
                     // {
-                    //     type   : 'byLastSix',
-                    //     prompt : 'Current password is already used.'
+                    //     type   : 'minLength[10]',
+                    //     prompt : 'Current password must be at least {ruleValue} characters.'
                     // },
                     // {
-                    //     type   : 'withinDayChange',
-                    //     prompt : 'Cannot change password anymore.'
-                    // },
-                    // {
-                    //     type   : 'onDict',
-                    //     prompt : 'Current password should not contain common dictionary words.'
-                    // },
-                    // {
-                    //     type   : 'trivial',
-                    //     prompt : 'Current password should not contain trivial words.'
-                    // },
-                    // {
-                    //     type   : 'personal',
-                    //     prompt : 'Current password should not contain personal information. i.e. usernames, names.'
+                    //     type   : 'regExp',
+                    //     value  : '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$',
+                    //     prompt : 'Current password should be alphanumeric and contains at least 1 upper case letter and a special character.'
                     // }
                 ]
             },
@@ -85,7 +65,6 @@ $(function() {
         }
     });
 
-    // var errors = [];
     $('.submit.button').click(function(e) {
         if ($('.ui.form').form('is valid')) {
             var form = $('#changePassForm');
@@ -97,7 +76,8 @@ $(function() {
 
 });
 
-function validatePassword(fieldId, isCurrent) {
+// Not implemented
+function validatePassword_(fieldId, isCurrent) {
     
     var withError = false;
     var erroMsg = $('.error.message');
@@ -137,8 +117,8 @@ function validatePassword(fieldId, isCurrent) {
         //     }
         // }),
         
-        checkPersonal(password).then(function(count) {
-            if (count > 0) {
+        checkPersonal(password).then(function(hasMatch) {
+            if (hasMatch) {
                 $('.error-list').append('<li class="' + fieldId + '_msg">' + (isCurrent ? 'Current' : 'New') + '  password should not contain personal information. i.e. usernames, names.</li>');
                 $('.current_password_field').addClass('error');
                 withError = true;

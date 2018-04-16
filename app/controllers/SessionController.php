@@ -92,7 +92,6 @@ class SessionController extends ControllerBase
                         // Check if initial login by comparing lastname and password. Must compare hashes.
                         if ($this->security->checkHash($password, $user->userPassword)) {
                             $this->session->set('initLogin', true);
-                            $this->flashSession->notice('Please change your password.');
                             return $this->response->redirect('session/changepassword');
                         }
 
@@ -152,6 +151,15 @@ class SessionController extends ControllerBase
     {        
         $this->tag->setTitle('Change Password');
         $this->view->setTemplateAfter('session');
+
+        $currentPassword = $this->session->get('currentPassword');
+        $newPassword = $this->session->get('newPassword');
+        $confirmPassword = $this->session->get('confirmPassword');
+
+        $this->view->currentPassword = $currentPassword;
+        $this->view->newPassword = $newPassword;
+        $this->view->confirmPassword = $confirmPassword;
+
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Change Password page.'); 
     }        
 

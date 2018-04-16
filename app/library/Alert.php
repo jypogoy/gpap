@@ -57,14 +57,6 @@ class Alert extends Component
                 switch ($type) {
                 case 'success':
                     
-                    // echo '<div class="ui success floating message">
-                    //         <i class="close icon"></i>
-                    //         <div class="header">
-                    //             <i class="check icon"></i>Success
-                    //         </div>
-                    //         <p>' . $message[0] . '</p>
-                    //     </div>';
-
                     echo '<script>
                             $(function () {
                                 toastr.options = { 
@@ -78,13 +70,6 @@ class Alert extends Component
                 
                 case 'error':
                     
-                    // echo '<div class="ui error floating message">
-                    //         <i class="close icon"></i>
-                    //         <div class="header">
-                    //             <i class="alarm icon"></i>Error
-                    //         </div>
-                    //         <p>' . $message[0] . '</p>
-                    //     </div>';
                     echo '<script>
                             $(function () {
                                 toastr.options = { 
@@ -98,13 +83,6 @@ class Alert extends Component
 
                 case 'warning':
                     
-                    // echo '<div class="ui warning floating message">
-                    //         <i class="close icon"></i>
-                    //         <div class="header">
-                    //         <i class="warning sign icon"></i>Warning
-                    //         </div>
-                    //         <p>' . $message[0] . '</p>
-                    //     </div>';
                     echo '<script>
                             $(function () {
                                 toastr.options = { 
@@ -118,13 +96,6 @@ class Alert extends Component
 
                 default: # Notice
                         
-                    // echo '<div class="ui info floating message">
-                    //         <i class="close icon"></i>
-                    //         <div class="header">
-                    //         <i class="comment icon"></i>Info
-                    //         </div>
-                    //         <p>' . $message[0] . '</p>
-                    //     </div>'; 
                     echo '<script>
                             $(function () {
                                 toastr.options = { 

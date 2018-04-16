@@ -15,7 +15,7 @@
         <div class="right aligned column user-tasks"></div>
         <div class="right aligned column">
             <a class="ui primary hidden button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>   
-            <div id="batchCount" class="floating ui hidden orange label" style="margin-left: -40px !important; margin-top: 10px !important;">...</div>         
+            <div id="batchCount" class="floating ui hidden label" style="margin-left: -40px !important; margin-top: 10px !important;">...</div>         
         </div>
     </div>     
 </form> 

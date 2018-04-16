@@ -11,14 +11,24 @@ $(function() {
     $('#merchant_number').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
-            searchMerchant($(this).val()); // See de_data_retrieval.js
+            getMerchantInfo($(this).val()); // See de_data_retrieval.js
             padZero($(this));
         }
         this.value = this.value.replace(/[^0-9]/, '');
     });
     
     $('#merchant_number').blur(function() {
-        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');        
+        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');  
+        
+        var params = {};
+        params.merchant_number = $('#merchant_number').val();
+        params.dcn = $('#dcn').val();
+        params.deposit_amount =  $('#deposit_amount').val();
+        params.region_code = $('#region_code').val();
+        params.task_id = $('#session_task_id').val();
+        // $.post('../merchant_header/getsame/', params, function (count) {
+        //     console.log(count)
+        // });      
     });
 
     $('#currency_id_dropdown').dropdown({
@@ -303,6 +313,7 @@ $(function() {
                 if (slipPage == slipMap.count()) {
                     $('.next-slip-btn').addClass('disabled'); 
                     $('.last-slip-btn').addClass('disabled'); 
+                    $('.insert-slip-btn').addClass('disabled'); 
                 }
 
                 if (slipMap.count() == 1) {

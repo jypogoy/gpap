@@ -39,6 +39,8 @@ class TransactionController extends ControllerBase
 
     public function deletePreviousAction($headerId)
     {
+        $this->view->disable();
+
         if (!$this->request->isPost()) {
             return $this->response->redirect('');
         }
@@ -77,6 +79,8 @@ class TransactionController extends ControllerBase
 
     public function saveAction()
     {
+        $this->view->disable();
+
         if (!$this->request->isPost()) {
             return $this->response->redirect('');
         }
@@ -109,17 +113,11 @@ class TransactionController extends ControllerBase
             $transaction->variance_exception = $this->request->getPost('variance_exception') == 'true' || $this->request->getPost('variance_exception') == '1' ? 1 : 0;
             $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
 
-            $successMsg = "Transaction was saved successfully.";
-
             if (!$transaction->save()) {
-                $errorMsg = '';
-                foreach ($transaction->getMessages() as $message) {
-                    $errorMsg = $errorMsg . $message;
-                }
-                return $errorMsg;
+                echo 0;
+            } else {
+                echo 1;
             }
-
-            return $successMsg;
 
         } catch (\Exception $e) {            
             $this->exceptionLogger->error(parent::_constExceptionMessage($e));
