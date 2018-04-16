@@ -140,7 +140,7 @@ $(function() {
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
         this.value = this.value.toUpperCase();
         var wrapper = $('#' + this.id + '_wrapper');
-        if (this.value.length < 3) {
+        if (this.value.length < this.minLength) {
             $('#' + this.id + '_alert').remove();
             $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +

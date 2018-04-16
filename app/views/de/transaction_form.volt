@@ -46,7 +46,7 @@
     <div class="equal width small fields">                        
         <div id="authorization_code_wrapper" class="required field">
             <label>Authorization Code</label>
-            {{ text_field('authorization_code', 'maxlength': 6, 'class': 'slip-field') }}
+            {{ text_field('authorization_code', 'minlength': 3, 'maxlength': 6, 'class': 'slip-field') }}
         </div>  
         <div id="transaction_amount_wrapper" class="required field">
             <label>Transaction Amount</label>
