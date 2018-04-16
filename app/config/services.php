@@ -123,7 +123,7 @@ $di->setShared('db', function () {
     $eventsManager = new \Phalcon\Events\Manager();
     $eventsManager->attach('db', function($event, $connection) use ($logger) {
         if ($event->getType() == 'beforeQuery') $logger->log($connection->getSQLStatement());
-        //.' '.join(', ', $connection->getSQLVariables())
+        // . ' ' . join(', ', $connection->getSQLVariables()));
     });
     $connection->setEventsManager($eventsManager);
 

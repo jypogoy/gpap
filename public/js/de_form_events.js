@@ -18,17 +18,7 @@ $(function() {
     });
     
     $('#merchant_number').blur(function() {
-        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');  
-        
-        var params = {};
-        params.merchant_number = $('#merchant_number').val();
-        params.dcn = $('#dcn').val();
-        params.deposit_amount =  $('#deposit_amount').val();
-        params.region_code = $('#region_code').val();
-        params.task_id = $('#session_task_id').val();
-        // $.post('../merchant_header/getsame/', params, function (count) {
-        //     console.log(count)
-        // });      
+        if (this.value != '') $('#merchant_number_wrapper').removeClass('error');                    
     });
 
     $('#currency_id_dropdown').dropdown({
@@ -63,6 +53,28 @@ $(function() {
     $('#dcn').blur(function() {
         padZero($(this));
         if (this.value != '') $('#dcn_wrapper').removeClass('error');
+        
+        var params = {};
+        params.merchant_number = $('#merchant_number').val();
+        params.dcn = $('#dcn').val();
+        params.deposit_amount =  $('#deposit_amount').val();
+        params.region_code = $('#region_code').val();
+        params.task_id = $('#session_task_id').val();
+        console.log(params)
+        var wrapper = $('#' + this.id + '_wrapper');
+        $.post('../merchant_header/getsame/', params, function (hasMatch) {   
+            console.log(hasMatch)         
+            if (hasMatch) {
+                $('#' + this.id + '_alert').remove();
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                        '<span id="' + this.id + '_msg">Invalid Batch DCN</span>' +
+                        '</div>');
+            } else {
+                $(wrapper).removeClass('error');
+                $('#' + this.id + '_alert').remove();
+            }
+        });    
     });   
     
     $('#dcn').keyup(function() {
@@ -140,6 +152,7 @@ $(function() {
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
         this.value = this.value.toUpperCase();
         var wrapper = $('#' + this.id + '_wrapper');
+        // Check length of keyed information.
         if (this.value.length < this.minLength) {
             $('#' + this.id + '_alert').remove();
             $(wrapper).addClass('error');

@@ -35,13 +35,17 @@
                 <input type="text" id="other_currency" class="uppercase header-field" maxlength="3">
                 <button id="otherCurrencyBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>
             </div>
-        </div>                    
+        </div>      
+        <div id="deposit_amount_wrapper" class="required field">
+            <label>Deposit Amount</label>
+            {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
+        </div>                                             
+    </div>    
+    <div class="two small fields">
         <div id="dcn_wrapper" class="required field">
             <label>DCN</label>
             {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
-        </div>                       
-    </div>    
-    <div class="two small fields">
+        </div>  
         <div id="deposit_date_wrapper" class="required field">
             <label>Deposit Date</label>
             <div class="ui calendar" id="deposit_date_cal">
@@ -50,11 +54,7 @@
                 {{ text_field('deposit_date', 'class': 'header-field', 'placeholder': 'Date') }}
                 </div>
             </div>
-        </div>    
-        <div id="deposit_amount_wrapper" class="required field">
-            <label>Deposit Amount</label>
-            {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
-        </div>                                         
+        </div>                                                   
     </div>    
     <div id="batch_pull_reason_id_wrapper" class="small field">
         <label>Batch Pull Reason</label>
