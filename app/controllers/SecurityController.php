@@ -9,7 +9,7 @@ class SecurityController extends ControllerBase
     }
 
     public function updatePasswordAction()
-    {
+    {        
         if (!$this->request->isPost()) {
             $this->flashSession->error('Cannot update password using URL!');
             return $this->response->redirect('');
@@ -70,7 +70,12 @@ class SecurityController extends ControllerBase
                 $this->flashSession->error('Password should not contain personal information. i.e. usernames, names.');
             }
 
-            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal) {
+            $hasMatchInSixMonths = self::isNotUsedInSixMonths($newPassword);
+            if ($hasMatchInSixMonths) {
+                $this->flashSession->error('You cannot use any of your previous passwords for the last 6 months.');
+            }            
+
+            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal || $hasMatchInSixMonths) {
                 $this->session->set('currentPassword', $currentPassword);
                 $this->session->set('newPassword', $newPassword);
                 $this->session->set('confirmPassword', $confirmPassword);
@@ -258,4 +263,59 @@ class SecurityController extends ControllerBase
         }
     }
 
+    /**
+     * Validates if password is within the set day limit e.g. 30 days.
+     */
+    private function isNotUsedInSixMonths($newPassword)
+    {        
+        $userId = intval($this->session->get('auth')['id']);
+
+        try {
+            $hasMatch = false;
+
+            $sql = "SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?";
+
+            $result = $this->db->query($sql, [$userId, $userId]);            
+            $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
+
+            // Match new password hash with the recorded passwords.
+            while ($password = $result->fetch()) {
+                if($this->security->checkHash($newPassword, $password->userPassword)) {
+                    $hasMatch = true;
+                    break;
+                }
+            }
+
+            return $hasMatch;
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
+    }    
+
+    public function isFiveDaysToExpire()
+    {
+        $userId = intval($this->session->get('auth')['id']);
+
+        try {
+            $sql = "SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = ?";
+
+            $result = $this->db->query($sql, [$userId]);            
+            
+            return $result->NotExpired ? false : true;
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
+    }
 }

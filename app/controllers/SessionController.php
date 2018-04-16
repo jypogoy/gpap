@@ -22,12 +22,17 @@ class SessionController extends ControllerBase
             $this->tag->setDefault('password', 'phalcon');
         }
 
+        // Helper: Generate sample password.
+        //$hash = $this->security->hash('test');
+        $hash = '';        
+
         // Redirect to home if already logged in.
         $auth = $this->session->get('auth');
         if ($auth) {            
             return $this->response->redirect('home');
         }
 
+        $this->view->hash = $hash;
         $this->view->setTemplateAfter('session');
     }
 
@@ -50,10 +55,7 @@ class SessionController extends ControllerBase
      */
     public function startAction()
     {      
-        if ($this->request->isPost()) {
-
-            // Helper: Generate sample password.
-            $p = $this->security->hash('Madrigalejos');
+        if ($this->request->isPost()) {            
 
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
@@ -97,6 +99,20 @@ class SessionController extends ControllerBase
                         if ($this->security->checkHash($password, $encLastName)) {
                             $this->session->set('initLogin', true);
                             return $this->response->redirect('session/changepassword');
+                        }
+
+                        // Check if password expired.
+                        $isExpired = self::isPasswordExpired();
+                        if ($isExpired) {
+                            $this->session->set('initLogin', true);
+                            $this->flashSession->error('Your password expired.');
+                            return $this->response->redirect('session/changepassword');
+                        }
+
+                        // Check if password is expiring.
+                        $isExpiring = self::isPasswordExpiring();
+                        if ($isExpiring) {
+                            $this->flashSession->notice('Your password is expiring soon. Please update as necessary.');
                         }
 
                         $this->flash->success('Welcome ' . $user->userName);
@@ -167,4 +183,39 @@ class SessionController extends ControllerBase
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Change Password page.'); 
     }        
 
+    private function isPasswordExpired() 
+    {
+        $userId = intval($this->session->get('auth')['id']);
+
+        try {
+            $sql = "SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = " . $userId;
+
+            $result = $this->db->fetchOne($sql);            
+            
+            return $result['NotExpired'] ? false : true;
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
+    }
+
+    private function isPasswordExpiring() 
+    {
+        $userId = intval($this->session->get('auth')['id']);
+
+        try {
+            $sql = "SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = " . $userId;
+
+            $result = $this->db->fetchOne($sql);            
+            
+            return $result['NotExpired'] ? false : true;
+
+        } catch (\Exception $e) {
+            $this->errorLogger->error(parent::_consterrorMessage($e));
+        }
+    }
 }

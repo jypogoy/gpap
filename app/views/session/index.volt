@@ -2,6 +2,7 @@
 
     <div class="eight wide column">
         {{ content() }}
+        {{ hash }}
         <h2 class="ui teal image header">
             <img src="/gpap/public/img/gpap_logo.jpeg" class="image"/>
             <div class="content">Log-in to your account</div>
