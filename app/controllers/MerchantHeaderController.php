@@ -104,7 +104,6 @@ class MerchantHeaderController extends ControllerBase
                     AND m.deposit_amount = '?' AND z.region_code = '?' AND t.id = ?";
 
             $result = $this->db->fetchOne($sql, [$merchantNumber, $dcn, $depositAmount, $regionCode, intval($taskId)]);
-            //$result = $this->db->fetchOne($sql);
              
             echo intval($result['total']) > 0 ? true : false;
 

@@ -102,6 +102,9 @@ function getContents(lastCompletedEntry, existingHeader) {
     params.batch_id = $('#batch_id').val();
     params.data_entry_id = dataEntryId;    
 
+    // Auto load transaction type related fields. See de_data_navigation.js
+    refreshTransTypeDependentFields();
+
     // For Balancing Only: Replace currrent activity ID to help fetch previous task's activity record.
     if (lastCompletedEntry && !existingHeader) {
         params.data_entry_id = lastCompletedEntry.id;            
@@ -146,6 +149,7 @@ function getHeader(params) {
     return d.promise();
 }
 
+var merchantAcceptedCards = [];
 function getMerchantInfo(merchant_number) {
     var d = $.Deferred(); 
 
@@ -166,6 +170,41 @@ function getMerchantInfo(merchant_number) {
             // Load currencies as can be filtered based on merchant's requirements
             getRegionCurrency();
             Form.resetErrors(true);
+
+            // Perform merchant specific validations.
+            if (merchantInfoMap.get('merchantStatus') == 'O' || merchantInfoMap.get('merchantStatus') == 'R') {
+                toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
+            }
+
+            if (merchantInfoMap.get('acceptInstallment') != 'N') {
+                $('#installment_months_id_wrapper').removeClass('hidden');
+            } else {
+                $('#installment_months_id_wrapper').addClass('hidden');
+            }
+
+            if (merchantInfoMap.get('acceptAmex') == 'Y') {
+                merchantAcceptedCards.push('Amex');
+            }
+            
+            if (merchantInfoMap.get('acceptCup') == 'Y') {
+                merchantAcceptedCards.push('Cup');
+            }
+
+            if (merchantInfoMap.get('acceptJcb') == 'Y') {
+                merchantAcceptedCards.push('JCB');
+            }
+
+            if (merchantInfoMap.get('acceptMasterCard') == 'Y') {
+                merchantAcceptedCards.push('Mastercard');
+            }
+
+            if (merchantInfoMap.get('acceptPrivateLabel') == 'Y') {
+                merchantAcceptedCards.push('PrivateLabel');
+            }
+
+            if (merchantInfoMap.get('acceptVisa') == 'Y') {
+                merchantAcceptedCards.push('Visa');
+            }
         }
         d.resolve(merchantData);
     });
@@ -317,7 +356,7 @@ function getSlipContents(headerId) {
                 $('.delete-slip-btn').removeClass('disabled'); 
             }
             
-            calculateAmount(); // See de_data_navigation.js
+            calculateAmount(); // See de_data_navigation.js            
         }                  
     })
     .done(function (msg) {

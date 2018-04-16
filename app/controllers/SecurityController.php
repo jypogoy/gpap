@@ -247,8 +247,7 @@ class SecurityController extends ControllerBase
                         POSITION(userName IN ?) AS m1,
                         POSITION(userLastName IN ?) AS m2,
                         POSITION(userFirstName IN ?) AS m3
-                    FROM user HAVING m1 > 0 OR m2 > 0 OR m3 > 0
-                    AND userID = " . $userId;
+                    FROM user WHERE userID = " . $userId . " HAVING m1 > 0 OR m2 > 0 OR m3 > 0";
 
             $result = $this->db->query($sql, [$password, $password, $password]);
             

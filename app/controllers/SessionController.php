@@ -52,6 +52,9 @@ class SessionController extends ControllerBase
     {      
         if ($this->request->isPost()) {
 
+            // Helper: Generate sample password.
+            $p = $this->security->hash('Madrigalejos');
+
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
                
@@ -71,7 +74,7 @@ class SessionController extends ControllerBase
             }
 
             $user = User::findFirstByUserName($username);    
-
+            
             if ($user) {                            
                 if ($this->security->checkHash($password, $user->userPassword)) {                                    
                     // Lock user if attempts reaches 3.
@@ -89,8 +92,9 @@ class SessionController extends ControllerBase
                         // The password is valid
                         $this->_registerSession($user);
 
-                        // Check if initial login by comparing lastname and password. Must compare hashes.
-                        if ($this->security->checkHash($password, $user->userPassword)) {
+                        // Check if initial login by comparing password against lastname. Must compare hashes.
+                        $encLastName = $this->security->hash($user->userLastName);
+                        if ($this->security->checkHash($password, $encLastName)) {
                             $this->session->set('initLogin', true);
                             return $this->response->redirect('session/changepassword');
                         }

@@ -99,7 +99,7 @@ $(function() {
     });
 
     $('#card_number').blur(function() {
-        if (!validateCard($(this).val())) {
+        if (!validateCard($(this).val())) { // See utils.js
             $('#' + this.id + '_wrapper').addClass('error');           
             $('#' + this.id + '_alert').addClass('visible');
             $('#' + this.id + '_msg').html('Invalid Credit Card number');
@@ -110,18 +110,22 @@ $(function() {
             var cardType = getCardType($(this).val());
             switch (cardType) {
                 case 'Visa':
+                    if ($.inArray('Visa', merchantAcceptedCards) < 0) toastr.info('Merchant does not accept Visa.');   
                     $('#cardLogo').attr('src', '../public/img/card/visa.png')
                     break;
                 
                 case 'Mastercard':
+                    if ($.inArray('Mastercard', merchantAcceptedCards) < 0) toastr.info('Merchant does not accept Mastercard.');   
                     $('#cardLogo').attr('src', '../public/img/card/mastercard.png')
                     break;    
 
                 case 'JCB':
+                    if ($.inArray('JCB', merchantAcceptedCards) < 0) toastr.info('Merchant does not accept JCB.');  
                     $('#cardLogo').attr('src', '../public/img/card/jcb.png')
                     break;     
             
                 default:
+                    if ($.inArray('Mastercard', merchantAcceptedCards) < 0) toastr.info('Merchant does not accept Private Label.');  
                     $('#cardLogo').attr('src', '../public/img/card/private.png')
                     break;
             }

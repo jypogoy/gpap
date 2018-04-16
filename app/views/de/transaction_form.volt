@@ -23,7 +23,7 @@
             <label>Region</label>
             {{ text_field('region_code', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.zip.region_code, 'disabled': true) }}
         </div> 
-        <div id="transaction_date_wrapper" class="required field">
+        <div id="transaction_date_wrapper" class="required hidden field">
             <label>Transaction Date</label>
             <div class="ui calendar" id="transaction_date_cal">
                 <div class="ui input left icon">
