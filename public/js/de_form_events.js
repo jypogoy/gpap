@@ -142,10 +142,12 @@ $(function() {
         var wrapper = $('#' + this.id + '_wrapper');
         if (this.value.length < 3) {
             $('#' + this.id + '_alert').remove();
+            $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                     '<span id="' + this.id + '_msg">Invalid Authorization Code</span>' +
                     '</div>');
         } else {
+            $(wrapper).removeClass('error');
             $('#' + this.id + '_alert').remove();
         }
     }); 
