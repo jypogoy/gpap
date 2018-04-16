@@ -203,10 +203,10 @@ class SecurityController extends ControllerBase
         try {
             $sql = "SELECT dictionary.*
                     FROM dictionary
-                    WHERE isCommon = true AND (INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
                     OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
                     OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
-                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0";
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)";
 
             $result = $this->db->query($sql, [$password, $password, $password, $password]);
 
@@ -226,10 +226,10 @@ class SecurityController extends ControllerBase
             $sql = "SELECT count(dictionaryid) AS total
                     FROM dictionary
                     WHERE isCommon = false
-                    AND (INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
                     OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
                     OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
-                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0";
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)";
 
             $result = $this->db->fetchOne($sql, [$password, $password, $password, $password]);
             
@@ -255,7 +255,7 @@ class SecurityController extends ControllerBase
                     FROM user WHERE userID = " . $userId . " HAVING m1 > 0 OR m2 > 0 OR m3 > 0";
 
             $result = $this->db->query($sql, [$password, $password, $password]);
-            
+            $r = $result->numRows();
             return $result->numRows() > 0 ? true : false;
 
         } catch (\Exception $e) {

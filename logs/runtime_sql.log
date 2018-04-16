@@ -18358,3 +18358,297 @@
                     SELECT DISTINCT userPassword, userid   
                         FROM user   
                     WHERE userid = ?
+[Mon, 16 Apr 18 08:06:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:06:36 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:06:36 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:06:37 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:06:49 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:06:59 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:11:40 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:11:44 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:12:16 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:12:18 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:12:44 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:12:47 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:50 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
+[Mon, 16 Apr 18 08:12:50 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = NOW(), `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:12:55 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:13:26 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:13:29 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:13:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:13:42 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:13:42 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:14:07 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:14:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:28 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:14:28 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:28 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
+[Mon, 16 Apr 18 08:14:29 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = NOW(), `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
