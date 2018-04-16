@@ -18652,3 +18652,1410 @@
 [Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
 [Mon, 16 Apr 18 08:14:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
 [Mon, 16 Apr 18 08:14:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:25:45 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:25:48 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:26:08 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:27:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:10 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:27:10 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:10 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:27:11 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:27:11 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:27:11 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:27:11 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:27:11 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:27:28 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:27:29 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:27:31 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:27:32 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:28:09 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:28:09 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:28:09 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:28:10 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:28:11 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:28:11 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:28:12 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:28:13 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:28:17 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:28:19 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:30:03 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:30:07 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:30:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:30:36 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:30:36 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:30:37 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:30:38 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:30:39 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:30:39 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:30:40 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:30:41 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:30:42 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:32:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:32:00 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:32:00 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:32:02 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:32:02 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:32:04 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:32:05 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:32:09 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:32:10 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:32:11 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:33:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:33:05 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:33:05 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:33:06 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:33:06 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:33:06 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:33:07 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:33:07 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:33:07 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:33:09 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:33:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:33:35 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:33:35 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:33:36 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:33:37 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:33:38 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:33:38 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:33:39 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:33:39 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:33:40 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:38:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:38:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:38:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:38:58 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:38:58 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:38:59 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:38:59 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:39:00 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:39:00 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:39:01 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
+[Mon, 16 Apr 18 08:40:36 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = NOW(), `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:40:39 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:40:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:40:55 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:40:55 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:00 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:41:00 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:41:31 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:33 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:41:34 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:43:08 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:43:10 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:47:55 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:47:57 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:47:58 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:48:13 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:48:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:43 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:48:43 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:43 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:48:44 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:46 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:48:46 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:48:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:46 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:48:47 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:48:57 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:49:00 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:49:15 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:49:16 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:49:50 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:49:50 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:49:50 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:49:50 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:49:51 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:49:51 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:49:52 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:49:52 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:49:53 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:49:54 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT DISTINCT userPassword, userID FROM user_prev_password WHERE userID = ? AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() UNION SELECT DISTINCT userPassword, userid FROM user WHERE userID = ?
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`user` WHERE DATEDIFF(now(), `user`.`userLastPasswordChange`) = 0 AND `user`.`userID` = :1
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT dictionary.*
+                    FROM dictionary
+                    WHERE isCommon = true AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord)) > 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord))) > 0)
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT count(dictionaryid) AS total
+                    FROM dictionary
+                    WHERE isCommon = false
+                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT userID,
+                        POSITION(userName IN ?) AS m1,
+                        POSITION(userLastName IN ?) AS m2,
+                        POSITION(userFirstName IN ?) AS m3
+                    FROM user WHERE userID = 2 HAVING m1 > 0 OR m2 > 0 OR m3 > 0
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT DISTINCT userPassword, userid   
+                    FROM user_prev_password   
+                    WHERE userid = ?  
+                        AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
+                        AND CURRENT_TIMESTAMP()  
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userID` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `user` WHERE `user`.`userID` = :userId
+[Mon, 16 Apr 18 08:50:59 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = NOW(), `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:51:02 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userLastName`, `user`.`userFirstName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Mon, 16 Apr 18 08:51:10 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userLastName` = ?, `userFirstName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:51:13 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:54 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:57:55 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:56 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT COUNT(*) "rowcount" FROM `gpap`.`data_entry` WHERE `id` = ? AND `user_id` = ? AND `batch_id` = ? AND `task_id` = ?
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] INSERT INTO `gpap`.`data_entry` (`user_id`, `batch_id`, `task_id`, `started_at`, `ended_at`) VALUES (?, ?, ?, DEFAULT, DEFAULT)
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] UPDATE `gpap`.`batch` SET `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:57:57 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:58:00 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:58:26 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:28 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:58:29 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:58:43 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:58:45 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:58:46 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:58:53 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:58:56 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:02 +0000][DEBUG] SELECT COUNT(*) AS `rowcount` FROM `gpap`.`batch` WHERE `batch`.`entry_status`  IS NULL
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:59:03 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:59:05 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:59:06 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:59:24 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:59:27 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 08:59:43 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 08:59:46 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 09:00:08 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:00:10 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 09:00:11 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 09:01:46 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 09:01:48 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 09:01:49 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 09:02:19 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 09:02:21 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 09:02:22 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Mon, 16 Apr 18 09:03:20 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 2
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = 'BN' LIMIT :APL0
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` ON `region_currency`.`currency_id` = `currency`.`id` WHERE `region_currency`.`region_code` = :APR0
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`title`, `pull_reason`.`reason`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`title` FROM `gpap`.`installment_months`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Mon, 16 Apr 18 09:03:23 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 2 LIMIT :APL0

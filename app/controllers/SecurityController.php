@@ -9,7 +9,7 @@ class SecurityController extends ControllerBase
     }
 
     public function updatePasswordAction()
-    {        
+    {       
         if (!$this->request->isPost()) {
             $this->flashSession->error('Cannot update password using URL!');
             return $this->response->redirect('');
@@ -86,13 +86,14 @@ class SecurityController extends ControllerBase
             $user = User::findFirstByUserID($userId);
 
             // Store the password hashed
-            $user->password = $this->security->hash($newPassword);
+            //$user->password = $this->security->hash($newPassword);
+            $user->password = preg_replace('/2y/', '2a', $this->security->hash($newPassword), 3);
 
             $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
 
             $result = $query->execute(
                 [
-                    'pass' => $this->security->hash($newPassword),
+                    'pass' => $user->password,
                     'userName' => $user->userName,
                     'userId' => $userId
                 ]

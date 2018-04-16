@@ -139,6 +139,15 @@ $(function() {
     $('#authorization_code').blur(function() {
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
         this.value = this.value.toUpperCase();
+        var wrapper = $('#' + this.id + '_wrapper');
+        if (this.value.length < 3) {
+            $('#' + this.id + '_alert').remove();
+            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                    '<span id="' + this.id + '_msg">Invalid Authorization Code</span>' +
+                    '</div>');
+        } else {
+            $('#' + this.id + '_alert').remove();
+        }
     }); 
 
     $('#transaction_amount').blur(function() {
