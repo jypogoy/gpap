@@ -271,7 +271,7 @@ class SecurityController extends ControllerBase
     }
 
     /**
-     * Validates if password is within the set day limit e.g. 30 days.
+     * Validates if password is used within the set month limit e.g. 6 months.
      */
     private function isNotUsedInSixMonths($newPassword)
     {        

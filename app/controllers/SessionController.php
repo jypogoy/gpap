@@ -189,7 +189,7 @@ class SessionController extends ControllerBase
         $userId = intval($this->session->get('auth')['id']);
 
         try {
-            $sql = "SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+            $sql = "SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 0 SECOND) AS NotExpired
                     FROM user   
                     WHERE userid = " . $userId;
 
