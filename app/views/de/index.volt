@@ -20,8 +20,8 @@
                 <button class="ui icon disabled button insert-slip-btn" data-tooltip="Insert" data-position="top center"><i class="share alternate blue icon"></i></button>
                 <button class="ui icon disabled button delete-slip-btn" data-tooltip="Delete Slip" data-position="top center"><i class="remove red icon"></i></button>  
                 <button class="ui icon button reset-slip-btn" data-tooltip="Reset Transaction" data-position="top center"><i class="recycle orange icon"></i></button>  
-                <button class="ui icon button link-slip-btn" data-tooltip="Link Image" data-position="top center"><i class="linkify green icon"></i></button>  
-                <button class="ui icon button link-slip-btn" data-tooltip="Link Image" data-position="top center"><i class="unlinkify green icon"></i></button> 
+                <button class="ui icon button link-slip-btn" data-tooltip="Link Image" data-position="top center"><i class="linkify blue icon"></i></button>  
+                <button class="ui icon button unlink-slip-btn" data-tooltip="Unlink Image" data-position="top center"><i class="unlinkify blue icon"></i></button> 
             </div>
 
             {% include 'de/summary_form.volt' %}

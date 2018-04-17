@@ -447,6 +447,16 @@ $(function() {
         $(slipRequiredFields).addClass('required');
     });
 
+    $('.link-slip-btn').click(function(e) {
+        e.preventDefault();
+        
+    });
+
+    $('.unlink-slip-btn').click(function(e) {
+        e.preventDefault();
+        
+    });
+
     //------------- Summary Events ---------------------------------
     $('#variance_exception').change(function() {
         var batchId = $('#batch_id').val();
