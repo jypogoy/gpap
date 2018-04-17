@@ -91,13 +91,13 @@ class SecurityController extends ControllerBase
 
             $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
 
-            // $result = $query->execute(
-            //     [
-            //         'pass' => $user->password,
-            //         'userName' => $user->userName,
-            //         'userId' => $userId
-            //     ]
-            // );
+            $result = $query->execute(
+                [
+                    'pass' => $user->password,
+                    'userName' => $user->userName,
+                    'userId' => $userId
+                ]
+            );
 
             // Remove persistent check for initial login.
             $this->session->remove('initLogin');
@@ -259,9 +259,9 @@ class SecurityController extends ControllerBase
                         POSITION(userName IN \'?\') AS m1,
                         POSITION(userLastName IN \'?\') AS m2,
                         POSITION(userFirstName IN \'?\') AS m3
-                    FROM user WHERE userID = ? HAVING m1 > 0 OR m2 > 0 OR m3 > 0';
+                    FROM user WHERE userID = ' . $userId . ' HAVING m1 > 0 OR m2 > 0 OR m3 > 0';
 
-            $result = $this->db->query($sql, [$password, $password, $password, $userId]);
+            $result = $this->db->query($sql, [$password, $password, $password]);
             $r = $result->numRows();
             return $result->numRows() > 0 ? true : false;
 
