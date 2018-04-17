@@ -80,7 +80,6 @@ function applySlipChecks() {
                         if (data) showMessage(field.id, rawValue, data.title);
                     } else if (field.id == 'slip_pull_reason_id') {
                         var data = slipPullReasonMap.get(rawValue);   
-                        console.log(data.reason)
                         if (data) showMessage(field.id, data.id, data.title + (data.reason != null ? ('-' + data.reason) : ''));
                     } else if (field.id == 'exception_id') {
                         var data = exceptionMap.get(rawValue);   

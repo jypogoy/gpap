@@ -105,7 +105,7 @@ function getContents(lastCompletedEntry, existingHeader) {
     // Auto load transaction type related fields. See de_data_navigation.js
     refreshTransTypeDependentFields();
 
-    // For Balancing Only: Replace currrent activity ID to help fetch previous task's activity record.
+    // For Balancing Only: Replace current activity ID to help fetch previous task's activity record.
     if (lastCompletedEntry && !existingHeader) {
         params.data_entry_id = lastCompletedEntry.id;            
     }

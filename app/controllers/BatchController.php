@@ -72,10 +72,19 @@ class BatchController extends ControllerBase
     {
         $this->view->disable();
         
+        $conditions = '';        
+        if ($taskName == 'Entry 1') {
+            $conditions = "entry_status IS NULL";
+        } else if ($taskName == 'Verify') {
+            $conditions = "entry_status = 'Complete' AND verify_status IS NULL";
+        } else if ($taskName == 'Balancing') {
+            $conditions = "entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
+        }
+
         try {
             $batches = Batch::findFirst(
                 [
-                    "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
+                    "conditions" => $conditions
                 ]
             );        
 

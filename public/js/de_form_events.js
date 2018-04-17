@@ -136,7 +136,7 @@ $(function() {
         var alert = $('#' + this.id + '_alert');
         var msg = $('#' + this.id + '_msg');
         var logo = $('#cardLogo');
-        if (!validateCard($(this).val()) || this.value.trim() == '') { // See utils.js
+        if (!validateCard($(this).val())) { // See utils.js
             $(alert).remove();
             $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
@@ -234,7 +234,7 @@ $(function() {
         this.value = this.value.toUpperCase();
         var wrapper = $('#' + this.id + '_wrapper');
         // Check length of keyed information.
-        if (this.value.length < this.minLength) {
+        if (this.value.length > 0 && this.value.length < this.minLength) {
             $('#' + this.id + '_alert').remove();
             $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +

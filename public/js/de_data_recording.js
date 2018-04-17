@@ -197,7 +197,8 @@ function saveBatch1(isSaveNew, isComplete) {
 }
 
 function getNewBatch() {
-    $.post('../batch/getavailable/' + ($('#session_task_name').val().indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (data) {
+    console.log($('#session_task_name').val())
+    $.post('../batch/getavailable/' + $('#session_task_name').val(), function (data) {
         if (data) {
             redirectBack(data.id)
         } else {

@@ -113,7 +113,7 @@ $(function() {
             checkHeaderIfExists().then(function(header) {
                 getContents(lastCompletedData, header);
             });            
-            prepBalancingFields();
+            //prepBalancingFields();
         });
     } else {
         getRegionCurrency();
@@ -149,7 +149,7 @@ function overrideHeader(pullReasonId) {
         $('.slip-controls').removeClass('hidden');
     }
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
-        prepBalancingFields();
+        //prepBalancingFields(); 
     }
 }
 
