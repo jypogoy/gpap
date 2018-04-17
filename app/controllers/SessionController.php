@@ -23,7 +23,7 @@ class SessionController extends ControllerBase
         }
 
         // Helper: Generate sample password.
-        //$hash = $this->security->hash('Madrigalejos');
+        //$hash = $this->security->hash('test');
         $hash = '';        
 
         // Redirect to home if already logged in.
@@ -81,7 +81,7 @@ class SessionController extends ControllerBase
                 $r = $user->userPassword;    
                 if ($this->security->checkHash($password, $user->userPassword)) {                                    
                     // Lock user if attempts reaches 3.
-                    if ($user->userInvalidLoginAttempt == 3) {
+                    if ($user->userInvalidLoginAttempt > 2) {
                         $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;
                         $user->save();
                         $this->flash->error('User account is locked!');
