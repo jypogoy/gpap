@@ -23,8 +23,8 @@ class SessionController extends ControllerBase
         }
 
         // Helper: Generate sample password.
-        //$hash = $this->security->hash('test');
-        $hash = '';        
+        $hash = $this->security->hash('Madrigalejos');
+        //$hash = '';        
 
         // Redirect to home if already logged in.
         $auth = $this->session->get('auth');
@@ -77,10 +77,11 @@ class SessionController extends ControllerBase
 
             $user = User::findFirstByUserName($username);    
             
-            if ($user) {                            
+            if ($user) {                        
+                $r = $user->userPassword;    
                 if ($this->security->checkHash($password, $user->userPassword)) {                                    
                     // Lock user if attempts reaches 3.
-                    if ($user->userInvalidLoginAttempt > 3) {
+                    if ($user->userInvalidLoginAttempt == 3) {
                         $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;
                         $user->save();
                         $this->flash->error('User account is locked!');
@@ -94,7 +95,7 @@ class SessionController extends ControllerBase
                         // The password is valid
                         $this->_registerSession($user);
 
-                        // Check if initial login by comparing password against lastname. Must compare hashes.
+                        // Check if initial login by comparing password against lastname. Must compare hashes.                        
                         $encLastName = $this->security->hash($user->userLastName);
                         if ($this->security->checkHash($password, $encLastName)) {
                             $this->session->set('initLogin', true);
@@ -188,7 +189,7 @@ class SessionController extends ControllerBase
         $userId = intval($this->session->get('auth')['id']);
 
         try {
-            $sql = "SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
+            $sql = "SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 0 SECOND) AS NotExpired
                     FROM user   
                     WHERE userid = " . $userId;
 
@@ -206,7 +207,7 @@ class SessionController extends ControllerBase
         $userId = intval($this->session->get('auth')['id']);
 
         try {
-            $sql = "SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
+            $sql = "SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 0 SECOND) AS NotExpired
                     FROM user   
                     WHERE userid = " . $userId;
 

@@ -74,6 +74,7 @@ $(function() {
             params.task_id = $('#session_task_id').val();
             
             $.post('../merchant_header/getsame/', params, function (hasMatch) {   
+                console.log(hasMatch)
                 if (hasMatch) {
                     $('#' + this.id + '_alert').remove();
                     $(wrapper).addClass('error');

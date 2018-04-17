@@ -13,12 +13,12 @@ return new \Phalcon\Config([
     
     'database' => [
         'adapter'     => 'Mysql',
-        // 'host'        => '10.120.20.206',
-        // 'username'    => 'spiq',
-        // 'password'    => 'ad7410/8520*963.aD',
-        'host'        => 'localhost',
-        'username'    => 'root',
-        'password'    => 'root01',
+        'host'        => '10.120.20.206',
+        'username'    => 'spiq',
+        'password'    => 'ad7410/8520*963.aD',
+        // 'host'        => 'localhost',
+        // 'username'    => 'root',
+        // 'password'    => 'root01',
         'dbname'      => 'gpap',
         'charset'     => 'utf8',
         // 'options'     => array(

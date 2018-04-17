@@ -2,14 +2,14 @@
 
 class SecurityController extends ControllerBase
 {
-
+    
     public function initialize()
     {
 
     }
 
     public function updatePasswordAction()
-    {       
+    {      
         if (!$this->request->isPost()) {
             $this->flashSession->error('Cannot update password using URL!');
             return $this->response->redirect('');
@@ -91,16 +91,19 @@ class SecurityController extends ControllerBase
 
             $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
 
-            $result = $query->execute(
-                [
-                    'pass' => $user->password,
-                    'userName' => $user->userName,
-                    'userId' => $userId
-                ]
-            );
+            // $result = $query->execute(
+            //     [
+            //         'pass' => $user->password,
+            //         'userName' => $user->userName,
+            //         'userId' => $userId
+            //     ]
+            // );
 
             // Remove persistent check for initial login.
             $this->session->remove('initLogin');
+            $this->session->remove('currentPassword');
+            $this->session->remove('newPassword');
+            $this->session->remove('confirmPassword');
 
             $msg = 'Your password was updated successfully!';
             $this->flashSession->success($msg);
@@ -168,7 +171,7 @@ class SecurityController extends ControllerBase
             return $hasMatch;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -192,7 +195,7 @@ class SecurityController extends ControllerBase
             return $count > 0 ? true : false;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -214,7 +217,7 @@ class SecurityController extends ControllerBase
             return $result->numRows() > 0 ? true : false;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -224,20 +227,22 @@ class SecurityController extends ControllerBase
     private function isTrivial($password)
     {       
         try {
-            $sql = "SELECT count(dictionaryid) AS total
+            $sql = 'SELECT count(dictionaryid) AS Total
                     FROM dictionary
                     WHERE isCommon = false
-                    AND ((INSTR(BINARY LOWER('?'), LOWER(dictionaryWord))) > 0
-                    OR INSTR(REVERSE(BINARY LOWER('?')), REVERSE(LOWER(dictionaryWord)))> 0
-                    OR INSTR(REVERSE(BINARY LOWER('?')),LOWER(dictionaryWord))> 0
-                    OR INSTR(LOWER('?'), REVERSE(LOWER(dictionaryWord)))> 0)";
+                    AND ((INSTR(BINARY LOWER(?), LOWER(dictionaryWord))) > 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)), REVERSE(LOWER(dictionaryWord)))> 0
+                    OR INSTR(REVERSE(BINARY LOWER(?)),LOWER(dictionaryWord))> 0
+                    OR INSTR(LOWER(?), REVERSE(LOWER(dictionaryWord)))> 0)';
 
-            $result = $this->db->fetchOne($sql, [$password, $password, $password, $password]);
+            $result = $this->db->query($sql, [$password, $password, $password, $password]);
+            $result = $result->fetchAll($result);
+            $total = intval($result[0]['Total']);
             
-            return intval($result->total) > 0 ? true : false;
+            return $total > 0 ? true : false;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -245,22 +250,23 @@ class SecurityController extends ControllerBase
      * Validates if password is same with personal information such as first and last name.
      */
     private function isPersonal($password)
-    {        
+    {      
+        $this->view->disable();  
         $userId = intval($this->session->get('auth')['id']);
 
         try {
-            $sql = "SELECT userID,
-                        POSITION(userName IN ?) AS m1,
-                        POSITION(userLastName IN ?) AS m2,
-                        POSITION(userFirstName IN ?) AS m3
-                    FROM user WHERE userID = " . $userId . " HAVING m1 > 0 OR m2 > 0 OR m3 > 0";
+            $sql = 'SELECT userID,
+                        POSITION(userName IN \'?\') AS m1,
+                        POSITION(userLastName IN \'?\') AS m2,
+                        POSITION(userFirstName IN \'?\') AS m3
+                    FROM user WHERE userID = ? HAVING m1 > 0 OR m2 > 0 OR m3 > 0';
 
-            $result = $this->db->query($sql, [$password, $password, $password]);
+            $result = $this->db->query($sql, [$password, $password, $password, $userId]);
             $r = $result->numRows();
             return $result->numRows() > 0 ? true : false;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -274,7 +280,7 @@ class SecurityController extends ControllerBase
         try {
             $hasMatch = false;
 
-            $sql = "SELECT DISTINCT userPassword, userid   
+            $sql = 'SELECT DISTINCT userPassword, userid   
                     FROM user_prev_password   
                     WHERE userid = ?  
                         AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
@@ -282,7 +288,7 @@ class SecurityController extends ControllerBase
                     UNION  
                     SELECT DISTINCT userPassword, userid   
                         FROM user   
-                    WHERE userid = ?";
+                    WHERE userid = ?';
 
             $result = $this->db->query($sql, [$userId, $userId]);            
             $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
@@ -298,7 +304,7 @@ class SecurityController extends ControllerBase
             return $hasMatch;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }    
 
@@ -316,7 +322,7 @@ class SecurityController extends ControllerBase
             return $result->NotExpired ? false : true;
 
         } catch (\Exception $e) {
-            $this->errorLogger->error(parent::_consterrorMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 }
