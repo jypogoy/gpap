@@ -13,6 +13,7 @@ var Form = {
         } else {
             $('.slip-field:not(.auto-fill)').val('');
             $('.slip-field:not(.auto-fill)').prop('checked', false);
+            $('.slip-field').html('');
             $('.slip-dropdown:not(.auto-fill)').dropdown('restore defaults');
         }
     },

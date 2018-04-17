@@ -3,7 +3,10 @@
     <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
         <div class="ui equal width grid">
             <div class="column"><i class="random icon"></i>Transactions</div>
-            <div class="column"><span id="slip_image"><div class="ui small teal tag label">Scan0001.tif</div></span></div>
+            <div class="column">
+                {{ hidden_field('image_id', 'class': 'slip-field') }}
+                <small><span id="image_file" class="slip-field slip-image"></span></small>
+            </div>
             <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
         </div>
     </h4>

@@ -1,4 +1,4 @@
-function saveSlip() {
+function saveSlip() {    
     var slipValueMap = new HashMap();
     var slipFields = $('.slip-field');    
     $.each(slipFields, function(i, field) {
@@ -6,6 +6,9 @@ function saveSlip() {
            slipValueMap.set(field.id, $(field).prop('checked'));
         } else {
            slipValueMap.set(field.id, field.value);
+        }
+        if($(field).is('span')) { // Capture labels
+            slipValueMap.set(field.id, $(field).html());
         }        
     });        
     
@@ -66,7 +69,7 @@ function navigate(direction) {
         } else if (direction == 'prev' || direction == 'first') {
             $('.next-slip-btn').removeClass('disabled');
             $('.last-slip-btn').removeClass('disabled');
-        }
+        }                
     }
 }
 
@@ -77,7 +80,11 @@ function fillFields(map) {
 }
 
 function setFieldValue(key, value) {    
-    // Set value for checkboxes and input elements.
+    // Set inline labels.
+    if($('#' + key).is('span')) {
+        $('#' + key).html(value);
+    }
+    // Set value for checkboxes and input elements.    
     if($('#' + key).is(':checkbox')) {
         if (value == true) {
             $('#' + key).prop('checked', true);
@@ -120,6 +127,15 @@ function setFieldValue(key, value) {
         } else {
             $('#other_exception_detail_wrapper').addClass('hidden');
         }       
+    }    
+
+    // Toggle image link buttons.
+    if ($('#image_id').val() != '' || $('#image_id').val() > 0) {
+        $('.link-slip-btn').addClass('hidden');
+        $('.unlink-slip-btn').removeClass('hidden');      
+    } else {        
+        $('.link-slip-btn').removeClass('hidden');
+        $('.unlink-slip-btn').addClass('hidden');          
     }
 }
 

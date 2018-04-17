@@ -112,6 +112,8 @@ class TransactionController extends ControllerBase
             $transaction->exception_id = $this->request->getPost('exception_id') == '' ? null : $this->request->getPost('exception_id');
             $transaction->variance_exception = $this->request->getPost('variance_exception') == 'true' || $this->request->getPost('variance_exception') == '1' ? 1 : 0;
             $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
+            $transaction->image_id = $this->request->getPost('image_id') == '' ? null : $this->request->getPost('image_id');
+            $transaction->image_file = $this->request->getPost('image_file') == '' ? null : $this->request->getPost('image_file');
 
             if (!$transaction->save()) {
                 echo 0;

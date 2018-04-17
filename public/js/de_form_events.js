@@ -449,12 +449,19 @@ $(function() {
 
     $('.link-slip-btn').click(function(e) {
         e.preventDefault();
-        
+        var fileName = imgArray[imgNavIndex].path.match(/[^/]*$/g)[0];
+        $('.slip-image').html(fileName);
+        $('.unlink-slip-btn').removeClass('hidden');
+        $('#image_id').val(imgArray[imgNavIndex].id);
+        $(this).addClass('hidden');        
     });
 
     $('.unlink-slip-btn').click(function(e) {
         e.preventDefault();
-        
+        $('.slip-image').html('');
+        $('.link-slip-btn').removeClass('hidden');
+        $('#image_id').val('');
+        $(this).addClass('hidden');
     });
 
     //------------- Summary Events ---------------------------------
