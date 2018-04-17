@@ -4,10 +4,12 @@ $(function () {
 
 var Form = {
     clear: function(isHeader) {
+        var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
+        $('#' + formId).find("div[id*='alert']").remove();
         if (isHeader) {
             $('.header-field').val('');
             $('.header-field').prop('checked', false);
-            $('.header-dropdown').dropdown('restore defaults');
+            $('.header-dropdown').dropdown('restore defaults');            
         } else {
             $('.slip-field:not(.auto-fill)').val('');
             $('.slip-field:not(.auto-fill)').prop('checked', false);

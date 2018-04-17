@@ -94,24 +94,19 @@ class MerchantHeaderController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
 
         try {
-            $sql = "SELECT COUNT(de.id) AS Total 
+            $sql = 'SELECT COUNT(de.id) AS Total 
                     FROM data_entry de 
                     INNER JOIN merchant_header m ON m.data_entry_id = de.id 
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id 
-                    WHERE m.merchant_number = '?' AND m.dcn = '?' AND m.deposit_amount = '?' AND z.region_code = '?' AND t.id = '?'";
+                    WHERE m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
 
             $result = $this->db->query($sql, [$merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
-            $result->setFetchMode(
-                \Phalcon\Db::FETCH_OBJ
-            );
-
-            while ($count = $result->fetch()) {
-                $x = $count->Total;
-            }
-
+            $result = $result->fetchAll($result);
            
+            $total = intval($result[0]['Total']);
+            echo $total > 0 ? true : false;    
 
         } catch (\Exception $e) {            
             $this->exceptionLogger->error(parent::_constExceptionMessage($e));

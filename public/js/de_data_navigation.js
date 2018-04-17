@@ -16,6 +16,9 @@ function navigate(direction) {
 
     if (Form.validate(false)) {
 
+        // Remove any shown error messages.
+        $('#transactionDataForm').find("div[id*='alert']").remove();
+
         saveSlip(); // Make sure to save the current slip.
 
         if (direction == 'next') {
@@ -142,8 +145,8 @@ function calculateAmount() {
     var totalAmount = 0;
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
-            if (fieldId.indexOf('amount') != -1 && value) {
-                totalAmount = totalAmount + parseInt(value);
+            if (fieldId.indexOf('amount') != -1 && value && value != '0') {
+                totalAmount = Number(totalAmount ) + Number(parseFloat(value).toFixed(2));
             }
         });
     });

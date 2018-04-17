@@ -155,7 +155,7 @@ function getMerchantInfo(merchant_number) {
 
     $.post('../merchant/get/' + parseInt(merchant_number), function (merchantData) { 
         if (!merchantData) {
-            toastr.warning('The search did not match any merchant.');                    
+            toastr.info('The search did not match any merchant.');                    
             Form.clear(true);
         } else {
             // Reset merchant details map.
@@ -172,8 +172,18 @@ function getMerchantInfo(merchant_number) {
             Form.resetErrors(true);
 
             // Perform merchant specific validations.
+            var wrapper = $('#merchant_number_wrapper');
+            var alert = $('#merchant_number_alert');
             if (merchantInfoMap.get('merchantStatus') == 'O' || merchantInfoMap.get('merchantStatus') == 'R') {
-                toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
+                $(alert).remove();
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
+                        '<span id="merchant_number_msg">Invalid Merchant: ' + (merchantInfoMap.get('merchantStatus') == 'O' ? 'Open status' : 'Re-open status') + '</span>' +
+                        '</div>');
+                //toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
+            } else {
+                $(alert).remove();
+                $(wrapper).removeClass('error');
             }
 
             if (merchantInfoMap.get('acceptInstallment') != 'N') {
@@ -183,11 +193,11 @@ function getMerchantInfo(merchant_number) {
             }
 
             if (merchantInfoMap.get('acceptAmex') == 'Y') {
-                merchantAcceptedCards.push('Amex');
+                merchantAcceptedCards.push('AMEX');
             }
             
             if (merchantInfoMap.get('acceptCup') == 'Y') {
-                merchantAcceptedCards.push('Cup');
+                merchantAcceptedCards.push('CUP');
             }
 
             if (merchantInfoMap.get('acceptJcb') == 'Y') {

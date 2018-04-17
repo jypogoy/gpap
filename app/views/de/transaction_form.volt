@@ -2,7 +2,7 @@
 
     <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
         <div class="ui equal width grid">
-            <div class="column"><i class="random icon"></i>Transaction</div>
+            <div class="column"><i class="random icon"></i>Transactions</div>
             <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
         </div>
     </h4>
@@ -38,9 +38,6 @@
         <div class="ui right labeled input">
             {{ text_field('card_number', 'maxlength': '19', 'placeholder': 'Credit Card Number', 'class': 'slip-field') }}
             <div class="ui basic label"><img id="cardLogo" src="../public/img/card/private.png" style="height: 12px !important;"></div>
-        </div>
-        <div class="ui basic red pointing prompt label transition hidden" id="card_number_alert">
-            <i class="warning icon"></i><span id="card_number_msg"></span>
         </div>
     </div>    
     <div class="equal width small fields">                        

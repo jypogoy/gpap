@@ -95,6 +95,11 @@ function getCardType(number)
     if (number.match(re) != null)
         return "Visa Electron";
 
+    // China Union Pay
+    re = new RegExp("^(62[0-9]{14,17})$");
+    if (number.match(re) != null)
+        return "CUP";
+
     return "";
 }
 

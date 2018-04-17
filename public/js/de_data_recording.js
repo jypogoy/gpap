@@ -33,7 +33,7 @@ function saveBatch(isSaveNew, isComplete) {
                     if (isSaveNew) {
                         getNewBatch();
                     } else {
-                        window.location = '../de/redirectsuccess/' + true;
+                        window.location = '../de/redirectsuccess/' + false;
                     }       
                 } else {
                     toastr.error('Unable to complete the this batch.');
