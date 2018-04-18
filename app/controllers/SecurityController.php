@@ -51,7 +51,7 @@ class SecurityController extends ControllerBase
             }
 
             $changedToday = self::isUpdatedToday();
-            if ($changedToday) {
+            if ($changedToday && !$this->session->get('initLogin')) {
                 $this->flashSession->error('Cannot change password anymore.');
             }
 
