@@ -115,11 +115,13 @@ class TransactionController extends ControllerBase
             $transaction->image_id = $this->request->getPost('image_id') == '' ? null : $this->request->getPost('image_id');
             $transaction->image_file = $this->request->getPost('image_file') == '' ? null : $this->request->getPost('image_file');
 
-            if (!$transaction->save()) {
-                echo 0;
-            } else {
-                echo 1;
-            }
+            // if (!$transaction->save()) {
+            //     echo 0;
+            // } else {
+            //     echo 1;
+            // }
+            $sql = '';    
+
 
         } catch (\Exception $e) {            
             $this->exceptionLogger->error(parent::_constExceptionMessage($e));
