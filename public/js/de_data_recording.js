@@ -197,7 +197,6 @@ function saveBatch1(isSaveNew, isComplete) {
 }
 
 function getNewBatch() {
-    console.log($('#session_task_name').val())
     $.post('../batch/getavailable/' + $('#session_task_name').val(), function (data) {
         if (data) {
             redirectBack(data.id)
@@ -209,7 +208,6 @@ function getNewBatch() {
         // Do nothing...
     })
     .fail(function (xhr, status, error) {
-        console.log(error)
         toastr.error(error);
     });
 }

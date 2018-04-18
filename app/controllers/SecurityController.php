@@ -290,7 +290,7 @@ class SecurityController extends ControllerBase
                     //     FROM user   
                     // WHERE userid = ?';
 
-            $result = $this->db->query($sql, [$userId, $userId]);            
+            $result = $this->db->query($sql, [$userId]);            
             $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
 
             // Match new password hash with the recorded passwords.
