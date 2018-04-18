@@ -284,11 +284,11 @@ class SecurityController extends ControllerBase
                     FROM user_prev_password   
                     WHERE userid = ?  
                         AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH)  
-                        AND CURRENT_TIMESTAMP()';  
-                    // UNION  
-                    // SELECT DISTINCT userPassword, userid   
-                    //     FROM user   
-                    // WHERE userid = ?';
+                        AND CURRENT_TIMESTAMP() 
+                    UNION  
+                    SELECT DISTINCT userPassword, userid   
+                        FROM user   
+                    WHERE userid = ?';
 
             $result = $this->db->query($sql, [$userId]);            
             $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
