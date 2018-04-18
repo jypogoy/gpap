@@ -225,6 +225,10 @@ $di->set('crypt',
             '%31.1e$i86e$f!8jz'
         );
 
+        // Set the applicable cipher method. Default is AES-256-CFB. 
+        // See http://php.net/manual/en/function.openssl-get-cipher-methods.php for more.
+        //$crypt->setCipher('AES256');
+
         return $crypt;
     },
     true
