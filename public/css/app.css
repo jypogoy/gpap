@@ -70,6 +70,7 @@ table thead tr th {
     font-style: normal;
     /* font-weight: 400 !important; */
     font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 
 table tfoot tr th {
