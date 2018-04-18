@@ -16,6 +16,11 @@ class Elements extends Component
                 'action'    => 'home',
                 'iconClass' => 'home icon'
             ],
+            // 'edits' => [
+            //     'caption'   => 'Record Edits',
+            //     'action'    => 'edits',
+            //     'iconClass' => 'pencil icon'
+            // ],
             'about' => [
                 'caption'   => 'About',
                 'action'    => 'index',
@@ -57,11 +62,13 @@ class Elements extends Component
             ];
         } else {
             unset($this->_headerMenu['left']['home']);
+            unset($this->_headerMenu['left']['edits']);
         }
 
         // For initial login: Remove menu items.
         if ($this->session->get('initLogin')) { 
             unset($this->_headerMenu['left']['home']);
+            unset($this->_headerMenu['left']['edits']);
         }
 
         $controllerName = $this->view->getControllerName();

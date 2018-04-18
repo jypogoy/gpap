@@ -45,10 +45,10 @@ class SecurityController extends ControllerBase
                 return;
             }
 
-            $used = self::isLastSixMatch($newPassword);
-            if ($used) {
-                $this->flashSession->error('Password is already used.');
-            }
+            // $used = self::isLastSixMatch($newPassword);
+            // if ($used) {
+            //     $this->flashSession->error('Password is already used.');
+            // }
 
             $changedToday = self::isUpdatedToday();
             if ($changedToday && !$this->session->get('initLogin')) {
@@ -148,14 +148,14 @@ class SecurityController extends ControllerBase
         try {
             $hasMatch = false;
 
-            $sql = "SELECT DISTINCT userPassword, userID " .
-                    "FROM user_prev_password " .
-                    "WHERE userID = ? " .
-                    "AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() " .
-                    "UNION " .
-                    "SELECT DISTINCT userPassword, userid " .
-                    "FROM user " .
-                    "WHERE userID = ?";
+            $sql = 'SELECT DISTINCT userPassword, userID 
+                    FROM user_prev_password 
+                    WHERE userID = ? 
+                    AND userprevpasswordChange BETWEEN DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -6 MONTH) AND CURRENT_TIMESTAMP() 
+                    UNION 
+                    SELECT DISTINCT userPassword, userid 
+                    FROM user 
+                    WHERE userID = ?';
 
             $result = $this->db->query($sql, [$userId, $userId]);        
             $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
