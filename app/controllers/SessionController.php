@@ -23,7 +23,7 @@ class SessionController extends ControllerBase
         }
 
         // Helper: Generate sample password.
-        //$hash = $this->security->hash('Madrigalejos');
+        //$hash = $this->security->hash('test');
         $hash = '';
 
         // Redirect to home if already logged in.

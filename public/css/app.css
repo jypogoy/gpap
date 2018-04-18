@@ -65,14 +65,16 @@ a {
 }
 
 table thead tr th {
-    font-family: 'Oswald', 'Meiryo', sans-serif;
+    /* font-family: 'Oswald', 'Meiryo', sans-serif; */
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-style: normal;
-    font-weight: 400 !important;
-    /* color: #666666 !important; */
+    /* font-weight: 400 !important; */
+    font-weight: bold !important;
 }
 
 table tfoot tr th {
-    font-family: 'Oswald', 'Meiryo', sans-serif;
+    /* font-family: 'Oswald', 'Meiryo', sans-serif; */
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400 !important;
     size: 12px;
@@ -80,7 +82,8 @@ table tfoot tr th {
 }
 
 table tbody tr td, table tfoot tr th {
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     size: 12px;

@@ -15,10 +15,7 @@
         {{ stylesheet_link('jqueryui/jquery-ui.structure.css') }}
         {{ stylesheet_link('toastr/toastr.min.css') }}
         {{ stylesheet_link('css/app.css') }}
-        
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+                
     </head>
     <body>    
         {{ javascript_include('js/jquery-3.3.1.min.js') }}        

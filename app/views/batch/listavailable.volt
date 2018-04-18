@@ -1,11 +1,11 @@
 <table id="batchTable" class="ui selectable celled striped table">
     <thead>
         <tr>
-            <th>REGION</th>
-            <th>RECODING DATE</th>                    
-            <th>TRANSACTION TYPE</th>
-            <th>SEQUENCE</th>
-            <th>BATCH</th>
+            <th>Region</th>
+            <th>Recording Date</th>                    
+            <th>Transaction Type</th>
+            <th>Sequence</th>
+            <th>Batch</th>
             <th></th>
         </tr>
     </thead>
