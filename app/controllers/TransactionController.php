@@ -12,28 +12,44 @@ class TransactionController extends ControllerBase
         $this->view->disable();
         
         try {
-            $transactions = Transaction::find(
-                [
-                    "conditions" => "merchant_header_id = " . $headerId,
-                    "order"      => "sequence ASC"
-                ]
-            );
+            $sql = 'SELECT merchant_header_id, sequence, transaction_type_id, `region_code`, AES_DECRYPT(`card_number`, \'' . $this->config->AES_Key . '\') as card_number, `transaction_date`, `authorization_code`,
+                    `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
+                    `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`
+                    FROM transaction 
+                    WHERE merchant_header_id = ?
+                    ORDER BY sequence ASC';
 
-            $decryptTrans = array();
+            $result = $this->db->query($sql, [$headerId]);        
+            $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
 
-            // Decrypt card information.
-            foreach ($transactions as $transaction) {
-                $cc = $this->crypt->decrypt($transaction->card_number);
-                //$cc = preg_replace("/[^0-9,.]/", "", $this->crypt->decrypt($transaction->card_number));
-                if ($transaction->card_number) $transaction->card_number = $cc;
-                array_push($decryptTrans, $transaction);
+            $trans = array();
+            // Match new password hash with the recorded passwords.
+            while ($transaction = $result->fetch()) {
+                array_push($trans, $transaction);
             }
 
-            $this->response->setJsonContent($decryptTrans);
+            // $transactions = Transaction::find(
+            //     [
+            //         "conditions" => "merchant_header_id = " . $headerId,
+            //         "order"      => "sequence ASC"
+            //     ]
+            // );
+
+            // $decryptTrans = array();
+
+            // Decrypt card information.
+            // foreach ($transactions as $transaction) {
+            //     $cc = $this->crypt->decrypt($transaction->card_number);
+            //     //$cc = preg_replace("/[^0-9,.]/", "", $this->crypt->decrypt($transaction->card_number));
+            //     if ($transaction->card_number) $transaction->card_number = $cc;
+            //     array_push($decryptTrans, $transaction);
+            // }
+
+            $this->response->setJsonContent($trans);
             $this->response->send();        
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -73,7 +89,7 @@ class TransactionController extends ControllerBase
             }      
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -94,12 +110,13 @@ class TransactionController extends ControllerBase
             $transaction->region_code = $this->request->getPost('region_code') == '' ? null : $this->request->getPost('region_code');
 
             //- Encrypt card information
-            if ($this->request->getPost('card_number') == '') {
-                $transaction->card_number = null;
-            } else {
-                $transaction->card_number = $this->crypt->encrypt($this->request->getPost('card_number'));
-            }        
+            // if ($this->request->getPost('card_number') == '') {
+            //     $transaction->card_number = null;
+            // } else {
+            //     $transaction->card_number = $this->crypt->encrypt($this->request->getPost('card_number'));
+            // }        
 
+            $transaction->card_number = $this->request->getPost('card_number') == '' ? null : $this->request->getPost('card_number');
             $transaction->transaction_date = $this->request->getPost('transaction_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('transaction_date');
             $transaction->authorization_code = $this->request->getPost('authorization_code') == '' ? null : $this->request->getPost('authorization_code');
             $transaction->transaction_amount = $this->request->getPost('transaction_amount') == '' ? null : $this->request->getPost('transaction_amount');
@@ -120,11 +137,18 @@ class TransactionController extends ControllerBase
             // } else {
             //     echo 1;
             // }
-            $sql = '';    
-
+            $sql = 'INSERT INTO transaction (merchant_header_id, sequence, transaction_type_id, `region_code`, `card_number`, `authorization_code`,
+                    `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
+                    `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`)
+                    VALUES (?, ?, ?, ?, AES_ENCRYPT(?, \'' . $this->config->AES_Key . '\'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                        
+            $result = $this->db->query($sql, [$transaction->merchant_header_id, $transaction->sequence, $transaction->transaction_type_id, $transaction->region_code, $transaction->card_number,
+                    $transaction->authorization_code, $transaction->transaction_amount, $transaction->installment_months_id, $transaction->airline_ticket_number,
+                    $transaction->customer_reference_identifier, $transaction->merchant_order_number, $transaction->commodity_code, $transaction->slip_pull_reason_id,
+                    $transaction->exception_id, $transaction->other_exception_detail, $transaction->image_id, $transaction->image_file]);                    
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
     

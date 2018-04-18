@@ -99,6 +99,10 @@ table tbody tr td, table tfoot tr th {
     background-color: grey;
 }
 
+.text {
+    font-size: 8pt;
+}
+
 textarea {
     overflow: hidden;
 }

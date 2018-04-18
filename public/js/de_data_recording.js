@@ -9,10 +9,12 @@ function saveBatch(isSaveNew, isComplete) {
             // Clear previously recorded transactions to eliminate repitition.
             $.when(delPreviousTrans(headerId))
             .done(function(isSuccess) {
+                console.log(isSuccess)
                 if (isSuccess) {
                     // Record new transactions.
                     $.when(writeSlips(headerId))
                     .done(function(isSuccess) {
+                        console.log(isSuccess)
                         if (!isSuccess) {
                             toastr.error('Unable to record transactions.');
                         }
@@ -43,7 +45,7 @@ function saveBatch(isSaveNew, isComplete) {
             if (isSaveNew) {
                 getNewBatch();
             } else {
-                window.location = '../de/redirectsuccess/' + true;
+                //window.location = '../de/redirectsuccess/' + true;
             }
         }   
     });
