@@ -18,7 +18,7 @@ class Elements extends Component
             ],
             // 'edits' => [
             //     'caption'   => 'Record Edits',
-            //     'action'    => 'edits',
+            //     'action'    => 'index',
             //     'iconClass' => 'pencil icon'
             // ],
             'about' => [

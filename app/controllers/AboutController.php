@@ -11,6 +11,7 @@ class AboutController extends ControllerBase
 
     public function indexAction()
     {
+        echo "HEY";
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ About page.'); 
     }
     

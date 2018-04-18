@@ -52,7 +52,7 @@ class SecurityController extends ControllerBase
 
             $changedToday = self::isUpdatedToday();
             if ($changedToday && !$this->session->get('initLogin')) {
-                $this->flashSession->error('Cannot change password anymore.');
+                $this->flashSession->error('You can only change password once a day.');
             }
 
             $inDictionary = self::isDictMatch($newPassword);
@@ -75,7 +75,7 @@ class SecurityController extends ControllerBase
                 $this->flashSession->error('You cannot use any of your previous passwords for the last 6 months.');
             }            
 
-            if ($used || $changedToday || $inDictionary || $isTrivial || $isPersonal || $hasMatchInSixMonths) {
+            if (($changedToday && !$this->session->get('initLogin')) || $inDictionary || $isTrivial || $isPersonal || $hasMatchInSixMonths) {
                 $this->session->set('currentPassword', $currentPassword);
                 $this->session->set('newPassword', $newPassword);
                 $this->session->set('confirmPassword', $confirmPassword);
@@ -290,7 +290,7 @@ class SecurityController extends ControllerBase
                         FROM user   
                     WHERE userid = ?';
 
-            $result = $this->db->query($sql, [$userId]);            
+            $result = $this->db->query($sql, [$userId, $userId]);            
             $result->setFetchMode(Phalcon\Db::FETCH_OBJ);
 
             // Match new password hash with the recorded passwords.
