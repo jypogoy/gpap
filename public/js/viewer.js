@@ -95,8 +95,50 @@ $(function () {
     $('.loader').fadeOut();
 });
 
-var prevContext;
 function renderImages() {
+    $.post('../image/list/' + $('#batch_id').val(), function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any image.');
+        } else {
+            imgArray = data;
+            imgActive = imgArray[imgNavIndex].path; // Render the first image, usually the header
+        }                
+    })
+    .done(function (msg) {
+        if (msg.indexOf('undefined') != -1) {
+            toastr.error(msg);
+        } else {
+            $.get('../image/get', function(imgEl) {
+                $('#viewer').append(imgEl); 
+
+                $('.filename').append(imgActive); // Display the relative file path
+                $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
+
+                // Set styling and events for the appended image element with ID 'canvas'
+                $('#canvas').width($('#canvas').width() / 2);       
+                $('#canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
+                $('#canvas').mousedown(function(e) { // Replace mouse pointers
+                    $('#canvas').css({ 'cursor' : 'move' });
+                    $(this).mousemove(function(e) {
+                        // Do nothing.
+                    }).mouseup(function(e) {
+                        $('#canvas').off('mousemove');
+                    });
+                }).mouseup(function(e) {
+                    $('#canvas').css({ 'cursor' : 'default' });
+                });
+                
+                imageOrigSize = $('#canvas').width();
+            });                                             
+        }
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+}
+
+var prevContext;
+function renderImages_old() {
     $.post('../image/list/' + $('#batch_id').val(), function (data) {
         if (!data) {
             toastr.warning('The search did not match any image.');
@@ -131,7 +173,7 @@ function renderImages() {
                     toastr.error('Image ' +  imgActive + ' does not exists!');
                     return;
                 } 
-
+                
                 var tiff = new Tiff({ buffer: xhr.response });
                 var canvas = tiff.toCanvas();                            
                 var context = canvas.getContext('2d');            

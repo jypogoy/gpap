@@ -30,15 +30,11 @@ class ImageController extends ControllerBase
     public function getAction()
     {
         $this->view->disable();
-
-        $file = 'C:\tiff\BN\20100101-1-001\Airline\scan0001-5.tif';
-        $content = file_get_contents($file);
-        
-        $array = array(); 
-        foreach(str_split($content) as $char){ 
-            array_push($array, ord($char)); 
-        }
-        var_dump(implode(' ', $array));
+        $filename = "C:\\tiff\\BN\\20100101-1-001\\Airline\\scan0001-5.tif";
+        $image = new Imagick($filename); 
+        $image->setImageFormat('png');
+        //$image->thumbnailImage(150, 120);
+        echo '<img id="canvas" src="data:image/png;base64,' . base64_encode($image) . '" />';
     }
 
 }
