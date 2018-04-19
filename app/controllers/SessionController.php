@@ -57,8 +57,8 @@ class SessionController extends ControllerBase
     {      
         if ($this->request->isPost()) {            
 
-            $username = $this->request->getPost('username');
-            $password = $this->request->getPost('password');
+            $username = $this->request->getPost('username', 'string');
+            $password = $this->request->getPost('password', 'string');
                
             // $user = Users::findFirst([
             //     "(email = :email: OR username = :email:) AND password = :password: AND active = 'Y'",

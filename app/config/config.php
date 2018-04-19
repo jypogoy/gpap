@@ -57,6 +57,6 @@ return new \Phalcon\Config([
         'sql'       =>  'runtime_sql.log',
         'error'     =>  'error.log',        
     ],
-    'AES_Key'       =>  '%31.1e$i86e$f!8jz',
+    'AES_Key'       =>  'bM6xyt`8P!Ubkw:Lf*',
     'policy_url'    =>  'https://gpapde-qa-web.amdatex.com/deccpolicy/'
 ]);
