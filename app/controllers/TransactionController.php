@@ -147,6 +147,14 @@ class TransactionController extends ControllerBase
                     $transaction->customer_reference_identifier, $transaction->merchant_order_number, $transaction->commodity_code, $transaction->slip_pull_reason_id,
                     $transaction->exception_id, $transaction->other_exception_detail, $transaction->image_id, $transaction->image_file]);                    
 
+            $n = $result->numRows();    
+
+            if ($result->numRows() > 0) {
+                echo 1;
+            } else {
+                echo 0;
+            }        
+                    
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }

@@ -99,8 +99,12 @@ table tbody tr td, table tfoot tr th {
     background-color: grey;
 }
 
-.text {
-    font-size: 8pt;
+.text { /* Selection place holder */
+    font-size: 12px !important;
+}
+
+.item {
+    font-size: 12px !important;
 }
 
 textarea {
