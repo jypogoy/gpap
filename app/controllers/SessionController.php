@@ -114,12 +114,29 @@ class SessionController extends ControllerBase
                         $this->flash->success('Welcome ' . $user->userName);
 
                         // Log successful access                    
-                        $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in @ ' . $this->utils->getRealIpAddr() . '.');
+                        $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in @ ' . $this->utils->getRealIpAddr() . '.');                        
 
-                        $user->userInvalidLoginAttempt = 0;
-                        $user->save();
+                        try {
+                            $user->userInvalidLoginAttempt = 0;
+                            $user->save();
+                            return $this->response->redirect('home');
 
-                        return $this->response->redirect('home');
+                        } catch (\Exception $e) {
+                            $this->session->remove('auth');
+                            $this->flash->error('An error occurred while registering your system access.');
+
+                            // Destroy the whole session
+                            $this->session->destroy();
+
+                            $this->errorLogger->error(parent::_constExceptionMessage($e));                                                        
+
+                            $this->view->setTemplateAfter('error');
+                            return $this->dispatcher->forward(
+                                [
+                                    "errors" => 'show500',
+                                ]
+                            );
+                        }                            
                     }
                 } else {
                     $user->userInvalidLoginAttempt = $user->userInvalidLoginAttempt + 1;

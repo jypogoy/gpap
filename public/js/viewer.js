@@ -95,7 +95,7 @@ $(function () {
     $('.loader').fadeOut();
 });
 
-function renderImages() {
+function renderImages1() {
     $.post('../image/list/' + $('#batch_id').val(), function (data) {
         if (!data) {
             toastr.warning('The search did not match any image.');
@@ -138,7 +138,7 @@ function renderImages() {
 }
 
 var prevContext;
-function renderImages_old() {
+function renderImages() {
     $.post('../image/list/' + $('#batch_id').val(), function (data) {
         if (!data) {
             toastr.warning('The search did not match any image.');
@@ -153,7 +153,10 @@ function renderImages_old() {
         } else {
             var xhr = createCORSRequest('GET', imgServer + imgActive);
             //var xhr = createCORSRequest('GET', '../image/get');
+            xhr.responseType = 'arraybuffer';
             xhr.onload = function (e) {                  
+                // var uInt8Array = new Uint8Array(this.response);
+                // console.log(uInt8Array)
                 
                 $('.filename').empty();
                 $('.filename').append(imgActive); // Display the relative file path
@@ -174,7 +177,7 @@ function renderImages_old() {
                     return;
                 } 
                 
-                var tiff = new Tiff({ buffer: xhr.response });
+                var tiff = new Tiff({ buffer: this.response });
                 var canvas = tiff.toCanvas();                            
                 var context = canvas.getContext('2d');            
 
