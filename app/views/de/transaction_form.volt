@@ -5,7 +5,7 @@
             <div class="column"><i class="random icon"></i>Transactions</div>
             <div class="column">
                 {{ hidden_field('image_id', 'class': 'slip-field') }}
-                <small><span id="image_file" class="slip-field slip-image"></span></small>
+                <span id="image_file" class="slip-field slip-image"></span>
             </div>
             <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
         </div>
@@ -16,7 +16,7 @@
             <label>Transaction Type</label>
             {{ hidden_field('transaction_type_id', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.id) }}
             {{ text_field('transaction_type_type', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.type, 'disabled': true) }}
-            {#<div id="transaction_type_id_dropdown" class="ui selection dropdown slip-dropdown">
+            {#<div id="transaction_type_id_dropdown" class="ui search selection dropdown slip-dropdown">
                 <input type="hidden" id="transaction_type_id" class="slip-field">
                 <div class="default text">Choose a type</div>
                 <i class="dropdown icon"></i>
@@ -55,7 +55,7 @@
         </div>    
         <div id="installment_months_id_wrapper" class="required field">    
             <label>Installment Months</label>
-            <div id="installment_months_id_dropdown" class="ui selection dropdown slip-dropdown">
+            <div id="installment_months_id_dropdown" class="ui search selection dropdown slip-dropdown">
                 <input type="hidden" id="installment_months_id" class="slip-field">
                 <div class="default text">Choose a plan</div>
                 <i class="dropdown icon"></i>
@@ -83,7 +83,7 @@
     </div>                 
     <div id="slip_pull_reason_id_wrapper" class="small field">
         <label>Transaction Pull Reason</label>
-        <div id="slip_pull_reason_id_dropdown" class="ui selection dropdown slip-dropdown">
+        <div id="slip_pull_reason_id_dropdown" class="ui search selection dropdown slip-dropdown">
             <input type="hidden" id="slip_pull_reason_id" class="slip-field">
             <div class="default text">Choose a reason</div>
             <i class="dropdown icon"></i>
@@ -92,7 +92,7 @@
     </div>                 
     <div id="exception_id_wrapper" class="small field">    
         <label>Other Exceptions</label>
-        <div id="exception_id_dropdown" class="ui selection dropdown slip-dropdown">
+        <div id="exception_id_dropdown" class="ui search selection dropdown slip-dropdown">
             <input type="hidden" id="exception_id" class="slip-field">
             <div class="default text">Choose an exception</div>
             <i class="dropdown icon"></i>

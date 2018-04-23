@@ -462,7 +462,7 @@ function getPullReasons() {
             $(menuWrapper).empty();  
             $.each(data, function(i, pullReason) {
                 batchPullReasonMap.set(pullReason.id, pullReason); // Keep reference of bath pull reasons for verify
-                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + ' - ' + pullReason.reason + '</div>').appendTo(menuWrapper);                             
+                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.on_display + '</div>').appendTo(menuWrapper);                             
             });
             $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
         }                
@@ -483,7 +483,7 @@ function getPullReasons() {
             $(menuWrapper).empty(); 
             $.each(data, function(i, pullReason) {
                 slipPullReasonMap.set(pullReason.id, pullReason); // Keep reference of slip pull reasons for verify
-                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.title + (pullReason.reason != null ? ' - ' + pullReason.reason : '') + '</div>').appendTo(menuWrapper);                    
+                $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.on_display + '</div>').appendTo(menuWrapper);                    
             });
             $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
         }                

@@ -8,28 +8,28 @@ class PullReason extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(type="integer", length=3, nullable=false)
+     * @Column(column="id", type="integer", length=3, nullable=false)
      */
     public $id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=45, nullable=false)
+     * @Column(column="on_display", type="string", length=100, nullable=false)
      */
-    public $title;
+    public $on_display;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=100, nullable=true)
+     * @Column(column="on_report", type="string", length=100, nullable=false)
      */
-    public $reason;
+    public $on_report;
 
     /**
      *
      * @var string
-     * @Column(type="string", nullable=false)
+     * @Column(column="level", type="string", nullable=false)
      */
     public $level;
 
@@ -40,6 +40,8 @@ class PullReason extends \Phalcon\Mvc\Model
     {
         $this->setSchema("gpap");
         $this->setSource("pull_reason");
+        $this->hasMany('id', 'MerchantHeader', 'batch_pull_reason_id', ['alias' => 'MerchantHeader']);
+        $this->hasMany('id', 'Transaction', 'slip_pull_reason_id', ['alias' => 'Transaction']);
     }
 
     /**

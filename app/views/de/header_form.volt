@@ -22,7 +22,7 @@
     <div class="equal width small fields">
         <div id="currency_id_wrapper" class="required field">
             <label>Currency Code</label>                        
-            <div id="currency_id_dropdown" class="ui selection dropdown header-dropdown">
+            <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
                 <input id="currency_id" type="hidden" class="header-field">
                 <div class="default text">Choose a code</div>
                 <i class="dropdown icon"></i>
@@ -58,7 +58,7 @@
     </div>    
     <div id="batch_pull_reason_id_wrapper" class="small field">
         <label>Batch Pull Reason</label>
-        <div id="batch_pull_reason_id_dropdown" class="ui selection dropdown header-dropdown">
+        <div id="batch_pull_reason_id_dropdown" class="ui search selection dropdown header-dropdown">
             <input id="batch_pull_reason_id" type="hidden" class="header-field">
             <div class="default text">Choose a reason</div>
             <i class="dropdown icon"></i>
