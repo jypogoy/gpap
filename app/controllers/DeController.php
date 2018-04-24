@@ -84,7 +84,7 @@ class DeController extends ControllerBase
             $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . $task->name . ' on Batch ' .  $batchId . '.'); 
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
 
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
@@ -161,7 +161,7 @@ class DeController extends ControllerBase
             return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
     

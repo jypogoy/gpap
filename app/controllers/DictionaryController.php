@@ -17,7 +17,7 @@ class DictionaryController extends ControllerBase
             $this->response->send(); 
 
         } catch (\Exception $e) {
-            $this->exceptionLogger->error($e);
+            $this->errorLogger->error($e);
         }
     }
 
@@ -32,7 +32,7 @@ class DictionaryController extends ControllerBase
             $this->response->send(); 
 
         } catch (\Exception $e) {
-            $this->exceptionLogger->error($e);
+            $this->errorLogger->error($e);
         }
     }
 

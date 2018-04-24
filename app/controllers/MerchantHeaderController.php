@@ -27,7 +27,7 @@ class MerchantHeaderController extends ControllerBase
             $this->response->send();        
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -75,7 +75,7 @@ class MerchantHeaderController extends ControllerBase
             return $header->id;
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
     
@@ -109,7 +109,7 @@ class MerchantHeaderController extends ControllerBase
             echo $total > 0 ? true : false;    
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 }

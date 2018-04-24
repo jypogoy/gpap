@@ -21,7 +21,7 @@ class UserTaskController extends ControllerBase
             echo $this->view->partial('home/user_tasks_selection', [ 'userTasks' => $userTasks ]);
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 

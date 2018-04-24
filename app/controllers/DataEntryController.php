@@ -28,7 +28,7 @@ class DataEntryController extends ControllerBase
             echo $this->view->partial('home/user_de_list', [ 'entries' => $entries ]);  
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -50,7 +50,7 @@ class DataEntryController extends ControllerBase
             $this->response->send();      
 
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
@@ -71,7 +71,7 @@ class DataEntryController extends ControllerBase
             $this->response->send();
         
         } catch (\Exception $e) {            
-            $this->exceptionLogger->error(parent::_constExceptionMessage($e));
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
 
