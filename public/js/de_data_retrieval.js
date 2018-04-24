@@ -174,12 +174,13 @@ function getMerchantInfo(merchant_number) {
             // Perform merchant specific validations.
             var wrapper = $('#merchant_number_wrapper');
             var alert = $('#merchant_number_alert');
-            if (merchantInfoMap.get('merchantStatus') == 'O' || merchantInfoMap.get('merchantStatus') == 'R') {
+            if (merchantInfoMap.get('merchantStatus') !== 'O') {
                 $(alert).remove();
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
-                        '<span id="merchant_number_msg">Invalid Merchant: ' + (merchantInfoMap.get('merchantStatus') == 'O' ? 'Open status' : 'Re-open status') + '</span>' +
+                        '<span id="merchant_number_msg">Invalid Merchant: In ' + merchantInfoMap.get('merchantStatus') + ' Status</span>' +
                         '</div>');
+                $('#merchant_number').select(); 
                 //toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
             } else {
                 $(alert).remove();
@@ -215,6 +216,10 @@ function getMerchantInfo(merchant_number) {
             if (merchantInfoMap.get('acceptVisa') == 'Y') {
                 merchantAcceptedCards.push('Visa');
             }
+
+            if (merchantInfoMap.get('acceptDiscover') == 'Y') {
+                merchantAcceptedCards.push('Discover');
+            }
         }
         d.resolve(merchantData);
     });
@@ -229,14 +234,14 @@ function getRegionCurrency() {
         } else {
             var menuWrapper = $('#currency_id_dropdown .menu');
             $(menuWrapper).empty();
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
             $.each(data, function(i, currency) {
                 currencyMap.set(currency.id, currency); // Keep reference of currencies for verify
-                $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
+                $('<div class="item" data-value="' + currency.id + '">' + currency.alpha_code + ' (' + currency.num_code + ')</div>').appendTo(menuWrapper);
             });
             if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
                 $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);              
-            }
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+            }            
         }                
     })
     .done(function (msg) {
@@ -280,11 +285,11 @@ function getContents1(lastCompletedEntry, existingHeader) {
                             var menuWrapper = $('#currency_id_dropdown .menu');
                             $(menuWrapper).empty();
                             
+                            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
                             $.each(currencyData, function(i, currency) {
                                 $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
                             });
-                            $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper); 
-                            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+                            $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);                             
 
                             // Reinstantiate the currency dropdown to apply changes. See de_form_events.js for similar code                
                             $('#currency_id_dropdown').dropdown({
@@ -460,11 +465,11 @@ function getPullReasons() {
         } else {
             var menuWrapper = $('#batch_pull_reason_id_dropdown .menu');
             $(menuWrapper).empty();  
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
             $.each(data, function(i, pullReason) {
                 batchPullReasonMap.set(pullReason.id, pullReason); // Keep reference of bath pull reasons for verify
                 $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.on_display + '</div>').appendTo(menuWrapper);                             
-            });
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
+            });            
         }                
     })
     .done(function (msg) {
@@ -481,11 +486,11 @@ function getPullReasons() {
         } else {
             var menuWrapper = $('#slip_pull_reason_id_dropdown .menu');
             $(menuWrapper).empty(); 
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
             $.each(data, function(i, pullReason) {
                 slipPullReasonMap.set(pullReason.id, pullReason); // Keep reference of slip pull reasons for verify
                 $('<div class="item" data-value="' + pullReason.id + '">' + pullReason.on_display + '</div>').appendTo(menuWrapper);                    
-            });
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
+            });            
         }                
     })
     .done(function (msg) {
@@ -503,11 +508,11 @@ function getExceptions() {
         } else {
             var menuWrapper = $('#exception_id_dropdown .menu');
             $(menuWrapper).empty();  
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
             $.each(data, function(i, exception) {
                 exceptionMap.set(exception.id, exception); // Keep reference of other exception for verify
                 $('<div class="item" data-value="' + exception.id + '">' + exception.title + '</div>').appendTo(menuWrapper);                             
-            });
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
+            });            
         }                
     })
     .done(function (msg) {
@@ -525,11 +530,11 @@ function getInstallmentMonths() {
         } else {
             var menuWrapper = $('#installment_months_id_dropdown .menu');
             $(menuWrapper).empty();  
+            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
             $.each(data, function(i, month) {
                 installMonthsMap.set(month.id, month); // Keep reference of installment months for verify
                 $('<div class="item" data-value="' + month.id + '">' + month.title + '</div>').appendTo(menuWrapper);                             
-            });
-            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper);
+            });            
         }                
     })
     .done(function (msg) {

@@ -27,7 +27,7 @@
             <label>Region</label>
             {{ text_field('region_code', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.zip.region_code, 'disabled': true) }}
         </div> 
-        <div id="transaction_date_wrapper" class="required hidden field">
+        <div id="transaction_date_wrapper" class="required field">
             <label>Transaction Date</label>
             <div class="ui calendar" id="transaction_date_cal">
                 <div class="ui input left icon">
@@ -53,7 +53,7 @@
             <label>Transaction Amount</label>
             {{ text_field('transaction_amount', 'maxlength': '9', 'class': 'slip-field balancing-enabled') }}
         </div>    
-        <div id="installment_months_id_wrapper" class="required field">    
+        <div id="installment_months_id_wrapper" class="field">    
             <label>Installment Months</label>
             <div id="installment_months_id_dropdown" class="ui search selection dropdown slip-dropdown">
                 <input type="hidden" id="installment_months_id" class="slip-field">

@@ -160,6 +160,13 @@ function refreshTransTypeDependentFields() {
         $('.airline-field').parent().addClass('hidden');
         $('.vi-field').parent().addClass('hidden');
     }
+
+    // Auth Code option in Credut and Airline Credit
+    if (option.indexOf('Credit') != -1) {
+        $('#authorization_code_wrapper').removeClass('required');
+    } else {
+        $('#authorization_code_wrapper').addClass('required');
+    }
 }
 
 function calculateAmount() {

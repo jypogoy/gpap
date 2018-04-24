@@ -60,7 +60,8 @@ class MerchantHeaderController extends ControllerBase
             $header->currency_id = $this->request->getPost('currency_id') == '' ? null : $this->request->getPost('currency_id');
             $header->other_currency = $this->request->getPost('other_currency') == '' ? null : $this->request->getPost('other_currency');
             $header->dcn = $this->request->getPost('dcn') == '' ? null : $this->request->getPost('dcn');
-            $header->deposit_date = $this->request->getPost('deposit_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('deposit_date');
+            //$header->deposit_date = $this->request->getPost('deposit_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('deposit_date');
+            $header->deposit_date = new \Phalcon\Db\RawValue("NOW()");
             $header->deposit_amount = $this->request->getPost('deposit_amount') == '' ? null : $this->request->getPost('deposit_amount');
             $header->batch_pull_reason_id = $this->request->getPost('batch_pull_reason_id') == '' ? null : $this->request->getPost('batch_pull_reason_id');
             
@@ -103,6 +104,38 @@ class MerchantHeaderController extends ControllerBase
                     WHERE m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
 
             $result = $this->db->query($sql, [$merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
+            $result = $result->fetchAll($result);
+           
+            $total = intval($result[0]['Total']);
+            echo $total > 0 ? true : false;    
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    public function getSameRegionDayAction()
+    {
+        $this->view->disable();
+
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        $dcn = $this->request->getPost('dcn');
+        $regionCode = $this->request->getPost('region_code');
+        $taskId = $this->request->getPost('task_id');
+
+        try {
+            $sql = 'SELECT COUNT(de.id) AS Total 
+                    FROM data_entry de 
+                    INNER JOIN merchant_header m ON m.data_entry_id = de.id 
+                    INNER JOIN task t ON t.id = de.task_id 
+                    INNER JOIN batch b ON b.id = m.batch_id 
+                    INNER JOIN zip z ON z.id = b.zip_id 
+                    WHERE m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?';
+
+            $result = $this->db->query($sql, [$dcn, $regionCode, $taskId]);
             $result = $result->fetchAll($result);
            
             $total = intval($result[0]['Total']);

@@ -51,47 +51,72 @@ $(function() {
     });
 
     $('#dcn').blur(function() {
-        padZero($(this));
+        //padZero($(this));
         var wrapper = $('#' + this.id + '_wrapper');       
-        if (this.value == '' || this.value == '0000000') {
-            // Reset formatting
+        if (this.value.length > 0) {
+            if (this.value.length < 7) {
+                // Reset formatting
+                $(wrapper).removeClass('error');
+                $('#' + this.id + '_alert').remove();
+                // Add formatting
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                        '<span id="' + this.id + '_msg">Invalid: Must be 7 chars long</span>' +
+                        '</div>');
+            } else {       
+                $(wrapper).removeClass('error');
+                $('#' + this.id + '_alert').remove();    
+                
+                var params = {};
+                params.merchant_number = $('#merchant_number').val();
+                params.dcn = $('#dcn').val();
+                params.deposit_amount =  $('#deposit_amount').val();
+                params.region_code = $('#region_code').val();
+                params.task_id = $('#session_task_id').val();            
+                
+                // Same DCN, same MID, same total amount within the same Region in the historical record
+                $.post('../merchant_header/getsame/', params, function (hasMatch) {   
+                    if (hasMatch) {
+                        $('#' + this.id + '_alert').remove();
+                        $(wrapper).addClass('error');
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Invalid: Same DCN, same MID, same total amount within the same Region in the historical record</span>' +
+                                '</div>');
+                    } else {
+                        $(wrapper).removeClass('error');
+                        $('#' + this.id + '_alert').remove();
+                    }
+                });          
+                
+                var params = {};
+                params.dcn = $('#dcn').val();
+                params.region_code = $('#region_code').val();
+                params.task_id = $('#session_task_id').val();     
+                console.log(params);
+                // Same DCN within the same Region on the same day
+                $.post('../merchant_header/getsameregionday/', params, function (hasMatch) {   
+                    console.log(hasMatch)
+                    if (hasMatch) {
+                        $('#' + this.id + '_alert').remove();
+                        $(wrapper).addClass('error');
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Invalid: Same DCN within the same Region on the same day</span>' +
+                                '</div>');
+                    } else {
+                        $(wrapper).removeClass('error');
+                        $('#' + this.id + '_alert').remove();
+                    }
+                });
+            }    
+        } else {
             $(wrapper).removeClass('error');
-            $('#' + this.id + '_alert').remove();
-            // Add formatting
-            $(wrapper).addClass('error');
-            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                    '<span id="' + this.id + '_msg">Invalid Batch DCN</span>' +
-                    '</div>');
-        } else {       
-            $(wrapper).removeClass('error');
-            $('#' + this.id + '_alert').remove();    
-            
-            var params = {};
-            params.merchant_number = $('#merchant_number').val();
-            params.dcn = $('#dcn').val();
-            params.deposit_amount =  $('#deposit_amount').val();
-            params.region_code = $('#region_code').val();
-            params.task_id = $('#session_task_id').val();
-            
-            $.post('../merchant_header/getsame/', params, function (hasMatch) {   
-                console.log(hasMatch)
-                if (hasMatch) {
-                    $('#' + this.id + '_alert').remove();
-                    $(wrapper).addClass('error');
-                    $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            '<span id="' + this.id + '_msg">Invalid Batch DCN</span>' +
-                            '</div>');
-                } else {
-                    $(wrapper).removeClass('error');
-                    $('#' + this.id + '_alert').remove();
-                }
-            });
-        }    
+            $('#' + this.id + '_alert').remove();   
+        }
     });   
     
-    $('#dcn').keyup(function() {
-        this.value = this.value.replace(/[^0-9]/, '');
-    }); 
+    // $('#dcn').keyup(function() {
+    //     this.value = this.value.replace(/[^0-9]/, '');
+    // }); 
 
     $('#deposit_date').blur(function() {
         if (this.value != '') $('#deposit_date_wrapper').removeClass('error');
@@ -209,6 +234,18 @@ $(function() {
                         }
                         $(logo).attr('src', '../public/img/card/cup.png')
                         break;     
+
+                    case 'Discover':
+                        if ($.inArray('Discover', merchantAcceptedCards) < 0) {
+                            //toastr.info('Merchant does not accept Discover.');  
+                            $(alert).remove();
+                            $(wrapper).addClass('error');
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                    '<span id="' + this.id + '_msg">Merchant does not accept Discover</span>' +
+                                    '</div>');
+                        }
+                        $(logo).attr('src', '../public/img/card/discover.png')
+                        break;      
                 
                     default:
                         if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
