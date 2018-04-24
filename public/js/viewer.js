@@ -7,7 +7,21 @@ var imageOrigSize;
 
 $(function () {                  
     
-    renderImages();            
+    $('.command').draggable();
+    $('.command').mousedown(function(e) { // Replace mouse pointers
+        $('.command').css({ 'cursor' : 'move' });
+        $(this).mousemove(function(e) {
+            // Do nothing.
+        }).mouseup(function(e) {
+            $('.command').off('mousemove');
+        });
+    }).mouseup(function(e) {
+        $('.command').css({ 'cursor' : 'default' });
+    });    
+
+    $('#firstBtn').click(function() {
+        navFirstImage();
+    });
 
     $('#prevBtn').click(function() {
         navPrevImage();
@@ -15,6 +29,10 @@ $(function () {
 
     $('#nextBtn').click(function() {
         navNextImage();
+    });
+
+    $('#lastBtn').click(function() {
+        navLastImage();
     });
 
     $('#restoreBtn').on('click' , function() {
@@ -92,8 +110,125 @@ $(function () {
 
     $('.dropdown').dropdown();
 
-    $('.loader').fadeOut();
+    getBatchImages().then(function(images) {
+        imgArray = images;
+
+        // Build the page selection if image count is more that 1.
+        if (imgArray.length > 1) {
+            var pSelectorEl = '<select id="pageSelector">';
+            for (let i = 0; i < imgArray.length; i++) {
+                pSelectorEl = pSelectorEl + '<option value="' + (i + 1) + '">' + (i + 1) + '</option>';
+            }                                                    
+            pSelectorEl = pSelectorEl + '</select>';
+            $('#currentPage').html(pSelectorEl);
+        }
+
+        renderImages();  
+        $('.loader').fadeOut();
+
+        $('#pageSelector').change(function() {
+            imgNavIndex = $(this).find(':selected').val() - 1;     
+            renderImages();    
+        });
+    });            
+
 });
+
+function getBatchImages() {
+    var d = $.Deferred();
+
+    $.post('../image/list/' + $('#batch_id').val(), function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any image.');
+        } else { 
+            d.resolve(data);
+        }
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+
+    return d.promise();
+}
+
+var prevContext;
+function renderImages() {
+    
+    // Trap exceeding previous page click.
+    if (imgNavIndex < 0) {
+        imgNavIndex = 0;
+        setCurrentPage();
+    }
+
+    if (imgNavIndex >= 0) {
+        // Trap exceeding next page click.
+        if (imgNavIndex > (imgArray.length - 1)) {
+            imgNavIndex = imgArray.length - 1;
+            setCurrentPage();
+        }
+
+        imgActive = imgArray[imgNavIndex].path; // Render the first image, usually the header
+        
+        var xhr = createCORSRequest('GET', imgServer + imgActive);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function (e) {                  
+            $('.filename').empty();
+            $('.filename').append(imgActive); // Display the relative file path
+            $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
+            
+            if(imgNavIndex <= 0) {
+                $('#firstBtn').addClass('disabled');
+                $('#prevBtn').addClass('disabled');
+                $('#nextBtn').removeClass('disabled');
+                $('#lastBtn').removeClass('disabled');
+            } else if(imgNavIndex < (imgArray.length - 1)) {
+                $('#firstBtn').removeClass('disabled');
+                $('#prevBtn').removeClass('disabled');
+                $('#nextBtn').removeClass('disabled');
+                $('#lastBtn').removeClass('disabled');
+            }
+            
+            if(imgNavIndex == (imgArray.length - 1)) {
+                $('#firstBtn').removeClass('disabled');
+                $('#prevBtn').removeClass('disabled');
+                $('#nextBtn').addClass('disabled');
+                $('#lastBtn').addClass('disabled');                 
+            }
+            
+            if(xhr.status == 404)  {
+                toastr.error('Image ' +  imgActive + ' does not exists!');
+                var canvasEl = $('canvas')[0];
+                if (canvasEl)  $(canvasEl).remove();
+                return;
+            } 
+            
+            var tiff = new Tiff({ buffer: this.response });
+            var canvas = tiff.toCanvas();                            
+            var context = canvas.getContext('2d');            
+
+            var canvasEl = $('canvas')[0];
+            if (canvasEl) $(canvasEl).remove();
+
+            $('#viewer').append(canvas);                
+                        
+            $('canvas').width($('canvas').width() / 2);       
+            $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
+            $('canvas').mousedown(function(e) { // Replace mouse pointers
+                $('canvas').css({ 'cursor' : 'move' });
+                $(this).mousemove(function(e) {
+                    // Do nothing.
+                }).mouseup(function(e) {
+                    $('canvas').off('mousemove');
+                });
+            }).mouseup(function(e) {
+                $('canvas').css({ 'cursor' : 'default' });
+            });
+            
+            imageOrigSize = $('canvas').width();
+        };
+        xhr.send();
+    }      
+}
 
 function renderImages1() {
     $.post('../image/list/' + $('#batch_id').val(), function (data) {
@@ -137,79 +272,10 @@ function renderImages1() {
     });
 }
 
-var prevContext;
-function renderImages() {
-    $.post('../image/list/' + $('#batch_id').val(), function (data) {
-        if (!data) {
-            toastr.warning('The search did not match any image.');
-        } else {
-            imgArray = data;
-            imgActive = imgArray[imgNavIndex].path; // Render the first image, usually the header
-        }                
-    })
-    .done(function (msg) {
-        if (msg.indexOf('undefined') != -1) {
-            toastr.error(msg);
-        } else {
-            var xhr = createCORSRequest('GET', imgServer + imgActive);
-            //var xhr = createCORSRequest('GET', '../image/get');
-            xhr.responseType = 'arraybuffer';
-            xhr.onload = function (e) {                  
-                // var uInt8Array = new Uint8Array(this.response);
-                // console.log(uInt8Array)
-                
-                $('.filename').empty();
-                $('.filename').append(imgActive); // Display the relative file path
-                $('#lastPage').html(imgArray.length > 1 ? imgArray.length : 1);
-                
-                if(imgNavIndex == 0) {
-                    $('#prevBtn').addClass('disabled');
-                    $('#nextBtn').removeClass('disabled');
-                }
-
-                if(imgNavIndex == (imgArray.length - 1)) {
-                    $('#nextBtn').addClass('disabled');
-                    $('#prevBtn').removeClass('disabled');
-                }
-                
-                if(xhr.status == 404)  {
-                    toastr.error('Image ' +  imgActive + ' does not exists!');
-                    return;
-                } 
-                
-                var tiff = new Tiff({ buffer: this.response });
-                var canvas = tiff.toCanvas();                            
-                var context = canvas.getContext('2d');            
-
-                var canvasEl = $('canvas')[0];
-                if (canvasEl) { 
-                    $(canvasEl).remove();
-                }
-
-                $('#viewer').append(canvas);                
-                            
-                $('canvas').width($('canvas').width() / 2);       
-                $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
-                $('canvas').mousedown(function(e) { // Replace mouse pointers
-                    $('canvas').css({ 'cursor' : 'move' });
-                    $(this).mousemove(function(e) {
-                        // Do nothing.
-                    }).mouseup(function(e) {
-                        $('canvas').off('mousemove');
-                    });
-                }).mouseup(function(e) {
-                    $('canvas').css({ 'cursor' : 'default' });
-                });
-                
-                imageOrigSize = $('canvas').width();
-            };
-            xhr.send();        
-        }
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-
+function navFirstImage() {
+    imgNavIndex = 0;     
+    setCurrentPage();
+    renderImages();    
 }
 
 function navPrevImage() {
@@ -224,9 +290,16 @@ function navNextImage() {
     renderImages();    
 }
 
+function navLastImage() {
+    imgNavIndex = imgArray.length - 1;    
+    setCurrentPage();
+    renderImages();    
+}
+
 function setCurrentPage() {
-    $('#currentPage').empty();
-    $('#currentPage').html(imgNavIndex + 1);
+    $('#pageSelector option[value=' + (imgNavIndex + 1) + ']').prop('selected', true);
+    // $('#currentPage').empty();
+    // $('#currentPage').html(imgNavIndex + 1);    
 }
 
 function performRotate(degree) {

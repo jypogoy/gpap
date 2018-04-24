@@ -37,7 +37,7 @@
             </div>
         </div>      
         <div id="deposit_amount_wrapper" class="required field">
-            <label>Deposit Amount</label>
+            <label>Deposit Amt</label>
             {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
         </div>                                             
     </div>    
@@ -56,7 +56,7 @@
             </div>
         </div>#} 
         <div id="batch_pull_reason_id_wrapper" class="twelve wide field">
-            <label>Batch Pull Reason</label>
+            <label>Pull Reason</label>
             <div id="batch_pull_reason_id_dropdown" class="ui search selection dropdown header-dropdown">
                 <input id="batch_pull_reason_id" type="hidden" class="header-field">
                 <div class="default text">Choose a reason</div>

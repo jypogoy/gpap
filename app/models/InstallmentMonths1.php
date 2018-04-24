@@ -8,30 +8,16 @@ class InstallmentMonths extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(column="id", type="integer", length=2, nullable=false)
+     * @Column(type="integer", length=2, nullable=false)
      */
     public $id;
 
     /**
      *
      * @var string
-     * @Column(column="on_display", type="string", length=45, nullable=false)
+     * @Column(type="string", length=45, nullable=false)
      */
-    public $on_display;
-
-    /**
-     *
-     * @var string
-     * @Column(column="on_report", type="string", length=45, nullable=false)
-     */
-    public $on_report;
-
-    /**
-     *
-     * @var string
-     * @Column(column="charge_type", type="string", length=45, nullable=false)
-     */
-    public $charge_type;
+    public $title;
 
     /**
      * Initialize method for model.

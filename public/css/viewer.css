@@ -11,13 +11,15 @@
 	position : absolute;
 	z-index : 10;
 	top : 20px;
-    right : 30px;
+    right : 40px;
+    width : 516px;
     background-color: beige !important;
 }
 
 .command > .button {
     z-index : 100;
     opacity: 0.8;
+    pointer-events: auto;
 }
 
 .command > .button > i {

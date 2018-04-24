@@ -2,9 +2,14 @@
 <div class="ui large label filename"></div>
 <div class="command">           
     <div class="ui small basic icon buttons">
+        <button id="firstBtn" class="ui disabled button" data-tooltip="First" data-position="bottom center"><i class="arrow left icon"></i></button>
         <button id="prevBtn" class="ui disabled button" data-tooltip="Previous" data-position="bottom center"><i class="chevron left icon"></i></button>
-        <div class="ui large label">Page <span id="currentPage">1</span> of <span id="lastPage">...</span></div>
+        <div class="ui large label">
+            Page 
+            <span id="currentPage">1</span> 
+            of <span id="lastPage">...</span></div>
         <button id="nextBtn" class="ui disabled button" data-tooltip="Next" data-position="bottom center"><i class="chevron right icon"></i></button>
+        <button id="lastBtn" class="ui disabled button" data-tooltip="Last" data-position="bottom center"><i class="arrow right icon"></i></button>
         <button id="restoreBtn" class="ui button" data-tooltip="Full View" data-position="bottom center"><i class="maximize icon"></i></button>
         <button id="rotateLeftBtn" class="ui button" data-tooltip="Rotate Left" data-position="bottom center"><i class="undo icon"></i></button>
         <button id="rotateRightBtn" class="ui button" data-tooltip="Rotate Right" data-position="bottom center"><i class="repeat icon"></i></button>
