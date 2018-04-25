@@ -20,6 +20,10 @@
         {{ text_field('merchant_name', 'class': 'header-field', 'disabled' : true) }}
     </div>  
     <div class="equal width small fields">
+        <div id="dcn_wrapper" class="required field">
+            <label>DCN</label>
+            {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
+        </div> 
         <div id="currency_id_wrapper" class="required field">
             <label>Currency Code</label>                        
             <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
@@ -37,13 +41,9 @@
             </div>
         </div>      
         <div id="deposit_amount_wrapper" class="required field">
-            <label>Deposit Amt</label>
+            <label>Batch Amt</label>
             {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
-        </div> 
-        <div id="dcn_wrapper" class="required field">
-            <label>DCN</label>
-            {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
-        </div>                                              
+        </div>                                                      
     </div>    
         
     {#<div id="deposit_date_wrapper" class="required field">

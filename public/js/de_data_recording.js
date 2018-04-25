@@ -1,4 +1,4 @@
-function saveBatch(isSaveNew, isComplete) {
+function saveBatch(isSaveOnly, isSaveNew, isComplete) {
 
     saveSlip(); // Save the current content. See de_data_navigation.js   
 
@@ -27,17 +27,20 @@ function saveBatch(isSaveNew, isComplete) {
                                             getNewBatch();
                                         } else {
                                             window.location = '../de/redirectsuccess/' + false;
-                                        }       
+                                        }   
                                     } else {
                                         toastr.error('Unable to complete the this batch.');
                                     }       
                                 });
                             } else {
-                                if (isSaveNew) {
-                                    getNewBatch();
+                                if (isSaveOnly) {
+                                    toastr.success('Batch was saved successfully.'); 
                                 } else {
-                                    window.location = '../home';
-                                    //window.location = '../de/redirectsuccess/' + true;
+                                    if (isSaveNew) {
+                                        getNewBatch();
+                                    } else {
+                                        window.location = '../de/redirectsuccess/' + true;
+                                    }
                                 }
                             }   
                         }

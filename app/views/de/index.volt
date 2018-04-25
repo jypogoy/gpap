@@ -27,10 +27,11 @@
             {% include 'de/summary_form.volt' %}
 
             <div style="margin-top: 10px;">
-                <button class="ui small blue button complete-next-btn" data-tooltip="Complete Order and process another" data-position="top center">Comp/Next</button>                 
-                <button class="ui small blue button complete-exit-btn" data-tooltip="Complete Order and exit to Home Page" data-position="top center">Comp/Exit</button>                                                  
-                <button class="ui small green button save-next-btn" data-tooltip="Save changes and process another" data-position="top center">Save/Next</button>
-                <button class="ui small green button save-exit-btn" data-tooltip="Save changes and exit to Home Page" data-position="top center">Save/Exit</button>
+                <button class="ui small teal button save-btn" data-tooltip="Save current entries without exiting [Ctrl+1]" data-position="top left">Save</button>                 
+                <button class="ui small blue button complete-next-btn" data-tooltip="Complete Order and process another [Ctrl+2]" data-position="top center">Comp/Next</button>                 
+                <button class="ui small blue button complete-exit-btn" data-tooltip="Complete Order and exit to Home Page [Ctrl+3]" data-position="top center">Comp/Exit</button>                                                  
+                <button class="ui small green button save-next-btn" data-tooltip="Save changes and process another [Ctrl+4]" data-position="top center">Save/Next</button>
+                <button class="ui small green button save-exit-btn" data-tooltip="Save changes and exit to Home Page [Ctrl+5]" data-position="top center">Save/Exit</button>
                 {#<div style="margin: 5px 0 0 0; float: right;">                        
                     <a href="/gpap" class="ui small button">Exit</a>
                 </div>#}

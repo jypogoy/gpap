@@ -1,9 +1,18 @@
+.operator {
+    position : absolute;
+	z-index : 10;
+	top : 20px;
+    left : 18px;
+    /* opacity: 0.5; */
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
 .filename {
     position : absolute;
 	z-index : 10;
 	bottom : 55px;
-    right : 30px;
-    opacity: 0.5;
+    right : 38px;
+    /* opacity: 0.5; */
     filter: alpha(opacity=50); /* For IE8 and earlier */
 }
 
@@ -11,8 +20,8 @@
 	position : absolute;
 	z-index : 10;
 	top : 20px;
-    right : 40px;
-    width : 516px;
+    right : 50px;
+    width : 525px;
     background-color: beige !important;
 }
 

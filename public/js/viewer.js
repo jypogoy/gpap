@@ -5,8 +5,7 @@ var imgNavIndex = 0;
 var degree = 0;
 var imageOrigSize; 
 
-$(function () {                  
-    
+$(function () {                      
     $('.command').draggable();
     $('.command').mousedown(function(e) { // Replace mouse pointers
         $('.command').css({ 'cursor' : 'move' });

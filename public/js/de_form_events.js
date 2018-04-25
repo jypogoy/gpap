@@ -383,23 +383,28 @@ $(function() {
     });    
 
     //------------- Form Control Events ---------------------------------
-    $('.complete-exit-btn').click(function(e) {
+    $('.save-btn').click(function(e) {
         e.preventDefault();
-        preSave(false, true);
-    });
+        preSave(true, false, false);
+    });        
 
     $('.complete-next-btn').click(function(e) {
         e.preventDefault();
-        preSave(true, true);
-    });
-    
-    $('.save-exit-btn').click(function(e) {
+        preSave(false, true, true);
+    });    
+
+    $('.complete-exit-btn').click(function(e) {
         e.preventDefault();
-        preSave(false, false);
+        preSave(false, false, true);
     });
 
     $('.save-next-btn').click(function(e) {
-        preSave(true, false);
+        preSave(false, true, false);
+    });
+
+    $('.save-exit-btn').click(function(e) {
+        e.preventDefault();
+        preSave(false, false, false);
     });
 });
 
@@ -424,6 +429,11 @@ function addNewSlip() {
         $(slipRequiredFields).addClass('required');
         $('#other_exception_detail_wrapper').addClass('hidden');
         $('#transaction_date').focus();
+
+        $('.slip-image').html('');
+        $('.link-slip-btn').removeClass('hidden');
+        $('#image_id').val('');
+        $('.unlink-slip-btn').addClass('hidden');
     } 
 }
 
@@ -554,19 +564,19 @@ function clearForm() {
 function linkSlip() {
     var fileName = imgArray[imgNavIndex].path.match(/[^/]*$/g)[0];
     $('.slip-image').html(fileName);
-    $('.unlink-slip-btn').removeClass('hidden');
     $('#image_id').val(imgArray[imgNavIndex].id);
+    $('.unlink-slip-btn').removeClass('hidden');    
     $('.link-slip-btn').addClass('hidden');     
 }
 
 function unlinkSlip() {
     $('.slip-image').html('');
-    $('.link-slip-btn').removeClass('hidden');
     $('#image_id').val('');
+    $('.link-slip-btn').removeClass('hidden');    
     $('.unlink-slip-btn').addClass('hidden');
 }
 
-function preSave(isSaveNew, isComplete) {
+function preSave(isSaveOnly, isSaveNew, isComplete) {
     var headerValidationResult = Form.validate(true);        
     var slipValidationResult = true;
     if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
@@ -581,17 +591,30 @@ function preSave(isSaveNew, isComplete) {
                 .modal({
                     inverted : true,
                     closable : true,
+                    autofocus: false,
                     observeChanges : true, // <-- Helps retain the modal position on succeeding show.
                     onDeny : function(){
                         // Do nothing
                     },
                     onApprove : function() {
-                        saveBatch(isSaveNew, true); // See de_data_recording.js
+                        saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
                     }
                 })
                 .modal('show');
+
+                $(document).on('keyup keypress', function(e) {                    
+                    var keyCode = e.keyCode || e.which;
+                    if (keyCode === 13) { 
+                        e.preventDefault();
+                        if($('.active.modal')) {
+                            saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+                            $('.active.modal').modal('hide');
+                        }                           
+                    }
+                });
+
             } else {
-                saveBatch(isSaveNew, false); // See de_data_recording.js
+                saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
             }            
         }            
     }
