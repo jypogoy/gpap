@@ -196,7 +196,7 @@ function renderImages() {
             }
             
             if(xhr.status == 404)  {
-                toastr.error('Image ' +  imgActive + ' does not exists!');
+                toastr.error('Image ' +  (imgActive !== 'undefined' ? imgActive : '') + ' does not exists!');
                 var canvasEl = $('canvas')[0];
                 if (canvasEl)  $(canvasEl).remove();
                 return;
@@ -211,7 +211,8 @@ function renderImages() {
 
             $('#viewer').append(canvas);                
                         
-            $('canvas').width($('canvas').width() / 2);       
+            //$('canvas').width($('canvas').width() / 2);       
+            $('canvas').width($('#viewer').width() - 50);
             $('canvas').draggable({ scroll: true }); // Make the canvas draggable. See jqueryui
             $('canvas').mousedown(function(e) { // Replace mouse pointers
                 $('canvas').css({ 'cursor' : 'move' });

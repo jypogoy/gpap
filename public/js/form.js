@@ -44,6 +44,7 @@ var Form = {
         var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
         $('#' + formId).find('*').removeClass('error');
         $('#' + formId).find('.prompt').removeClass('visible');
+        $('#' + formId).find('.prompt').addClass('hidden');
     },
     setFocusOnError: function() {
         $('.error').find('input:text, input:password, textarea').first().focus();

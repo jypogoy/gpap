@@ -25,7 +25,7 @@ function navigate(direction) {
         saveSlip(); // Make sure to save the current slip.
 
         if (direction == 'next') {
-            if (slipPage <= slipMap.count()) slipPage++;      
+            if (slipPage < slipMap.count()) slipPage++;      
             if (slipPage == slipMap.count()) {
                 $('.next-slip-btn').addClass('disabled'); 
                 $('.last-slip-btn').addClass('disabled'); 
@@ -165,7 +165,8 @@ function refreshTransTypeDependentFields() {
     if (option.indexOf('Credit') != -1) {
         $('#authorization_code_wrapper').removeClass('required');
     } else {
-        $('#authorization_code_wrapper').addClass('required');
+        var pullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
+        if (!pullReasonId) $('#authorization_code_wrapper').addClass('required');
     }
 }
 

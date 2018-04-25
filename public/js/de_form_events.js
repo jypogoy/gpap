@@ -13,6 +13,8 @@ $(function() {
         if (keyCode === 13 && $(this).val().length > 0) { 
             getMerchantInfo($(this).val()); // See de_data_retrieval.js
             padZero($(this));
+            $('#card_number_alert').remove();
+            $('#card_number_wrapper').removeClass('error');
         }
         this.value = this.value.replace(/[^0-9]/, '');
     });
@@ -61,7 +63,7 @@ $(function() {
                 // Add formatting
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                        '<span id="' + this.id + '_msg">Invalid: Must be 7 chars long</span>' +
+                        '<span id="' + this.id + '_msg">Must be 7 chars long</span>' +
                         '</div>');
             } else {       
                 $(wrapper).removeClass('error');
@@ -162,102 +164,112 @@ $(function() {
         var alert = $('#' + this.id + '_alert');
         var msg = $('#' + this.id + '_msg');
         var logo = $('#cardLogo');
-        if (!validateCard($(this).val())) { // See utils.js
+        if ($('#merchant_number').val() == '') {
             $(alert).remove();
             $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                    '<span id="' + this.id + '_msg">Invalid Credit Card number</span>' +
+                    '<span id="' + this.id + '_msg">Merchant required</span>' +
                     '</div>');
-            $(logo).attr('src', '../public/img/card/private.png')
+            $(this).val('');
+            $('#merchant_number').focus();
         } else {
-            $(wrapper).removeClass('error');       
-            $(alert).remove();
-            var cardType = getCardType($(this).val());
-            if (this.value.trim() != '') {
-                switch (cardType) {
-                    case 'Visa':
-                        if ($.inArray('Visa', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept Visa.');
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept Visa</span>' +
-                                    '</div>');
-                        }   
-                        $(logo).attr('src', '../public/img/card/visa.png')
-                        break;
-                    
-                    case 'Mastercard':
-                        if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept Mastercard.'); 
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept Mastercard</span>' +
-                                    '</div>');  
-                        }
-                        $(logo).attr('src', '../public/img/card/mastercard.png')
-                        break;    
-
-                    case 'JCB':
-                        if ($.inArray('JCB', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept JCB.');  
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept JCB</span>' +
-                                    '</div>'); 
-                        }
-                        $(logo).attr('src', '../public/img/card/jcb.png')
-                        break;    
+            if (!validateCard($(this).val())) { // See utils.js
+                $(alert).remove();
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                        '<span id="' + this.id + '_msg">Invalid Credit Card number</span>' +
+                        '</div>');
+                $(logo).attr('src', '../public/img/card/private.png')
+            } else {
+                $(wrapper).removeClass('error');       
+                $(alert).remove();
+                var cardType = getCardType($(this).val());
+                if (this.value.trim() != '') {
+                    switch (cardType) {
+                        case 'Visa':
+                            if ($.inArray('Visa', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept Visa.');
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept Visa</span>' +
+                                        '</div>');
+                            }   
+                            $(logo).attr('src', '../public/img/card/visa.png')
+                            break;
                         
-                    case 'AMEX':
-                        if ($.inArray('Amex', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept AMEX.');  
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept AMEX</span>' +
-                                    '</div>');
-                        }
-                        $(logo).attr('src', '../public/img/card/amex.png')
-                        break;     
+                        case 'Mastercard':
+                            if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept Mastercard.'); 
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept Mastercard</span>' +
+                                        '</div>');  
+                            }
+                            $(logo).attr('src', '../public/img/card/mastercard.png')
+                            break;    
 
-                    case 'CUP':
-                        if ($.inArray('Amex', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept CUP.');  
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept CUP</span>' +
-                                    '</div>');
-                        }
-                        $(logo).attr('src', '../public/img/card/cup.png')
-                        break;     
+                        case 'JCB':
+                            if ($.inArray('JCB', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept JCB.');  
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept JCB</span>' +
+                                        '</div>'); 
+                            }
+                            $(logo).attr('src', '../public/img/card/jcb.png')
+                            break;    
+                            
+                        case 'AMEX':
+                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept AMEX.');  
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept AMEX</span>' +
+                                        '</div>');
+                            }
+                            $(logo).attr('src', '../public/img/card/amex.png')
+                            break;     
 
-                    case 'Discover':
-                        if ($.inArray('Discover', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept Discover.');  
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept Discover</span>' +
-                                    '</div>');
-                        }
-                        $(logo).attr('src', '../public/img/card/discover.png')
-                        break;      
-                
-                    default:
-                        if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
-                            //toastr.info('Merchant does not accept Private Label.');  
-                            $(alert).remove();
-                            $(wrapper).addClass('error');
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                    '<span id="' + this.id + '_msg">Merchant does not accept Private Label</span>' +
-                                    '</div>');
-                        }
-                        $(logo).attr('src', '../public/img/card/private.png')
-                        break;
+                        case 'CUP':
+                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept CUP.');  
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept CUP</span>' +
+                                        '</div>');
+                            }
+                            $(logo).attr('src', '../public/img/card/cup.png')
+                            break;     
+
+                        case 'Discover':
+                            if ($.inArray('Discover', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept Discover.');  
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept Discover</span>' +
+                                        '</div>');
+                            }
+                            $(logo).attr('src', '../public/img/card/discover.png')
+                            break;      
+                    
+                        default:
+                            if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
+                                //toastr.info('Merchant does not accept Private Label.');  
+                                $(alert).remove();
+                                $(wrapper).addClass('error');
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                        '<span id="' + this.id + '_msg">Merchant does not accept Private Label</span>' +
+                                        '</div>');
+                            }
+                            $(logo).attr('src', '../public/img/card/private.png')
+                            break;
+                    }
                 }
             }
         }
@@ -297,29 +309,8 @@ $(function() {
 
     //------------- Transaction Control Events ---------------------------------
     $('.more-btn').click(function(e) {
-        e.preventDefault();
-        
-        if (Form.validate(false)) {
-            saveSlip(); // Save the current content
-            Form.clear(false);        
-            
-            slipPage = slipMap.count() + 1;
-            saveSlip(); // Save a fresh entry
-            
-            $('#currentSlipPage').html(slipPage);        
-            $('#totalSlips').html(slipMap.count());
-            $('.first-slip-btn').removeClass('disabled');   
-            $('.prev-slip-btn').removeClass('disabled');   
-            $('.next-slip-btn').addClass('disabled');     
-            $('.last-slip-btn').addClass('disabled');
-            $('.insert-slip-btn').removeClass('disabled');
-            $('.delete-slip-btn').removeClass('disabled');                            
-
-            refreshTransTypeDependentFields();
-            $(slipRequiredFields).addClass('required');
-            $('#other_exception_detail_wrapper').addClass('hidden');
-            $('#transaction_date').focus();
-        }        
+        e.preventDefault();        
+        addNewSlip();       
     });
 
     $('.first-slip-btn').click(function(e) {
@@ -358,58 +349,135 @@ $(function() {
 
     $('.insert-slip-btn').click(function(e) {
         e.preventDefault();
-        
-        // Make sure to save the current slip to keep any changes prior to inserting.
-        saveSlip();
-        
-        // Keep copy of all left and right values of the current position.
-        var beforeMap = new HashMap();
-        var afterMap = new HashMap();
-        var afterKey = slipPage;
-        slipMap.forEach(function(value, key) {
-            if (key < slipPage) {
-                beforeMap.set(key, value);
-            }
-            if (key >= afterKey) {       
-                afterKey++; // Make sure add 1 to key immediately to signify next value.                 
-                afterMap.set(afterKey, value);                                        
-            }
-        });
-
-        // Clear all values.
-        slipMap.clear();
-                
-        // Rebuild left values
-        beforeMap.forEach(function(value, key) {
-            slipMap.set(key, value);
-        });        
-
-        // Rebuild right values
-        afterMap.forEach(function(value, key) {
-            slipMap.set(key, value);
-        });
-
-        // Insert a new value in the map using the new and current position.
-        saveSlip();
-        
-        $('#totalSlips').html(slipMap.count());
-
-        // Clear form and restore required field markers.
-        Form.clear(false);
-        $(slipRequiredFields).addClass('required');
-
-        $('.prev-slip-btn').removeClass('disabled'); 
-        $('.first-slip-btn').removeClass('disabled'); 
-        $('.next-slip-btn').removeClass('disabled'); 
-        $('.last-slip-btn').removeClass('disabled');         
-        $('.delete-slip-btn').removeClass('disabled'); 
-        
-        Form.setFocus(false);
+        insertSlip();                
     });
 
     $('.delete-slip-btn').click(function(e) {
         e.preventDefault();
-        $('.custom-text').html('<p>Are you sure you want to delete transaction <strong>' + slipPage + '</strong>? Click OK to proceed.</p>');    
+        deleteSlip();     
+    });
+
+    $('.reset-slip-btn').click(function(e) {
+        e.preventDefault();
+        clearForm();
+    });
+
+    $('.link-slip-btn').click(function(e) {
+        e.preventDefault();
+        linkSlip();   
+    });
+
+    $('.unlink-slip-btn').click(function(e) {
+        e.preventDefault();
+        unlinkSlip();
+    });
+
+    //------------- Summary Events ---------------------------------
+    $('#variance_exception').change(function() {
+        var batchId = $('#batch_id').val();
+        if (this.checked) {
+            setAsException(batchId, true); // See de_data_navigation.js
+        } else {
+            setAsException(batchId, false);
+        }
+    });    
+
+    //------------- Form Control Events ---------------------------------
+    $('.complete-exit-btn').click(function(e) {
+        e.preventDefault();
+        preSave(false, true);
+    });
+
+    $('.complete-next-btn').click(function(e) {
+        e.preventDefault();
+        preSave(true, true);
+    });
+    
+    $('.save-exit-btn').click(function(e) {
+        e.preventDefault();
+        preSave(false, false);
+    });
+
+    $('.save-next-btn').click(function(e) {
+        preSave(true, false);
+    });
+});
+
+function addNewSlip() {
+    if (Form.validate(false)) {
+        saveSlip(); // Save the current content
+        Form.clear(false);        
+        
+        slipPage = slipMap.count() + 1;
+        saveSlip(); // Save a fresh entry
+        
+        $('#currentSlipPage').html(slipPage);        
+        $('#totalSlips').html(slipMap.count());
+        $('.first-slip-btn').removeClass('disabled');   
+        $('.prev-slip-btn').removeClass('disabled');   
+        $('.next-slip-btn').addClass('disabled');     
+        $('.last-slip-btn').addClass('disabled');
+        $('.insert-slip-btn').removeClass('disabled');
+        $('.delete-slip-btn').removeClass('disabled');                            
+
+        refreshTransTypeDependentFields();
+        $(slipRequiredFields).addClass('required');
+        $('#other_exception_detail_wrapper').addClass('hidden');
+        $('#transaction_date').focus();
+    } 
+}
+
+function insertSlip() {
+    // Make sure to save the current slip to keep any changes prior to inserting.
+    saveSlip();
+        
+    // Keep copy of all left and right values of the current position.
+    var beforeMap = new HashMap();
+    var afterMap = new HashMap();
+    var afterKey = slipPage;
+    slipMap.forEach(function(value, key) {
+        if (key < slipPage) {
+            beforeMap.set(key, value);
+        }
+        if (key >= afterKey) {       
+            afterKey++; // Make sure add 1 to key immediately to signify next value.                 
+            afterMap.set(afterKey, value);                                        
+        }
+    });
+
+    // Clear all values.
+    slipMap.clear();
+            
+    // Rebuild left values
+    beforeMap.forEach(function(value, key) {
+        slipMap.set(key, value);
+    });        
+
+    // Rebuild right values
+    afterMap.forEach(function(value, key) {
+        slipMap.set(key, value);
+    });
+
+    // Insert a new value in the map using the new and current position.
+    saveSlip();
+    
+    $('#totalSlips').html(slipMap.count());
+
+    // Clear form and restore required field markers.
+    Form.clear(false);
+    $(slipRequiredFields).addClass('required');
+
+    $('.prev-slip-btn').removeClass('disabled'); 
+    $('.first-slip-btn').removeClass('disabled'); 
+    $('.next-slip-btn').removeClass('disabled'); 
+    $('.last-slip-btn').removeClass('disabled');         
+    $('.delete-slip-btn').removeClass('disabled'); 
+    
+    $('#transaction_date').focus();
+}
+
+function deleteSlip() {
+    $('.custom-text').html('<p>Are you sure you want to delete transaction <strong>' + slipPage + '</strong>? Click OK to proceed.</p>');    
         $('.ui.tiny.modal.delete')
         .modal({
             inverted : true,
@@ -474,63 +542,29 @@ $(function() {
                 //toastr.success('Transaction was deleted successfully.');                
             }
         })
-        .modal('show');        
-    });
+        .modal('show');   
+}
 
-    $('.reset-slip-btn').click(function(e) {
-        e.preventDefault();
-        Form.clear(false);
-        Form.resetErrors(false);
-        $(slipRequiredFields).addClass('required');
-    });
+function clearForm() {
+    Form.clear(false);
+    Form.resetErrors(false);
+    $(slipRequiredFields).addClass('required');
+}
 
-    $('.link-slip-btn').click(function(e) {
-        e.preventDefault();
-        var fileName = imgArray[imgNavIndex].path.match(/[^/]*$/g)[0];
-        $('.slip-image').html(fileName);
-        $('.unlink-slip-btn').removeClass('hidden');
-        $('#image_id').val(imgArray[imgNavIndex].id);
-        $(this).addClass('hidden');        
-    });
+function linkSlip() {
+    var fileName = imgArray[imgNavIndex].path.match(/[^/]*$/g)[0];
+    $('.slip-image').html(fileName);
+    $('.unlink-slip-btn').removeClass('hidden');
+    $('#image_id').val(imgArray[imgNavIndex].id);
+    $('.link-slip-btn').addClass('hidden');     
+}
 
-    $('.unlink-slip-btn').click(function(e) {
-        e.preventDefault();
-        $('.slip-image').html('');
-        $('.link-slip-btn').removeClass('hidden');
-        $('#image_id').val('');
-        $(this).addClass('hidden');
-    });
-
-    //------------- Summary Events ---------------------------------
-    $('#variance_exception').change(function() {
-        var batchId = $('#batch_id').val();
-        if (this.checked) {
-            setAsException(batchId, true); // See de_data_navigation.js
-        } else {
-            setAsException(batchId, false);
-        }
-    });    
-
-    //------------- Form Control Events ---------------------------------
-    $('.complete-exit-btn').click(function(e) {
-        e.preventDefault();
-        preSave(false, true);
-    });
-
-    $('.complete-next-btn').click(function(e) {
-        e.preventDefault();
-        preSave(true, true);
-    });
-    
-    $('.save-exit-btn').click(function(e) {
-        e.preventDefault();
-        preSave(false, false);
-    });
-
-    $('.save-next-btn').click(function(e) {
-        preSave(true, false);
-    });
-});
+function unlinkSlip() {
+    $('.slip-image').html('');
+    $('.link-slip-btn').removeClass('hidden');
+    $('#image_id').val('');
+    $('.unlink-slip-btn').addClass('hidden');
+}
 
 function preSave(isSaveNew, isComplete) {
     var headerValidationResult = Form.validate(true);        

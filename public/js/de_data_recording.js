@@ -15,37 +15,39 @@ function saveBatch(isSaveNew, isComplete) {
                     .done(function(isSuccess) {
                         if (!isSuccess) {
                             toastr.error('Unable to record transactions.');
+                        } else {
+                            if (isComplete) {
+                                var data = {};
+                                data.entry_id = $('#data_entry_id').val();
+                                data.batch_id = $('#batch_id').val();
+                                $.post('../de/complete/', data,function (msg) {  
+                                    if (msg.indexOf('success') != -1) {                                               
+                                        toastr.success(msg);  
+                                        if (isSaveNew) {
+                                            getNewBatch();
+                                        } else {
+                                            window.location = '../de/redirectsuccess/' + false;
+                                        }       
+                                    } else {
+                                        toastr.error('Unable to complete the this batch.');
+                                    }       
+                                });
+                            } else {
+                                if (isSaveNew) {
+                                    getNewBatch();
+                                } else {
+                                    window.location = '../home';
+                                    //window.location = '../de/redirectsuccess/' + true;
+                                }
+                            }   
                         }
+                        
                     });
                 } else {
                     toastr.error('Unable to clear previous recorded transactions.');
                 }
             });
-        }
-
-        if (isComplete) {
-            var data = {};
-            data.entry_id = $('#data_entry_id').val();
-            data.batch_id = $('#batch_id').val();
-            $.post('../de/complete/', data,function (msg) {  
-                if (msg.indexOf('success') != -1) {                                               
-                    toastr.success(msg);  
-                    if (isSaveNew) {
-                        getNewBatch();
-                    } else {
-                        window.location = '../de/redirectsuccess/' + false;
-                    }       
-                } else {
-                    toastr.error('Unable to complete the this batch.');
-                }       
-            });
-        } else {
-            if (isSaveNew) {
-                getNewBatch();
-            } else {
-                window.location = '../de/redirectsuccess/' + true;
-            }
-        }   
+        }        
     });
 }
 
@@ -108,9 +110,6 @@ function writeSlips(headerId) {
         // Write the transaction details.
         $.post('../transaction/save', data, function (result) {
             d.resolve(result == 1 ? true : false);
-        })
-        .fail(function (xhr, status, error) {
-            toastr.error(error);
         });                                     
     });
 
