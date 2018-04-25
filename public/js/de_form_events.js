@@ -318,7 +318,7 @@ $(function() {
             refreshTransTypeDependentFields();
             $(slipRequiredFields).addClass('required');
             $('#other_exception_detail_wrapper').addClass('hidden');
-            $('#card_number').focus();
+            $('#transaction_date').focus();
         }        
     });
 

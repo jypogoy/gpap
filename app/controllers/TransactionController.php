@@ -140,7 +140,7 @@ class TransactionController extends ControllerBase
             $sql = 'INSERT INTO transaction (merchant_header_id, sequence, transaction_type_id, `region_code`, `card_number`, `transaction_date`, `authorization_code`,
                     `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
                     `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`)
-                    VALUES (?, ?, ?, ?, AES_ENCRYPT(?, \'' . $this->config->AES_Key . '\'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                    VALUES (?, ?, ?, ?, AES_ENCRYPT(?, \'' . $this->config->AES_Key . '\'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
                         
             $result = $this->db->query($sql, [$transaction->merchant_header_id, $transaction->sequence, $transaction->transaction_type_id, $transaction->region_code, $transaction->card_number,
                     $transaction->transaction_date, $transaction->authorization_code, $transaction->transaction_amount, $transaction->installment_months_id, $transaction->airline_ticket_number,

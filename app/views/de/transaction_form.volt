@@ -80,28 +80,29 @@
             <label>Comm Code</label> 
             {{ text_field('commodity_code', 'maxlength': '4', 'class': 'vi-field slip-field') }}
         </div>
-    </div>                 
-    <div id="slip_pull_reason_id_wrapper" class="small field">
-        <label>Pull Reason</label>
-        <div id="slip_pull_reason_id_dropdown" class="ui search selection dropdown slip-dropdown">
-            <input type="hidden" id="slip_pull_reason_id" class="slip-field">
-            <div class="default text">Choose a reason</div>
-            <i class="dropdown icon"></i>
-            <div class="menu"></div>
-        </div>
-    </div>                 
-    <div id="exception_id_wrapper" class="small field">    
-        <label>Other Exceptions</label>
-        <div id="exception_id_dropdown" class="ui search selection dropdown slip-dropdown">
-            <input type="hidden" id="exception_id" class="slip-field">
-            <div class="default text">Choose an exception</div>
-            <i class="dropdown icon"></i>
-            <div class="menu"></div>
-        </div>
     </div>     
+    <div class="equal width small fields">                    
+        <div id="slip_pull_reason_id_wrapper" class="field">
+            <label>Pull Reason</label>
+            <div id="slip_pull_reason_id_dropdown" class="ui search selection dropdown slip-dropdown">
+                <input type="hidden" id="slip_pull_reason_id" class="slip-field">
+                <div class="default text">Choose a reason</div>
+                <i class="dropdown icon"></i>
+                <div class="menu"></div>
+            </div>
+        </div>             
+        <div id="exception_id_wrapper" class="field">    
+            <label>Other Exceptions</label>
+            <div id="exception_id_dropdown" class="ui search selection dropdown slip-dropdown">
+                <input type="hidden" id="exception_id" class="slip-field">
+                <div class="default text">Choose an exception</div>
+                <i class="dropdown icon"></i>
+                <div class="menu"></div>
+            </div>
+        </div>                                                     
+    </div>         
     <div id="other_exception_detail_wrapper" class="small hidden field">    
         <label>Other Exception Detail</label>
         {{ text_field('other_exception_detail', 'maxlength': '30', 'class': 'slip-field') }} 
-    </div>                                         
-                                                                                    
+    </div>                                                                        
 </form> 
