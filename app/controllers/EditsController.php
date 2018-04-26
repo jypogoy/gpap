@@ -13,13 +13,17 @@ class EditsController extends ControllerBase
         } 
     }
 
-
     public function indexAction()
     {
-        
+        try {
+            $regions = Region::find();
+            $this->view->regions = $regions;
+            
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
 
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Edits page.'); 
     }
 
 }
-

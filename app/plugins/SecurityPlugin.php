@@ -62,7 +62,8 @@ class SecurityPlugin extends Plugin
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
 				'session'    	=> 	['changepassword'],
-				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
+				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword'],
+				'region'		=>	['list']
 			];
 
 			foreach ($privateResources as $resource => $actions) {

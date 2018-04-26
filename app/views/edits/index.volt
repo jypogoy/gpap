@@ -6,16 +6,20 @@
             <div class="inline fields">
                 <div class="field">            
                     <label>Region</label>                        
-                    <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
+                    <div id="region_dropdown" class="ui search selection dropdown">
                         <input id="currency_id" type="hidden" class="header-field">
                         <div class="default text">Choose a region</div>
                         <i class="dropdown icon"></i>
-                        <div class="menu"></div>
+                        <div class="menu">
+                            {% for region in regions %}
+                                <div class="item" data-value="{{ region.code }}">{{ region.name }} - {{ region.code }}</div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="field" style="margin-left: 10px;">            
                     <label>Job</label>                        
-                    <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
+                    <div id="job_dropdown" class="ui search selection dropdown">
                         <input id="currency_id" type="hidden" class="header-field">
                         <div class="default text">Choose a job</div>
                         <i class="dropdown icon"></i>

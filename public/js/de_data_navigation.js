@@ -180,19 +180,15 @@ function calculateAmount() {
             }
         });
     });
-    totalAmount = numToCurrency(totalAmount); // See utils.js    
+       
     var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-    $('#total_transaction_amount').val(fAmount);
-    
-    var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js
-    var vToCurr = numToCurrency(totalAmount - depAmount); // See utils.js    
-    
+    $('#total_transaction_amount').val(fAmount);    
+    var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
     var varianceField =  $('#variance');
     if (currNoDecimal) {
-        var noDecVal = noDecimal(vToCurr); // See utils.js
-        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+        varianceField.val(accounting.formatNumber(totalAmount - depAmount)); // See accounting.min.js            
     } else {
-        varianceField.val(accounting.formatMoney(vToCurr, { symbol: '',  format: '%v %s' })); // See accounting.min.js
+        varianceField.val(accounting.formatMoney(totalAmount - depAmount, { symbol: '',  format: '%v %s' })); // See accounting.min.js
     }
 }
 
