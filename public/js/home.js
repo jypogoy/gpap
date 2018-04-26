@@ -18,7 +18,7 @@ var activeTaskId;
 function getUserTasks() {
     $.post('user_task/getbyuser/' + $('#user_id').val(), function (data) {   
         if (!data) {
-            toastr.warning('The search did not match any assigned tasks.'); 
+            toastr.info('The search did not match any assigned tasks.'); 
         } else {
             
             $(data).appendTo('.user-tasks'); // Add the task selection component
