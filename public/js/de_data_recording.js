@@ -5,12 +5,12 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
     // Record new header.
     $.when(writeHeader())
     .done(function(headerId) {
-        if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') { // Record transactions if no specified batch pull reason.
+        //if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') { // Record transactions if no specified batch pull reason.
             // Clear previously recorded transactions to eliminate repitition.
             $.when(delPreviousTrans(headerId))
             .done(function(isSuccess) {
                 if (isSuccess) {
-                    // Record new transactions.
+                    // Record new transactions. 
                     $.when(writeSlips(headerId))
                     .done(function(isSuccess) {
                         if (!isSuccess) {
@@ -42,15 +42,14 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                                         window.location = '../de/redirectsuccess/' + true;
                                     }
                                 }
-                            }   
-                        }
-                        
+                            }
+                        }                        
                     });
                 } else {
                     toastr.error('Unable to clear previous recorded transactions.');
-                }
+                }                   
             });
-        }        
+        //}                    
     });
 }
 
@@ -59,7 +58,8 @@ function writeHeader() {
 
     $.post('../merchant_header/save', gatherHeaderValues(), function(headerId) {
         d.resolve(headerId);
-    }).fail(function (xhr, status, error) {
+    })
+    .fail(function (xhr, status, error) {
         toastr.error(error);
     });  
 
