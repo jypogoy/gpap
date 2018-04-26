@@ -27,7 +27,13 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             if (headerData || headerData.length > 0) {                
                 // Add values to header map.
                 $.each(headerData, function(key, value) {
-                    rawHeaderMap.set(key, value);
+                    if (value && key.indexOf('amount') != -1) {                                                            
+                        var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+                        rawHeaderMap.set(key, v);
+                    } else {
+                        rawHeaderMap.set(key, value);
+                    } 
+                    
                 });    
                 
                 applyHeaderChecks(); // See de_verify.js
@@ -49,7 +55,13 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                         if (id == 'sequence') {
                             key = value;                        
                         } else {
-                            slipValueMap.set(id, value);
+                            if (value && id.indexOf('card') != -1) {                                
+                                slipValueMap.set(id, cc_format(value)); // See utils.js
+                            } else if (value && id.indexOf('amount') != -1) {                                                            
+                                slipValueMap.set(id, accounting.formatMoney(value, { symbol: '',  format: '%v %s' })); // See accounting.min.js
+                            } else {
+                                slipValueMap.set(id, value);
+                            } 
                         }                    
                     });
                     rawSlipMap.set(parseInt(key), slipValueMap);
@@ -124,7 +136,12 @@ function getContents(lastCompletedEntry, existingHeader) {
 
                 // Fill header fields with values.
                 $.each(headerData, function(key, value) {
-                    setFieldValue(key, value); // See de_data_navigation.js
+                    if (value && key.indexOf('amount') != -1) {                                                            
+                        var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+                        setFieldValue(key, v); // See de_data_navigation.js
+                    } else {
+                        setFieldValue(key, value); // See de_data_navigation.js
+                    }                    
                 });
 
                 // Load transactions
@@ -252,92 +269,6 @@ function getRegionCurrency() {
     });    
 }
 
-function getContents1(lastCompletedEntry, existingHeader) {    
-
-    // Initialization of maps moved to de.js
-
-    var dataEntryId = $('#data_entry_id').val();
-
-    var params = {};
-    params.batch_id = $('#batch_id').val();
-    params.data_entry_id = dataEntryId;    
-
-    // For Balancing Only: Replace currrent activity ID to help fetch previous task's activity record.
-    if (lastCompletedEntry && !existingHeader) {
-        params.data_entry_id = lastCompletedEntry.id;            
-    }
-
-    $.post('../merchant_header/get/', params, function (headerData) {                   
-        if (!headerData || headerData.length == 0) {
-            //toastr.warning('This batch does not have any header content.');
-        } else {
-            withHeaderContent = true;
-            $('#merchant_header_id').val(headerData.id);            
-            if (headerData.merchant_number) {
-                // Load information of dependent fields e.g. currency
-                // Get the region or country code.      
-                $.post('../merchant/get/' + parseInt(headerData.merchant_number), function (merchantData) { 
-                    if (merchantData.stateCountry)  {
-                        // Get all currencies with the region.                    
-                        $.post('../currency/getbyregion/' + merchantData.stateCountry, function (currencyData) {   
-                            
-                            // Populate currencies allowed by the recorded merchant.            
-                            var menuWrapper = $('#currency_id_dropdown .menu');
-                            $(menuWrapper).empty();
-                            
-                            $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
-                            $.each(currencyData, function(i, currency) {
-                                $('<div class="item" data-value="' + currency.id + '">' + currency.num_code + ' (' + currency.alpha_code + ')</div>').appendTo(menuWrapper);
-                            });
-                            $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);                             
-
-                            // Reinstantiate the currency dropdown to apply changes. See de_form_events.js for similar code                
-                            $('#currency_id_dropdown').dropdown({
-                                onChange: function() {
-                                    var value = $(this).dropdown('get value');    
-                                    if (value == 34) { // Other
-                                        $(this).addClass('hidden');
-                                        $('#other_currency_wrapper').removeClass('hidden');
-                                        $('#currency_id_wrapper').addClass('hidden');
-                                        $('#other_currency').focus();
-                                    } else {
-                                        $('#other_currency_wrapper').addClass('hidden');
-                                        $('#currency_id_wrapper').removeClass('hidden');
-                                        if (value > 0) {
-                                            if (this.value != '') $('#currency_id_wrapper').removeClass('error');
-                                        } else {
-                                            $(this).dropdown('restore defaults');
-                                        }
-                                    }
-                                }
-                            });                                                  
-                        })
-                    }
-                });
-            }
-            
-            // Fill header fields with values.
-            $.each(headerData, function(key, value) {
-                setFieldValue(key, value); // See de_data_navigation.js
-            });
-            
-            // For Balancing Only: Revert back to current task's activity ID to correct saving of records.
-            if (lastCompletedEntry) {
-                $('#data_entry_id').val(dataEntryId);
-            }
-
-            // Load transactions
-            getSlipContents(headerData.id);   
-        }            
-    })
-    .done(function (headerData) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
-}
-
 function getSlipContents(headerId) {
     $.post('../transaction/getbyheader/' + headerId, function (data) {
         if (!data || data.length == 0) {
@@ -352,7 +283,13 @@ function getSlipContents(headerId) {
                     if (id == 'sequence') {
                         key = value;                        
                     } else {
-                        slipValueMap.set(id, value);
+                        if (value && id.indexOf('card') != -1) {                                
+                            slipValueMap.set(id, cc_format(value)); // See utils.js
+                        } else if (value && id.indexOf('amount') != -1) {                                                            
+                            slipValueMap.set(id, accounting.formatMoney(value, { symbol: '',  format: '%v %s' })); // See accounting.min.js
+                        } else {
+                            slipValueMap.set(id, value);
+                        }  
                     }                    
                 });
                 slipMap.set(parseInt(key), slipValueMap);

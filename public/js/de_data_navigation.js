@@ -175,14 +175,25 @@ function calculateAmount() {
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
             if (fieldId.indexOf('amount') != -1 && value && value != '0') {
+                value = unformatValue(value); // See utils.js
                 totalAmount = Number(totalAmount ) + Number(parseFloat(value).toFixed(2));
             }
         });
     });
-    totalAmount = numToCurrency(totalAmount); // See util.js    
-    $('#total_transaction_amount').val(totalAmount);
-    var variance = numToCurrency(totalAmount - $('#deposit_amount').val());
-    $('#variance').val(variance);
+    totalAmount = numToCurrency(totalAmount); // See utils.js    
+    var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+    $('#total_transaction_amount').val(fAmount);
+    
+    var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js
+    var vToCurr = numToCurrency(totalAmount - depAmount); // See utils.js    
+    
+    var varianceField =  $('#variance');
+    if (currNoDecimal) {
+        var noDecVal = noDecimal(vToCurr); // See utils.js
+        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+    } else {
+        varianceField.val(accounting.formatMoney(vToCurr, { symbol: '',  format: '%v %s' })); // See accounting.min.js
+    }
 }
 
 function setAsException(batchId, isException) {

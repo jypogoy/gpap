@@ -3,6 +3,7 @@ var slipMap; // <index, map<field_id, value>>
 var slipRequiredFields;
 var headerRequiredFields;
 var merchantInfoMap; // <db_field, db_value>  
+var currNoDecimal = false;
 
 $(function() {              
 

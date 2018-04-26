@@ -15,6 +15,7 @@ $(function() {
             padZero($(this));
             $('#card_number_alert').remove();
             $('#card_number_wrapper').removeClass('error');
+            $('#dcn').focus();
         }
         this.value = this.value.replace(/[^0-9]/, '');
     });
@@ -40,6 +41,32 @@ $(function() {
                     $(this).dropdown('restore defaults');
                 }
             }
+
+            // Check if selected is either JPY, KRW or IDR that restricts decimal in amounts.
+            var amountFields = $('input[id*="amount"]');
+            var text = $(this).dropdown('get text');    
+            if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1) {
+                currNoDecimal = true;                
+            } else {
+                currNoDecimal = false;
+            }
+
+            $.each(amountFields, function(i, field) {
+                if (currNoDecimal) {
+                    var noDecVal = noDecimal(field.value); // See utils.js
+                    field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
+                } else {
+                    field.value = accounting.formatMoney(field.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+                }
+            }); 
+            
+            var varianceField =  $('#variance');
+            if (currNoDecimal) {
+                var noDecVal = noDecimal(varianceField.val()); // See utils.js
+                varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+            } else {
+                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '',  format: '%v %s' })); // See accounting.min.js
+            }
         }
     });
 
@@ -53,7 +80,6 @@ $(function() {
     });
 
     $('#dcn').blur(function() {
-        //padZero($(this));
         var wrapper = $('#' + this.id + '_wrapper');       
         if (this.value.length > 0) {
             if (this.value.length < 7) {
@@ -97,7 +123,6 @@ $(function() {
                 console.log(params);
                 // Same DCN within the same Region on the same day
                 $.post('../merchant_header/getsameregionday/', params, function (hasMatch) {   
-                    console.log(hasMatch)
                     if (hasMatch) {
                         $('#' + this.id + '_alert').remove();
                         $(wrapper).addClass('error');
@@ -116,16 +141,18 @@ $(function() {
         }
     });   
     
-    // $('#dcn').keyup(function() {
-    //     this.value = this.value.replace(/[^0-9]/, '');
-    // }); 
-
     $('#deposit_date').blur(function() {
         if (this.value != '') $('#deposit_date_wrapper').removeClass('error');
     });  
     
     $('#deposit_amount').blur(function() {
-        toCurrency($(this)); // See util.js
+        if (currNoDecimal) {
+            var noDecVal = noDecimal(this.value); // See utils.js
+            this.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
+        } else {
+            this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+        }        
+
         calculateAmount(); // See de_data_navigation.js
         var wrapper = $('#' + this.id + '_wrapper');
         if (this.value == '' || this.value == 0 || this.value == '0.00') {
@@ -141,7 +168,12 @@ $(function() {
     });  
 
     $('#deposit_amount').keyup(function() {
-        this.value = this.value.replace(/[^0-9.]/, '');
+        unformat(this); // See utils.js
+    });
+
+    $('#deposit_amount').focus(function() {
+        unformat(this); // See utils.js
+        this.select();
     });
 
     //------------- Transaction Events ---------------------------------
@@ -157,7 +189,7 @@ $(function() {
 
     $('#transaction_date').blur(function() {
         if (this.value != '') $('#transaction_date_wrapper').removeClass('error');
-    });
+    });    
 
     $('#card_number').blur(function() {
         var wrapper = $('#' + this.id + '_wrapper');
@@ -185,6 +217,9 @@ $(function() {
                 $(alert).remove();
                 var cardType = getCardType($(this).val());
                 if (this.value.trim() != '') {
+                    
+                    this.value = cc_format(this.value); // See utils.js
+                    
                     switch (cardType) {
                         case 'Visa':
                             if ($.inArray('Visa', merchantAcceptedCards) < 0) {
@@ -276,7 +311,12 @@ $(function() {
     });
 
     $('#card_number').keyup(function() {
-        this.value = this.value.replace(/[^0-9]/, '');
+        unformat(this); // See utils.js
+    });
+
+    $('#card_number').click(function() {
+        unformat(this); // See utils.js
+        this.select();
     });
 
     $('#authorization_code').blur(function() {
@@ -297,14 +337,24 @@ $(function() {
     }); 
 
     $('#transaction_amount').blur(function() {
-        toCurrency($(this)); // See util.js
+        if (currNoDecimal) {
+            var noDecVal = noDecimal(this.value); // See utils.js
+            this.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
+        } else {
+            this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+        }
         if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
         saveSlip(); // Make sure to save the current slip to apply amount.
         calculateAmount(); // See de_data_navigation.js
     }); 
 
     $('#transaction_amount').keyup(function() {
-        this.value = this.value.replace(/[^0-9.]/, '');
+        unformat(this); // See utils.js
+    });
+
+    $('#transaction_amount').focus(function() {
+        unformat(this); // See utils.js
+        this.select();
     });
 
     //------------- Transaction Control Events ---------------------------------
@@ -332,20 +382,6 @@ $(function() {
         e.preventDefault();
         navigate('last'); // See de_data_navigation.js
     });
-
-    // var prevInt;
-    // $('.prev-slip-btn').mousedown(function() {        
-    //     prevInt = setInterval(navigateToPrevSlip, 100);
-    // }).mouseup(function() {
-    //     clearInterval(prevInt);
-    // });    
-
-    // var nextInt;
-    // $('.next-slip-btn').mousedown(function() {        
-    //     nextInt = setInterval(navigateToNextSlip, 100);
-    // }).mouseup(function() {
-    //     clearInterval(nextInt);
-    // });        
 
     $('.insert-slip-btn').click(function(e) {
         e.preventDefault();

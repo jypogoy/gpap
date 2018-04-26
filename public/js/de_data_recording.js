@@ -75,7 +75,11 @@ function gatherHeaderValues() {
         if (field.id.indexOf('date') != -1) {
             data[field.id] = $.datepicker.formatDate('yy-mm-dd', new Date(field.value));
         } else {
-            data[field.id] = field.value;
+            if (field.value && (field.id.indexOf('card') != -1 || field.id.indexOf('amount') != -1)) {
+                data[field.id] = unformatValue(field.value); // See utils.js
+            } else {
+                data[field.id] = field.value;
+            }            
         }
     });
     data.id = $('#merchant_header_id').val();
@@ -106,7 +110,11 @@ function writeSlips(headerId) {
             if (id.indexOf('date') != -1) {
                 data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
             } else {
-                data[id] = value;
+                if (value && (id.indexOf('card') != -1 || id.indexOf('amount') != -1)) {
+                    data[id] = unformatValue(value); // See utils.js
+                } else {
+                    data[id] = value;
+                }
             }      
         });
         

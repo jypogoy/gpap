@@ -1,3 +1,20 @@
+function cc_format(value) {
+    var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+    var matches = v.match(/\d{4,16}/g);
+    var match = matches && matches[0] || ''
+    var parts = []
+
+    for (i=0, len=match.length; i<len; i+=4) {
+        parts.push(match.substring(i, i+4))
+    }
+
+    if (parts.length) {
+        return parts.join(' ')
+    } else {
+        return value
+    }
+}
+
 function padZero(el) {
     el.val(new Array(el.attr('maxlength') - el.val().toString().length + 1).join('0') + el.val());
 }
@@ -5,6 +22,18 @@ function padZero(el) {
 function toCurrency(el) {
     el.val(parseFloat(Math.round(el.val() * 100) / 100).toFixed(2));
 }
+
+function unformat(el) {
+    el.value = el.value.replace(/[^0-9.]/g, '');
+}
+
+function unformatValue(value) {
+   return value.replace(/[^0-9.]/g, '');
+}
+
+function noDecimal(value) {
+    return value.replace(/[.]/g, '');
+ }
 
 function numToCurrency(value) {
     return parseFloat(Math.round(value * 100) / 100).toFixed(2);
