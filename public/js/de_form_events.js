@@ -11,11 +11,16 @@ $(function() {
     $('#merchant_number').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
-            getMerchantInfo($(this).val()); // See de_data_retrieval.js
+            getMerchantInfo($(this).val()).then(function(data) {
+                if (!data) {
+                    $('#merchant_number').focus();
+                } else {
+                    $('#dcn').focus();
+                }
+            }); // See de_data_retrieval.js
             padZero($(this));
             $('#card_number_alert').remove();
-            $('#card_number_wrapper').removeClass('error');
-            $('#dcn').focus();
+            $('#card_number_wrapper').removeClass('error');            
         }
         this.value = this.value.replace(/[^0-9]/, '');
     });
