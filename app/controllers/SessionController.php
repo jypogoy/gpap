@@ -70,7 +70,15 @@ class SessionController extends ControllerBase
                 );
             }
 
-            $user = User::findFirstByUserName($username);    
+            //$user = User::findFirstByUserName($username);    
+            $user = User::findFirst(
+                [
+                    "conditions" => "userName = ?1 AND createStatus = 'ACTIVE'",
+                    "bind"  => [
+                        1   => $username
+                    ]
+                ]
+            );
             
             if ($user) {                        
                 $r = $user->userPassword;    
