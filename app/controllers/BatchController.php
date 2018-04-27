@@ -153,5 +153,10 @@ class BatchController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
+
+    public function listByRegion()
+    {
+        
+    }
 }
 
