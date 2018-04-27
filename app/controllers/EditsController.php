@@ -16,6 +16,8 @@ class EditsController extends ControllerBase
 
     public function indexAction()
     {
+        
+
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Edits page.'); 
     }
 
