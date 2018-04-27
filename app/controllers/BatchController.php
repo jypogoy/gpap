@@ -154,9 +154,22 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function listByRegion()
+    public function listByRegionJob()
     {
-        
+        $this->view->disable();
+
+        try {
+            $batches = Batch::find(
+                [
+                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL"
+                ]
+            );
+
+            echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
     }
 }
 

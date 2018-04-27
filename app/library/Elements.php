@@ -16,11 +16,11 @@ class Elements extends Component
                 'action'    => 'home',
                 'iconClass' => 'home icon'
             ],
-            // 'edits' => [
-            //     'caption'   => 'Record Edits',
-            //     'action'    => 'index',
-            //     'iconClass' => 'pencil icon'
-            // ],
+            'edits' => [
+                'caption'   => 'Batch Edit',
+                'action'    => 'index',
+                'iconClass' => 'pencil icon'
+            ],
             'about' => [
                 'caption'   => 'About',
                 'action'    => 'index',

@@ -47,7 +47,7 @@ class SecurityPlugin extends Plugin
 			//Private area resources
 			$privateResources = [
 				'home'      => 	['index'],
-				'edits'     => 	['index'],
+				'edits'     => 	['index', 'getjobsbyregion'],
 				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
 				'batch'		=>	['listavailable', 'get', 'getavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception'],
 				'currency'	=>	['getbyregion'],
@@ -62,8 +62,7 @@ class SecurityPlugin extends Plugin
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
 				'session'    	=> 	['changepassword'],
-				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword'],
-				'region'		=>	['list']
+				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
 			];
 
 			foreach ($privateResources as $resource => $actions) {
