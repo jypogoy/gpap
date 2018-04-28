@@ -15,7 +15,7 @@
             <td>{{ batch.Zip.region_code }}</td>
             <td>{{ batch.Zip.rec_date }}</td>
             <td>{{ batch.TransactionType.type }}</td>
-            <td>{{ batch.Zip.sequence }}</td>
+            <td>{{ batch.Zip.getSequence() }}</td>
             <td>{{ batch.id }}</td>
             <td>
                 <a onclick="begin({{ batch.id }}); return false;" class="ui icon" data-tooltip="Start" data-position="bottom center">

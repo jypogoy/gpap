@@ -154,18 +154,47 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function listByRegionJob()
+    public function listByRegionJobAction()
     {
-        $this->view->disable();
+        $this->view->disable();        
+
+        $regionCode = $this->request->getPost('region_code');
+        $recDate = $this->request->getPost('rec_date');
+        $operatorId = $this->request->getPost('operator_id');
+        $sequence = $this->request->getPost('sequence');
 
         try {
-            $batches = Batch::find(
+            // $phql = "SELECT z.region_code, z.rec_date, tt.type, LPAD(z.sequence,4,'0'), b.id 
+            //         FROM Batch b 
+            //         INNER JOIN Zip z ON z.id = b.zip_id 
+            //         INNER JOIN TransactionType tt ON tt.id = b.trans_type_id 
+            //         WHERE z.region_code = :regCode: AND z.rec_date = :recDate: AND z.operator_id = :optId: AND z.sequence = :seq:";
+
+            // $rows = $this->modelsManager->executeQuery(
+            //     $phql,
+            //     [
+            //         "regCode"   =>  $regionCode,
+            //         "recDate"   =>  $recDate,
+            //         "optId"     =>  $operatorId,
+            //         "seq"       =>  $sequence
+            //     ]
+            // );        
+            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, LPAD(z.sequence,4,'0') as sequence, b.id AS id 
+                    FROM batch b 
+                    INNER JOIN zip z ON z.id = b.zip_id 
+                    INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
+                    WHERE z.region_code = ? AND z.rec_date = ? AND z.operator_id = ? AND z.sequence = ?";
+
+            $result = $this->db->query(
+                $sql,
                 [
-                    "conditions" => "is_exception = 1 AND entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL"
+                    $regionCode, $recDate, $operatorId, $sequence
                 ]
             );
+            $result->setFetchMode(\Phalcon\Db::FETCH_OBJ);
+            $rows = $result->fetchAll($result);    
 
-            echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);
+            echo $this->view->partial('edits/partial_batch_list', [ 'rows' => $rows ]);
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));

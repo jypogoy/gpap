@@ -3,7 +3,7 @@
         <td>{{ entry.Batch.Zip.Region.code }}</td>    
         <td>{{ entry.Batch.Zip.rec_date }}</td>
         <td>{{ entry.Batch.TransactionType.type }}</td> 
-        <td>{{ entry.Batch.Zip.sequence }}</td>
+        <td>{{ entry.Batch.Zip.getSequence() }}</td>
         <td>{{ entry.Batch.id }}</td>
         <td class="data-process-btn" width="20%">
             <a onclick="begin({{ entry.Batch.id }}); return false;" data-tooltip="Review" data-position="bottom center">

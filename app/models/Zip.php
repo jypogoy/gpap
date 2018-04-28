@@ -91,4 +91,9 @@ class Zip extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public function getSequence()
+    {
+        return str_pad($this->sequence, 5 - strlen($this->sequence),"0",STR_PAD_LEFT );
+    }
+
 }

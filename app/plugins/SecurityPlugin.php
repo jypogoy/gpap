@@ -49,7 +49,7 @@ class SecurityPlugin extends Plugin
 				'home'      => 	['index'],
 				'edits'     => 	['index', 'getjobsbyregion'],
 				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
-				'batch'		=>	['listavailable', 'get', 'getavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception'],
+				'batch'		=>	['listavailable', 'get', 'getavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception', 'listbyregionjob'],
 				'currency'	=>	['getbyregion'],
 				'image'		=>	['list', 'get'],
 				'installment_months'	=>	['list'],
