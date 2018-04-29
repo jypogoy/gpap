@@ -17,7 +17,7 @@ class Elements extends Component
                 'iconClass' => 'home icon'
             ],
             'edits' => [
-                'caption'   => 'Batch Edit',
+                'caption'   => 'Record Edit',
                 'action'    => 'index',
                 'iconClass' => 'pencil icon'
             ],

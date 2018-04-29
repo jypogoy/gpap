@@ -7,7 +7,7 @@
     Please be mindful of the changes you intend to make as these cannot be reverted.</div>
 </div>
 
-<h2><i class="pencil icon"></i>Batch Edit</h2>
+<h2><i class="pencil icon"></i>Record Edit</h2>
 
 <form class="ui form" id="listForm" action="boards" method="post">
     <div class="ui equal width stackable grid">
