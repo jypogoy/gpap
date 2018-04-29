@@ -82,10 +82,11 @@ function filterBatches() {
     });   
 }
 
-function edit(batchId, taskId) {    
+function edit(batchId, taskId, taskName) {    
     var params = {};
     params.batch_id = batchId;
     params.task_id = taskId;
+    params.task_name = taskName;    
     $.post('edits/prep/', params, function (data) {  
         var form = $('#beginForm');
         $(form).attr('action', 'de/' + batchId);    

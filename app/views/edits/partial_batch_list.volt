@@ -11,7 +11,7 @@
         <td>{{ row.sequence }}</td>
         <td>{{ row.batch_id }}</td>
         <td>
-            <a onclick="edit({{ row.batch_id }}, {{ row.task_id }}); return false;" data-tooltip="Edit" data-position="bottom center">
+            <a onclick="edit({{ row.batch_id }}, {{ row.task_id }}, '{{ row.last_activity }}'); return false;" data-tooltip="Edit" data-position="bottom center">
                 {% if row.task_id  %}
                     <i class="pencil alternate orange icon"></i>{{ row.last_activity }}
                 {% endif %}    

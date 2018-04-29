@@ -5,7 +5,7 @@
             <div class="ten wide column">
                 <i class="shopping cart icon"></i>Merchant Header
             </div>
-            <div class="six wide column" style="text-align: right;">Batch {{ batch.id }} - {{ session.get('taskName') }}</div>
+            <div class="six wide column" style="text-align: right;">Batch {{ batch.id }} - {{ session.get('taskName') }} {{ session.get('fromEdits') ? 'Edit' : '' }}</div>
         </div>        
     </h4>
 

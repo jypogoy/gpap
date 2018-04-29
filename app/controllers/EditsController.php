@@ -47,8 +47,10 @@ class EditsController extends ControllerBase
 
         $batchId = $this->request->getPost('batch_id');
         $taskId = $this->request->getPost('task_id');
+        $taskName = $this->request->getPost('task_name');
 
         $this->session->set('fromEdits', true);
         $this->session->set('taskId', $taskId);
+        $this->session->set('taskName', $taskName);
     }
 }
