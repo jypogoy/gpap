@@ -154,16 +154,26 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function listByRegionJobAction()
+    public function listByRegionJobAction($zipId)
     {
         $this->view->disable();        
 
-        $regionCode = $this->request->getPost('region_code');
-        $recDate = $this->request->getPost('rec_date');
-        $operatorId = $this->request->getPost('operator_id');
-        $sequence = $this->request->getPost('sequence');
+        // $regionCode = $this->request->getPost('region_code');
+        // $recDate = $this->request->getPost('rec_date');
+        // $operatorId = $this->request->getPost('operator_id');
+        // $sequence = $this->request->getPost('sequence');
+
+        $this->session->set('zipId', $zipId); // Keep reference of the selected job.        
 
         try {
+            // $batches = Batch::find(
+            //     [
+            //         "conditions" => "zip_id = ?1",
+            //         "bind"  => [
+            //             1   =>  $zipId 
+            //         ]
+            //     ]
+            // );
             // $phql = "SELECT z.region_code, z.rec_date, tt.type, LPAD(z.sequence,4,'0'), b.id 
             //         FROM Batch b 
             //         INNER JOIN Zip z ON z.id = b.zip_id 
@@ -179,20 +189,38 @@ class BatchController extends ControllerBase
             //         "seq"       =>  $sequence
             //     ]
             // );        
-            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, LPAD(z.sequence,4,'0') as sequence, b.id AS id 
+            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, LPAD(z.sequence,4,'0') as sequence, b.id AS batch_id, a.last_activity, t.id as task_id
                     FROM batch b 
                     INNER JOIN zip z ON z.id = b.zip_id 
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
-                    WHERE z.region_code = ? AND z.rec_date = ? AND z.operator_id = ? AND z.sequence = ?";
+                    INNER JOIN (
+                        SELECT DISTINCT b.id, CASE WHEN balance_status = 'Complete' 
+                                    THEN 'Balancing' 
+                                ELSE 
+                                    CASE WHEN verify_status = 'Complete' 
+                                        THEN 'Verify' 
+                                    ELSE
+                                        CASE WHEN entry_status = 'Complete' 
+											THEN 'Entry 1' 
+										ELSE
+											'-'
+										END
+                                    END 
+                                END AS last_activity
+                        FROM batch b
+                        INNER JOIN task t
+                    ) AS a ON a.id = b.id 
+                    LEFT JOIN task t ON t.name = a.last_activity
+                    WHERE b.zip_id = ?";
 
-            $result = $this->db->query(
+            $rows = $this->db->query(
                 $sql,
                 [
-                    $regionCode, $recDate, $operatorId, $sequence
+                    $zipId
                 ]
             );
-            $result->setFetchMode(\Phalcon\Db::FETCH_OBJ);
-            $rows = $result->fetchAll($result);    
+            $rows->setFetchMode(\Phalcon\Db::FETCH_OBJ);
+            $rows = $rows->fetchAll($rows);    
 
             echo $this->view->partial('edits/partial_batch_list', [ 'rows' => $rows ]);
 

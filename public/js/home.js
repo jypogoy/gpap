@@ -251,8 +251,10 @@ function complete(fromHome, actionEl, entryId, batchId) {
 }
 
 function begin(batchId) {
-    var form = $('#beginForm');
-    $(form).attr('action', 'de/' + batchId);    
-    $(form).attr('method', 'POST');
-    $(form).submit();
+    $.post('de/prep', function (data) {  
+        var form = $('#beginForm');
+        $(form).attr('action', 'de/' + batchId);    
+        $(form).attr('method', 'POST');
+        $(form).submit();
+    });    
 }

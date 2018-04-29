@@ -1,3 +1,12 @@
+{{ hidden_field('session_region_code', 'value': session.get('regionCode')) }}
+{{ hidden_field('session_zip_id', 'value': session.get('zipId')) }}
+
+<div class="ui warning message static">
+    <div class="header">Caution:</div>
+    <div>This module directly affect keyed batch and transaction records on their respective last completed task.<br/>
+    Please be mindful of the changes you intend to make as these cannot be reverted.</div>
+</div>
+
 <h2><i class="pencil icon"></i>Batch Edit</h2>
 
 <form class="ui form" id="listForm" action="boards" method="post">
@@ -29,6 +38,8 @@
                 <div id="filterBtn" class="ui disabled primary button">Filter</div>
             </div>
         </div>
+        <div>
+        </div>
     </div>     
 </form> 
 
@@ -40,13 +51,15 @@
             <th>Transaction Type</th>
             <th>Sequence</th>
             <th>Batch</th>
-            <th></th>
+            <th>Completed Task</th>
         </tr>
     </thead>
     <tbody class="listBody">
         <tr><td colspan="6">No records found.</td></tr>        
     </tbody>    
 </table>
+
+<form id="beginForm"></form>
 
 {{ alert.getRedirectMessage() }}
 

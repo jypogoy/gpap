@@ -37,23 +37,26 @@ class MerchantHeaderController extends ControllerBase
             return $this->response->redirect('');
         }
 
+        $header = null;
         $deId = $this->request->getPost('data_entry_id');
         $batchId = $this->request->getPost('batch_id');
 
-        try {
+        try {                       
             // Update any existing header content.
             $header = MerchantHeader::findFirst(
                 [
-                    "conditions" => "data_entry_id = " . $deId . " AND batch_id = " . $batchId
+                    "conditions" => "data_entry_id = ?1 AND batch_id = ?2",
+                    "bind"  => [
+                        1   => $deId,
+                        2   => $batchId
+                    ]
                 ]
             );
             
-            //$header = MerchantHeader::findById($this->request->getPost('id'), 'int');
-
             // Set a new instance if no existing record found.
             if (!$header) $header = new MerchantHeader();
             
-            $header->data_entry_id = $this->request->getPost('data_entry_id');
+            $header->data_entry_id = $deId;
             $header->batch_id = $this->request->getPost('batch_id');
             $header->merchant_number = $this->request->getPost('merchant_number') == '' ? null : $this->request->getPost('merchant_number');
             $header->merchant_name = $this->request->getPost('merchant_name') == '' ? null : $this->request->getPost('merchant_name');
@@ -66,8 +69,8 @@ class MerchantHeaderController extends ControllerBase
             $header->batch_pull_reason_id = $this->request->getPost('batch_pull_reason_id') == '' ? null : $this->request->getPost('batch_pull_reason_id');
             
             if (!$header->save()) {
-                $errorMsg;
-                foreach ($task->getMessages() as $message) {
+                $errorMsg = '';
+                foreach ($header->getMessages() as $message) {
                     $errorMsg = $errorMsg . $message;
                 }
                 return $errorMsg;

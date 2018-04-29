@@ -32,11 +32,23 @@ class EditsController extends ControllerBase
 
         try {
             $zips = Zip::findByRegionCode($regionCode);
-
+            $this->session->set('regionCode', $regionCode); // Keep reference of the selected region.        
+            
             echo $this->view->partial('edits/partial_job_selection', [ 'zips' => $zips ]);  
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }       
+    }
+
+    public function prepAction()
+    {
+        $this->view->disable();
+
+        $batchId = $this->request->getPost('batch_id');
+        $taskId = $this->request->getPost('task_id');
+
+        $this->session->set('fromEdits', true);
+        $this->session->set('taskId', $taskId);
     }
 }

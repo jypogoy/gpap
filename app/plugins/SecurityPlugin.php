@@ -47,8 +47,8 @@ class SecurityPlugin extends Plugin
 			//Private area resources
 			$privateResources = [
 				'home'      => 	['index'],
-				'edits'     => 	['index', 'getjobsbyregion'],
-				'de'		=>	['index', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
+				'edits'     => 	['index', 'getjobsbyregion', 'prep'],
+				'de'		=>	['index', 'prep', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
 				'batch'		=>	['listavailable', 'get', 'getavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception', 'listbyregionjob'],
 				'currency'	=>	['getbyregion'],
 				'image'		=>	['list', 'get'],

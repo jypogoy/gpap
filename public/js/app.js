@@ -12,16 +12,16 @@ $(function () {
         PolicyModal.show();
     });
 
-    var msgEl = $('.ui.message');
-    if ($(msgEl).html() != '') {
-        if ($(msgEl).hasClass('error')) {
-            composeMessagePrompt('error', $(msgEl).html());
-        } else if ($(msgEl).hasClass('success')) {
-            composeMessagePrompt('success', $(msgEl).html());
-        } else if ($(msgEl).hasClass('notice')) {
-            composeMessagePrompt('info', $(msgEl).html());
-        } else if ($(msgEl).hasClass('warning')) {
-            composeMessagePrompt('warning', $(msgEl).html());
+    var msgEl = $('.ui.message:not(.static)');
+    if (msgEl.html() && msgEl.html() != '') {
+        if (msgEl.hasClass('error')) {
+            composeMessagePrompt('error', msgEl.html());
+        } else if (msgEl.hasClass('success')) {
+            composeMessagePrompt('success', msgEl.html());
+        } else if (msgEl.hasClass('notice')) {
+            composeMessagePrompt('info', msgEl.html());
+        } else if (msgEl.hasClass('warning')) {
+            composeMessagePrompt('warning', msgEl.html());
         }
     }
 });

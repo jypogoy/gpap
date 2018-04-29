@@ -11,6 +11,8 @@ class DeController extends ControllerBase
 
     public function indexAction($batchId = null)
     {        
+        $fromEdits = $this->session->get('fromEdits');
+
         if (!$this->request->isPost()) {
             $this->flashSession->error('Direct access to data entry URL is not permitted!');
             return $this->response->redirect('');
@@ -26,14 +28,23 @@ class DeController extends ControllerBase
             $task = Task::findFirst($taskId);    
 
             // Look for existing activity to maintain single record of batch on a particular task.
-            $entry = DataEntry::findFirst(
-                [
-                    "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
-                ]
-            );
+            $entry = null;
+            if (!$fromEdits) {
+                $entry = DataEntry::findFirst(
+                    [
+                        "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
+                    ]
+                );
+            } else {
+                $entry = DataEntry::findFirst(
+                    [
+                        "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
+                    ]
+                );
+            }
 
             // Create an activity if nothing has been recorded.
-            if (!$entry) {            
+            if (!$entry && !$fromEdits) {            
 
                 // Write information for data entry activity.
                 $entry = new DataEntry();
@@ -75,19 +86,25 @@ class DeController extends ControllerBase
 
                     return;
                 }                            
-            }
+            }            
 
             $this->view->dataEntry = $entry;
             $this->view->batch = $batch;
             $this->view->setTemplateAfter('de');        
 
-            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . $task->name . ' on Batch ' .  $batchId . '.'); 
+            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $task->name . ' Record Edit' : $task->name) . ' on Batch ' .  $batchId . '.'); 
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
 
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
+    }
+
+    public function prepAction()
+    {
+        $this->view->disable();
+        $this->session->set('fromEdits', false);
     }
 
     public function startAction($batchId)
@@ -158,6 +175,7 @@ class DeController extends ControllerBase
                 return;
             }                                 
 
+            $this->deLogger->info($this->session->get('auth')['name'] . ' completed Batch ' . $batchId . ' successfully.');
             return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
 
         } catch (\Exception $e) {            
@@ -169,14 +187,22 @@ class DeController extends ControllerBase
     {
         $this->flashSession->notice("There are no more available batches for " . $taskName . ".");
         $this->deLogger->info($this->session->get('auth')['name'] . ' requested batch for ' . strtoupper($taskName) . '. No available batch found.'); 
-        return $this->response->redirect('home');
+        if ($this->session->get('fromEdits')) {
+            return $this->response->redirect('edits');
+        } else {
+            return $this->response->redirect('home');
+        }        
     }
 
     public function redirectSuccessAction($isSave)
     {
         $this->flashSession->success("Batch was " . ($isSave ? "saved" : "completed") . " successfully.");
         $this->deLogger->info($this->session->get('auth')['name'] . ($isSave ? ' saved' : ' completed') . ' a batch successfully.');
-        return $this->response->redirect('home');
+        if ($this->session->get('fromEdits')) {
+            return $this->response->redirect('edits');
+        } else {
+            return $this->response->redirect('home');
+        }
     }
 
 }
