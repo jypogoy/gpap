@@ -9,7 +9,6 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
             // Clear previously recorded transactions to eliminate repitition.
             $.when(delPreviousTrans(headerId))
             .done(function(isSuccess) {
-                console.log(isSuccess)
                 if (isSuccess) {
                     if (isComplete) {
                         var data = {};
