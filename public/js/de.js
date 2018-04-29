@@ -157,6 +157,7 @@ function overrideSlip(pullReasonId) {
     if (pullReasonId && pullReasonId > 0) {
         $(slipRequiredFields).removeClass('required');
         Form.resetErrors(false);
+        $('#image_file_wrapper').addClass('required');
     } else {
         $('#slip_pull_reason_id_dropdown').dropdown('restore defaults');
         $(slipRequiredFields).addClass('required');

@@ -3,10 +3,10 @@
     <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
         <div class="ui equal width grid">
             <div class="column"><i class="random icon"></i>Transactions</div>
-            <div class="column">
+            {#<div class="column">
                 {{ hidden_field('image_id', 'class': 'slip-field') }}
                 <span id="image_file" class="slip-field slip-image"></span>
-            </div>
+            </div>#}
             <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
         </div>
     </h4>
@@ -104,5 +104,10 @@
     <div id="other_exception_detail_wrapper" class="small hidden field">    
         <label>Other Exception Detail</label>
         {{ text_field('other_exception_detail', 'maxlength': '30', 'class': 'slip-field') }} 
-    </div>                                                                        
+    </div>      
+    <div id="image_file_wrapper" class="required small field">
+        <label>Linked Image</label>
+        {{ hidden_field('image_id', 'class': 'slip-field') }}
+        {{ text_field('image_file', 'class': 'slip-field image-link', 'disabled': true) }}
+    </div>                                                                    
 </form> 

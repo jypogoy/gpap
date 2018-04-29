@@ -64,29 +64,31 @@ $(function() {
         preSave(true, false, false);
     });
 
-    // Complete and Next
-    listener.simple_combo("ctrl 2", function() {
-        preSave(false, true, true);
-    });
-    listener.simple_combo("ctrl num_2", function() {
-        preSave(false, true, true);
-    });
+    if ($('#session_from_edits').val() == '' || $('#session_from_edits').val() < 1) {
+        // Complete and Next
+        listener.simple_combo("ctrl 2", function() {
+            preSave(false, true, true);
+        });
+        listener.simple_combo("ctrl num_2", function() {
+            preSave(false, true, true);
+        });
 
-    // Complete and Exit
-    listener.simple_combo("ctrl 3", function() {
-        preSave(false, false, true);
-    });
-    listener.simple_combo("ctrl num_3", function() {
-        preSave(false, false, true);
-    });
+        // Complete and Exit
+        listener.simple_combo("ctrl 3", function() {
+            preSave(false, false, true);
+        });
+        listener.simple_combo("ctrl num_3", function() {
+            preSave(false, false, true);
+        });
 
-    // Save and Next
-    listener.simple_combo("ctrl 4", function() {
-        preSave(false, true, false);
-    });
-    listener.simple_combo("ctrl num_4", function() {
-        preSave(false, true, false);
-    });
+        // Save and Next
+        listener.simple_combo("ctrl 4", function() {
+            preSave(false, true, false);
+        });
+        listener.simple_combo("ctrl num_4", function() {
+            preSave(false, true, false);
+        });
+    }
 
     // Save and Exit
     listener.simple_combo("ctrl 5", function() {

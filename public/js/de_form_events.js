@@ -124,8 +124,7 @@ $(function() {
                 var params = {};
                 params.dcn = $('#dcn').val();
                 params.region_code = $('#region_code').val();
-                params.task_id = $('#session_task_id').val();     
-                console.log(params);
+                params.task_id = $('#session_task_id').val();                     
                 // Same DCN within the same Region on the same day
                 $.post('../merchant_header/getsameregionday/', params, function (hasMatch) {   
                     if (hasMatch) {
@@ -604,14 +603,30 @@ function clearForm() {
 
 function linkSlip() {
     var fileName = imgArray[imgNavIndex].path.match(/[^/]*$/g)[0];
-    $('.slip-image').html(fileName);
-    $('#image_id').val(imgArray[imgNavIndex].id);
+    var idField = $('#image_id');
+    var fileField = $('#image_file');
+    var wrapper = $('#image_file_wrapper');
+    
+    idField.val(imgArray[imgNavIndex].id);
+    fileField.val(fileName);
+    wrapper.removeClass('error');
+    
     $('.unlink-slip-btn').removeClass('hidden');    
-    $('.link-slip-btn').addClass('hidden');     
+    $('.link-slip-btn').addClass('hidden');       
+    
+    // For Verify Only
+    if ($('#session_task_name').val().indexOf('Verify') != 1) {
+        var rawFile = rawSlipMap.get(slipPage).get(fileField[0].id); // See de_data_retrieval.js for map object            
+        if(rawFile && fileField.val() !== rawFile) {    
+            showMessage(fileField[0].id, rawFile, rawFile); // See de_verify.js
+        } else {
+            hideMessage(fileField[0].id); // See de_verify.js
+        }
+    }  
 }
 
 function unlinkSlip() {
-    $('.slip-image').html('');
+    $('#image_file').val('');
     $('#image_id').val('');
     $('.link-slip-btn').removeClass('hidden');    
     $('.unlink-slip-btn').addClass('hidden');

@@ -134,7 +134,11 @@ function showMessage(fieldId, value, msg) {
 function acceptRaw(fieldId, value) {
     setFieldValue(fieldId, value) // See de_data_navigation.js
     hideMessage(fieldId);   
-    $('#' + fieldId).focus(); 
+    $('#' + fieldId).focus();
+    if (fieldId.indexOf('image') != -1) {
+        var rawId = rawSlipMap.get(slipPage).get('image_id'); // See de_data_retrieval.js for map object  
+        $('#image_id').val(rawId);
+    } 
 }
 
 function hideMessage(fieldId) {
