@@ -144,7 +144,7 @@ function overrideHeader(pullReasonId) {
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
         $(slipRequiredFields).addClass('required');
-        $('.slip-field:not(.auto-fill)').removeAttr('disabled');
+        $('.slip-field:not(.auto-fill, .image-link)').removeAttr('disabled');
         $('.slip-dropdown').removeClass('disabled');
         $('.slip-controls').removeClass('hidden');
     }
