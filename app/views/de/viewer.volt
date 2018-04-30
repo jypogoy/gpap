@@ -1,5 +1,5 @@
 <div id="viewer" style="width: 100%; height: 98vh; overflow: scroll; background-color: lightgrey;" class="ui raised segment"></div>
-<div class="ui large teal label operator">Operator: {{ session.get('auth')['name'] }}</div>
+<div class="ui hidden large teal label prev-operator"></div>
 <div class="ui large label filename"></div>
 <div class="command">           
     <div class="ui small basic icon buttons">

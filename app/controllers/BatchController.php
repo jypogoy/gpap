@@ -228,5 +228,26 @@ class BatchController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
+
+    public function getPrevOperatorAction()
+    {
+        $this->view->disable();
+
+        $batchId = $this->request->getPost('batch_id');
+        $nextTaskId = $this->request->getPost('task_id');
+
+        $sql = "SELECT u.userfirstname AS first_name, u.userlastname AS last_name 
+                FROM data_entry de 
+                INNER JOIN task t ON t.next_task_id = ?
+                INNER JOIN user u ON u.userid = de.user_id 
+                WHERE de.batch_id = ?";
+
+        $result = $this->db->query($sql, [$nextTaskId, $batchId]);
+        $result->setFetchMode(\Phalcon\Db::FETCH_OBJ);
+        $rows = $result->fetchAll($result);            
+
+        $this->response->setJsonContent($rows[0]);
+        $this->response->send();   
+    }
 }
 

@@ -123,7 +123,23 @@ $(function() {
         getContents();
     }        
 
-    if ($('#session_task_name').val().indexOf('Verify') != -1) getRawContents();
+    if ($('#session_task_name').val().indexOf('Verify') != -1) {
+        getRawContents();
+        var params = {};
+        params.batch_id = $('#batch_id').val();
+        params.task_id = $('#session_task_id').val();
+        $.post('../batch/getprevoperator', params, function (data) {            
+            if (data) {
+                $('.prev-operator').removeClass('hidden');
+                $('.prev-operator').html('Prev Optr: ' + data.first_name + ' ' + data.last_name);            
+            }                
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });         
+    } else {
+        $('.prev-operator').addClass('hidden');
+    }
 
     $('#merchant_number').focus();
     $('.dropdown.icon').removeAttr('tabIndex');    
