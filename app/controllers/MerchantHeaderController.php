@@ -91,6 +91,7 @@ class MerchantHeaderController extends ControllerBase
             return $this->response->redirect('');
         }
 
+        $batchId = $this->request->getPost('batch_id');
         $merchantNumber = $this->request->getPost('merchant_number');
         $dcn = $this->request->getPost('dcn');
         $depositAmount = $this->request->getPost('deposit_amount');
@@ -104,9 +105,9 @@ class MerchantHeaderController extends ControllerBase
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id 
-                    WHERE m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
+                    WHERE de.batch_id != ? AND m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
 
-            $result = $this->db->query($sql, [$merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
+            $result = $this->db->query($sql, [$batchId, $merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
             $result = $result->fetchAll($result);
            
             $total = intval($result[0]['Total']);
@@ -125,6 +126,7 @@ class MerchantHeaderController extends ControllerBase
             return $this->response->redirect('');
         }
 
+        $batchId = $this->request->getPost('batch_id');
         $dcn = $this->request->getPost('dcn');
         $regionCode = $this->request->getPost('region_code');
         $taskId = $this->request->getPost('task_id');
@@ -136,9 +138,9 @@ class MerchantHeaderController extends ControllerBase
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id 
-                    WHERE m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?';
+                    WHERE de.batch_id != ? AND m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?';
 
-            $result = $this->db->query($sql, [$dcn, $regionCode, $taskId]);
+            $result = $this->db->query($sql, [$batchId, $dcn, $regionCode, $taskId]);
             $result = $result->fetchAll($result);
            
             $total = intval($result[0]['Total']);

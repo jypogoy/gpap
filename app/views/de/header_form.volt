@@ -19,8 +19,8 @@
         <label>Merchant Name</label>
         {{ text_field('merchant_name', 'class': 'header-field', 'disabled' : true) }}
     </div>  
-    <div class="equal width small fields">
-        <div id="dcn_wrapper" class="required field">
+    <div class="small fields">
+        <div id="dcn_wrapper" class="four wide required field">
             <label>DCN</label>
             {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
         </div> 
@@ -40,7 +40,7 @@
                 <button id="otherCurrencyBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>
             </div>
         </div>      
-        <div id="deposit_amount_wrapper" class="required field">
+        <div id="deposit_amount_wrapper" class="eight wide required field">
             <label>Batch Amt</label>
             {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
         </div>                                                      

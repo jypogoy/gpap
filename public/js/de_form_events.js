@@ -101,6 +101,7 @@ $(function() {
                 $('#' + this.id + '_alert').remove();    
                 
                 var params = {};
+                params.batch_id = $('#batch_id').val();
                 params.merchant_number = $('#merchant_number').val();
                 params.dcn = $('#dcn').val();
                 params.deposit_amount =  $('#deposit_amount').val();
@@ -122,6 +123,7 @@ $(function() {
                 });          
                 
                 var params = {};
+                params.batch_id = $('#batch_id').val();
                 params.dcn = $('#dcn').val();
                 params.region_code = $('#region_code').val();
                 params.task_id = $('#session_task_id').val();                     
@@ -640,6 +642,19 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
     }
     if(headerValidationResult) {            
         if (headerValidationResult && slipValidationResult) {
+            
+            var wrapper = $('#variance_exception_wrapper');
+            $('#variance_alert').remove();
+            if ($('#variance').val() < 0 && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
+                                '<span id="variance_msg">With variance</span>' +
+                                '</div>');
+                return;
+            } else {
+                $(wrapper).removeClass('error');                
+            }
+
             if (isComplete) {
                 $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
 

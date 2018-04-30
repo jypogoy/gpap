@@ -151,6 +151,11 @@ function refreshTransTypeDependentFields() {
         $('#other_fields_div').removeClass('hidden');
         $('.airline-field').parent().removeClass('hidden');
         $('.vi-field').parent().addClass('hidden');
+
+        $('#airline_ticket_number').keyup(function() {
+            this.value = this.value.replace(/[\s]/g, '');        
+        });
+
     } else if (option.indexOf('VI') != -1) {
         $('#other_fields_div').removeClass('hidden');
         $('.vi-field').parent().removeClass('hidden');
@@ -197,6 +202,9 @@ function setAsException(batchId, isException) {
     params.batch_id = batchId;
     params.is_exception = isException;
     $.post('../batch/exception/', params, function (success) {
-        // Do nothing...
+        if (isException) {
+            $('#variance_exception_wrapper').removeClass('error');
+            $('#variance_alert').remove();
+        }
     });    
 }
