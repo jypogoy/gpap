@@ -159,5 +159,39 @@ class TransactionController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
-    
+
+    public function transDateElevenMonthsOlderAction($transDate)
+    {
+        $this->view->disable();
+        
+        try {
+            $sql = "SELECT ? < DATE_ADD(CURDATE(), INTERVAL -6 MONTH) AS is_older";
+
+            $result = $this->db->query($sql, [$transDate]);
+
+            $this->response->setJsonContent($result->fetch());
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    public function transDateFutureAction($transDate)
+    {
+        $this->view->disable();
+        
+        try {
+            $sql = "SELECT ? > CURDATE() AS is_future";
+
+            $result = $this->db->query($sql, [$transDate]);
+
+            $this->response->setJsonContent($result->fetch());
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
 }

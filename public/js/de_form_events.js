@@ -195,6 +195,13 @@ $(function() {
 
     $('#transaction_date').blur(function() {
         if (this.value != '') $('#transaction_date_wrapper').removeClass('error');
+        var date = $.datepicker.formatDate('yy-mm-dd', new Date(this.value));
+        $.post('../transaction/transdatefuture/', date, function(data) {
+            console.log(data.is_future);
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        }); ;
     });    
 
     $('#card_number').blur(function() {

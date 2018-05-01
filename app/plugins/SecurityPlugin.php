@@ -57,7 +57,7 @@ class SecurityPlugin extends Plugin
 				'merchant_header'	=>	['get', 'save', 'getsame', 'getsameregionday'],
 				'other_exception'	=>	['list'],
 				'pull_reason'	=>	['getbylevel'],
-				'transaction'	=>	['getbyheader', 'deleteprevious', 'save'],
+				'transaction'	=>	['getbyheader', 'deleteprevious', 'save', 'transdateelevenmonthsolder', 'transdatefuture'],
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
