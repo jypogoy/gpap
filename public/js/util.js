@@ -148,3 +148,12 @@ function formatDate(date) {
     var year = date.getFullYear().toString().substr(-2);
     return month + '/' + day + '/' + year;
 }
+
+function charsLeft(el) {
+    var diff = el.maxLength - el.value.length;
+    $('#' + el.id + '_counter').html(diff + (diff > 1 ? ' chars' : ' char') + ' left.');
+}
+
+function toAlphaNumNoSpace(el) {
+    el.value = el.value.replace(/[^a-z0-9]/g, '');
+}

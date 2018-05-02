@@ -165,7 +165,7 @@ class TransactionController extends ControllerBase
         $this->view->disable();
         
         try {
-            $sql = "SELECT ? < DATE_ADD(CURDATE(), INTERVAL -6 MONTH) AS is_older";
+            $sql = "SELECT ? < DATE_ADD(CURDATE(), INTERVAL -11 MONTH) AS is_older";
 
             $result = $this->db->query($sql, [$transDate]);
 

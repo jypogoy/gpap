@@ -63,22 +63,24 @@
             </div>
         </div> 
     </div>    
-    <div id="other_fields_div" class="small hidden fields">                    
+    <div id="other_fields_div" class="hidden fields">                    
         <div id="airline_ticket_number_wrapper" class="sixteen wide hidden field">    
             <label>Ticket No.</label> 
-            {{ text_field('airline_ticket_number', 'maxlength': '13', 'class': 'airline-field slip-field') }} 
+            {{ text_field('airline_ticket_number', 'maxlength': 13, 'class': 'airline-field slip-field') }} 
         </div>        
         <div id="customer_reference_identifier_wrapper" class="six wide hidden field">    
             <label>Cust Ref</label> 
-            {{ text_field('customer_reference_identifier', 'maxlength': '17', 'class': 'vi-field slip-field') }}
+            {{ text_field('customer_reference_identifier', 'maxlength': 17, 'class': 'vi-field slip-field') }}
+            <div id="customer_reference_identifier_counter" class="charcount">17 chars left.</div>
         </div>
         <div id="merchant_order_number_wrapper" class="seven wide hidden field">    
             <label>Order No.</label> 
-            {{ text_field('merchant_order_number', 'maxlength': '25', 'class': 'vi-field slip-field') }}
+            {{ text_field('merchant_order_number', 'maxlength': 25, 'class': 'vi-field slip-field') }}
+            <div id="merchant_order_number_counter" class="charcount">25 chars left.</div>
         </div>
         <div id="commodity_code_wrapper" class="three wide hidden field">    
-            <label>Comm Code</label> 
-            {{ text_field('commodity_code', 'maxlength': '4', 'class': 'vi-field slip-field') }}
+            <label>Com Code</label> 
+            {{ text_field('commodity_code', 'maxlength': 4, 'class': 'vi-field slip-field') }}
         </div>
     </div>     
     <div class="equal width small fields">                    

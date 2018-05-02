@@ -146,6 +146,10 @@ $(function() {
             $('#' + this.id + '_alert').remove();   
         }
     });   
+
+    $('#dcn').keyup(function() {
+        toAlphaNumNoSpace(this);
+    });
     
     $('#deposit_date').blur(function() {
         if (this.value != '') $('#deposit_date_wrapper').removeClass('error');
@@ -182,6 +186,12 @@ $(function() {
         this.select();
     });
 
+    $('#batch_pull_reason_id_dropdown').find('.search').focus(function() {        
+        if ($('#headerDataForm').find('.error').length == 0) {
+            $('#transaction_date').focus();
+        }
+    });
+
     //------------- Transaction Events ---------------------------------
 
     $('#region_code').keyup(function() {
@@ -194,14 +204,46 @@ $(function() {
     });
 
     $('#transaction_date').blur(function() {
-        if (this.value != '') $('#transaction_date_wrapper').removeClass('error');
+        var wrapper = $('#' + this.id + '_wrapper');
+        var alert = $('#' + this.id + '_alert');
+        var msg = $('#' + this.id + '_msg');
+        if (this.value != '') $(wrapper).removeClass('error');
+
         var date = $.datepicker.formatDate('yy-mm-dd', new Date(this.value));
-        $.post('../transaction/transdatefuture/', date, function(data) {
-            console.log(data.is_future);
+
+        $.post('../transaction/transdateelevenmonthsolder/' + date, function(data) {
+            $(wrapper).removeClass('error');
+            $(alert).remove();
+            if (data.is_older == 1) {
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
+                        '<span id="transaction_date_msg">Older than 11 months</span>' +
+                        '</div>');
+                $(this).val('');
+                $(this).select();
+                $(this).focus();
+            }
         })
         .fail(function (xhr, status, error) {
             toastr.error(error);
-        }); ;
+        });
+
+        $.post('../transaction/transdatefuture/' + date, function(data) {
+            $(wrapper).removeClass('error');
+            $(alert).remove();
+            if (data.is_future == 1) {                
+                $(wrapper).addClass('error');
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
+                        '<span id="transaction_date_msg">Future Date</span>' +
+                        '</div>');
+                $(this).val('');
+                $(this).select();
+                $(this).focus();
+            }
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });
     });    
 
     $('#card_number').blur(function() {
@@ -382,6 +424,19 @@ $(function() {
         this.select();
     });
 
+    $('#customer_reference_identifier').keyup(function() {
+        $(this).val($(this).val().toUpperCase());
+        charsLeft(this);
+    });
+
+    $('#merchant_order_number').keyup(function() {
+        $(this).val($(this).val().toUpperCase());
+        charsLeft(this);
+    });
+
+    $('#commodity_code').keyup(function() {
+        $(this).val($(this).val().toUpperCase());
+    });
     //------------- Transaction Control Events ---------------------------------
     $('.more-btn').click(function(e) {
         e.preventDefault();        

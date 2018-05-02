@@ -174,6 +174,8 @@ function getMerchantInfo(merchant_number) {
         if (!merchantData) {
             toastr.info('The search did not match any merchant.');                    
             Form.clear(true);
+            $('#merchant_number').focus();
+            $('#merchant_number').select();
         } else {
             // Reset merchant details map.
             merchantInfoMap.clear();

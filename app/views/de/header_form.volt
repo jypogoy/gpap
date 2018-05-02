@@ -13,7 +13,7 @@
 
     <div id="merchant_number_wrapper" class="required small field">
         <label>Merchant Number </label>
-        {{ text_field('merchant_number', 'class': 'header-field', 'maxlength': '16', 'placeholder': 'Type in the Merchant Number and press <Enter> to validate') }}
+        {{ text_field('merchant_number', 'class': 'header-field no-clear', 'maxlength': '16', 'placeholder': 'Type in the Merchant Number and press <Enter> to validate') }}
     </div>  
     <div id="merchant_name_wrapper" class="required small field">
         <label>Merchant Name</label>

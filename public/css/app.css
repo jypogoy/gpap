@@ -224,3 +224,9 @@ input[readonly] {
 .uppercase {
     text-transform: uppercase;
 }
+
+.charcount {
+    margin-top: 5px;
+    margin-right: 5px;
+    text-align: right;
+}
