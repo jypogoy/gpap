@@ -186,13 +186,16 @@ function calculateAmount() {
         });
     });
        
-    var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-    $('#total_transaction_amount').val(fAmount);    
+    var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js     
     var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
+    
+    var totalAmountField = $('#total_transaction_amount');
     var varianceField =  $('#variance');
     if (currNoDecimal) {
+        totalAmountField.val(accounting.formatNumber(fAmount));   
         varianceField.val(accounting.formatNumber(totalAmount - depAmount)); // See accounting.min.js            
     } else {
+        totalAmountField.val(accounting.formatMoney(depAmount, { symbol: '',  format: '%v %s' }));   
         varianceField.val(accounting.formatMoney(totalAmount - depAmount, { symbol: '',  format: '%v %s' })); // See accounting.min.js
     }
 }
