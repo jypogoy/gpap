@@ -177,5 +177,5 @@ function charsLeft(el) {
 }
 
 function toAlphaNumNoSpace(el) {
-    el.value = el.value.replace(/[^a-z0-9]/g, '');
+    el.value = el.value.replace(/[^a-zA-Z0-9]/g, '');
 }

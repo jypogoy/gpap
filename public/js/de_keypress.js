@@ -124,7 +124,7 @@ $(function() {
         $('canvas').width(imageOrigSize);
         performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
         degree = 0;
-    });
+    });    
 
     // Rotate left
     listener.simple_combo("ctrl shift e", function() {
@@ -151,6 +151,38 @@ $(function() {
     // Ruler
     listener.simple_combo("ctrl /", function() {
         toggleShow(); // See ruler.js
+    });
+
+    // Grab and move to the left
+    listener.simple_combo("shift left", function() {
+        alert();
+        // $('canvas').width(imageOrigSize);
+        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
+        // degree = 0;
+    });
+
+    // Grab and move to the right
+    listener.simple_combo("shift right", function() {
+        alert();
+        // $('canvas').width(imageOrigSize);
+        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
+        // degree = 0;
+    });
+
+    // Grab and move to the top
+    listener.simple_combo("shift up", function() {
+        alert();
+        // $('canvas').width(imageOrigSize);
+        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
+        // degree = 0;
+    });
+
+    // Grab and move to the bottom
+    listener.simple_combo("shift down", function() {
+        alert();
+        // $('canvas').width(imageOrigSize);
+        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
+        // degree = 0;
     });
 });
 

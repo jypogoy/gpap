@@ -25,7 +25,7 @@
             {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
         </div> 
         <div id="currency_id_wrapper" class="required field">
-            <label>CNY Code <span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
+            <label>CNY Code<span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
             <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
                 <input id="currency_id" type="hidden" class="header-field">
                 <div class="default text">Choose a code</div>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div id="other_currency_wrapper" class="required hidden field">
-            <label>CNY Code <span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
+            <label>CNY Code<span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
             <div class="ui action input">
                 <input type="text" id="other_currency" class="uppercase header-field" maxlength="3">
                 <button id="otherCurrencyBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>

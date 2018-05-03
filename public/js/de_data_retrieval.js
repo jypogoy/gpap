@@ -192,7 +192,7 @@ function getMerchantInfo(merchant_number) {
 
             // Show tip if allows multiple currencies.
             if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
-                $('#multi_currency').html('MULTI');
+                $('#multi_currency').html(' MULTI');
             } else {
                 $('#multi_currency').html('');
             }
