@@ -190,6 +190,13 @@ function getMerchantInfo(merchant_number) {
             getRegionCurrency();
             Form.resetErrors(true);
 
+            // Show tip if allows multiple currencies.
+            if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
+                $('#multi_currency').html('MULTI');
+            } else {
+                $('#multi_currency').html('');
+            }
+
             // Perform merchant specific validations.
             var wrapper = $('#merchant_number_wrapper');
             var alert = $('#merchant_number_alert');
