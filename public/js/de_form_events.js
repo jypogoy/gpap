@@ -41,7 +41,22 @@ $(function() {
                 $('#other_currency_wrapper').addClass('hidden');
                 $('#currency_id_wrapper').removeClass('hidden');
                 if (value > 0) {
-                    if (this.value != '') $('#currency_id_wrapper').removeClass('error');
+                    if (this.value != '') {
+                        $('#currency_id_wrapper').removeClass('error');
+                        $('#currency_id_alert').remove();
+                        var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
+                        if (currency != merchantInfoMap.get('currency')) {
+                            if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
+                                $('#currency_id_wrapper').addClass('error');
+                                $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
+                                        '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
+                                        '</div>');
+                            }
+                        } else {
+                            $('#currency_id_wrapper').removeClass('error');
+                            $('#currency_id_alert').remove();
+                        } 
+                    }
                 } else {
                     $(this).dropdown('restore defaults');
                 }
@@ -73,6 +88,23 @@ $(function() {
                 varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '',  format: '%v %s' })); // See accounting.min.js
             }
         }
+    });
+
+    $('#currency_id_dropdown').find('.search').blur(function() {
+        $('#currency_id_wrapper').removeClass('error');
+        $('#currency_id_alert').remove();
+        var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
+        if (currency != merchantInfoMap.get('currency')) {
+            if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
+                $('#currency_id_wrapper').addClass('error');
+                $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
+                        '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
+                        '</div>');
+            }
+        } else {
+            $('#currency_id_wrapper').removeClass('error');
+            $('#currency_id_alert').remove();
+        }   
     });
 
     $('#otherCurrencyBtn').click(function(e) {
