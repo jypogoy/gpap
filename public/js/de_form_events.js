@@ -142,6 +142,7 @@ $(function() {
                 
                 // Same DCN, same MID, same total amount within the same Region in the historical record
                 $.post('../merchant_header/getsame/', params, function (hasMatch) {   
+                    console.log(hasMatch);
                     if (hasMatch) {
                         $('#' + this.id + '_alert').remove();
                         $(wrapper).addClass('error');
