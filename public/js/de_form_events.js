@@ -11,13 +11,13 @@ $(function() {
     $('#merchant_number').on('keyup', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13 && $(this).val().length > 0) { 
-            getMerchantInfo($(this).val()).then(function(data) {
+            getMerchantInfo($(this).val()).then(function(data) { // See de_data_retrieval.js
                 if (!data) {
                     $('#merchant_number').focus();
                 } else {
                     $('#dcn').focus();
                 }
-            }); // See de_data_retrieval.js
+            }); 
             padZero($(this));
             $('#card_number_alert').remove();
             $('#card_number_wrapper').removeClass('error');            
@@ -260,20 +260,49 @@ $(function() {
             $(this).val('');
             $('#merchant_number').focus();
         } else {
-            if (!validateCard($(this).val())) { // See utils.js
-                $(alert).remove();
-                $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                        '<span id="' + this.id + '_msg">Invalid Credit Card number</span>' +
-                        '</div>');
-                $(logo).attr('src', '../public/img/card/private.png')
+            if (!validateCard($(this).val())) { // See util.js
+
+                var isPreInvalid = false;
+                var cardType = getCardType($(this).val()); // See util.js
+                switch (cardType) {
+                    case 'Maestro':
+                        $(alert).remove();
+                        $(wrapper).addClass('error');
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">PAN Issuer Identification Number is not supported</span>' +
+                                '</div>');
+                        $(logo).attr('src', '../public/img/card/maestro.png');
+                        isPreInvalid = true;
+                        break;
+
+                    case 'NotSupported':
+                        $(alert).remove();
+                        $(wrapper).addClass('error');
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
+                                '</div>');
+                        isPreInvalid = true;
+                        break;
+
+                    default:                            
+                            break;
+                }
+                
+                if (!isPreInvalid) {
+                    $(alert).remove();
+                    $(wrapper).addClass('error');
+                    $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                            '<span id="' + this.id + '_msg">Invalid Credit Card number</span>' +
+                            '</div>');
+                    $(logo).attr('src', '../public/img/card/private.png')
+                }
             } else {
                 $(wrapper).removeClass('error');       
                 $(alert).remove();
-                var cardType = getCardType($(this).val());
+                var cardType = getCardType($(this).val()); // See util.js
                 if (this.value.trim() != '') {
                     
-                    this.value = cc_format(this.value); // See utils.js
+                    this.value = cc_format(this.value); // See util.js
                     
                     switch (cardType) {
                         case 'Visa':
@@ -366,11 +395,12 @@ $(function() {
     });
 
     $('#card_number').keyup(function() {
-        unformat(this); // See utils.js
+        unformat(this); // See util.js
+        limitCardLengthByStartingNumbers(this); // See util.js
     });
 
     $('#card_number').click(function() {
-        unformat(this); // See utils.js
+        unformat(this); // See util.js
         this.select();
     });
 

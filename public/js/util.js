@@ -59,7 +59,7 @@ function createCORSRequest(method, url) {
     return xhr;
 }
 
-function validateCard(value) {
+function validateCard(value) { // Luhn algorithm or MOD 10
     // accept only digits, dashes or spaces
     if (/[^0-9-\s]+/.test(value)) return false;
 
@@ -80,6 +80,18 @@ function validateCard(value) {
     }
 
     return (nCheck % 10) == 0;
+}
+
+function limitCardLengthByStartingNumbers(el) {
+    var number = el.value;
+    // Not supported starting numbers
+    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)");
+    if (number.match(re) != null) {
+        re = new RegExp("^(3|4|9|51|52|53|54|55|589460)");
+        if (number.match(re) != null) $(el).attr('maxlength', 16);
+        re = new RegExp("^(2131|1800)");
+        if (number.match(re) != null) $(el).attr('maxlength', 15);
+    }
 }
 
 function getCardType(number)
@@ -128,6 +140,16 @@ function getCardType(number)
     re = new RegExp("^(62[0-9]{14,17})$");
     if (number.match(re) != null)
         return "CUP";
+
+    // Maestro
+    re = new RegExp("^(5018)");
+    if (number.match(re) != null)
+        return "Maestro";
+
+    // Not supported starting numbers
+    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)");
+    if (number.match(re) == null)
+        return "NotSupported";
 
     return "";
 }

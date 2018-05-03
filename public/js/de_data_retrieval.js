@@ -193,7 +193,7 @@ function getMerchantInfo(merchant_number) {
             // Perform merchant specific validations.
             var wrapper = $('#merchant_number_wrapper');
             var alert = $('#merchant_number_alert');
-            if (merchantInfoMap.get('merchantStatus') !== 'O') {
+            if (merchantInfoMap.get('merchantStatus') !== 'O' && merchantInfoMap.get('merchantStatus') !== 'R') {
                 $(alert).remove();
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
@@ -310,7 +310,14 @@ function getSlipContents(headerId) {
                 $('.delete-slip-btn').removeClass('disabled'); 
             }
             
-            calculateAmount(); // See de_data_navigation.js            
+            calculateAmount(); // See de_data_navigation.js    
+            
+            // Refresh character counter.
+            var counterEls = $('.charcount');
+            $.each(counterEls, function(c, el) {
+                var valueEL = $('#' + el.id.substring(0, el.id.lastIndexOf('_')));
+                charsLeft(valueEL[0]);
+            });
         }                  
     })
     .done(function (msg) {
