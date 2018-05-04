@@ -441,6 +441,7 @@ $(function() {
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
         this.value = this.value.toUpperCase();
         var wrapper = $('#' + this.id + '_wrapper');
+        $(wrapper).removeClass('error');
         $('#' + this.id + '_alert').remove();
         // Check length of keyed information.
         if (this.value.length > 0 && this.value.length < this.minLength) {            
@@ -453,7 +454,7 @@ $(function() {
                 var slipValueMap = slipMap.get(slipPage - 1);
                 if (slipValueMap) {
                     var prevAuthCode = slipValueMap.get('authorization_code');
-                    if (prevAuthCode === this.value) {
+                    if (prevAuthCode.length > 0 && this.value.length > 0 && prevAuthCode === this.value) {
                         $(wrapper).addClass('error');
                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                 '<span id="' + this.id + '_msg">Auth Code with duplicate</span>' +
