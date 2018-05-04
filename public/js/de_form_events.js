@@ -117,7 +117,8 @@ $(function() {
     });
 
     $('#dcn').blur(function() {
-        var wrapper = $('#' + this.id + '_wrapper');       
+        var el = this;
+        var wrapper = $('#' + el.id + '_wrapper');       
         if (this.value.length > 0) {
             if (this.value.length < 7) {
                 // Reset formatting
@@ -141,17 +142,16 @@ $(function() {
                 params.task_id = $('#session_task_id').val();            
                 
                 // Same DCN, same MID, same total amount within the same Region in the historical record
-                $.post('../merchant_header/getsame/', params, function (hasMatch) {   
-                    console.log(hasMatch);
-                    if (hasMatch) {
-                        $('#' + this.id + '_alert').remove();
+                $.post('../merchant_header/getsame/', params, function (data) {                       
+                    if (data) {
+                        $('#' + el.id + '_alert').remove();
                         $(wrapper).addClass('error');
-                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                '<span id="' + this.id + '_msg">Invalid: Same DCN, same MID, same total amount within the same Region in the historical record</span>' +
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                '<span id="' + el.id + '_msg">Exists in ' + data.job + '</span>' +
                                 '</div>');
                     } else {
                         $(wrapper).removeClass('error');
-                        $('#' + this.id + '_alert').remove();
+                        $('#' + el.id + '_alert').remove();
                     }
                 });          
                 
@@ -161,16 +161,16 @@ $(function() {
                 params.region_code = $('#region_code').val();
                 params.task_id = $('#session_task_id').val();                     
                 // Same DCN within the same Region on the same day
-                $.post('../merchant_header/getsameregionday/', params, function (hasMatch) {   
-                    if (hasMatch) {
+                $.post('../merchant_header/getsameregionday/', params, function (data) {   
+                    if (data) {
                         $('#' + this.id + '_alert').remove();
                         $(wrapper).addClass('error');
-                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                '<span id="' + this.id + '_msg">Invalid: Same DCN within the same Region on the same day</span>' +
+                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                '<span id="' + el.id + '_msg">Exists in ' + data.job + '</span>' +
                                 '</div>');
                     } else {
                         $(wrapper).removeClass('error');
-                        $('#' + this.id + '_alert').remove();
+                        $('#' + el.id + '_alert').remove();
                     }
                 });
             }    

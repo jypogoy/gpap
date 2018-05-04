@@ -99,30 +99,22 @@ class MerchantHeaderController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
 
         try {
-            // $sql = 'SELECT COUNT(de.id) AS Total 
-            //         FROM data_entry de 
-            //         INNER JOIN merchant_header m ON m.data_entry_id = de.id 
-            //         INNER JOIN task t ON t.id = de.task_id 
-            //         INNER JOIN batch b ON b.id = m.batch_id 
-            //         INNER JOIN zip z ON z.id = b.zip_id 
-            //         WHERE de.batch_id != ? AND m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
-            $sql = 'SELECT CONCAT(z.region_code, \'_\', z.rec_date, \'_\', z.operator_id, \'_\', LPAD(z.sequence,3,\'0\'), \'_\', tt.type) AS match
+            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type) AS job
                     FROM data_entry de 
                     INNER JOIN merchant_header m ON m.data_entry_id = de.id 
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
-                    WHERE de.batch_id != ? AND m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?';
+                    WHERE de.batch_id != ? AND m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?";
 
             $result = $this->db->query($sql, [$batchId, $merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
-            $result->setFetchMode(\Phalcon\Db::FETCH_OBJ);
-            $result = $result->fetch($result);
-           
+            $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
+            
             $this->response->setJsonContent($result);
             $this->response->send(); 
 
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {     
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
@@ -141,19 +133,20 @@ class MerchantHeaderController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
 
         try {
-            $sql = 'SELECT COUNT(de.id) AS Total 
+            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type) AS job
                     FROM data_entry de 
                     INNER JOIN merchant_header m ON m.data_entry_id = de.id 
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
-                    INNER JOIN zip z ON z.id = b.zip_id 
-                    WHERE de.batch_id != ? AND m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?';
+                    INNER JOIN zip z ON z.id = b.zip_id
+                    INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
+                    WHERE de.batch_id != ? AND m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?";
 
             $result = $this->db->query($sql, [$batchId, $dcn, $regionCode, $taskId]);
-            $result = $result->fetchAll($result);
+            $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
            
-            $total = intval($result[0]['Total']);
-            echo $total > 0 ? true : false;    
+            $this->response->setJsonContent($result);
+            $this->response->send();    
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));
