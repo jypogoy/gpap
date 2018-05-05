@@ -618,52 +618,56 @@ function addNewSlip() {
 }
 
 function insertSlip() {
-    // Make sure to save the current slip to keep any changes prior to inserting.
-    saveSlip();
-        
-    // Keep copy of all left and right values of the current position.
-    var beforeMap = new HashMap();
-    var afterMap = new HashMap();
-    var afterKey = slipPage;
-    slipMap.forEach(function(value, key) {
-        if (key < slipPage) {
-            beforeMap.set(key, value);
-        }
-        if (key >= afterKey) {       
-            afterKey++; // Make sure add 1 to key immediately to signify next value.                 
-            afterMap.set(afterKey, value);                                        
-        }
-    });
-
-    // Clear all values.
-    slipMap.clear();
+    if (Form.validate(false)) {
+        // Make sure to save the current slip to keep any changes prior to inserting.
+        saveSlip();
             
-    // Rebuild left values
-    beforeMap.forEach(function(value, key) {
-        slipMap.set(key, value);
-    });        
+        // Keep copy of all left and right values of the current position.
+        var beforeMap = new HashMap();
+        var afterMap = new HashMap();
+        var afterKey = slipPage;
+        slipMap.forEach(function(value, key) {
+            if (key < slipPage) {
+                beforeMap.set(key, value);
+            }
+            if (key >= afterKey) {       
+                afterKey++; // Make sure add 1 to key immediately to signify next value.                 
+                afterMap.set(afterKey, value);                                        
+            }
+        });
 
-    // Rebuild right values
-    afterMap.forEach(function(value, key) {
-        slipMap.set(key, value);
-    });
+        // Clear all values.
+        slipMap.clear();
+                
+        // Rebuild left values
+        beforeMap.forEach(function(value, key) {
+            slipMap.set(key, value);
+        });        
 
-    // Insert a new value in the map using the new and current position.
-    saveSlip();
-    
-    $('#totalSlips').html(slipMap.count());
+        // Rebuild right values
+        afterMap.forEach(function(value, key) {
+            slipMap.set(key, value);
+        });
 
-    // Clear form and restore required field markers.
-    Form.clear(false);
-    $(slipRequiredFields).addClass('required');
+        // Insert a new value in the map using the new and current position.
+        saveSlip();
+        
+        $('#totalSlips').html(slipMap.count());
 
-    $('.prev-slip-btn').removeClass('disabled'); 
-    $('.first-slip-btn').removeClass('disabled'); 
-    $('.next-slip-btn').removeClass('disabled'); 
-    $('.last-slip-btn').removeClass('disabled');         
-    $('.delete-slip-btn').removeClass('disabled'); 
-    
-    $('#transaction_date').focus();
+        // Clear form and restore required field markers.
+        Form.clear(false);
+        $(slipRequiredFields).addClass('required');
+
+        $('.prev-slip-btn').removeClass('disabled'); 
+        $('.first-slip-btn').removeClass('disabled'); 
+        $('.next-slip-btn').removeClass('disabled'); 
+        $('.last-slip-btn').removeClass('disabled');         
+        $('.delete-slip-btn').removeClass('disabled'); 
+        
+        $('.link-slip-btn').removeClass('hidden');
+        $('.unlink-slip-btn').addClass('hidden');
+        $('#transaction_date').focus();
+    }
 }
 
 function deleteSlip() {
