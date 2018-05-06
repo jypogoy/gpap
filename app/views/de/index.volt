@@ -48,6 +48,7 @@
 
 {{ modals.getConfirmation('delete', 'Transaction') }}
 {{ modals.getConfirmation('complete', 'Batch') }}
+{{ modals.getWarning() }}
 
 <form id="redirectForm"></form>
 

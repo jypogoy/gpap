@@ -1,5 +1,7 @@
 <?php
 
+use Phalcon\Filter;
+
 class TransactionController extends ControllerBase
 {
 
@@ -102,53 +104,43 @@ class TransactionController extends ControllerBase
         }
 
         try {
-            // Record a new header content.
-            $transaction = new Transaction();
-            $transaction->merchant_header_id = $this->request->getPost('merchant_header_id');
-            $transaction->sequence = $this->request->getPost('sequence');
-            $transaction->transaction_type_id = $this->request->getPost('transaction_type_id') == '' ? null : $this->request->getPost('transaction_type_id');
-            $transaction->region_code = $this->request->getPost('region_code') == '' ? null : $this->request->getPost('region_code');
 
-            //- Encrypt card information
-            // if ($this->request->getPost('card_number') == '') {
-            //     $transaction->card_number = null;
-            // } else {
-            //     $transaction->card_number = $this->crypt->encrypt($this->request->getPost('card_number'));
-            // }        
+            $filter = new Filter();
 
-            $transaction->card_number = $this->request->getPost('card_number') == '' ? null : $this->request->getPost('card_number');
-            $transaction->transaction_date = $this->request->getPost('transaction_date') == 'NaN-NaN-NaN' ? null : $this->request->getPost('transaction_date');
-            $transaction->authorization_code = $this->request->getPost('authorization_code') == '' ? null : $this->request->getPost('authorization_code');
-            $transaction->transaction_amount = $this->request->getPost('transaction_amount') == '' ? null : $this->request->getPost('transaction_amount');
-            $transaction->installment_months_id = $this->request->getPost('installment_months_id') == '' ? null : $this->request->getPost('installment_months_id');
-            $transaction->airline_ticket_number = $this->request->getPost('airline_ticket_number') == '' ? null : $this->request->getPost('airline_ticket_number');
-            $transaction->customer_reference_identifier = $this->request->getPost('customer_reference_identifier') == '' ? null : $this->request->getPost('customer_reference_identifier');
-            $transaction->merchant_order_number = $this->request->getPost('merchant_order_number') == '' ? null : $this->request->getPost('merchant_order_number');
-            $transaction->commodity_code = $this->request->getPost('commodity_code') == '' ? null : $this->request->getPost('commodity_code');
-            $transaction->slip_pull_reason_id = $this->request->getPost('slip_pull_reason_id') == '' ? null : $this->request->getPost('slip_pull_reason_id');
-            $transaction->exception_id = $this->request->getPost('exception_id') == '' ? null : $this->request->getPost('exception_id');
-            $transaction->variance_exception = $this->request->getPost('variance_exception') == 'true' || $this->request->getPost('variance_exception') == '1' ? 1 : 0;
-            $transaction->other_exception_detail = $this->request->getPost('other_exception_detail') == '' ? null : $this->request->getPost('other_exception_detail');
-            $transaction->image_id = $this->request->getPost('image_id') == '' ? null : $this->request->getPost('image_id');
-            $transaction->image_file = $this->request->getPost('image_file') == '' ? null : $this->request->getPost('image_file');
+            $sqlValuePart = 'VALUES';
+            $collection = $this->request->getPost('collection');
+            for ($i=0; $i < count($collection); $i++) {                 
+                $sqlValuePart = $sqlValuePart . '(';
+                $slip = $collection[$i];
+                $sqlValuePart = $sqlValuePart . $slip['merchant_header_id'] . ',';        
+                $sqlValuePart = $sqlValuePart . $slip['sequence'] . ',';        
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['transaction_type_id'], 'int') == '' ? 'null' : $filter->sanitize($slip['transaction_type_id'], 'int')) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['region_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['region_code'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['card_number'], 'string') == '' ? 'null' : 'AES_ENCRYPT(' . $filter->sanitize($slip['card_number'], 'string') . ', \'' . $this->config->AES_Key . '\')') . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['transaction_date'] == 'NaN-NaN-NaN' ? 'null' : '\'' . $slip['transaction_date'] . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['authorization_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['authorization_code'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['transaction_amount'] == '' ? 'null' : $slip['transaction_amount']) . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['installment_months_id'] == '' ? 'null' : $slip['installment_months_id']) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['airline_ticket_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['airline_ticket_number'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : $filter->sanitize($slip['customer_reference_identifier'], 'string')) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['merchant_order_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['merchant_order_number'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['commodity_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['commodity_code'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['slip_pull_reason_id'] == '' ? 'null' : $slip['slip_pull_reason_id']) . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['exception_id'] == '' ? 'null' : $slip['exception_id']) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['other_exception_detail'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['other_exception_detail'], 'string') . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['image_id'] == '' ? 'null' : $slip['image_id']) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['image_file'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['image_file'], 'string') . '\'');
+                $sqlValuePart = $sqlValuePart . ')';
+                if ($i < (count($collection) - 1)) $sqlValuePart  = $sqlValuePart . ',';        
+            }
 
-            // if (!$transaction->save()) {
-            //     echo 0;
-            // } else {
-            //     echo 1;
-            // }
             $sql = 'INSERT INTO transaction (merchant_header_id, sequence, transaction_type_id, `region_code`, `card_number`, `transaction_date`, `authorization_code`,
                     `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
-                    `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`)
-                    VALUES (?, ?, ?, ?, AES_ENCRYPT(?, \'' . $this->config->AES_Key . '\'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-                        
-            $result = $this->db->query($sql, [$transaction->merchant_header_id, $transaction->sequence, $transaction->transaction_type_id, $transaction->region_code, $transaction->card_number,
-                    $transaction->transaction_date, $transaction->authorization_code, $transaction->transaction_amount, $transaction->installment_months_id, $transaction->airline_ticket_number,
-                    $transaction->customer_reference_identifier, $transaction->merchant_order_number, $transaction->commodity_code, $transaction->slip_pull_reason_id,
-                    $transaction->exception_id, $transaction->other_exception_detail, $transaction->image_id, $transaction->image_file]);                    
-
-            $n = $result->numRows();    
-
+                    `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`) ';
+            
+            $sql = $sql . $sqlValuePart;        
+            
+            $result =  $this->db->query($sql);
             if ($result->numRows() > 0) {
                 echo 1;
             } else {

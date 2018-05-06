@@ -1,7 +1,7 @@
 function saveBatch(isSaveOnly, isSaveNew, isComplete) {
 
     saveSlip(); // Save the current content. See de_data_navigation.js   
-
+    
     // Record new header.
     $.when(writeHeader())
     .done(function(headerId) {
@@ -138,6 +138,9 @@ function delPreviousTrans(headerId) {
 function writeSlips(headerId) {
     var d = $.Deferred();
 
+    // Assemble all transaction details.
+    var params = {};
+    params.collection = [];
     slipMap.forEach(function(fieldValueMap, index) {                        
         var data = {};
         data['merchant_header_id'] = headerId;
@@ -152,12 +155,13 @@ function writeSlips(headerId) {
                     data[id] = value;
                 }
             }      
-        });
-        
-        // Write the transaction details.
-        $.post('../transaction/save', data, function (result) {
-            d.resolve(result == 1 ? true : false);
-        });                                     
+        });        
+        params.collection.push(data);                                             
+    });
+
+    // Write the transaction details.
+    $.post('../transaction/save', params, function (result) {
+        d.resolve(result == 1 ? true : false);
     });
 
     return d.promise();

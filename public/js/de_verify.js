@@ -33,10 +33,10 @@ function applyHeaderChecks(fields) {
 
         // Dropdown or comboboxes
         var dropdown = $('#' + field.id + '_dropdown');
-        $(dropdown).blur(function(e) {
+        $(dropdown).find('.search').blur(function(e) {
             $('#' + field.id + '_alert').remove();
             var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object    
-            if ($(dropdown).dropdown('get value') !== rawValue) {                    
+            if ($(dropdown).dropdown('get value') !== rawValue) {   
                 if (field.id == 'currency_id') {    
                     var data = currencyMap.get(rawValue);                    
                     if (data) showMessage(field.id, rawValue, data.alpha_code);
@@ -68,54 +68,60 @@ function applySlipChecks() {
             // Input fields
             $(field).blur(function(e) {                
                 $('#' + field.id + '_alert').remove();
-                var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
-                if (field.id.indexOf('date') != -1) {
-                    if (rawValue && rawValue.length > 0) {
-                        var date =new Date(rawValue);                        
-                        rawValue = formatDate(date); // See util.js
-                        if(field.value !== rawValue) {                                                    
-                            showMessage(field.id, rawValue, rawValue);
+                if (rawSlipMap.get(slipPage)) {
+                    var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
+                    if (field.id.indexOf('date') != -1) {
+                        if (rawValue && rawValue.length > 0) {
+                            var date =new Date(rawValue);                        
+                            rawValue = formatDate(date); // See util.js
+                            if(field.value !== rawValue) {                                                    
+                                showMessage(field.id, rawValue, rawValue);
+                            }
                         }
-                    }
-                } else {
-                    if(rawValue && field.value !== rawValue) {         
-                        showMessage(field.id, rawValue, rawValue);
                     } else {
-                        hideMessage(field.id);
+                        if(rawValue && field.value !== rawValue) {         
+                            showMessage(field.id, rawValue, rawValue);
+                        } else {
+                            hideMessage(field.id);
+                        }
                     }
                 }
             });
             // Dropdown or comboboxes
             var dropdown = $('#' + field.id + '_dropdown');
-            $(dropdown).blur(function(e) {
+            $(dropdown).find('.search').blur(function(e) {
                 $('#' + field.id + '_alert').remove();
-                var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
-                if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
-                    if (field.id == 'installment_months_id') {    
-                        var data = installMonthsMap.get(rawValue);                    
-                        if (data) showMessage(field.id, rawValue, data.title);
-                    } else if (field.id == 'slip_pull_reason_id') {
-                        var data = slipPullReasonMap.get(rawValue);   
-                        if (data) showMessage(field.id, data.id, data.on_display);
-                    } else if (field.id == 'exception_id') {
-                        var data = exceptionMap.get(rawValue);   
-                        if (data) showMessage(field.id, data.id, data.title);
+                if (rawSlipMap.get(slipPage)) {
+                    var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
+                    if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
+                        if (field.id == 'installment_months_id') {    
+                            var data = installMonthsMap.get(rawValue);                    
+                            if (data) showMessage(field.id, rawValue, data.title);
+                        } else if (field.id == 'slip_pull_reason_id') {
+                            var data = slipPullReasonMap.get(rawValue);   
+                            if (data) showMessage(field.id, data.id, data.on_display);
+                        } else if (field.id == 'exception_id') {
+                            var data = exceptionMap.get(rawValue);   
+                            if (data) showMessage(field.id, data.id, data.title);
+                        }
                     }
                 }
             });
             $(dropdown).change(function(e) {
                 $('#' + field.id + '_alert').remove();
-                var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
-                if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
-                    if (field.id == 'installment_months_id') {    
-                        var data = installMonthsMap.get(rawValue);                    
-                        if (data) showMessage(field.id, rawValue, data.title);
-                    } else if (field.id == 'slip_pull_reason_id') {
-                        var data = slipPullReasonMap.get(rawValue);   
-                        if (data) showMessage(field.id, data.id, data.on_display);
-                    } else if (field.id == 'exception_id') {
-                        var data = exceptionMap.get(rawValue);   
-                        if (data) showMessage(field.id, data.id, data.title);
+                if (rawSlipMap.get(slipPage)) {
+                    var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
+                    if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
+                        if (field.id == 'installment_months_id') {    
+                            var data = installMonthsMap.get(rawValue);                    
+                            if (data) showMessage(field.id, rawValue, data.title);
+                        } else if (field.id == 'slip_pull_reason_id') {
+                            var data = slipPullReasonMap.get(rawValue);   
+                            if (data) showMessage(field.id, data.id, data.on_display);
+                        } else if (field.id == 'exception_id') {
+                            var data = exceptionMap.get(rawValue);   
+                            if (data) showMessage(field.id, data.id, data.title);
+                        }
                     }
                 }
             });

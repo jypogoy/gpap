@@ -24,10 +24,12 @@
     <thead>
         <tr>
             <th>Region</th>
-            <th>Recording Date</th>                    
-            <th>Transaction Type</th>
+            <th>Type</th>
+            <th>Recording Date</th>  
+            <th>Operator</th>                              
             <th>Sequence</th>
             <th>Batch</th>
+            <th>Trans</th>
             <th></th>
         </tr>
     </thead>

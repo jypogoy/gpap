@@ -131,7 +131,7 @@ $(function() {
         $.post('../batch/getprevoperator', params, function (data) {            
             if (data) {
                 $('.prev-operator').removeClass('hidden');
-                $('.prev-operator').html('Prev Optr: ' + data.first_name + ' ' + data.last_name);            
+                $('.prev-operator').html('DE Optr: ' + data.first_name + ' ' + data.last_name);            
             }                
         })
         .fail(function (xhr, status, error) {

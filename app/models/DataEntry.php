@@ -57,6 +57,7 @@ class DataEntry extends \Phalcon\Mvc\Model
     {
         $this->setSchema("gpap");
         $this->setSource("data_entry");
+        $this->hasOne('id', 'MerchantHeader', 'data_entry_id', ['alias' => 'MerchantHeader']);
         $this->belongsTo('task_id', '\Task', 'id', ['alias' => 'Task']);
         $this->belongsTo('batch_id', '\Batch', 'id', ['alias' => 'Batch']);
         $this->belongsTo('user_id', '\User', 'userID', ['alias' => 'User']);

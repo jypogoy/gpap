@@ -94,17 +94,21 @@ $(function() {
         $('#currency_id_wrapper').removeClass('error');
         $('#currency_id_alert').remove();
         var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
-        if (currency != merchantInfoMap.get('currency')) {
-            if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
-                $('#currency_id_wrapper').addClass('error');
-                $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
-                        '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
-                        '</div>');
-            }
+        if ($('#merchant_number').val() != '') {
+            if (currency != merchantInfoMap.get('currency')) {
+                if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
+                    $('#currency_id_wrapper').addClass('error');
+                    $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
+                            '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
+                            '</div>');
+                }
+            } else {
+                $('#currency_id_wrapper').removeClass('error');
+                $('#currency_id_alert').remove();
+            }   
         } else {
-            $('#currency_id_wrapper').removeClass('error');
-            $('#currency_id_alert').remove();
-        }   
+            $('#merchant_number').focus();
+        }
     });
 
     $('#otherCurrencyBtn').click(function(e) {
@@ -118,6 +122,7 @@ $(function() {
 
     $('#dcn').blur(function() {
         var el = this;
+        this.value = this.value.toUpperCase();
         var wrapper = $('#' + el.id + '_wrapper');       
         if (this.value.length > 0) {
             if (this.value.length < 7) {
@@ -454,7 +459,7 @@ $(function() {
                 var slipValueMap = slipMap.get(slipPage - 1);
                 if (slipValueMap) {
                     var prevAuthCode = slipValueMap.get('authorization_code');
-                    if (prevAuthCode.length > 0 && this.value.length > 0 && prevAuthCode === this.value) {
+                    if (prevAuthCode && prevAuthCode.length > 0 && this.value.length > 0 && prevAuthCode === this.value) {
                         $(wrapper).addClass('error');
                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                 '<span id="' + this.id + '_msg">Auth Code with duplicate</span>' +
@@ -579,6 +584,7 @@ $(function() {
     });
 
     $('.save-next-btn').click(function(e) {
+        e.preventDefault();
         preSave(false, true, false);
     });
 
@@ -760,11 +766,13 @@ function linkSlip() {
     
     // For Verify Only
     if ($('#session_task_name').val().indexOf('Verify') != -1) {
-        var rawFile = rawSlipMap.get(slipPage).get(fileField[0].id); // See de_data_retrieval.js for map object            
-        if(rawFile && fileField.val() !== rawFile) {    
-            showMessage(fileField[0].id, rawFile, rawFile); // See de_verify.js
-        } else {
-            hideMessage(fileField[0].id); // See de_verify.js
+        if (rawSlipMap.get(slipPage)) {
+            var rawFile = rawSlipMap.get(slipPage).get(fileField[0].id); // See de_data_retrieval.js for map object            
+            if(rawFile && fileField.val() !== rawFile) {    
+                showMessage(fileField[0].id, rawFile, rawFile); // See de_verify.js
+            } else {
+                hideMessage(fileField[0].id); // See de_verify.js
+            }
         }
     }  
 }
@@ -776,15 +784,14 @@ function unlinkSlip() {
     $('.unlink-slip-btn').addClass('hidden');
 }
 
-function preSave(isSaveOnly, isSaveNew, isComplete) {
+function preSave(isSaveOnly, isSaveNew, isComplete) {    
     var headerValidationResult = Form.validate(true);        
     var slipValidationResult = true;
     if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
         slipValidationResult = Form.validate(false);
     }
     if(headerValidationResult) {            
-        if (headerValidationResult && slipValidationResult) {
-            
+        if (headerValidationResult && slipValidationResult) {            
             var wrapper = $('#variance_exception_wrapper');
             $('#variance_alert').remove();
             if ($('#variance').val() < 0 && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
@@ -797,38 +804,71 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
                 $(wrapper).removeClass('error');                
             }
 
-            if (isComplete) {
-                $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
-
-                $('.modal:not(div.Transaction)')
-                .modal({
-                    inverted : true,
-                    closable : true,
-                    autofocus: false,
-                    observeChanges : true, // <-- Helps retain the modal position on succeeding show.
-                    onDeny : function(){
-                        // Do nothing
-                    },
-                    onApprove : function() {
-                        saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
-                    }
-                })
-                .modal('show');
-
-                $(document).on('keyup keypress', function(e) {                    
-                    var keyCode = e.keyCode || e.which;
-                    if (keyCode === 13) { 
-                        e.preventDefault();
-                        if($('.active.modal')) {
-                            saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
-                            $('.active.modal').modal('hide');
-                        }                           
-                    }
-                });
-
+            if ($('#session_task_name').val().indexOf('Verify') != -1) {
+                validateTransCount(isSaveOnly, isSaveNew, isComplete);
             } else {
-                saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
-            }            
+                executeWrite(isSaveOnly, isSaveNew, isComplete);
+            }
         }            
     }
+}
+
+// For Verify Only
+// Check if DE slip count matches with verify slips.
+function validateTransCount(isSaveOnly, isSaveNew, isComplete) {    
+    if (!isSaveOnly && slipMap.size != rawSlipMap.size) {
+        warningPassed = false;
+        $('.warning-text').html('<p>Your transaction count (' + slipMap.size + ') is ' + (slipMap.size < rawSlipMap.size ? 'less' : 'greater') + ' than the DE transactions (' + rawSlipMap.size + '). Kindly check.</p>');
+        $('.modal.warning')
+        .modal({
+            inverted : true,
+            closable : true,
+            autofocus: false,
+            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
+            onDeny : function(){
+                // Do nothing...
+            },
+            onApprove : function() {
+                executeWrite(isSaveOnly, isSaveNew, isComplete);
+            }
+        })
+        .modal('show');
+    } else {
+        executeWrite(isSaveOnly, isSaveNew, isComplete);
+    }
+}
+
+function executeWrite(isSaveOnly, isSaveNew, isComplete) {
+    if (isComplete) {
+        $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
+
+        $('.modal:not(div.Transaction, div.warning)')
+        .modal({
+            inverted : true,
+            closable : true,
+            autofocus: false,
+            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
+            onDeny : function(){
+                // Do nothing
+            },
+            onApprove : function() {
+                saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+            }
+        })
+        .modal('show');
+
+        $(document).on('keyup keypress', function(e) {                    
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                if($('.active.modal')) {
+                    saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+                    $('.active.modal').modal('hide');
+                }                           
+            }
+        });
+
+    } else {
+        saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
+    } 
 }

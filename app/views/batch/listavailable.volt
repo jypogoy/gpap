@@ -2,8 +2,9 @@
     <thead>
         <tr>
             <th>Region</th>
+            <th>Type</th>
             <th>Recording Date</th>                    
-            <th>Transaction Type</th>
+            <th>Operator</th>
             <th>Sequence</th>
             <th>Batch</th>
             <th></th>
@@ -13,8 +14,9 @@
         {% for batch in batches %}
         <tr>
             <td>{{ batch.Zip.region_code }}</td>
-            <td>{{ batch.Zip.rec_date }}</td>
             <td>{{ batch.TransactionType.type }}</td>
+            <td>{{ batch.Zip.rec_date }}</td>
+            <td>{{ batch.Zip.operator_id }}</td>
             <td>{{ batch.Zip.getSequence() }}</td>
             <td>{{ batch.id }}</td>
             <td>

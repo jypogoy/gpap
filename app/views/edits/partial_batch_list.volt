@@ -6,8 +6,9 @@
         <td>{{ batch.Zip.getSequence() }}</td>
         <td>{{ batch.id }}</td>#}
         <td>{{ row.region_code }}</td>    
-        <td>{{ row.rec_date }}</td>
         <td>{{ row.type }}</td> 
+        <td>{{ row.rec_date }}</td>        
+        <td>{{ row.operator_id }}</td>
         <td>{{ row.sequence }}</td>
         <td>{{ row.batch_id }}</td>
         <td>
