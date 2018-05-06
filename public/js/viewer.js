@@ -129,6 +129,11 @@ $(function () {
             imgNavIndex = $(this).find(':selected').val() - 1;     
             renderImages();    
         });
+
+        // Automatically set linked image if only 1 is found.
+        if (images.length == 1) {
+            linkSlip(); // See de_form_events.js
+        }
     });            
 
 });
