@@ -133,6 +133,8 @@ $(function () {
         // Automatically set linked image if only 1 is found.
         if (images.length == 1) {
             linkSlip(); // See de_form_events.js
+            $('.unlink-slip-btn').addClass('hidden');    
+            $('.link-slip-btn').addClass('hidden');      
         }
     });            
 

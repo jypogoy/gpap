@@ -75,7 +75,7 @@ $di->setShared('view', function () {
             $volt->setOptions([
                 'compiledPath' => $config->application->cacheDir,
                 'compiledSeparator' => '_',
-                'compileAlways'     => true // Set to FALSE in PRODUCTION. Compiles templates in each request or only when they change. 
+                //'compileAlways'     => true // Set to FALSE or remove in PRODUCTION. Compiles templates in each request or only when they change. 
             ]);
 
             // Enable macro calls
