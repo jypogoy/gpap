@@ -6,7 +6,7 @@
         <td>{{ entry.Batch.Zip.operator_id }}</td>         
         <td>{{ entry.Batch.Zip.getSequence() }}</td>
         <td>{{ entry.Batch.id }}</td>
-        <td>{{ entry.MerchantHeader.Transaction | length }}</td>
+        <td>{{ entry.MerchantHeader ? entry.MerchantHeader.Transaction | length : 0 }}</td>
         <td class="data-process-btn" width="10%">
             <a onclick="begin({{ entry.Batch.id }}); return false;" data-tooltip="Review" data-position="bottom center">
                 <i class="pencil alternate orange icon"></i>Edit
