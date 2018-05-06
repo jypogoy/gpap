@@ -230,6 +230,15 @@ $(function() {
         }
     });
 
+    //TODO
+    $('#slip_pull_reason_id_dropdown').dropdown({
+        onChange: function() {
+            var text = $(this).dropdown('get text');    
+            if (text.indexOf('Supporting') != -1) {
+                Form.clear(false);
+            }
+        }
+    });
     //------------- Transaction Events ---------------------------------
 
     $('#region_code').keyup(function() {
@@ -506,6 +515,8 @@ $(function() {
     $('#commodity_code').keyup(function() {
         $(this).val($(this).val().toUpperCase());
     });
+
+    //TODO
     //------------- Transaction Control Events ---------------------------------
     $('.more-btn').click(function(e) {
         e.preventDefault();        
