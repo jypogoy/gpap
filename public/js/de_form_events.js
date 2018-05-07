@@ -228,17 +228,7 @@ $(function() {
         if ($('#headerDataForm').find('.error').length == 0) {
             $('#transaction_date').focus();
         }
-    });
-
-    //TODO
-    $('#slip_pull_reason_id_dropdown').dropdown({
-        onChange: function() {
-            var text = $(this).dropdown('get text');    
-            if (text.indexOf('Supporting') != -1) {
-                Form.clear(false);
-            }
-        }
-    });
+    });    
     //------------- Transaction Events ---------------------------------
 
     $('#region_code').keyup(function() {
