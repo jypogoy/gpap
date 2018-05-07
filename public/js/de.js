@@ -78,10 +78,17 @@ $(function() {
             overrideSlip(value);              
             var text = $(this).dropdown('get text');    
             if (text.indexOf('Supporting') != -1) { // Clear form content if Supporting Document.
-                Form.clear(false, this.id);
+                Form.clearOnSupportingDoc();
             }          
         }
     });
+
+    // $('#slip_pull_reason_id_dropdown').find('.search').blur(function() {        
+    //     var text = $('#slip_pull_reason_id_dropdown').dropdown('get text');    
+    //     if (text.indexOf('Supporting') != -1) { // Clear form content if Supporting Document.
+    //         Form.clear(false, this.id);
+    //     }
+    // });
 
     $('#exception_id_dropdown').dropdown({
         onChange: function() {
