@@ -122,7 +122,7 @@ class TransactionController extends ControllerBase
                 $sqlValuePart = $sqlValuePart . ($slip['transaction_amount'] == '' ? 'null' : $slip['transaction_amount']) . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['installment_months_id'] == '' ? 'null' : $slip['installment_months_id']) . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['airline_ticket_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['airline_ticket_number'], 'string') . '\'') . ',';
-                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : $filter->sanitize($slip['customer_reference_identifier'], 'string')) . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : '\''. $filter->sanitize($slip['customer_reference_identifier'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['merchant_order_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['merchant_order_number'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['commodity_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['commodity_code'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['slip_pull_reason_id'] == '' ? 'null' : $slip['slip_pull_reason_id']) . ',';

@@ -832,6 +832,26 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
             } else {
                 $(wrapper).removeClass('error');                
             }
+            
+            if ($('#customer_reference_identifier').val().length > 17) {
+                var wrapper = $('#customer_reference_identifier_wrapper');
+                $('#customer_reference_identifier_alert').remove();
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="customer_reference_identifier_alert">' +
+                                '<span id="customer_reference_identifier_msg">More than 17 chars</span>' +
+                                '</div>');
+                return;
+            }
+
+            if ($('#merchant_order_number').val().length > 25) {
+                var wrapper = $('#merchant_order_number_wrapper');
+                $('#merchant_order_number_alert').remove();
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="merchant_order_number_alert">' +
+                                '<span id="merchant_order_number_msg">More than 25 chars</span>' +
+                                '</div>');
+                return;                
+            }
 
             if ($('#session_task_name').val().indexOf('Verify') != -1) {
                 validateTransCount(isSaveOnly, isSaveNew, isComplete);
