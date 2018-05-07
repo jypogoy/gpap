@@ -443,6 +443,10 @@ $(function() {
         this.select();
     });
 
+    $('#authorization_code').keyup(function() {
+        toAlphaNumNoSpace(this);
+    });
+
     $('#authorization_code').blur(function() {
         if (this.value != '') $('#authorization_code_wrapper').removeClass('error');
         this.value = this.value.toUpperCase();
@@ -573,7 +577,7 @@ $(function() {
     //------------- Form Control Events ---------------------------------
     $('.save-btn').click(function(e) {
         e.preventDefault();
-        preSave(true, false, false);
+        preSaveNoValidation(true, false, false);
     });        
 
     $('.complete-next-btn').click(function(e) {
@@ -588,12 +592,12 @@ $(function() {
 
     $('.save-next-btn').click(function(e) {
         e.preventDefault();
-        preSave(false, true, false);
+        preSaveNoValidation(false, true, false);
     });
 
     $('.save-exit-btn').click(function(e) {
         e.preventDefault();
-        preSave(false, false, false);
+        preSaveNoValidation(false, false, false);
     });
 });
 
@@ -813,6 +817,26 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
                 executeWrite(isSaveOnly, isSaveNew, isComplete);
             }
         }            
+    }
+}
+
+function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
+    var wrapper = $('#variance_exception_wrapper');
+    $('#variance_alert').remove();
+    if ($('#variance').val() < 0 && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+        $(wrapper).addClass('error');
+        wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
+                        '<span id="variance_msg">With variance</span>' +
+                        '</div>');
+        return;
+    } else {
+        $(wrapper).removeClass('error');                
+    }
+
+    if ($('#session_task_name').val().indexOf('Verify') != -1) {
+        validateTransCount(isSaveOnly, isSaveNew, isComplete);
+    } else {
+        executeWrite(isSaveOnly, isSaveNew, isComplete);
     }
 }
 

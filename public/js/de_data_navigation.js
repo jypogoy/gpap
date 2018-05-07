@@ -11,7 +11,6 @@ function saveSlip() {
             slipValueMap.set(field.id, $(field).html());
         }        
     });        
-    console.log(slipValueMap.get('slip_pull_reason_id'));
     slipMap.set(slipPage, slipValueMap);
 }
 
