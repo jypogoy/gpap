@@ -1,12 +1,8 @@
 {{ form('', 'id' : 'transactionDataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
 
-    <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
+    <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px; font-size: 9pt;">
         <div class="ui equal width grid">
-            <div class="column"><i class="random icon"></i>Transactions</div>
-            {#<div class="column">
-                {{ hidden_field('image_id', 'class': 'slip-field') }}
-                <span id="image_file" class="slip-field slip-image"></span>
-            </div>#}
+            <div class="column"><i class="random icon"></i>Transactions</div>            
             <div class="column" style="text-align: right;"><span id="currentSlipPage">1</span> of <span id="totalSlips">...</span></div>
         </div>
     </h4>
@@ -15,13 +11,7 @@
         <div id="transaction_type_id_wrapper" class="required field">
             <label>Trans Type</label>
             {{ hidden_field('transaction_type_id', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.id) }}
-            {{ text_field('transaction_type_type', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.type, 'disabled': true) }}
-            {#<div id="transaction_type_id_dropdown" class="ui search selection dropdown slip-dropdown">
-                <input type="hidden" id="transaction_type_id" class="slip-field">
-                <div class="default text">Choose a type</div>
-                <i class="dropdown icon"></i>
-                <div class="menu"></div>
-            </div>#}
+            {{ text_field('transaction_type_type', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.TransactionType.type, 'disabled': true) }}            
         </div>   
         <div id="region_code_wrapper" class="required field">
             <label>Region</label>
@@ -63,7 +53,7 @@
             </div>
         </div> 
     </div>    
-    <div id="other_fields_div" class="hidden fields">                    
+    <div id="other_fields_div" class="hidden small fields">                    
         <div id="airline_ticket_number_wrapper" class="sixteen wide hidden field">    
             <label>Ticket No.</label> 
             {{ text_field('airline_ticket_number', 'maxlength': 13, 'class': 'airline-field slip-field') }} 

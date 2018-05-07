@@ -1,6 +1,6 @@
 {{ form('', 'id' : 'summaryDataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
 
-    <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px;">
+    <h4 class="ui dividing header" style="color: darkblue; margin-top: 20px; font-size: 9pt;">
         <div class="ui equal width grid">
             <div class="column"><i class="filter icon"></i>Summary</div>
         </div>

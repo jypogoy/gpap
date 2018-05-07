@@ -3,7 +3,7 @@ $(function () {
 });
 
 var Form = {
-    clear: function(isHeader) {
+    clear: function(isHeader, excemptedElId) {
         var formId = isHeader ? 'headerDataForm' : 'transactionDataForm';
         $('#' + formId).find("div[id*='alert']").remove();
         if (isHeader) {
@@ -15,7 +15,7 @@ var Form = {
             $('.slip-field:not(.auto-fill)').prop('checked', false);
             $('.slip-field').html('');
             $('.slip-field').parent().parent().removeClass('error');            
-            $('.slip-dropdown:not(.auto-fill)').dropdown('restore defaults');            
+            $('.slip-dropdown:not(.auto-fill, #' + excemptedElId + ')').dropdown('restore defaults');            
             $('.slip-dropdown').parent().removeClass('error');
         }
     },

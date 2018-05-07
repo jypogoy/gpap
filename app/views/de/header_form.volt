@@ -1,6 +1,6 @@
 {{ form('', 'id' : 'headerDataForm', 'class' : 'ui form', 'autocomplete' : 'off') }}
 
-    <h4 class="ui dividing header" style="color: darkblue;">
+    <h4 class="ui dividing header" style="color: darkblue; font-size: 9pt;">
         <div class="ui grid">
             <div class="ten wide column">
                 <i class="shopping cart icon"></i>Merchant Header
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>#} 
-    <div id="batch_pull_reason_id_wrapper" class="field">
+    <div id="batch_pull_reason_id_wrapper" class="small field">
         <label>Pull Reason</label>
         <div id="batch_pull_reason_id_dropdown" class="ui search selection dropdown header-dropdown">
             <input id="batch_pull_reason_id" type="hidden" class="header-field">

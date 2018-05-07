@@ -77,9 +77,9 @@ $(function() {
             var value = $(this).dropdown('get value'); 
             overrideSlip(value);              
             var text = $(this).dropdown('get text');    
-            // if (text.indexOf('Supporting') != -1) { // Clear form content if Supporting Document.
-            //     Form.clear(false);
-            // }          
+            if (text.indexOf('Supporting') != -1) { // Clear form content if Supporting Document.
+                Form.clear(false, this.id);
+            }          
         }
     });
 
