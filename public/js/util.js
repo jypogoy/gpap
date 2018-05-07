@@ -171,8 +171,8 @@ function formatDate(date) {
     return month + '/' + day + '/' + year;
 }
 
-function charsLeft(el) {
-    var diff = el.maxLength - el.value.length;
+function charsLeft(el, total) {
+    var diff = total - el.value.length;
     $('#' + el.id + '_counter').html(diff + (diff > 1 ? ' chars' : ' char') + ' left.');
 }
 

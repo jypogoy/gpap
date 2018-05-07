@@ -499,13 +499,35 @@ $(function() {
     });
 
     $('#customer_reference_identifier').keyup(function() {
-        $(this).val($(this).val().toUpperCase());
-        charsLeft(this);
+        $(this).val($(this).val().toUpperCase());        
+        charsLeft(this, 17);
+        var wrapper = $('#' + this.id + '_wrapper');
+        $('#' + this.id + '_alert').remove();
+        if (this.value.length >= 17) {                
+            $(wrapper).addClass('error');
+            wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                            '<span id="' + this.id + '_msg">Reached 17 chars</span>' +
+                            '</div>');
+            return;
+        } else {
+            $(wrapper).removeClass('error');                
+        }
     });
 
     $('#merchant_order_number').keyup(function() {
         $(this).val($(this).val().toUpperCase());
-        charsLeft(this);
+        charsLeft(this, 25);
+        var wrapper = $('#' + this.id + '_wrapper');
+        $('#' + this.id + '_alert').remove();
+        if (this.value.length >= 25) {                
+            $(wrapper).addClass('error');
+            wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                            '<span id="' + this.id + '_msg">Reached 25 chars</span>' +
+                            '</div>');
+            return;
+        } else {
+            $(wrapper).removeClass('error');                
+        }
     });
 
     $('#commodity_code').keyup(function() {
