@@ -244,43 +244,45 @@ $(function() {
         var wrapper = $('#' + this.id + '_wrapper');
         var alert = $('#' + this.id + '_alert');
         var msg = $('#' + this.id + '_msg');
-        if (this.value != '') $(wrapper).removeClass('error');
-
-        var date = $.datepicker.formatDate('yy-mm-dd', new Date(this.value));
-
-        $.post('../transaction/transdateelevenmonthsolder/' + date, function(data) {
+        if (this.value != '') {
             $(wrapper).removeClass('error');
-            $(alert).remove();
-            if (data.is_older == 1) {
-                $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
-                        '<span id="transaction_date_msg">Older than 11 months</span>' +
-                        '</div>');
-                $(this).val('');
-                $(this).select();
-                $(this).focus();
-            }
-        })
-        .fail(function (xhr, status, error) {
-            toastr.error(error);
-        });
 
-        $.post('../transaction/transdatefuture/' + date, function(data) {
-            $(wrapper).removeClass('error');
-            $(alert).remove();
-            if (data.is_future == 1) {                
-                $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
-                        '<span id="transaction_date_msg">Future Date</span>' +
-                        '</div>');
-                $(this).val('');
-                $(this).select();
-                $(this).focus();
-            }
-        })
-        .fail(function (xhr, status, error) {
-            toastr.error(error);
-        });
+            var date = $.datepicker.formatDate('yy-mm-dd', new Date(this.value));
+
+            $.post('../transaction/transdateelevenmonthsolder/' + date, function(data) {
+                $(wrapper).removeClass('error');
+                $(alert).remove();
+                if (data.is_older == 1) {
+                    $(wrapper).addClass('error');
+                    $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
+                            '<span id="transaction_date_msg">Older than 11 months</span>' +
+                            '</div>');
+                    $(this).val('');
+                    $(this).select();
+                    $(this).focus();
+                }
+            })
+            .fail(function (xhr, status, error) {
+                toastr.error(error);
+            });
+
+            $.post('../transaction/transdatefuture/' + date, function(data) {
+                $(wrapper).removeClass('error');
+                $(alert).remove();
+                if (data.is_future == 1) {                
+                    $(wrapper).addClass('error');
+                    $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
+                            '<span id="transaction_date_msg">Future Date</span>' +
+                            '</div>');
+                    $(this).val('');
+                    $(this).select();
+                    $(this).focus();
+                }
+            })
+            .fail(function (xhr, status, error) {
+                toastr.error(error);
+            });
+        }
     });    
 
     $('#card_number').blur(function() {
