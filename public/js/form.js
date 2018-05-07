@@ -21,7 +21,7 @@ var Form = {
     },
     clearOnSupportingDoc: function() {
         $('#transactionDataForm').find("div[id*='alert']").remove();        
-        $('.slip-field:not(.auto-fill)').val('');
+        $('.slip-field:not(.auto-fill, #image_id, #image_file)').val('');
         $('.slip-field:not(.auto-fill)').prop('checked', false);
         $('.slip-field').html('');
         $('.slip-field').parent().parent().removeClass('error');            
