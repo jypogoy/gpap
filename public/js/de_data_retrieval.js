@@ -213,11 +213,11 @@ function getMerchantInfo(merchant_number) {
                 $(wrapper).removeClass('error');
             }
             
-            if (merchantInfoMap.get('merchantStatus') != $('#region_code').val()) {
+            if (merchantInfoMap.get('stateCountry') != $('#region_code').val()) {
                 $(alert).remove();
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
-                        '<span id="merchant_number_msg">Merchant is out of Region</span>' +
+                        '<span id="merchant_number_msg">Merchant is out of Region (' + merchantInfoMap.get('stateCountry') + ')</span>' +
                         '</div>');
                 $('#merchant_number').select();
             } else {
