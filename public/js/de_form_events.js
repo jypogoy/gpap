@@ -126,17 +126,15 @@ $(function() {
         var wrapper = $('#' + el.id + '_wrapper');       
         if (this.value.length > 0) {
             if (this.value.length < 7) {
-                // Reset formatting
                 $(wrapper).removeClass('error');
-                $('#' + this.id + '_alert').remove();
-                // Add formatting
+                $('#' + el.id + '_alert').remove();
                 $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                        '<span id="' + this.id + '_msg">Must be 7 chars long</span>' +
+                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                        '<span id="' + el.id + '_msg">Must be 7 chars long</span>' +
                         '</div>');
             } else {       
                 $(wrapper).removeClass('error');
-                $('#' + this.id + '_alert').remove();    
+                $('#' + el.id + '_alert').remove();    
                 
                 var params = {};
                 params.batch_id = $('#batch_id').val();
@@ -155,8 +153,8 @@ $(function() {
                                 '<span id="' + el.id + '_msg">Exists in ' + data.job + '</span>' +
                                 '</div>');
                     } else {
-                        $(wrapper).removeClass('error');
-                        $('#' + el.id + '_alert').remove();
+                        // $(wrapper).removeClass('error');
+                        // $('#' + el.id + '_alert').remove();
                     }
                 });          
                 
@@ -174,8 +172,8 @@ $(function() {
                                 '<span id="' + el.id + '_msg">Exists in ' + data.job + '</span>' +
                                 '</div>');
                     } else {
-                        $(wrapper).removeClass('error');
-                        $('#' + el.id + '_alert').remove();
+                        // $(wrapper).removeClass('error');
+                        // $('#' + el.id + '_alert').remove();
                     }
                 });
             }    

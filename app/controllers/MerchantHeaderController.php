@@ -99,13 +99,14 @@ class MerchantHeaderController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
 
         try {
-            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type) AS job
+            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type, '-', SUBSTRING_INDEX(img.path, '/', -1)) AS job
                     FROM data_entry de 
                     INNER JOIN merchant_header m ON m.data_entry_id = de.id 
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
+                    INNER JOIN image img ON img.batch_id = b.id AND img.is_start = 1 
                     WHERE de.batch_id != ? AND m.merchant_number = ? AND m.dcn = ? AND m.deposit_amount = ? AND z.region_code = ? AND t.id = ?";
 
             $result = $this->db->query($sql, [$batchId, $merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);
@@ -133,13 +134,14 @@ class MerchantHeaderController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
 
         try {
-            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type) AS job
+            $sql = "SELECT CONCAT(z.region_code, '_', z.rec_date, '_', z.operator_id, '_', LPAD(z.sequence,3,'0'), '_', tt.type, '-', SUBSTRING_INDEX(img.path, '/', -1)) AS job
                     FROM data_entry de 
                     INNER JOIN merchant_header m ON m.data_entry_id = de.id 
                     INNER JOIN task t ON t.id = de.task_id 
                     INNER JOIN batch b ON b.id = m.batch_id 
                     INNER JOIN zip z ON z.id = b.zip_id
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
+                    INNER JOIN image img ON img.batch_id = b.id AND img.is_start = 1 
                     WHERE de.batch_id != ? AND m.dcn = ? AND z.region_code = ? AND DATE(m.deposit_date) = DATE(NOW()) AND t.id = ?";
 
             $result = $this->db->query($sql, [$batchId, $dcn, $regionCode, $taskId]);

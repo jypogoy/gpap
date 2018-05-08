@@ -22,7 +22,7 @@
     <div class="small fields">
         <div id="dcn_wrapper" class="four wide required field">
             <label>DCN</label>
-            {{ text_field('dcn', 'class': 'header-field', 'maxlength': 7) }}
+            {{ text_field('dcn', 'class': 'header-field', 'minlength': 7, 'maxlength': 7) }}
         </div> 
         <div id="currency_id_wrapper" class="required field">
             <label>CNY Code<span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
