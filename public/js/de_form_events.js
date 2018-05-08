@@ -65,7 +65,8 @@ $(function() {
             // Check if selected is either JPY, KRW or IDR that restricts decimal in amounts.
             var amountFields = $('input[id*="amount"]');
             var text = $(this).dropdown('get text');    
-            if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1) {
+            if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
+                || ($('#region_code').val() == 'MY' && text.indexOf('TWD'))) {
                 currNoDecimal = true;                
             } else {
                 currNoDecimal = false;
@@ -76,7 +77,11 @@ $(function() {
                     var noDecVal = noDecimal(field.value); // See utils.js
                     field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
                 } else {
-                    field.value = accounting.formatMoney(field.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
+                    if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+                        field.value = accounting.formatMoney(field.value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
+                    } else {
+                        field.value = accounting.formatMoney(field.value, { symbol: '', format: '%v %s' }); // See accounting.min.js
+                    }
                 }
             }); 
             
@@ -85,7 +90,11 @@ $(function() {
                 var noDecVal = noDecimal(varianceField.val()); // See utils.js
                 varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
             } else {
-                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '',  format: '%v %s' })); // See accounting.min.js
+                if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+                    varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', precision: 3, format: '%v %s' })); // See accounting.min.js
+                } else {
+                    varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', format: '%v %s' })); // See accounting.min.js
+                }
             }
         }
     });
