@@ -167,10 +167,12 @@ function refreshTransTypeDependentFields() {
 
     // Auth Code option in Credut and Airline Credit
     if (option.indexOf('Credit') != -1) {
-        $('#authorization_code_wrapper').removeClass('required');
+        //$('#authorization_code_wrapper').removeClass('required');
+        $('#authorization_code_wrapper').addClass('hidden');
     } else {
         var pullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
         if (!pullReasonId) $('#authorization_code_wrapper').addClass('required');
+        $('#authorization_code_wrapper').removeClass('hidden');
     }
 }
 
