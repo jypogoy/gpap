@@ -434,3 +434,54 @@ function getInstallmentMonths() {
         toastr.error(error);
     });       
 }
+
+function getPrevOperator() {
+    var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.task_id = $('#session_task_id').val();
+    $.post('../batch/getprevoperator', params, function (data) {            
+        if (data) {
+            $('.prev-operator').removeClass('hidden');
+            $('.prev-operator').html('DE Optr: ' + data.first_name + ' ' + data.last_name);            
+        }                
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    }); 
+}
+
+function getKeyer() {
+    $.post('../batch/getkeyer/' + $('#batch_id').val(), function (data) {            
+        if (data) {
+            $('.prev-operator').removeClass('hidden');
+            $('.prev-operator').html('Keyer: ' + data.first_name + ' ' + data.last_name);            
+        }                
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    }); 
+}
+
+function getVerifier() {
+    $.post('../batch/getverifier/' + $('#batch_id').val(), function (data) {            
+        if (data) {
+            $('.prev-operator').removeClass('hidden');
+            $('.prev-operator').html('Verifier: ' + data.first_name + ' ' + data.last_name);            
+        }                
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    }); 
+}
+
+function getBalancer() {
+    $.post('../batch/getbalancer/' + $('#batch_id').val(), function (data) {            
+        if (data) {
+            $('.prev-operator').removeClass('hidden');
+            $('.prev-operator').html('Balancer: ' + data.first_name + ' ' + data.last_name);            
+        }                
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    }); 
+}

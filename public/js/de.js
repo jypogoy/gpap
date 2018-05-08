@@ -115,6 +115,16 @@ $(function() {
     slipPullReasonMap = new HashMap();
     exceptionMap = new HashMap();
 
+    if ($('#session_from_edits').val()) {
+        if ($('#session_task_name').val().indexOf('Entry') != -1) {
+            getKeyer(); // See de_data_retrieval.js
+        } else if ($('#session_task_name').val().indexOf('Verify') != -1) {
+            getVerifier(); // See de_data_retrieval.js
+        } else if ($('#session_task_name').val().indexOf('Balancing') != -1) {
+            getBalancer(); // See de_data_retrieval.js
+        }
+    }
+
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {
             getRegionCurrency();
@@ -123,7 +133,8 @@ $(function() {
             getExceptions();
             checkHeaderIfExists().then(function(header) {
                 getContents(lastCompletedData, header);
-            });            
+            });      
+            if (!$('#session_from_edits').val()) getVerifier(); // See de_data_retrieval.js
             //prepBalancingFields();
         });
     } else {
@@ -136,18 +147,7 @@ $(function() {
 
     if ($('#session_task_name').val().indexOf('Verify') != -1) {
         getRawContents();
-        var params = {};
-        params.batch_id = $('#batch_id').val();
-        params.task_id = $('#session_task_id').val();
-        $.post('../batch/getprevoperator', params, function (data) {            
-            if (data) {
-                $('.prev-operator').removeClass('hidden');
-                $('.prev-operator').html('DE Optr: ' + data.first_name + ' ' + data.last_name);            
-            }                
-        })
-        .fail(function (xhr, status, error) {
-            toastr.error(error);
-        });         
+        if (!$('#session_from_edits').val()) getKeyer(); // See de_data_retrieval.js        
     } else {
         $('.prev-operator').addClass('hidden');
     }

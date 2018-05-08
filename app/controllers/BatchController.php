@@ -249,5 +249,71 @@ class BatchController extends ControllerBase
         $this->response->setJsonContent($rows[0]);
         $this->response->send();   
     }
+
+    public function getKeyerAction($batchId)
+    {
+        $this->view->disable();
+
+        try {            
+            $sql = "SELECT userFirstName AS first_name, userLastName AS last_name
+                    FROM data_entry de
+                    INNER JOIN task t ON t.id = de.task_id
+                    INNER JOIN user u ON u.userID = de.user_id
+                    WHERE t.name = 'Entry 1' AND de.batch_id = ?";
+
+            $result = $this->db->query($sql, [$batchId]);
+            $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);       
+
+            $this->response->setJsonContent($result);
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    public function getVerifierAction($batchId)
+    {
+        $this->view->disable();
+
+        try {            
+            $sql = "SELECT userFirstName AS first_name, userLastName AS last_name
+                    FROM data_entry de
+                    INNER JOIN task t ON t.id = de.task_id
+                    INNER JOIN user u ON u.userID = de.user_id
+                    WHERE t.name = 'Verify' AND de.batch_id = ?";
+
+            $result = $this->db->query($sql, [$batchId]);
+            $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);       
+
+            $this->response->setJsonContent($result);
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    public function getBalancerAction($batchId)
+    {
+        $this->view->disable();
+
+        try {            
+            $sql = "SELECT userFirstName AS first_name, userLastName AS last_name
+                    FROM data_entry de
+                    INNER JOIN task t ON t.id = de.task_id
+                    INNER JOIN user u ON u.userID = de.user_id
+                    WHERE t.name = 'Balancing' AND de.batch_id = ?";
+
+            $result = $this->db->query($sql, [$batchId]);
+            $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);       
+
+            $this->response->setJsonContent($result);
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
 }
 
