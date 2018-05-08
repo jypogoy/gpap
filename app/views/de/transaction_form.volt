@@ -60,12 +60,12 @@
         </div>        
         <div id="customer_reference_identifier_wrapper" class="six wide hidden field">    
             <label>Cust Ref</label> 
-            {{ text_field('customer_reference_identifier', 'maxlength': 30, 'class': 'vi-field slip-field') }}
+            {{ text_area('customer_reference_identifier', 'rows': 1, 'maxlength': 30, 'class': 'vi-field slip-field') }}
             <div id="customer_reference_identifier_counter" class="charcount">17 chars left.</div>
         </div>
         <div id="merchant_order_number_wrapper" class="seven wide hidden field">    
             <label>Order No.</label> 
-            {{ text_field('merchant_order_number', 'maxlength': 40, 'class': 'vi-field slip-field') }}
+            {{ text_area('merchant_order_number', 'rows': 1, 'maxlength': 40, 'class': 'vi-field slip-field') }}
             <div id="merchant_order_number_counter" class="charcount">25 chars left.</div>
         </div>
         <div id="commodity_code_wrapper" class="three wide hidden field">    
