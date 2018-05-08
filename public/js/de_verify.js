@@ -114,7 +114,7 @@ function applySlipChecks() {
                     if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
                         if (field.id == 'installment_months_id') {    
                             var data = installMonthsMap.get(rawValue);                    
-                            if (data) showMessage(field.id, rawValue, data.title);
+                            if (data) showMessage(field.id, rawValue, data.on_display);
                         } else if (field.id == 'slip_pull_reason_id') {
                             var data = slipPullReasonMap.get(rawValue);   
                             if (data) showMessage(field.id, data.id, data.on_display);
