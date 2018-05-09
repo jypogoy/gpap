@@ -64,33 +64,14 @@ class TransactionController extends ControllerBase
         }
 
         try {
-            // Delete any existing transaction content.
-            $existingTrans = Transaction::find(
-                [
-                    "conditions" => "merchant_header_id = " . $headerId
-                ]
-            );
+            $sql = 'DELETE FROM `transaction` 
+                    WHERE merchant_header_id = ?';
 
-            if ($existingTrans) {
-                if (!$existingTrans->delete()) {
-                    foreach ($existingTrans->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
+            $this->db->query($sql, [$headerId]);
+            echo true;                        
 
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
-
-                    return;
-                } else {
-                    echo 1;
-                }
-            }  else {
-                echo 0;
-            }      
-
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {          
+            echo false;  
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
