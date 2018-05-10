@@ -36,6 +36,13 @@ class Dcn extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
+     * @Column(column="image_path", type="string", length=100, nullable=true)
+     */
+    public $image_path;
+
+    /**
+     *
+     * @var string
      * @Column(column="created_at", type="string", nullable=true)
      */
     public $created_at;

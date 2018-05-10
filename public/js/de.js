@@ -158,22 +158,22 @@ $(function() {
 
 function overrideHeader(pullReasonId) {
     if (pullReasonId && pullReasonId > 0) {
-        $('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
+        //$('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
         $(headerRequiredFields).removeClass('required');
-        $(slipRequiredFields).removeClass('required');
+        // $(slipRequiredFields).removeClass('required');
         Form.resetErrors(true);
-        Form.resetErrors(false);
-        $('.slip-field:not(.auto-fill)').attr('disabled', true);
-        $('.slip-dropdown').addClass('disabled');
-        $('.slip-controls').addClass('hidden');        
+        // Form.resetErrors(false);
+        // $('.slip-field:not(.auto-fill)').attr('disabled', true);
+        // $('.slip-dropdown').addClass('disabled');
+        // $('.slip-controls').addClass('hidden');        
     } else {
-        $('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
+        //$('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
-        $(slipRequiredFields).addClass('required');
-        $('.slip-field:not(.auto-fill, .image-link)').removeAttr('disabled');
-        $('.slip-dropdown').removeClass('disabled');
-        $('.slip-controls').removeClass('hidden');
+        // $(slipRequiredFields).addClass('required');
+        // $('.slip-field:not(.auto-fill, .image-link)').removeAttr('disabled');
+        // $('.slip-dropdown').removeClass('disabled');
+        // $('.slip-controls').removeClass('hidden');
     }
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         //prepBalancingFields(); 

@@ -1,6 +1,8 @@
 {{ hidden_field('data_entry_id', 'value': dataEntry.id) }}
 {{ hidden_field('batch_id', 'value': batch.id) }}
 {{ hidden_field('region', 'value': batch.zip.region_code) }}
+{{ hidden_field('job', 'value': [batch.zip.rec_date, batch.zip.operator_id, batch.zip.getSequence()] | join('_')) }}
+{{ hidden_field('region', 'value': batch.zip.region_code) }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
 {{ hidden_field('session_task_name', 'value': session.get('taskName')) }}
 {{ hidden_field('session_from_edits', 'value': session.get('fromEdits')) }}

@@ -4,9 +4,81 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
     
     // Record new header.
     $.when(writeHeader())
+    .done(function(headerId) {        
+        // Clear previously recorded transactions to eliminate repetition.
+        $.when(delPreviousTrans(headerId))
+        .done(function(isSuccess) {
+            if (isSuccess) {
+                // Record new transactions. 
+                $.when(writeSlips(headerId))
+                .done(function(isSuccess) {
+                    if (!isSuccess) {
+                        toastr.error('Unable to record transactions.');
+                    } else {
+                        if (isComplete) {
+                            var data = {};
+                            data.entry_id = $('#data_entry_id').val();
+                            data.batch_id = $('#batch_id').val();
+                            $.post('../de/complete/', data,function (msg) {  
+                                if (msg.indexOf('success') != -1) {        
+                                    
+                                    // Record a copy of the DCN information to maintain uniqueness.
+                                    // These records will be used to validate new transaction DCNs.                                        
+                                    var params = {};
+                                    params.region_code = $('#region').val();
+                                    params.dcn = $('#dcn').val();
+                                    params.amount = $('#deposit_amount').val();
+                                    params.image_path = imgArray[0].path; 
+                                    
+                                    $.post('../dcn/record/', params, function (isSuccess) {
+                                       d.resolve(isSuccess);      
+                                    })
+                                    .done(function (msg) {
+                                        // Do nothing...
+                                    })
+                                    .fail(function (xhr, status, error) {
+                                        toastr.error(error);
+                                    });
+
+                                    toastr.success(msg);  
+                                    if (isSaveNew) {
+                                        getNewBatch();
+                                    } else {
+                                        window.location = '../de/redirectsuccess/' + false;
+                                    }   
+                                } else {
+                                    toastr.error('Unable to complete the this batch.');
+                                }       
+                            });
+                        } else {
+                            if (isSaveOnly) {
+                                toastr.success('Batch was saved successfully.'); 
+                            } else {
+                                if (isSaveNew) {
+                                    getNewBatch();
+                                } else {
+                                    window.location = '../de/redirectsuccess/' + true;
+                                }
+                            }
+                        }
+                    }                        
+                });
+            } else {
+                toastr.error('Unable to clear previous recorded transactions.');
+            }                   
+        });               
+    });
+}
+
+function saveBatch_deprecated(isSaveOnly, isSaveNew, isComplete) {
+
+    saveSlip(); // Save the current content. See de_data_navigation.js   
+    
+    // Record new header.
+    $.when(writeHeader())
     .done(function(headerId) {
         if ($('#batch_pull_reason_id').val() > 0 || $('#batch_pull_reason_id').val() != '') { // Record transactions if no specified batch pull reason.
-            // Clear previously recorded transactions to eliminate repitition.
+            // Clear previously recorded transactions to eliminate repetition.
             $.when(delPreviousTrans(headerId))
             .done(function(isSuccess) {
                 if (isSuccess) {
@@ -16,6 +88,11 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                         data.batch_id = $('#batch_id').val();
                         $.post('../de/complete/', data,function (msg) {  
                             if (msg.indexOf('success') != -1) {                                               
+                                
+                                // Record a copy of the DCN information to maintain uniqueness.
+                                // These records will be used to validate new transaction DCNs.
+                                recordDCN();
+                                
                                 toastr.success(msg);  
                                 if (isSaveNew) {
                                     getNewBatch();
@@ -42,7 +119,7 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                 }    
             });
         } else {
-            // Clear previously recorded transactions to eliminate repitition.
+            // Clear previously recorded transactions to eliminate repetition.
             $.when(delPreviousTrans(headerId))
             .done(function(isSuccess) {
                 if (isSuccess) {
@@ -57,7 +134,12 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                                 data.entry_id = $('#data_entry_id').val();
                                 data.batch_id = $('#batch_id').val();
                                 $.post('../de/complete/', data,function (msg) {  
-                                    if (msg.indexOf('success') != -1) {                                               
+                                    if (msg.indexOf('success') != -1) {        
+                                        
+                                        // Record a copy of the DCN information to maintain uniqueness.
+                                        // These records will be used to validate new transaction DCNs.                                        
+                                        recordDCN();
+
                                         toastr.success(msg);  
                                         if (isSaveNew) {
                                             getNewBatch();
@@ -190,13 +272,18 @@ function redirectBack(batchId) {
     $(form).submit();
 }
 
-function logDCN(regionCode, dcn, amount) {
+function recordDCN() {
+
+    var d = $.Deferred();
+
     var params = {};
-    params.region_code = regionCode;
-    params.dcn = dcn;
-    params.amount = amount;
-    $.post('../dcn/post/', params, function (data) {
-        // Do nothing...             
+    params.region_code = $('#region').val();
+    params.dcn = $('#dcn').val();
+    params.amount = $('#deposit_amount').val();
+    params.image_path = imgArray[0].path; 
+    
+    $.post('../dcn/record/', function (isSuccess) {
+       d.resolve(isSuccess);      
     })
     .done(function (msg) {
         // Do nothing...
@@ -204,4 +291,6 @@ function logDCN(regionCode, dcn, amount) {
     .fail(function (xhr, status, error) {
         toastr.error(error);
     });
+
+    return d.promise();
 }

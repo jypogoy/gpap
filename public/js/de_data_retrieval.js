@@ -229,6 +229,7 @@ function getMerchantInfo(merchant_number) {
                 $('#installment_months_id_wrapper').removeClass('hidden');
             } else {
                 $('#installment_months_id_wrapper').addClass('hidden');
+                $('#other_inst_term_wrapper').addClass('hidden');
             }
 
             if (merchantInfoMap.get('acceptAmex') == 'Y') {
@@ -315,7 +316,7 @@ function getSlipContents(headerId) {
                 });
                 slipMap.set(parseInt(key), slipValueMap);
             }); 
-            console.log(slipMap)
+            
             // Load initial index as result can be multiple.
             slipMap.get(slipPage).forEach(function(value, key) {
                 setFieldValue(key, value); // See de_data_navigation.js
