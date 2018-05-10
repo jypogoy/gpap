@@ -99,6 +99,17 @@ $(function() {
         }
     });
 
+    $('#other_currency').keyup(function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 27) { 
+            $('#other_currency').val('');
+            $('#other_currency_wrapper').addClass('hidden');
+            $('#currency_id_wrapper').removeClass('hidden');
+            $('#currency_id_dropdown').removeClass('hidden');
+            $('#currency_id_dropdown').find('.search').focus();
+        }
+    });
+
     $('#currency_id_dropdown').find('.search').blur(function() {
         $('#currency_id_wrapper').removeClass('error');
         $('#currency_id_alert').remove();
@@ -127,6 +138,7 @@ $(function() {
         $('#currency_id_wrapper').removeClass('hidden');
         $('#currency_id_dropdown').removeClass('hidden');
         $('#currency_id_dropdown').dropdown('restore defaults');
+        $('#currency_id_dropdown').find('.search').focus();
     });
 
     $('#dcn').blur(function() {
@@ -509,17 +521,21 @@ $(function() {
         onChange: function() {
             var value = $(this).dropdown('get value');    
             if (value > 0) {
-                if (value == 100) { // Other
-                    $(this).addClass('hidden');
-                    $(this).dropdown('restore defaults');
+                if (value == 60) { // Other
                     $('#other_inst_term_wrapper').removeClass('hidden');
                     $('#installment_months_id_wrapper').addClass('hidden');
                     $('#other_inst_term').focus();
+                } else {
+                    $('#other_inst_term').val('');
                 }
             } else {
                 $(this).dropdown('restore defaults');
             }
         }
+    });
+
+    $('#other_inst_term').keyup(function() {
+        toNum(this);
     });
 
     $('#other_inst_term').keyup(function(e) {
@@ -529,6 +545,8 @@ $(function() {
             $('#other_inst_term_wrapper').addClass('hidden');
             $('#installment_months_id_wrapper').removeClass('hidden');
             $('#installment_months_id_dropdown').removeClass('hidden');
+            $('#installment_months_id_dropdown').find('.search').focus();
+            $('#installment_months_id_dropdown').dropdown('restore defaults');
         }
     });
 
@@ -538,6 +556,8 @@ $(function() {
         $('#other_inst_term_wrapper').addClass('hidden');
         $('#installment_months_id_wrapper').removeClass('hidden');
         $('#installment_months_id_dropdown').removeClass('hidden');
+        $('#installment_months_id_dropdown').find('.search').focus();
+        $('#installment_months_id_dropdown').dropdown('restore defaults');
     });
 
     $('#customer_reference_identifier').keyup(function() {

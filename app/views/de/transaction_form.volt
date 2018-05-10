@@ -86,10 +86,10 @@
                 <div class="menu"></div>
             </div>
         </div>
-        <div id="other_inst_term_wrapper" class="required hidden field">
+        <div id="other_inst_term_wrapper" class="hidden field">
             <label>Inst. Term</label>                        
             <div class="ui action input">
-                <input type="text" id="other_inst_term" class="uppercase header-field" maxlength="3">
+                {{ text_field('other_inst_term', 'maxlength': 2, 'class': 'slip-field') }} 
                 <button id="otherInstBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>
             </div>
         </div>   

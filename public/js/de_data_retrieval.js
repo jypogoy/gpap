@@ -315,7 +315,7 @@ function getSlipContents(headerId) {
                 });
                 slipMap.set(parseInt(key), slipValueMap);
             }); 
-            
+            console.log(slipMap)
             // Load initial index as result can be multiple.
             slipMap.get(slipPage).forEach(function(value, key) {
                 setFieldValue(key, value); // See de_data_navigation.js
@@ -424,8 +424,7 @@ function getInstallmentMonths() {
             $.each(data, function(i, month) {
                 installMonthsMap.set(month.id, month); // Keep reference of installment months for verify
                 $('<div class="item" data-value="' + month.id + '">' + month.on_display + '</div>').appendTo(menuWrapper);                             
-            });  
-            $('<div class="item" data-value="100">Other</div>').appendTo(menuWrapper);          
+            });    
         }                
     })
     .done(function (msg) {

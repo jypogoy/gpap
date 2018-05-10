@@ -129,9 +129,16 @@ class Transaction extends \Phalcon\Mvc\Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=11, nullable=false)
+     * @Column(type="integer", length=11, nullable=true)
      */
     public $image_id;
+
+    /**
+     *
+     * @var string
+     * @Column(type="string", length=45, nullable=true)
+     */
+    public $image_file;
 
     /**
      * Initialize method for model.

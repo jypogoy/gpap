@@ -113,6 +113,12 @@ function setFieldValue(key, value) {
         $('#currency_id_wrapper').addClass('hidden');
     }
 
+    // Important: Hide IPP Term selection when in Other and show the input box.
+    if (key.indexOf('installment') != -1 && value == 60) { // Other        
+        $('#other_inst_term_wrapper').removeClass('hidden');
+        $('#installment_months_id_wrapper').addClass('hidden');
+    }
+
     // Enable or disable input forms depending on pull reason.
     if (key == 'batch_pull_reason_id') {
         overrideHeader(value); // See de.js

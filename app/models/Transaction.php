@@ -8,7 +8,7 @@ class Transaction extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(type="integer", length=11, nullable=false)
+     * @Column(column="id", type="integer", length=11, nullable=false)
      */
     public $id;
 
@@ -16,14 +16,14 @@ class Transaction extends \Phalcon\Mvc\Model
      *
      * @var integer
      * @Primary
-     * @Column(type="integer", length=11, nullable=false)
+     * @Column(column="merchant_header_id", type="integer", length=11, nullable=false)
      */
     public $merchant_header_id;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=3, nullable=false)
+     * @Column(column="sequence", type="integer", length=3, nullable=false)
      */
     public $sequence;
 
@@ -31,112 +31,119 @@ class Transaction extends \Phalcon\Mvc\Model
      *
      * @var integer
      * @Primary
-     * @Column(type="integer", length=3, nullable=false)
+     * @Column(column="transaction_type_id", type="integer", length=3, nullable=false)
      */
     public $transaction_type_id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=2, nullable=true)
+     * @Column(column="region_code", type="string", length=2, nullable=true)
      */
     public $region_code;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=60, nullable=true)
+     * @Column(column="card_number", type="string", length=128, nullable=true)
      */
     public $card_number;
 
     /**
      *
      * @var string
-     * @Column(type="string", nullable=true)
+     * @Column(column="transaction_date", type="string", nullable=true)
      */
     public $transaction_date;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=6, nullable=true)
+     * @Column(column="authorization_code", type="string", length=6, nullable=true)
      */
     public $authorization_code;
 
     /**
      *
      * @var double
-     * @Column(type="double", length=9, nullable=true)
+     * @Column(column="transaction_amount", type="double", length=9, nullable=true)
      */
     public $transaction_amount;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=2, nullable=true)
+     * @Column(column="installment_months_id", type="integer", length=2, nullable=true)
      */
     public $installment_months_id;
 
     /**
      *
+     * @var integer
+     * @Column(column="other_inst_term", type="integer", length=2, nullable=true)
+     */
+    public $other_inst_term;
+
+    /**
+     *
      * @var string
-     * @Column(type="string", length=13, nullable=true)
+     * @Column(column="airline_ticket_number", type="string", length=13, nullable=true)
      */
     public $airline_ticket_number;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=17, nullable=true)
+     * @Column(column="customer_reference_identifier", type="string", length=17, nullable=true)
      */
     public $customer_reference_identifier;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=25, nullable=true)
+     * @Column(column="merchant_order_number", type="string", length=25, nullable=true)
      */
     public $merchant_order_number;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=4, nullable=true)
+     * @Column(column="commodity_code", type="string", length=4, nullable=true)
      */
     public $commodity_code;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=3, nullable=true)
+     * @Column(column="slip_pull_reason_id", type="integer", length=3, nullable=true)
      */
     public $slip_pull_reason_id;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=2, nullable=true)
+     * @Column(column="exception_id", type="integer", length=2, nullable=true)
      */
     public $exception_id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=30, nullable=true)
+     * @Column(column="other_exception_detail", type="string", length=30, nullable=true)
      */
     public $other_exception_detail;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=11, nullable=true)
+     * @Column(column="image_id", type="integer", length=11, nullable=true)
      */
     public $image_id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=45, nullable=true)
+     * @Column(column="image_file", type="string", length=45, nullable=true)
      */
     public $image_file;
 

@@ -179,3 +179,7 @@ function charsLeft(el, total) {
 function toAlphaNumNoSpace(el) {
     el.value = el.value.replace(/[^a-zA-Z0-9]/g, '');
 }
+
+function toNum(el) {
+    el.value = el.value.replace(/[^0-9]/g, '');
+}

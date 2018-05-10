@@ -15,7 +15,7 @@ class TransactionController extends ControllerBase
         
         try {
             $sql = 'SELECT merchant_header_id, sequence, transaction_type_id, `region_code`, AES_DECRYPT(`card_number`, \'' . $this->config->AES_Key . '\') as card_number, `transaction_date`, `authorization_code`,
-                    `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
+                    `transaction_amount`, `installment_months_id`, `other_inst_term`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
                     `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`
                     FROM transaction 
                     WHERE merchant_header_id = ?
@@ -102,6 +102,7 @@ class TransactionController extends ControllerBase
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['authorization_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['authorization_code'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['transaction_amount'] == '' ? 'null' : $slip['transaction_amount']) . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['installment_months_id'] == '' ? 'null' : $slip['installment_months_id']) . ',';
+                $sqlValuePart = $sqlValuePart . ($slip['other_inst_term'] == '' ? 'null' : $slip['other_inst_term']) . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['airline_ticket_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['airline_ticket_number'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : '\''. $filter->sanitize($slip['customer_reference_identifier'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['merchant_order_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['merchant_order_number'], 'string') . '\'') . ',';
@@ -116,7 +117,7 @@ class TransactionController extends ControllerBase
             }
 
             $sql = 'INSERT INTO transaction (merchant_header_id, sequence, transaction_type_id, `region_code`, `card_number`, `transaction_date`, `authorization_code`,
-                    `transaction_amount`, `installment_months_id`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
+                    `transaction_amount`, `installment_months_id`, `other_inst_term`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
                     `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`) ';
             
             $sql = $sql . $sqlValuePart;        
