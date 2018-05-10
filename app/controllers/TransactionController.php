@@ -116,7 +116,7 @@ class TransactionController extends ControllerBase
                 if ($i < (count($collection) - 1)) $sqlValuePart  = $sqlValuePart . ',';        
             }
 
-            $sql = 'INSERT INTO transaction (merchant_header_id, sequence, transaction_type_id, `region_code`, `card_number`, `transaction_date`, `authorization_code`,
+            $sql = 'INSERT INTO `transaction` (`merchant_header_id`, `sequence`, `transaction_type_id`, `region_code`, `card_number`, `transaction_date`, `authorization_code`,
                     `transaction_amount`, `installment_months_id`, `other_inst_term`, `airline_ticket_number`, `customer_reference_identifier`, `merchant_order_number`, `commodity_code`,
                     `slip_pull_reason_id`, `exception_id`, `other_exception_detail`, `image_id`, `image_file`) ';
             

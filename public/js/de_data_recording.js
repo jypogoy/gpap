@@ -189,3 +189,19 @@ function redirectBack(batchId) {
     $(form).attr('method', 'POST');
     $(form).submit();
 }
+
+function logDCN(regionCode, dcn, amount) {
+    var params = {};
+    params.region_code = regionCode;
+    params.dcn = dcn;
+    params.amount = amount;
+    $.post('../dcn/post/', params, function (data) {
+        // Do nothing...             
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+}
