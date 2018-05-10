@@ -505,6 +505,41 @@ $(function() {
         this.select();
     });
 
+    $('#installment_months_id_dropdown').dropdown({
+        onChange: function() {
+            var value = $(this).dropdown('get value');    
+            if (value > 0) {
+                if (value == 100) { // Other
+                    $(this).addClass('hidden');
+                    $(this).dropdown('restore defaults');
+                    $('#other_inst_term_wrapper').removeClass('hidden');
+                    $('#installment_months_id_wrapper').addClass('hidden');
+                    $('#other_inst_term').focus();
+                }
+            } else {
+                $(this).dropdown('restore defaults');
+            }
+        }
+    });
+
+    $('#other_inst_term').keyup(function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 27) { 
+            $('#other_inst_term').val('');
+            $('#other_inst_term_wrapper').addClass('hidden');
+            $('#installment_months_id_wrapper').removeClass('hidden');
+            $('#installment_months_id_dropdown').removeClass('hidden');
+        }
+    });
+
+    $('#otherInstBtn').click(function(e) {
+        e.preventDefault();
+        $('#other_inst_term').val('');
+        $('#other_inst_term_wrapper').addClass('hidden');
+        $('#installment_months_id_wrapper').removeClass('hidden');
+        $('#installment_months_id_dropdown').removeClass('hidden');
+    });
+
     $('#customer_reference_identifier').keyup(function() {
         $(this).val($(this).val().toUpperCase());        
         charsLeft(this, 17);

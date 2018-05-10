@@ -61,16 +61,16 @@ $(function() {
         }
     });
 
-    $('#installment_months_id_dropdown').dropdown({
-        onChange: function() {
-            var value = $(this).dropdown('get value');            
-            if (value == 0) {       
-                $(this).dropdown('restore defaults');         
-            } else {                
-                $('#installment_months_id_wrapper').removeClass('error');
-            }
-        }
-    });
+    // $('#installment_months_id_dropdown').dropdown({
+    //     onChange: function() {
+    //         var value = $(this).dropdown('get value');            
+    //         if (value == 0) {       
+    //             $(this).dropdown('restore defaults');         
+    //         } else {                
+    //             $('#installment_months_id_wrapper').removeClass('error');
+    //         }
+    //     }
+    // });
     
     $('#slip_pull_reason_id_dropdown').dropdown({
         onChange: function() {

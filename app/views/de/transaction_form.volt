@@ -43,6 +43,40 @@
             <label>Trans Amt</label>
             {{ text_field('transaction_amount', 'maxlength': '9', 'class': 'slip-field balancing-enabled') }}
         </div>    
+        {#<div id="installment_months_id_wrapper" class="field">    
+            <label>Inst. Term</label>
+            <div class="ui action input">
+            <input type="text">
+            <button id="termsBtn" class="ui right icon button" data-tooltip="Accepted Terms" data-position="top center">
+                <i class="question icon"></i>
+            </button>
+            </div>
+        </div>#}
+
+{#<script>
+    $(function() {
+        $('#termsBtn').click(function(e){
+            e.preventDefault();
+            $('.mini.modal').modal({inverted : true}).modal('show');
+        });
+    });
+</script>
+
+<div class="ui mini modal">
+  <div class="header">Accepted Terms</div>
+  <div class="content">
+    <div class="ui list">
+        <div class="item">Apples</div>
+        <div class="item">Pears</div>
+        <div class="item">Oranges</div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Close</div>
+  </div>
+</div>#}
+
+
         <div id="installment_months_id_wrapper" class="field">    
             <label>Inst. Term</label>
             <div id="installment_months_id_dropdown" class="ui search selection dropdown slip-dropdown">
@@ -51,7 +85,14 @@
                 <i class="dropdown icon"></i>
                 <div class="menu"></div>
             </div>
-        </div> 
+        </div>
+        <div id="other_inst_term_wrapper" class="required hidden field">
+            <label>Inst. Term</label>                        
+            <div class="ui action input">
+                <input type="text" id="other_inst_term" class="uppercase header-field" maxlength="3">
+                <button id="otherInstBtn" class="ui small icon button" data-tooltip="Close" data-position="top center"><i class="remove icon"></i></button>
+            </div>
+        </div>   
     </div>    
     <div id="other_fields_div" class="hidden small fields">                    
         <div id="airline_ticket_number_wrapper" class="sixteen wide hidden field">    

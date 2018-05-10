@@ -424,7 +424,8 @@ function getInstallmentMonths() {
             $.each(data, function(i, month) {
                 installMonthsMap.set(month.id, month); // Keep reference of installment months for verify
                 $('<div class="item" data-value="' + month.id + '">' + month.on_display + '</div>').appendTo(menuWrapper);                             
-            });            
+            });  
+            $('<div class="item" data-value="100">Other</div>').appendTo(menuWrapper);          
         }                
     })
     .done(function (msg) {

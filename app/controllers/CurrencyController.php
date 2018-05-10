@@ -12,13 +12,13 @@ class CurrencyController extends ControllerBase
         $this->view->disable();
         
         try {
-            $region = Region::findFirst(
-                [
-                    "conditions" => "code = '" . $regionCode . "'"
-                ]
-            );
+            $phql = "SELECT Currency.* 
+                    FROM Currency 
+                    JOIN RegionCurrency rc 
+                    WHERE rc.region_code = '$regionCode' 
+                    ORDER BY Currency.alpha_code";
 
-            $currencies = $region->getCurrency();
+            $currencies = $this->modelsManager->executeQuery($phql);
 
             $this->response->setJsonContent($currencies);
             $this->response->send();     
