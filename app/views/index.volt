@@ -28,6 +28,7 @@
         {{ javascript_include('js/hashmap.js') }} 
         {{ javascript_include('js/keypress.js') }} 
         {{ javascript_include('js/accounting.min.js') }} 
+        {{ javascript_include('js/moment.min.js') }} 
 
         {{ javascript_include('js/app.js') }}
         {{ javascript_include('js/util.js') }}

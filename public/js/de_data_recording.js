@@ -26,26 +26,29 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                                     // These records will be used to validate new transaction DCNs.                                        
                                     var params = {};
                                     params.region_code = $('#region').val();
+                                    params.merchant_number = $('#merchant_number').val();
                                     params.dcn = $('#dcn').val();
-                                    params.amount = $('#deposit_amount').val();
+                                    params.amount = unformatValue($('#deposit_amount').val());
                                     params.image_path = imgArray[0].path; 
                                     
                                     $.post('../dcn/record/', params, function (isSuccess) {
-                                       d.resolve(isSuccess);      
+                                        if (isSuccess) {
+                                            toastr.success(msg);  
+                                            if (isSaveNew) {
+                                                getNewBatch();
+                                            } else {
+                                                window.location = '../de/redirectsuccess/' + false;
+                                            } 
+                                        } else {
+                                            toastr.error('Unable to record DCN.');
+                                        }      
                                     })
                                     .done(function (msg) {
                                         // Do nothing...
                                     })
                                     .fail(function (xhr, status, error) {
                                         toastr.error(error);
-                                    });
-
-                                    toastr.success(msg);  
-                                    if (isSaveNew) {
-                                        getNewBatch();
-                                    } else {
-                                        window.location = '../de/redirectsuccess/' + false;
-                                    }   
+                                    });                                      
                                 } else {
                                     toastr.error('Unable to complete the this batch.');
                                 }       
@@ -229,7 +232,8 @@ function writeSlips(headerId) {
         data['sequence'] = index;
         fieldValueMap.forEach(function(value, id) {
             if (id.indexOf('date') != -1) {
-                data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
+                //data[id] = $.datepicker.formatDate('yy-mm-dd', new Date(value));
+                data[id] = value;
             } else {
                 if (value && (id.indexOf('card') != -1 || id.indexOf('amount') != -1)) {
                     data[id] = unformatValue(value); // See utils.js

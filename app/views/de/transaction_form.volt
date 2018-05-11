@@ -16,8 +16,12 @@
         <div id="region_code_wrapper" class="required field">
             <label>Region</label>
             {{ text_field('region_code', 'class': 'slip-field auto-fill', 'maxlength': 2, 'value': batch.zip.region_code, 'disabled': true) }}
-        </div> 
+        </div>
         <div id="transaction_date_wrapper" class="required field">
+            <label>Trans Date</label>
+            {{ text_field('transaction_date', 'placeholder': 'MM/DD/YY', 'class': 'slip-field') }}
+        </div> 
+        {#<div id="transaction_date_wrapper" class="required field">
             <label>Trans Date</label>
             <div class="ui calendar" id="transaction_date_cal">
                 <div class="ui input left icon">
@@ -25,7 +29,7 @@
                 {{ text_field('transaction_date', 'placeholder': 'Date', 'class': 'slip-field') }}
                 </div>
             </div>
-        </div> 
+        </div>#}
     </div>
     <div id="card_number_wrapper" class="small required field">
         <label>Cardholder Number (PAN)</label>

@@ -22,9 +22,16 @@ class Dcn extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(column="mid", type="string", length=16, nullable=false)
+     * @Column(column="merchant_number", type="string", length=16, nullable=false)
      */
-    public $mid;
+    public $merchant_number;
+
+    /**
+     *
+     * @var string
+     * @Column(column="dcn", type="string", length=7, nullable=false)
+     */
+    public $dcn;
 
     /**
      *

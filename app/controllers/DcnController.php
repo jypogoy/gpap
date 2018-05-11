@@ -12,21 +12,18 @@ class DcnController extends ControllerBase
     {
         $this->view->disable();
 
-        // if (!$this->request->isPost()) {
-        //     return $this->response->redirect('');
-        // }
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
 
         try {
             $dcn = new Dcn();
-            // $dcn->region_code = $this->request->getPost('region_code');
-            // $dcn->mid = $this->request->getPost('mid');
-            // $dcn->amount = $this->request->getPost('amount');
-            // $dcn->image_path = $this->request->getPost('image_path');
-            $dcn->region_code = 'PH';
-            $dcn->mid = '00000000444';
-            $dcn->amount = 500;
-            $dcn->image_path = '/BN/20100101-2-001/Airline/scan0001-5.tif';
-
+            $dcn->region_code = $this->request->getPost('region_code');
+            $dcn->mid = $this->request->getPost('mid');
+            $dcn->dcn = $this->request->getPost('dcn');
+            $dcn->amount = $this->request->getPost('amount');
+            $dcn->image_path = $this->request->getPost('image_path');
+            
             if (!$dcn->save()) {
                 $this->errorLogger->error(parent::_constExceptionMessage('Unable to log DCN information:'));
                 $messages = $dcn->getMessages();
