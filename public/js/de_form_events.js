@@ -74,7 +74,8 @@ $(function() {
 
             $.each(amountFields, function(i, field) {
                 if (currNoDecimal) {
-                    var noDecVal = noDecimal(field.value); // See utils.js
+                    var wholeValue = field.value.indexOf('.') != -1 ? field.value.substring(0, field.value.indexOf('.')) : field.value; // Remove the decimal value
+                    var noDecVal = noDecimal(wholeValue); // See utils.js
                     field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
                 } else {
                     if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
