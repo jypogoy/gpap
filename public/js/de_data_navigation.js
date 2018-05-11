@@ -171,8 +171,8 @@ function refreshTransTypeDependentFields() {
         $('.vi-field').parent().addClass('hidden');
     }
 
-    // Auth Code option in Credut and Airline Credit
-    if (option.indexOf('Credit') != -1) {
+    // Auth Code option in Credit and Airline Credit
+    if (option.indexOf('Airline') != -1 || option.indexOf('Credit') != -1) {
         //$('#authorization_code_wrapper').removeClass('required');
         $('#authorization_code_wrapper').addClass('hidden');
     } else {
