@@ -201,10 +201,10 @@ $di->set('flash', function () {
 $di->setShared('session', function () {
 
     // Set the max lifetime of a session with 'ini_set()' to one hour
-    //ini_set('session.gc_maxlifetime', 3600);
+    ini_set('session.gc_maxlifetime', 3600);
 
     // Each client should remember their session id for EXACTLY 1 hour
-    //session_set_cookie_params(3600);
+    session_set_cookie_params(3600);
 
     // Start session with Phalcon
     $session = new SessionAdapter();
