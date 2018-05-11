@@ -15,7 +15,7 @@ $(function() {
                 if (!data) {
                     $('#merchant_number').focus();
                 } else {
-                    $('#dcn').focus();
+                    $('#currency_id_dropdown').find('.search').focus();
                 }
             }); 
             padZero($(this));
@@ -62,43 +62,9 @@ $(function() {
                 }
             }
 
-            // Check if selected is either JPY, KRW or IDR that restricts decimal in amounts.
-            var amountFields = $('input[id*="amount"]');
-            var text = $(this).dropdown('get text');    
-            if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-                || ($('#region_code').val() == 'MY' && text.indexOf('TWD'))) {
-                currNoDecimal = true;                
-            } else {
-                currNoDecimal = false;
-            }
-
-            $.each(amountFields, function(i, field) {
-                if (currNoDecimal) {
-                    var wholeValue = field.value.indexOf('.') != -1 ? field.value.substring(0, field.value.indexOf('.')) : field.value; // Remove the decimal value
-                    var noDecVal = noDecimal(wholeValue); // See utils.js
-                    field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
-                } else {
-                    if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
-                    } else {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', format: '%v %s' }); // See accounting.min.js
-                    }
-                }
-            }); 
-            
-            var varianceField =  $('#variance');
-            if (currNoDecimal) {
-                var noDecVal = noDecimal(varianceField.val()); // See utils.js
-                varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
-            } else {
-                if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                    varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', precision: 3, format: '%v %s' })); // See accounting.min.js
-                } else {
-                    varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', format: '%v %s' })); // See accounting.min.js
-                }
-            }
+            loadAndFormatAmounts();
         }
-    });
+    });    
 
     $('#other_currency').keyup(function(e) {
         var keyCode = e.keyCode || e.which;
@@ -1029,4 +995,43 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     } else {
         saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
     } 
+}
+
+function loadAndFormatAmounts() {
+    // Check if selected is either JPY, KRW or IDR that restricts decimal in amounts.
+    var amountFields = $('input[id*="amount"]');
+    var text = $('#currency_id_dropdown').dropdown('get text');    
+    if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
+        || ($('#region_code').val() == 'MY' && text.indexOf('TWD'))) {
+        currNoDecimal = true;                
+    } else {
+        currNoDecimal = false;
+    }
+
+    $.each(amountFields, function(i, field) {
+        if (currNoDecimal) {
+            var wholeValue = field.value.indexOf('.') != -1 ? field.value.substring(0, field.value.indexOf('.')) : field.value; // Remove the decimal value
+            var noDecVal = noDecimal(wholeValue); // See utils.js
+            field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
+        } else {
+            if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+                field.value = accounting.formatMoney(field.value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
+            } else {
+                field.value = accounting.formatMoney(field.value, { symbol: '', format: '%v %s' }); // See accounting.min.js
+            }
+        }
+    }); 
+    
+    var varianceField =  $('#variance');
+    if (currNoDecimal) {
+        var wholeValue = varianceField.val().indexOf('.') != -1 ? varianceField.val().substring(0, varianceField.val().indexOf('.')) : varianceField.val(); // Remove the decimal value
+        var noDecVal = noDecimal(wholeValue); // See utils.js
+        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+    } else {
+        if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+            varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', precision: 3, format: '%v %s' })); // See accounting.min.js
+        } else {
+            varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', format: '%v %s' })); // See accounting.min.js
+        }
+    }
 }

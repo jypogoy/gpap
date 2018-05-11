@@ -133,7 +133,7 @@ function getContents(lastCompletedEntry, existingHeader) {
 
                 // Re-persist merchant information and filter dependent controls.
                 getMerchantInfo(headerData.merchant_number);
-
+        
                 // Fill header fields with values.
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
@@ -143,7 +143,7 @@ function getContents(lastCompletedEntry, existingHeader) {
                         setFieldValue(key, value); // See de_data_navigation.js
                     }                    
                 });
-
+                                
                 // Load transactions
                 getSlipContents(headerData.id);
 
@@ -151,6 +151,8 @@ function getContents(lastCompletedEntry, existingHeader) {
                 if (lastCompletedEntry) {
                     $('#data_entry_id').val(dataEntryId);
                 } 
+                
+                loadAndFormatAmounts(); // See de_form_events.js                
             }       
         }
     });

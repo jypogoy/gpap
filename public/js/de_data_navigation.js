@@ -202,7 +202,7 @@ function calculateAmount() {
         totalAmountField.val(accounting.formatNumber(fAmount));   
         varianceField.val(accounting.formatNumber(totalAmount - depAmount)); // See accounting.min.js            
     } else {
-        totalAmountField.val(accounting.formatMoney(depAmount, { symbol: '',  format: '%v %s' }));   
+        totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }));   
         varianceField.val(accounting.formatMoney(totalAmount - depAmount, { symbol: '',  format: '%v %s' })); // See accounting.min.js
     }
 }
