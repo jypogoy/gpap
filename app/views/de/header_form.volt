@@ -19,11 +19,7 @@
         <label>Merchant Name</label>
         {{ text_field('merchant_name', 'class': 'header-field', 'disabled' : true) }}
     </div>  
-    <div class="small fields">
-        <div id="dcn_wrapper" class="four wide required field">
-            <label>DCN</label>
-            {{ text_field('dcn', 'class': 'header-field', 'minlength': 7, 'maxlength': 7) }}
-        </div> 
+    <div class="small fields">        
         <div id="currency_id_wrapper" class="required field">
             <label>CNY Code<span id="multi_currency" style="color: #8C8CFF;"></span></label>                        
             <div id="currency_id_dropdown" class="ui search selection dropdown header-dropdown">
@@ -43,7 +39,11 @@
         <div id="deposit_amount_wrapper" class="eight wide required field">
             <label>Batch Amt</label>
             {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
-        </div>                                                      
+        </div>  
+        <div id="dcn_wrapper" class="four wide required field">
+            <label>DCN</label>
+            {{ text_field('dcn', 'class': 'header-field', 'minlength': 7, 'maxlength': 7) }}
+        </div>                                                     
     </div>    
         
     {#<div id="deposit_date_wrapper" class="required field">

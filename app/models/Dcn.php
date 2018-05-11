@@ -1,6 +1,6 @@
 <?php
 
-class Dcn extends \Phalcon\Mvc\Model
+class DCN extends \Phalcon\Mvc\Model
 {
 
     /**

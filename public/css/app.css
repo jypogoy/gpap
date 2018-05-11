@@ -231,3 +231,7 @@ input[readonly] {
     text-align: right;
     color: darkgrey;
 }
+
+.pointing.label {
+    z-index: 9999 !important;
+}

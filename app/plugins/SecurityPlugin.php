@@ -61,7 +61,7 @@ class SecurityPlugin extends Plugin
 				'transaction_type'	=>	['list'],
 				'user_task'		=>	['getbyuser'],
 				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
-				'dcn'			=>	['record'],
+				'dcn'			=>	['record', 'getsamemidamountregion', 'getsameregionday'],
 				'session'    	=> 	['changepassword'],
 				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
 			];

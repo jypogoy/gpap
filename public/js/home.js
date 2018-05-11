@@ -55,7 +55,7 @@ function getUserTasks() {
                     loadUserEntries(activeTaskId);    
                 } else {
                     $('.deListBody').empty();                
-                    $('.deListBody').append('<tr><td colspan="6">No records found.</td></tr>');
+                    $('.deListBody').append('<tr><td colspan="8">No records found.</td></tr>');
                 }        
                 $('.get-batch').removeClass('hidden');
                 $('#batchCount').removeClass('hidden');
@@ -65,7 +65,7 @@ function getUserTasks() {
                 $('.get-batch').addClass('hidden');
                 $('#batchCount').addClass('hidden');
                 $('.deListBody').empty();  
-                $('.deListBody').append('<tr><td colspan="6">No records found.</td></tr>');
+                $('.deListBody').append('<tr><td colspan="8">No records found.</td></tr>');
             }    
         }                
     })
@@ -82,7 +82,7 @@ function loadUserEntries(taskId) {
     $.post('data_entry/getbyusertask/' + taskId, function (data) {
         $(wrapper).empty();
         if (!data) {
-            $(wrapper).append('<tr><td colspan="6">No records found.</td></tr>');
+            $(wrapper).append('<tr><td colspan="8">No records found.</td></tr>');
         } else {
             if (data.indexOf('alert') != -1) {
                 toastr.error(data);
