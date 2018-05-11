@@ -233,5 +233,6 @@ input[readonly] {
 }
 
 .pointing.label {
+    /* position: relative !important; */
     z-index: 9999 !important;
 }

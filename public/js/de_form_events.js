@@ -293,7 +293,7 @@ $(function() {
                 $(alert).remove();
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                        '<span id="' + this.id + '_msg">Invalid Car Number</span>' +
+                        '<span id="' + this.id + '_msg">Invalid Card Number</span>' +
                         '</div>');
                 isPreInvalid = true;
             } else {
