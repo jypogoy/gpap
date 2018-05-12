@@ -21,17 +21,10 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                             data.batch_id = $('#batch_id').val();
                             $.post('../de/complete/', data,function (msg) {  
                                 if (msg.indexOf('success') != -1) {        
-                                    
+                                                                        
                                     // Record a copy of the DCN information to maintain uniqueness.
-                                    // These records will be used to validate new transaction DCNs.                                        
-                                    var params = {};
-                                    params.region_code = $('#region').val();
-                                    params.merchant_number = $('#merchant_number').val();
-                                    params.dcn = $('#dcn').val();
-                                    params.amount = unformatValue($('#deposit_amount').val());
-                                    params.image_path = imgArray[0].path; 
-                                    
-                                    $.post('../dcn/record/', params, function (isSuccess) {
+                                    // These records will be used to validate new transaction DCNs.
+                                    recordDCN().then(function(isSuccess) {
                                         if (isSuccess) {
                                             toastr.success(msg);  
                                             if (isSaveNew) {
@@ -48,7 +41,7 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                                     })
                                     .fail(function (xhr, status, error) {
                                         toastr.error(error);
-                                    });                                      
+                                    });                                 
                                 } else {
                                     toastr.error('Unable to complete the this batch.');
                                 }       
@@ -92,12 +85,9 @@ function saveBatch_deprecated(isSaveOnly, isSaveNew, isComplete) {
                         $.post('../de/complete/', data,function (msg) {  
                             if (msg.indexOf('success') != -1) {                                               
                                 
-                                // Execute on verify by default
-                                if ($('#session_task_name').val().indexOf('Verify') != -1) {
-                                    // Record a copy of the DCN information to maintain uniqueness.
-                                    // These records will be used to validate new transaction DCNs.
-                                    recordDCN();
-                                }
+                                // Record a copy of the DCN information to maintain uniqueness.
+                                // These records will be used to validate new transaction DCNs.
+                                recordDCN();
                                 
                                 toastr.success(msg);  
                                 if (isSaveNew) {
@@ -284,13 +274,15 @@ function recordDCN() {
     var d = $.Deferred();
 
     var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.task_id = $('#session_task_id').val();
     params.dcn = $('#dcn').val();
     params.merchant_number = $('#merchant_number').val();
     params.region_code = $('#region').val();  
-    params.amount = $('#deposit_amount').val();
-    params.image_path = imgArray[0].path; 
-    
-    $.post('../dcn/record/', function (isSuccess) {
+    params.amount = unformatValue($('#deposit_amount').val());
+    params.image_path = imgArray[0].path;                                 
+
+    $.post('../dcn/record/', params, function (isSuccess) {
        d.resolve(isSuccess);      
     })
     .done(function (msg) {

@@ -125,6 +125,8 @@ $(function() {
                 $('#' + el.id + '_alert').remove();    
                 
                 var params = {};
+                params.batch_id = $('#batch_id').val();
+                params.task_id = $('#session_task_id').val();
                 params.dcn = $('#dcn').val();
                 params.region_code = $('#region_code').val();
                 // Same DCN within the same Region on the same day
@@ -142,6 +144,8 @@ $(function() {
                 });
 
                 var params = {};
+                params.batch_id = $('#batch_id').val();
+                params.task_id = $('#session_task_id').val();
                 params.dcn = $('#dcn').val();
                 params.merchant_number = $('#merchant_number').val();                
                 params.deposit_amount =  $('#deposit_amount').val().trim();
@@ -152,7 +156,7 @@ $(function() {
                         //$('#' + el.id + '_alert').remove();
                         $(wrapper).addClass('error');
                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
-                                '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN, MID, total amount within the same Region in the historical record</span>' +
+                                '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN, MID, Total Amount within the same Region in the historical record</span>' +
                                 '</div>');
                     } else {
                         // $(wrapper).removeClass('error');

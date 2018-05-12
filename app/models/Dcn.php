@@ -1,6 +1,6 @@
 <?php
 
-class DCN extends \Phalcon\Mvc\Model
+class Dcn extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -8,49 +8,63 @@ class DCN extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(column="id", type="integer", length=11, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     public $id;
 
     /**
      *
+     * @var integer
+     * @Column(type="integer", length=3, nullable=false)
+     */
+    public $task_id;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=false)
+     */
+    public $batch_id;
+
+    /**
+     *
      * @var string
-     * @Column(column="region_code", type="string", length=2, nullable=false)
+     * @Column(type="string", length=3, nullable=false)
      */
     public $region_code;
 
     /**
      *
      * @var string
-     * @Column(column="merchant_number", type="string", length=16, nullable=false)
+     * @Column(type="string", length=16, nullable=true)
      */
     public $merchant_number;
 
     /**
      *
      * @var string
-     * @Column(column="dcn", type="string", length=7, nullable=false)
+     * @Column(type="string", length=7, nullable=true)
      */
     public $dcn;
 
     /**
      *
      * @var double
-     * @Column(column="amount", type="double", length=13, nullable=false)
+     * @Column(type="double", length=13, nullable=true)
      */
     public $amount;
 
     /**
      *
      * @var string
-     * @Column(column="image_path", type="string", length=100, nullable=true)
+     * @Column(type="string", length=100, nullable=true)
      */
     public $image_path;
 
     /**
      *
      * @var string
-     * @Column(column="created_at", type="string", nullable=true)
+     * @Column(type="string", nullable=true)
      */
     public $created_at;
 
@@ -60,7 +74,8 @@ class DCN extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("gpap");
-        $this->setSource("dcn");
+        $this->belongsTo('batch_id', '\Batch', 'id', ['alias' => 'Batch']);
+        $this->belongsTo('task_id', '\Task', 'id', ['alias' => 'Task']);
     }
 
     /**
@@ -77,7 +92,7 @@ class DCN extends \Phalcon\Mvc\Model
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Dcn[]|Dcn|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Dcn[]|Dcn
      */
     public static function find($parameters = null)
     {
@@ -88,7 +103,7 @@ class DCN extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Dcn|\Phalcon\Mvc\Model\ResultInterface
+     * @return Dcn
      */
     public static function findFirst($parameters = null)
     {
