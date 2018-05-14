@@ -35,17 +35,44 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function listAvailableAction($taskName)
+    public function listAvailableAction()
     {
         $this->view->disable();
         
-        try {
-            $batches = Batch::find(
-                [
-                    "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
-                ]
-            );        
-        
+        $phql = '';
+        $conditions = '';        
+        $batches = null;
+
+        $taskId = $this->request->getPost('task_id');
+        $taskName = $this->request->getPost('task_name');
+        $userId = $this->request->getPost('user_id');
+
+        try {            
+            if ($taskName == 'Entry 1') {
+                $phql = 'SELECT * FROM Batch WHERE entry_status IS NULL';
+                $batches = $this->modelsManager->executeQuery($phql);
+
+            } else if ($taskName == 'Verify') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                            SELECT batch_id 
+                            FROM DataEntry 
+                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                        )";
+                $batches = $this->modelsManager->executeQuery(
+                    $phql, 
+                    [
+                        'taskId' => $taskId,
+                        'userId' => $userId
+                    ]
+                );
+
+            } else if ($taskName == 'Balancing') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
+                $batches = $this->modelsManager->executeQuery($phql);        
+            }          
+
             echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
 
         } catch (\Exception $e) {            
@@ -73,20 +100,38 @@ class BatchController extends ControllerBase
         $this->view->disable();
         
         $conditions = '';        
-        if ($taskName == 'Entry 1') {
-            $conditions = "entry_status IS NULL";
-        } else if ($taskName == 'Verify') {
-            $conditions = "entry_status = 'Complete' AND verify_status IS NULL";
-        } else if ($taskName == 'Balancing') {
-            $conditions = "entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
-        }
+        $batches = null;
+
+        $taskId = $this->request->getPost('task_id');
+        $taskName = $this->request->getPost('task_name');
+        $userId = $this->request->getPost('user_id');
 
         try {
-            $batches = Batch::findFirst(
-                [
-                    "conditions" => $conditions
-                ]
-            );        
+            $phql = '';
+            if ($taskName == 'Entry 1') {
+                $phql = 'SELECT * FROM Batch WHERE entry_status IS NULL';
+                $batches = $this->modelsManager->executeQuery($phql);
+
+            } else if ($taskName == 'Verify') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                            SELECT batch_id 
+                            FROM DataEntry 
+                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                        )";
+                $batches = $this->modelsManager->executeQuery(
+                    $phql, 
+                    [
+                        'taskId' => $taskId,
+                        'userId' => $userId
+                    ]
+                );
+
+            } else if ($taskName == 'Balancing') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
+                $batches = $this->modelsManager->executeQuery($phql);        
+            }            
 
             $this->response->setJsonContent($batches);
             $this->response->send(); 
@@ -98,16 +143,43 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function countAvailableAction($taskName)
+    public function countAvailableAction()
     {
         $this->view->disable();
         
-        try {
-            $count = Batch::count(
-                [
-                    "conditions" => ($taskName == 'ENTRY' ? "entry_status IS NULL" : "entry_status = 'Complete' AND verify_status IS NULL")
-                ]
-            );        
+        $phql = '';
+        $conditions = '';        
+        $count = 0;
+
+        $taskId = $this->request->getPost('task_id');
+        $taskName = $this->request->getPost('task_name');
+        $userId = $this->request->getPost('user_id');
+
+        try {            
+            if ($taskName == 'Entry 1') {
+                $phql = 'SELECT COUNT(*) FROM Batch WHERE entry_status IS NULL';
+                $count = $this->modelsManager->executeQuery($phql);
+
+            } else if ($taskName == 'Verify') {
+                $phql = "SELECT COUNT(*) FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                            SELECT batch_id 
+                            FROM DataEntry 
+                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                        )";
+                $count = $this->modelsManager->executeQuery(
+                    $phql, 
+                    [
+                        'taskId' => $taskId,
+                        'userId' => $userId
+                    ]
+                );
+
+            } else if ($taskName == 'Balancing') {
+                $phql = "SELECT COUNT(*) FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
+                $count = $this->modelsManager->executeQuery($phql);        
+            }          
 
             $this->response->setJsonContent($count);
             $this->response->send(); 

@@ -119,7 +119,11 @@ function countAvailableByTask() {
             toastr.error(error);
         }); 
     } else {
-        $.post('batch/countavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (count) {
+        var params = {};
+        params.task_id = activeTaskId;
+        params.task_name = activeTaskName;
+        params.user_id = $('#user_id').val();
+        $.post('batch/countavailable/', params, function (count) {
             $('#batchCount').html(count);
             if (count > 0) {                
                 $('#batchCount').addClass('green');
@@ -189,7 +193,11 @@ function loadAvailableBatches() {
             toastr.error(error);
         });
     } else {
-        $.post('batch/listavailable/' + (activeTaskName.indexOf('Entry') != -1 ? 'ENTRY' : 'VERIFY'), function (data) {
+        var params = {};
+        params.task_id = activeTaskId;
+        params.task_name = activeTaskName;
+        params.user_id = $('#user_id').val();
+        $.post('batch/listavailable/', params, function (data) {
             if (!data) {
                 toastr.warning('The search did not match any batch.');
                 BatchModal.hide();      
