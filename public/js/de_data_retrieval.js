@@ -133,7 +133,7 @@ function getContents(lastCompletedEntry, existingHeader) {
 
                 // Re-persist merchant information and filter dependent controls.
                 getMerchantInfo(headerData.merchant_number);
-        
+                
                 // Fill header fields with values.
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
@@ -189,7 +189,7 @@ function getMerchantInfo(merchant_number) {
 
             $('#merchant_name').val(merchantData.doingBusinessAs);
             // Load currencies as can be filtered based on merchant's requirements
-            getRegionCurrency();
+            //getRegionCurrency();
             Form.resetErrors(true);
 
             // Show tip if allows multiple currencies.
@@ -269,6 +269,8 @@ function getMerchantInfo(merchant_number) {
 }
 
 function getRegionCurrency() {
+    var d = $.Deferred();
+
     $.post('../currency/getbyregion/' + $('#region_code').val(), function (data) {
         if (!data) {
             toastr.warning('The search did not match any currency.'); 
@@ -283,7 +285,8 @@ function getRegionCurrency() {
             if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
                 $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);              
             }            
-        }                
+        }   
+        d.resolve(data);             
     })
     .done(function (msg) {
         // Do nothing...
@@ -291,6 +294,8 @@ function getRegionCurrency() {
     .fail(function (xhr, status, error) {
         toastr.error(error);
     });    
+
+    return d.promise();
 }
 
 function getSlipContents(headerId) {

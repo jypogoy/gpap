@@ -102,8 +102,16 @@ function setFieldValue(key, value) {
     if (dropDownEl.length > 0) {
         if (value == '') {
             $(dropDownEl).dropdown('restore defaults');
-        } else {            
-            $(dropDownEl).dropdown('set selected', value);
+        } else {       
+            if (key == 'currency_id') {
+                $(dropDownEl).find('.menu').empty();
+                getRegionCurrency().then(function() {
+                    $(dropDownEl).dropdown('set selected', value);
+                    loadAndFormatAmounts();
+                });                                
+            } else {
+                $(dropDownEl).dropdown('set selected', value);
+            }                        
         } 
     }               
 
@@ -143,10 +151,10 @@ function setFieldValue(key, value) {
         $('.unlink-slip-btn').addClass('hidden');          
     }
 
-    if (key.indexOf('merchant_number') != -1) {
-        getMerchantInfo($('#' + key).val()); // See de_data_retrieval.js
-        padZero($('#' + key));
-    }
+    // if (key.indexOf('merchant_number') != -1) {
+    //     getMerchantInfo($('#' + key).val()); // See de_data_retrieval.js
+    //     padZero($('#' + key));
+    // }
 }
 
 function refreshTransTypeDependentFields() {
