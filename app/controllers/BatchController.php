@@ -113,12 +113,11 @@ class BatchController extends ControllerBase
                 $batches = $this->modelsManager->executeQuery($phql);
 
             } else if ($taskName == 'Verify') {
-                $phql = "SELECT * FROM Batch 
-                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
-                            SELECT batch_id 
-                            FROM DataEntry 
-                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
-                        )";
+                $phql = "SELECT Batch.*
+                        FROM Batch
+                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id AND DataEntry.task_id = (SELECT id FROM Task WHERE next_task_id = :taskId:)
+                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND DataEntry.user_id != :userId:";
+                        
                 $batches = $this->modelsManager->executeQuery(
                     $phql, 
                     [
@@ -161,12 +160,11 @@ class BatchController extends ControllerBase
                 $count = $this->modelsManager->executeQuery($phql);
 
             } else if ($taskName == 'Verify') {
-                $phql = "SELECT COUNT(*) FROM Batch 
-                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
-                            SELECT batch_id 
-                            FROM DataEntry 
-                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
-                        )";
+                $phql = "SELECT COUNT(*)
+                        FROM Batch
+                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id AND DataEntry.task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:)
+                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND DataEntry.user_id != :userId:";
+
                 $count = $this->modelsManager->executeQuery(
                     $phql, 
                     [
