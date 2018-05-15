@@ -385,5 +385,66 @@ class BatchController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
+
+    public function isAvailableAction()
+    {
+
+        $this->view->disable();
+
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        $taskId = $this->request->getPost('task_id');
+        $batchId = $this->request->getPost('batch_id');
+
+        try {            
+            $task = Task::findFirst($taskId);
+
+            $isAvailable = true;
+            
+            switch ($task->name) {
+                case 'Entry 1':
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND entry_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+                
+                case 'Verify':
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND verify_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+
+                default:
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND balance_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+            }
+            
+            $this->response->setJsonContent($isAvailable);
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+
+    }
 }
 

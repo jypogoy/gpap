@@ -165,6 +165,7 @@ var BatchModal = {
         .modal('show');
     },
     hide : function () {
+        var modal = $('.modal:not(div.complete)');
         $(modal).modal('hide');
     }
 }
@@ -178,7 +179,8 @@ function loadAvailableBatches() {
                 BatchModal.hide();      
             } else {
                 if (data.indexOf('No records') != -1) {
-                    toastr.info('There are no more available batches for ' + activeTaskName + '.');                    
+                    toastr.info('There are no more available batches for ' + activeTaskName + '.');        
+                    countAvailableByTask();            
                 } else {
                     $('.available-batch-content').empty();
                     $('.available-batch-content').append(data);
@@ -203,7 +205,8 @@ function loadAvailableBatches() {
                 BatchModal.hide();      
             } else {
                 if (data.indexOf('No records') != -1) {
-                    toastr.info('There are no more available batches for ' + activeTaskName + '.');                    
+                    toastr.info('There are no more available batches for ' + activeTaskName + '.');   
+                    countAvailableByTask();                 
                 } else {
                     $('.available-batch-content').empty();
                     $('.available-batch-content').append(data);
@@ -259,10 +262,21 @@ function complete(fromHome, actionEl, entryId, batchId) {
 }
 
 function begin(batchId) {
-    $.post('de/prep', function (data) {  
-        var form = $('#beginForm');
-        $(form).attr('action', 'de/' + batchId);    
-        $(form).attr('method', 'POST');
-        $(form).submit();
-    });    
+    var params = {};
+    params.task_id = activeTaskId;
+    params.batch_id = batchId;
+    $.post('batch/isavailable/', params, function (data) {  
+        if (data.id) {
+            $.post('de/prep', function (data) {  
+                var form = $('#beginForm');
+                $(form).attr('action', 'de/' + batchId);    
+                $(form).attr('method', 'POST');
+                $(form).submit();
+            });
+        } else {            
+            toastr.info('Batch <b>' + batchId + '</b> was currently acquired or processed by a different user. Kindly try another.');            
+            BatchModal.hide();
+            countAvailableByTask();            
+        } 
+    });       
 }
