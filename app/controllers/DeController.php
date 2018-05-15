@@ -17,19 +17,36 @@ class DeController extends ControllerBase
             $this->flashSession->error('Direct access to data entry URL is not permitted!');
             return $this->response->redirect('');
         }
+
+        $userId = $this->session->get('auth')['id'];
+        $taskId = $this->session->get('taskId');
+        $taskName = $this->session->get('taskName');
         
         try {
-            $batch = new Batch();
-            $batch->id = $batchId;
-            //TODO
-
             $batch = Batch::findFirstById($batchId); 
             $batch->is_exception = (int) $batch->is_exception;
+            
+            // Determine task then set status to 'Doing' or in progress.            
+            if (strpos($taskName, 'Entry') !== false) {
+                $batch->entry_status = 'Doing';
+            } else if (strpos(taskName, 'Verify') !== false) {
+                $batch->verify_status = 'Doing';
+            } else {
+                $batch->balance_status = 'Doing';
+            }
 
-            $userId = $this->session->get('auth')['id'];
-            $taskId = $this->session->get('taskId');
+            if (!$batch->save()) {
+                foreach ($batch->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
 
-            $task = Task::findFirst($taskId);    
+                $this->dispatcher->forward([
+                    'controller' => "home",
+                    'action' => 'index'
+                ]);
+
+                return;
+            }                 
 
             // Look for existing activity to maintain single record of batch on a particular task.
             $entry = null;
@@ -67,36 +84,14 @@ class DeController extends ControllerBase
                     ]);
 
                     return;
-                }
-                
-                // Determine task then set status to 'Doing' or in progress.            
-                if (strpos($task->name, 'Entry') !== false) {
-                    $batch->entry_status = 'Doing';
-                } else if (strpos($task->name, 'Verify') !== false) {
-                    $batch->verify_status = 'Doing';
-                } else {
-                    $batch->balance_status = 'Doing';
-                }
-
-                if (!$batch->save()) {
-                    foreach ($batch->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
-
-                    return;
-                }                            
+                }                                                       
             }            
 
             $this->view->dataEntry = $entry;
             $this->view->batch = $batch;
             $this->view->setTemplateAfter('de');        
 
-            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $task->name . ' Record Edit' : $task->name) . ' on Batch ' .  $batchId . '.'); 
+            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $taskName . ' Record Edit' : $taskName) . ' on Batch ' .  $batchId . '.'); 
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));

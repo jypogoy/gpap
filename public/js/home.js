@@ -272,7 +272,7 @@ function begin(batchId) {
                 $(form).submit();
             });
         } else {            
-            toastr.info('Batch <b>' + batchId + '</b> was currently acquired or processed by a different user. Kindly try another.');            
+            toastr.info('Batch <b>' + batchId + '</b> was already acquired or currently being processed by a different user. Kindly try another.');            
             BatchModal.hide();
             countAvailableByTask();            
         } 
