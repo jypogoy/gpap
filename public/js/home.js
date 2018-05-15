@@ -27,7 +27,8 @@ function getUserTasks() {
 
                 $('#task_id_dropdown').dropdown({ // See user_tasks_selection.volt
                     onChange: function() {
-                        var value = $(this).dropdown('get value');   
+                        var value = $(this).dropdown('get value'); 
+                        activeTaskId = value;
                         loadUserEntries(value);
                     },
                 });
@@ -118,12 +119,8 @@ function countAvailableByTask() {
         .fail(function (xhr, status, error) {
             toastr.error(error);
         }); 
-    } else {
-        var params = {};
-        params.task_id = activeTaskId;
-        params.task_name = activeTaskName;
-        params.user_id = $('#user_id').val();
-        $.post('batch/countavailable/', params, function (count) {
+    } else {        
+        $.post('batch/countavailable/' + activeTaskId, function (count) {
             $('#batchCount').html(count);
             if (count > 0) {                
                 $('#batchCount').addClass('green');
@@ -263,6 +260,7 @@ function complete(fromHome, actionEl, entryId, batchId) {
 
 function begin(batchId) {
     var params = {};
+    params.user_id = $('#user_id').val();
     params.task_id = activeTaskId;
     params.batch_id = batchId;
     $.post('batch/isavailable/', params, function (data) {  
@@ -279,4 +277,13 @@ function begin(batchId) {
             countAvailableByTask();            
         } 
     });       
+}
+
+function edit(batchId) {
+    $.post('de/prep', function (data) {  
+        var form = $('#beginForm');
+        $(form).attr('action', 'de/' + batchId);    
+        $(form).attr('method', 'POST');
+        $(form).submit();
+    }); 
 }

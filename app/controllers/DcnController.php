@@ -16,7 +16,6 @@ class DCNController extends ControllerBase
             return $this->response->redirect('');
         }
 
-        $batch_id = $this->request->getPost('batch_id');
         $task_id = $this->request->getPost('task_id');
         $dcn = $this->request->getPost('dcn');        
         $mid = $this->request->getPost('merchant_number');
@@ -26,14 +25,13 @@ class DCNController extends ControllerBase
         try {
             $dcn = Dcn::findFirst(
                 [
-                    'batch_id != ?1 AND task_id = ?2 AND dcn = ?3 AND merchant_number = ?4 AND amount = ?5 AND region_code = ?6 ',
+                    'task_id = ?1 AND dcn = ?2 AND merchant_number = ?3 AND amount = ?4 AND region_code = ?5 ',
                     'bind'  => [
-                        1   =>  $batch_id,
-                        2   =>  $task_id,
-                        3   =>  $dcn,
-                        4   =>  $mid,
-                        5   =>  $amount,
-                        6   =>  $region
+                        1   =>  $task_id,
+                        2   =>  $dcn,
+                        3   =>  $mid,
+                        4   =>  $amount,
+                        5   =>  $region
                     ]
                 ]
             );
@@ -55,7 +53,6 @@ class DCNController extends ControllerBase
             return $this->response->redirect('');
         }
 
-        $batch_id = $this->request->getPost('batch_id');
         $task_id = $this->request->getPost('task_id');
         $dcn = $this->request->getPost('dcn');
         $region = $this->request->getPost('region_code');
@@ -63,12 +60,11 @@ class DCNController extends ControllerBase
         try {
             $dcn = Dcn::findFirst(
                 [
-                    'batch_id != ?1 AND task_id = ?2 AND dcn = ?3 AND region_code = ?4 AND DATE(created_at) = DATE(NOW())',
+                    'task_id = ?1 AND dcn = ?2 AND region_code = ?3 AND DATE(created_at) = DATE(NOW())',
                     'bind'  => [
-                        1   =>  $batch_id,
-                        2   =>  $task_id,
-                        3   =>  $dcn,
-                        4   =>  $region
+                        1   =>  $task_id,
+                        2   =>  $dcn,
+                        3   =>  $region
                     ]
                 ]
             );
@@ -91,7 +87,6 @@ class DCNController extends ControllerBase
 
         try {
             $dcn = new Dcn();
-            $dcn->batch_id = $this->request->getPost('batch_id');
             $dcn->task_id = $this->request->getPost('task_id');
             $dcn->region_code = $this->request->getPost('region_code');
             $dcn->merchant_number = $this->request->getPost('merchant_number');

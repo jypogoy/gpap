@@ -19,6 +19,10 @@ class DeController extends ControllerBase
         }
         
         try {
+            $batch = new Batch();
+            $batch->id = $batchId;
+            //TODO
+
             $batch = Batch::findFirstById($batchId); 
             $batch->is_exception = (int) $batch->is_exception;
 

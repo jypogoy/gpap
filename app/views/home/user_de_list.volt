@@ -8,7 +8,7 @@
         <td>{{ entry.Batch.id }}</td>
         <td>{{ entry.MerchantHeader ? entry.MerchantHeader.Transaction | length : 0 }}</td>
         <td class="data-process-btn" width="10%">
-            <a onclick="begin({{ entry.Batch.id }}); return false;" data-tooltip="Review" data-position="bottom center">
+            <a onclick="edit({{ entry.Batch.id }}); return false;" data-tooltip="Review" data-position="bottom center">
                 <i class="pencil alternate orange icon"></i>Edit
             </a>
             {#<i class="ellipsis vertical icon"></i>

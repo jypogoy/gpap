@@ -247,8 +247,8 @@ function writeSlips(headerId) {
 }
 
 function getNewBatch() {
-    $.post('../batch/getavailable/' + $('#session_task_name').val(), function (data) {
-        if (data) {
+    $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
+        if (data && data.id) {
             redirectBack(data.id)
         } else {
             window.location = '../de/redirectnonext/' + $('#session_task_name').val();

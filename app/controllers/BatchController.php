@@ -80,6 +80,118 @@ class BatchController extends ControllerBase
         }
     }
 
+    public function getNextAvailableAction($taskId)
+    {
+        $this->view->disable();
+        
+        $phql = '';
+        $conditions = '';        
+        $result = null;
+
+        $userId = $this->session->get('auth')['id'];
+
+        try {     
+            $task = Task::findFirst($taskId);  
+            $taskId = $task->id;
+            $taskName = $task->name;  
+            
+            if ($taskName == 'Entry 1') {
+                $phql = 'SELECT * FROM Batch WHERE entry_status IS NULL LIMIT 1';
+                $result = $this->modelsManager->executeQuery($phql);
+
+            } else if ($taskName == 'Verify') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                            SELECT batch_id 
+                            FROM DataEntry 
+                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                        ) LIMIT 1";
+
+                $result = $this->modelsManager->executeQuery(
+                    $phql, 
+                    [
+                        'taskId' => $taskId,
+                        'userId' => $userId
+                    ]
+                );
+
+            } else if ($taskName == 'Balancing') {
+                $phql = "SELECT * FROM Batch 
+                        WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1 LIMIT 1";
+                $result = $this->modelsManager->executeQuery($phql);        
+            }          
+
+            $this->response->setJsonContent($result && count($result) > 0 ? $result[0] : $result);
+            $this->response->send(); 
+        
+            if ($result && count($result) > 0) $this->deLogger->info($this->session->get('auth')['name'] . ' was given Batch ' . $result[0]->id . ' for ' . strtoupper($taskName) . '.'); 
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
+    public function isAvailableAction()
+    {
+
+        $this->view->disable();
+
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        $taskId = $this->request->getPost('task_id');
+        $batchId = $this->request->getPost('batch_id');
+
+        try {            
+            $task = Task::findFirst($taskId);
+
+            $isAvailable = true;
+            
+            switch ($task->name) {
+                case 'Entry 1':
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND entry_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+                
+                case 'Verify':
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND verify_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+
+                default:
+                    $isAvailable = Batch::findFirst(
+                        [
+                            'id = ?1 AND balance_status IS NULL',
+                            'bind'  =>  [
+                                1   =>  $batchId
+                            ]
+                        ]
+                    );
+                    break;
+            }
+            
+            $this->response->setJsonContent($isAvailable);
+            $this->response->send();
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+
+    }
+
     public function getAction($id)
     {
         $this->view->disable();
@@ -94,92 +206,42 @@ class BatchController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
-    
-    public function getAvailableAction($taskName)
+        
+    public function countAvailableAction($taskId)
     {
-        $this->view->disable();
-        
-        $conditions = '';        
-        $batches = null;
+        $this->view->disable();                
 
-        $taskId = $this->request->getPost('task_id');
-        $taskName = $this->request->getPost('task_name');
-        $userId = $this->request->getPost('user_id');
-
-        try {
-            $phql = '';
-            if ($taskName == 'Entry 1') {
-                $phql = 'SELECT * FROM Batch WHERE entry_status IS NULL';
-                $batches = $this->modelsManager->executeQuery($phql);
-
-            } else if ($taskName == 'Verify') {
-                $phql = "SELECT Batch.*
-                        FROM Batch
-                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id AND DataEntry.task_id = (SELECT id FROM Task WHERE next_task_id = :taskId:)
-                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND DataEntry.user_id != :userId:";
-                        
-                $batches = $this->modelsManager->executeQuery(
-                    $phql, 
-                    [
-                        'taskId' => $taskId,
-                        'userId' => $userId
-                    ]
-                );
-
-            } else if ($taskName == 'Balancing') {
-                $phql = "SELECT * FROM Batch 
-                        WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
-                $batches = $this->modelsManager->executeQuery($phql);        
-            }            
-
-            $this->response->setJsonContent($batches);
-            $this->response->send(); 
-        
-            $this->deLogger->info($this->session->get('auth')['name'] . ' requested another batch for ' . strtoupper($taskName) . '.'); 
-
-        } catch (\Exception $e) {            
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
-        }
-    }
-
-    public function countAvailableAction()
-    {
-        $this->view->disable();
-        
-        $phql = '';
-        $conditions = '';        
-        $count = 0;
-
-        $taskId = $this->request->getPost('task_id');
-        $taskName = $this->request->getPost('task_name');
-        $userId = $this->request->getPost('user_id');
+        $result = null;
+        $userId = $this->session->get('auth')['id'];
 
         try {            
+            $task = Task::findFirst($taskId);
+            $taskName = $task->name;
+
             if ($taskName == 'Entry 1') {
-                $phql = 'SELECT COUNT(*) FROM Batch WHERE entry_status IS NULL';
-                $count = $this->modelsManager->executeQuery($phql);
+                $sql = 'SELECT COUNT(*) AS Total FROM batch WHERE entry_status IS NULL';
+
+                $result = $this->db->query($sql);
+                $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
 
             } else if ($taskName == 'Verify') {
-                $phql = "SELECT COUNT(*)
-                        FROM Batch
-                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id AND DataEntry.task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:)
-                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND DataEntry.user_id != :userId:";
+                $sql = "SELECT COUNT(*) AS Total
+                        FROM batch b
+                        INNER JOIN data_entry de ON de.batch_id = b.id AND de.task_id = (SELECT id FROM task WHERE next_task_id = ?)
+                        WHERE b.entry_status = 'Complete' AND b.verify_status IS NULL AND de.user_id != ?";
 
-                $count = $this->modelsManager->executeQuery(
-                    $phql, 
-                    [
-                        'taskId' => $taskId,
-                        'userId' => $userId
-                    ]
-                );
+                $result = $this->db->query($sql, [$task->id, $userId]);
+                $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
 
             } else if ($taskName == 'Balancing') {
-                $phql = "SELECT COUNT(*) FROM Batch 
+                $phql = "SELECT COUNT(*) AS Total FROM Batch 
                         WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
-                $count = $this->modelsManager->executeQuery($phql);        
+                
+                $result = $this->db->query($sql);
+                $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);    
             }          
 
-            $this->response->setJsonContent($count);
+            $this->response->setJsonContent($result->Total);
             $this->response->send(); 
 
         } catch (\Exception $e) {            
@@ -385,66 +447,6 @@ class BatchController extends ControllerBase
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }
-
-    public function isAvailableAction()
-    {
-
-        $this->view->disable();
-
-        if (!$this->request->isPost()) {
-            return $this->response->redirect('');
-        }
-
-        $taskId = $this->request->getPost('task_id');
-        $batchId = $this->request->getPost('batch_id');
-
-        try {            
-            $task = Task::findFirst($taskId);
-
-            $isAvailable = true;
-            
-            switch ($task->name) {
-                case 'Entry 1':
-                    $isAvailable = Batch::findFirst(
-                        [
-                            'id = ?1 AND entry_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
-                
-                case 'Verify':
-                    $isAvailable = Batch::findFirst(
-                        [
-                            'id = ?1 AND verify_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
-
-                default:
-                    $isAvailable = Batch::findFirst(
-                        [
-                            'id = ?1 AND balance_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
-            }
-            
-            $this->response->setJsonContent($isAvailable);
-            $this->response->send();
-
-        } catch (\Exception $e) {            
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
-        }
-
-    }
+    
 }
 
