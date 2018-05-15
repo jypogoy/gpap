@@ -160,9 +160,9 @@ function overrideHeader(pullReasonId) {
     if (pullReasonId && pullReasonId > 0) {
         //$('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
         $(headerRequiredFields).removeClass('required');
-        // $(slipRequiredFields).removeClass('required');
+        $(slipRequiredFields).removeClass('required');
         Form.resetErrors(true);
-        // Form.resetErrors(false);
+        Form.resetErrors(false);
         // $('.slip-field:not(.auto-fill)').attr('disabled', true);
         // $('.slip-dropdown').addClass('disabled');
         // $('.slip-controls').addClass('hidden');        

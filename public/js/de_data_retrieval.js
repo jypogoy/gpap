@@ -343,7 +343,7 @@ function getSlipContents(headerId) {
             var counterEls = $('.charcount');
             $.each(counterEls, function(c, el) {
                 var valueEL = $('#' + el.id.substring(0, el.id.lastIndexOf('_')));
-                charsLeft(valueEL[0]);
+                charsLeft(valueEL[0], valueEL.attr('allowedLength'));
             });
         }                  
     })

@@ -558,11 +558,11 @@ $(function() {
     });
 
     $('#customer_reference_identifier').keyup(function() {
-        $(this).val($(this).val().toUpperCase());        
-        charsLeft(this, 17);
+        $(this).val($(this).val().toUpperCase());      
+        charsLeft(this, $(this).attr('allowedLength'));
         var wrapper = $('#' + this.id + '_wrapper');
         $('#' + this.id + '_alert').remove();
-        if (this.value.length >= 17) {                
+        if (this.value.length >= $(this).attr('allowedLength')) {                
             $(wrapper).addClass('error');
             wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                             '<span id="' + this.id + '_msg">Reached 17 chars</span>' +
@@ -575,10 +575,10 @@ $(function() {
 
     $('#merchant_order_number').keyup(function() {
         $(this).val($(this).val().toUpperCase());
-        charsLeft(this, 25);
+        charsLeft(this, $(this).attr('allowedLength'));
         var wrapper = $('#' + this.id + '_wrapper');
         $('#' + this.id + '_alert').remove();
-        if (this.value.length >= 25) {                
+        if (this.value.length >= $(this).attr('allowedLength')) {                
             $(wrapper).addClass('error');
             wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                             '<span id="' + this.id + '_msg">Reached 25 chars</span>' +
