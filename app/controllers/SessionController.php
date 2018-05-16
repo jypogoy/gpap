@@ -122,7 +122,7 @@ class SessionController extends ControllerBase
                         $this->flash->success('Welcome ' . $user->userName);
 
                         // Log successful access                    
-                        $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in @ ' . $this->utils->getRealIpAddr() . '.');                        
+                        $this->sessionLogger->info($user->userFirstName . ' ' . $user->userLastName . ' logged in using IP: ' . $this->utils->getRealIpAddr() . ' with SESSION ID: ' . $this->session->getId() . '.');                        
 
                         try {
                             $user->userInvalidLoginAttempt = 0;

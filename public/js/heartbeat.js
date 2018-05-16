@@ -1,3 +1,3 @@
 setInterval(function () {
-    $.get("/", null, function () {});
+    $.get("/gpap/", null, function () {});
 }, 10000);
