@@ -239,4 +239,11 @@ class SessionController extends ControllerBase
             $this->errorLogger->error(parent::_consterrorMessage($e));
         }
     }
+
+    public function keepAliveAction()
+    {
+        $this->view->disable();
+        $this->session->set('LAST_ACTIVITY', time());
+        echo time();
+    }
 }
