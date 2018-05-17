@@ -1006,7 +1006,7 @@ function loadAndFormatAmounts() {
     var amountFields = $('input[id*="amount"]');
     var text = $('#currency_id_dropdown').dropdown('get text');    
     if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-        || ($('#region_code').val() == 'MY' && text.indexOf('TWD'))) {
+        || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
         currNoDecimal = true;                
     } else {
         currNoDecimal = false;
