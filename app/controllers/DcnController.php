@@ -88,6 +88,7 @@ class DCNController extends ControllerBase
         try {
             $dcn = new Dcn();
             $dcn->task_id = $this->request->getPost('task_id');
+            $dcn->batch_id = $this->request->getPost('batch_id');
             $dcn->region_code = $this->request->getPost('region_code');
             $dcn->merchant_number = $this->request->getPost('merchant_number');
             $dcn->dcn = $this->request->getPost('dcn');
@@ -97,7 +98,7 @@ class DCNController extends ControllerBase
             if (!$dcn->save()) {
                 $this->errorLogger->error('Unable to log DCN information: ' . json_encode($dcn));
                 foreach ($dcn->getMessages() as $message) {
-                    $this->errorLogger->error($message);
+                    $this->errorLogger->error($message->getMessage());
                 }
 
                 echo false;
