@@ -243,7 +243,8 @@ class SessionController extends ControllerBase
     public function keepAliveAction()
     {
         $this->view->disable();
-        $this->session->set('LAST_ACTIVITY', time());
-        echo time();
+        $auth = $this->session->get('auth');
+        $this->session->set('auth', $auth);
+        echo $auth['id'];
     }
 }
