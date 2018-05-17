@@ -127,7 +127,7 @@ $(function() {
 
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {
-            getRegionCurrency();
+            //getRegionCurrency();
             getPullReasons();
             getInstallmentMonths();
             getExceptions();
@@ -138,7 +138,7 @@ $(function() {
             //prepBalancingFields();
         });
     } else {
-        getRegionCurrency();
+        //getRegionCurrency();
         getPullReasons();
         getInstallmentMonths();
         getExceptions();

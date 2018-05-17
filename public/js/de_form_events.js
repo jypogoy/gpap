@@ -15,6 +15,7 @@ $(function() {
                 if (!data) {
                     $('#merchant_number').focus();
                 } else {
+                    getRegionCurrency(); // See de_data_retrieval.js
                     $('#currency_id_dropdown').find('.search').focus();
                 }
             }); 
@@ -59,6 +60,8 @@ $(function() {
                     }
                 } else {
                     $(this).dropdown('restore defaults');
+                    $('#currency_id_wrapper').removeClass('error');
+                    $('#currency_id_alert').remove();
                 }
             }
 
@@ -82,7 +85,7 @@ $(function() {
         $('#currency_id_alert').remove();
         var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
         if ($('#merchant_number').val() != '') {
-            if (currency != merchantInfoMap.get('currency')) {
+            if (currency != 'Choose' && currency != merchantInfoMap.get('currency')) {
                 if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
                     $('#currency_id_wrapper').addClass('error');
                     $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
@@ -95,6 +98,8 @@ $(function() {
             }   
         } else {
             $('#merchant_number').focus();
+            $('#currency_id_wrapper').removeClass('error');
+            $('#currency_id_alert').remove();
         }
     });
 
