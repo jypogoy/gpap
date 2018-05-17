@@ -110,6 +110,7 @@ $(function() {
     // See de_data_retrieval.js
     merchantInfoMap = new HashMap();
     currencyMap = new HashMap();
+    currencyMapForRef = new HashMap(); // Used in verify
     batchPullReasonMap = new HashMap();
     installMonthsMap = new HashMap();
     slipPullReasonMap = new HashMap();
@@ -124,6 +125,8 @@ $(function() {
             getBalancer(); // See de_data_retrieval.js
         }
     }
+
+    getRegionCurrencyForRef(); // See de_data_retrieval.js
 
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {

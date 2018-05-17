@@ -72,8 +72,8 @@ class MerchantHeader extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var double
-     * @Column(type="double", length=13, nullable=true)
+     * @var string
+     * @Column(type="string", length=13, nullable=true)
      */
     public $deposit_amount;
 

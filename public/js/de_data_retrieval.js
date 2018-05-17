@@ -26,14 +26,33 @@ function getRawContents() {  // Only called during Verify to get the previous ta
         $.post('../merchant_header/get/', params, function (headerData) {
             if (headerData || headerData.length > 0) {                
                 // Add values to header map.
+                var currency = currencyMapForRef.get(headerData['currency_id']);
+                var text = currency.alpha_code;
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
-                        var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-                        rawHeaderMap.set(key, v);
-                    } else {
-                        rawHeaderMap.set(key, value);
-                    } 
+                        //var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
                     
+                        if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
+                            || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
+                            currNoDecimal = true;                
+                        } else {
+                            currNoDecimal = false;
+                        }
+
+                        if (currNoDecimal) {
+                            var wholeValue = value.indexOf('.') != -1 ? value.substring(0, value.indexOf('.')) : value; // Remove the decimal value
+                            var noDecVal = noDecimal(wholeValue); // See utils.js
+                            value = accounting.formatNumber(noDecVal); // See accounting.min.js            
+                        } else {
+                            if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+                                value = accounting.formatMoney(value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
+                            } else {
+                                value = accounting.formatMoney(value, { symbol: '', format: '%v %s' }); // See accounting.min.js
+                            }
+                        }                                                
+                    }
+
+                    rawHeaderMap.set(key, value);                    
                 });    
                 
                 applyHeaderChecks(); // See de_verify.js
@@ -264,6 +283,29 @@ function getMerchantInfo(merchant_number) {
         }
         d.resolve(merchantData);
     });
+
+    return d.promise();
+}
+
+function getRegionCurrencyForRef() {
+    var d = $.Deferred();
+
+    $.post('../currency/getbyregion/' + $('#region_code').val(), function (data) {
+        if (!data) {
+            toastr.warning('The search did not match any currency.'); 
+        } else {
+            $.each(data, function(i, currency) {
+                currencyMapForRef.set(currency.id, currency); // Keep reference of currencies for verify
+            });                        
+        }   
+        d.resolve(data);             
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });    
 
     return d.promise();
 }

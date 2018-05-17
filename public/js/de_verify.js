@@ -25,7 +25,7 @@ function applyHeaderChecks(fields) {
                     }
                 }
             } else {
-                if(rawValue && field.value !== rawValue) {                                                    
+                if(rawValue && field.value.trim() != rawValue.trim()) {                                                    
                     showMessage(field.id, rawValue, rawValue);
                 }
             }

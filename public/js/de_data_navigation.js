@@ -107,7 +107,7 @@ function setFieldValue(key, value) {
                 $(dropDownEl).find('.menu').empty();
                 getRegionCurrency().then(function() {
                     $(dropDownEl).dropdown('set selected', value);
-                    loadAndFormatAmounts();
+                    loadAndFormatAmounts(); // See de_form.events.js
                 });                                
             } else {
                 $(dropDownEl).dropdown('set selected', value);
