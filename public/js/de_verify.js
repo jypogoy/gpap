@@ -145,6 +145,7 @@ function acceptRaw(fieldId, value) {
         var rawId = rawSlipMap.get(slipPage).get('image_id'); // See de_data_retrieval.js for map object  
         $('#image_id').val(rawId);
     } 
+    if (fieldId == 'merchant_number') getRegionCurrency(); // See de_data_retrieval.js
 }
 
 function hideMessage(fieldId) {

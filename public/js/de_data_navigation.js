@@ -151,10 +151,10 @@ function setFieldValue(key, value) {
         $('.unlink-slip-btn').addClass('hidden');          
     }
 
-    // if (key.indexOf('merchant_number') != -1) {
-    //     getMerchantInfo($('#' + key).val()); // See de_data_retrieval.js
-    //     padZero($('#' + key));
-    // }
+    if (key.indexOf('merchant_number') != -1) {
+        getMerchantInfo($('#' + key).val()); // See de_data_retrieval.js
+        padZero($('#' + key));
+    }
 }
 
 function refreshTransTypeDependentFields() {

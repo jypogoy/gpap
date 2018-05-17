@@ -29,7 +29,7 @@ class DeController extends ControllerBase
             // Determine task then set status to 'Doing' or in progress.            
             if (strpos($taskName, 'Entry') !== false) {
                 $batch->entry_status = 'Doing';
-            } else if (strpos(taskName, 'Verify') !== false) {
+            } else if (strpos($taskName, 'Verify') !== false) {
                 $batch->verify_status = 'Doing';
             } else {
                 $batch->balance_status = 'Doing';
