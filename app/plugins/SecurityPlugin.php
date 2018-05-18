@@ -142,7 +142,7 @@ class SecurityPlugin extends Plugin
 				'controller' => 'errors',
 				'action'     => 'show401'
 			]);
-            $this->session->destroy();
+            //$this->session->destroy();
 			return false;
 		}
 	}

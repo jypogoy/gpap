@@ -8,7 +8,7 @@
 class SessionController extends ControllerBase
 {
     private $logger;
-
+    
     public function initialize()
     {
         $this->tag->setTitle('Sign In');
@@ -242,10 +242,14 @@ class SessionController extends ControllerBase
 
     public function keepAliveAction()
     {
-        $this->view->disable();
+        $this->view->disable();        
+        
         $auth = $this->session->get('auth');
-        $this->session->set('auth', $auth);
-        $this->session->set('LAST_ACTIVITY', time());
+        // $this->session->set('auth', $auth);
+        // $this->session->set('LAST_ACTIVITY', time());
+
+        return $auth['name'];
+
         // session_regenerate_id(true);
         // echo $this->session->getId();
     }
