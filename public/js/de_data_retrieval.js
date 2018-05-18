@@ -27,29 +27,12 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             if (headerData || headerData.length > 0) {                
                 // Add values to header map.
                 var currency = currencyMapForRef.get(headerData['currency_id']);
-                var text = currency.alpha_code;
+                var currencyCode = currency.alpha_code;
+                
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
-                        //var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-                    
-                        if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-                            || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
-                            currNoDecimal = true;                
-                        } else {
-                            currNoDecimal = false;
-                        }
-
-                        if (currNoDecimal) {
-                            var wholeValue = value.indexOf('.') != -1 ? value.substring(0, value.indexOf('.')) : value; // Remove the decimal value
-                            var noDecVal = noDecimal(wholeValue); // See utils.js
-                            value = accounting.formatNumber(noDecVal); // See accounting.min.js            
-                        } else {
-                            if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                                value = accounting.formatMoney(value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
-                            } else {
-                                value = accounting.formatMoney(value, { symbol: '', format: '%v %s' }); // See accounting.min.js
-                            }
-                        }                                                
+                        //var v = accounting.formatMoney(value, { symbol: '',  format: '%v %s' }); // See accounting.min.js                    
+                        value = formatAmount(currencyCode, value);                                                
                     }
 
                     rawHeaderMap.set(key, value);                    
@@ -69,7 +52,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             if (data || data.length > 0) {
 
                 var currency = currencyMapForRef.get(rawHeaderMap.get('currency_id'));
-                var text = currency.alpha_code;
+                var currencyCode = currency.alpha_code;
 
                 $.each(data, function(id, fieldValueArray) {
                     var slipValueMap = new HashMap();
@@ -82,24 +65,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                                 slipValueMap.set(id, cc_format(value)); // See utils.js
                             } else if (value && id.indexOf('amount') != -1) {                                                                    
                                 //slipValueMap.set(id, accounting.formatMoney(value, { symbol: '',  format: '%v %s' })); // See accounting.min.js
-                                if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-                                    || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
-                                    currNoDecimal = true;                
-                                } else {
-                                    currNoDecimal = false;
-                                }
-
-                                if (currNoDecimal) {
-                                    var wholeValue = value.indexOf('.') != -1 ? value.substring(0, value.indexOf('.')) : value; // Remove the decimal value
-                                    var noDecVal = noDecimal(wholeValue); // See utils.js
-                                    value = accounting.formatNumber(noDecVal); // See accounting.min.js            
-                                } else {
-                                    if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                                        value = accounting.formatMoney(value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
-                                    } else {
-                                        value = accounting.formatMoney(value, { symbol: '', format: '%v %s' }); // See accounting.min.js
-                                    }
-                                } 
+                                value = formatAmount(currencyCode, value);
                                 slipValueMap.set(id, value);
                             } else {
                                 slipValueMap.set(id, value);
@@ -113,6 +79,28 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             }
         })
     }
+}
+
+function formatAmount(currencyCode, amountValue) {
+    if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1 || currencyCode.indexOf('IDR') != -1 
+        || ($('#region_code').val() == 'MY' && currencyCode.indexOf('TWD') != -1)) {
+        currNoDecimal = true;                
+    } else {
+        currNoDecimal = false;
+    }
+
+    if (currNoDecimal) {
+        var wholeValue = amountValue.indexOf('.') != -1 ? amountValue.substring(0, amountValue.indexOf('.')) : amountValue; // Remove the decimal value
+        var noDecVal = noDecimal(wholeValue); // See utils.js
+        amountValue = accounting.formatNumber(noDecVal); // See accounting.min.js            
+    } else {
+        if (currencyCode.indexOf('BHD') != -1 || currencyCode.indexOf('KWD') != -1 || currencyCode.indexOf('OMR') != -1) {
+            amountValue = accounting.formatMoney(amountValue, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
+        } else {
+            amountValue = accounting.formatMoney(amountValue, { symbol: '', format: '%v %s' }); // See accounting.min.js
+        }
+    } 
+    return amountValue;
 }
 
 function getLastCompleted(bastchId) {
