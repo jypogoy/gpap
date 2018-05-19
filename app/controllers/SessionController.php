@@ -244,6 +244,8 @@ class SessionController extends ControllerBase
     {
         $this->view->disable();        
         
+        parent::checkSession();        
+                
         $auth = $this->session->get('auth');
         // $this->session->set('auth', $auth);
         // $this->session->set('LAST_ACTIVITY', time());

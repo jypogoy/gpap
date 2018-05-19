@@ -105,7 +105,7 @@ $di->setShared('db', function () {
         'dbname'   => $config->database->dbname,
         'charset'  => $config->database->charset,
         'options'  => array(
-            PDO::ATTR_PERSISTENT        => 1,
+            //PDO::ATTR_PERSISTENT        => 1,
             PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-key.pem',
             PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-cert.pem',
             PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\ca-cert.pem'
@@ -203,10 +203,10 @@ $di->setShared('session', function () {
 
     // Set the max lifetime of a session with 'ini_set()' to 1 hour
     //ini_set('session.gc_maxlifetime', 3600);
-
+    
     // Each client should remember their session id for EXACTLY 1 hour
     //session_set_cookie_params(3600);
-
+    
     // Start session with Phalcon
     $session = new SessionAdapter(
         [

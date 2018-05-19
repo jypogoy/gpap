@@ -20,4 +20,19 @@ class ControllerBase extends Controller
                 $e->getTraceAsString() . "\n";
         return $msg;
     }
+
+    protected function checkSession()
+    {
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $this->config->get('session_lifetime'))) {            
+            // Last request was more than [session_lifetime] minutes ago
+            session_unset();     // unset $_SESSION variable for the run-time 
+            session_destroy();   // destroy session data in storage     
+            $this->dispatcher->forward([
+				'controller' => 'errors',
+				'action'     => 'show401'
+			]);       
+        }
+
+        $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp     
+    }
 }

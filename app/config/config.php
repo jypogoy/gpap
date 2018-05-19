@@ -22,7 +22,7 @@ return new \Phalcon\Config([
         'dbname'      => 'gpap',
         'charset'     => 'utf8',
         'options'     => array(
-            PDO::ATTR_PERSISTENT        => 1,
+            //PDO::ATTR_PERSISTENT        => 1,
             PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-key.pem',
             PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-cert.pem',
             PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\ca-cert.pem'
@@ -59,5 +59,6 @@ return new \Phalcon\Config([
         'error'     =>  'error.log',        
     ],
     'AES_Key'       =>  'bM6xyt`8P!Ubkw:Lf*',
-    'policy_url'    =>  'https://gpapde-qa-web.amdatex.com/deccpolicy/'
+    'policy_url'    =>  'https://gpapde-qa-web.amdatex.com/deccpolicy/',
+    'session_lifetime'  =>  60
 ]);

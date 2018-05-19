@@ -14,6 +14,11 @@ class TaskController extends ControllerBase
         $this->persistent->parameters = null;
     }
 
+    public function beforeExecuteRoute()
+	{
+        parent::checkSession();
+    }
+
     /**
      * Searches for task
      */

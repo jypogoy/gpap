@@ -7,6 +7,11 @@ class UserTaskController extends ControllerBase
         
     }
 
+    public function beforeExecuteRoute()
+	{
+        parent::checkSession();
+    }
+
     public function getByUserAction($userId)
     {
         $this->view->disable();
