@@ -710,11 +710,18 @@ function addNewSlip() {
         $(slipRequiredFields).addClass('required');
         $('#other_exception_detail_wrapper').addClass('hidden');
         $('#transaction_date').focus();
-
-        $('.slip-image').html('');
-        $('.link-slip-btn').removeClass('hidden');
-        $('#image_id').val('');
-        $('.unlink-slip-btn').addClass('hidden');
+        
+        if (imgArray.length > 1) {
+            $('.slip-image').html('');
+            $('.link-slip-btn').removeClass('hidden');
+            $('#image_id').val('');
+            $('.unlink-slip-btn').addClass('hidden');
+        } else {
+            // Retain linked image if only 1 is found. See de_form_events.js
+            linkSlip();
+            $('.unlink-slip-btn').addClass('hidden');    
+            $('.link-slip-btn').addClass('hidden');  
+        }
     } 
 }
 
