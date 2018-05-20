@@ -27,7 +27,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             if (headerData || headerData.length > 0) {                
                 // Add values to header map.
                 var currency = currencyMapForRef.get(headerData['currency_id']);
-                var currencyCode = currency.alpha_code;
+                var currencyCode = currency ? currency.alpha_code : '';
                 
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
@@ -52,7 +52,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             if (data || data.length > 0) {
 
                 var currency = currencyMapForRef.get(rawHeaderMap.get('currency_id'));
-                var currencyCode = currency.alpha_code;
+                var currencyCode = currency ? currency.alpha_code : '';
 
                 $.each(data, function(id, fieldValueArray) {
                     var slipValueMap = new HashMap();
@@ -502,7 +502,7 @@ function getPrevOperator() {
     params.task_id = $('#session_task_id').val();
     $.post('../batch/getprevoperator', params, function (data) {            
         if (data) {
-            $('.prev-operator').removeClass('hidden');
+            //$('.prev-operator').removeClass('hidden');
             $('.prev-operator').html('DE Optr: ' + data.first_name + ' ' + data.last_name);            
         }                
     })
@@ -512,37 +512,52 @@ function getPrevOperator() {
 }
 
 function getKeyer() {
+    var d = $.Deferred();
+    
     $.post('../batch/getkeyer/' + $('#batch_id').val(), function (data) {            
         if (data) {
             $('.prev-operator').removeClass('hidden');
-            $('.prev-operator').html('Keyer: ' + data.first_name + ' ' + data.last_name);            
-        }                
+            $('.prev-operator').append('<a class="ui tag label">Keyer: ' + data.first_name + '</a> ');            
+        }   
+        d.resolve(data);             
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
     }); 
+    
+    return d.promise();
 }
 
 function getVerifier() {
+    var d = $.Deferred();
+
     $.post('../batch/getverifier/' + $('#batch_id').val(), function (data) {            
         if (data) {
             $('.prev-operator').removeClass('hidden');
-            $('.prev-operator').html('Verifier: ' + data.first_name + ' ' + data.last_name);            
-        }                
+            $('.prev-operator').append('<a class="ui tag label">Verifier: ' + data.first_name + '</a> ');  
+        }              
+        d.resolve(data);            
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
     }); 
+
+    return d.promise();
 }
 
 function getBalancer() {
+    var d = $.Deferred();
+
     $.post('../batch/getbalancer/' + $('#batch_id').val(), function (data) {            
         if (data) {
             $('.prev-operator').removeClass('hidden');
-            $('.prev-operator').html('Balancer: ' + data.first_name + ' ' + data.last_name);            
-        }                
+            $('.prev-operator').append('<a class="ui tag label">Balancer: ' + data.first_name + '</a>');  
+        }            
+        d.resolve(data);      
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
     }); 
+
+    return d.promise();
 }

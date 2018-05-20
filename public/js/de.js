@@ -120,9 +120,23 @@ $(function() {
         if ($('#session_task_name').val().indexOf('Entry') != -1) {
             getKeyer(); // See de_data_retrieval.js
         } else if ($('#session_task_name').val().indexOf('Verify') != -1) {
-            getVerifier(); // See de_data_retrieval.js
+            getKeyer().then(function() {
+                getVerifier(); // See de_data_retrieval.js
+            });            
         } else if ($('#session_task_name').val().indexOf('Balancing') != -1) {
-            getBalancer(); // See de_data_retrieval.js
+            getKeyer().then(function() { 
+                getVerifier().then(function() {
+                    getBalancer(); // See de_data_retrieval.js
+                })
+            });
+        }
+    } else {
+        if ($('#session_task_name').val().indexOf('Verify') != -1) {
+            getKeyer();
+        } else if ($('#session_task_name').val().indexOf('Balancing') != -1) {
+            getKeyer().then(function() {
+                getVerifier(); // See de_data_retrieval.js
+            });                        
         }
     }
 
@@ -130,18 +144,14 @@ $(function() {
 
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         getLastCompleted($('#batch_id').val()).then(function(lastCompletedData) {
-            //getRegionCurrency();
             getPullReasons();
             getInstallmentMonths();
             getExceptions();
             checkHeaderIfExists().then(function(header) {
                 getContents(lastCompletedData, header);
-            });      
-            if (!$('#session_from_edits').val()) getVerifier(); // See de_data_retrieval.js
-            //prepBalancingFields();
+            }); 
         });
     } else {
-        //getRegionCurrency();
         getPullReasons();
         getInstallmentMonths();
         getExceptions();
@@ -149,12 +159,9 @@ $(function() {
     }        
 
     if ($('#session_task_name').val().indexOf('Verify') != -1) {
-        getRawContents();
-        if (!$('#session_from_edits').val()) getKeyer(); // See de_data_retrieval.js        
-    } else {
-        $('.prev-operator').addClass('hidden');
+        getRawContents();    
     }
-
+    
     $('#merchant_number').focus();
     $('.dropdown.icon').removeAttr('tabIndex');    
 });

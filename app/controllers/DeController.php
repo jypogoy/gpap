@@ -26,27 +26,29 @@ class DeController extends ControllerBase
             $batch = Batch::findFirstById($batchId); 
             $batch->is_exception = (int) $batch->is_exception;
             
-            // Determine task then set status to 'Doing' or in progress.            
-            if (strpos($taskName, 'Entry') !== false) {
-                $batch->entry_status = 'Doing';
-            } else if (strpos($taskName, 'Verify') !== false) {
-                $batch->verify_status = 'Doing';
-            } else {
-                $batch->balance_status = 'Doing';
-            }
-
-            if (!$batch->save()) {
-                foreach ($batch->getMessages() as $message) {
-                    $this->flash->error($message);
+            // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
+            if (!$fromEdits) {       
+                if (strpos($taskName, 'Entry') !== false) {
+                    $batch->entry_status = 'Doing';
+                } else if (strpos($taskName, 'Verify') !== false) {
+                    $batch->verify_status = 'Doing';
+                } else {
+                    $batch->balance_status = 'Doing';
                 }
 
-                $this->dispatcher->forward([
-                    'controller' => "home",
-                    'action' => 'index'
-                ]);
+                if (!$batch->save()) {
+                    foreach ($batch->getMessages() as $message) {
+                        $this->flash->error($message);
+                    }
 
-                return;
-            }                 
+                    $this->dispatcher->forward([
+                        'controller' => "home",
+                        'action' => 'index'
+                    ]);
+
+                    return;
+                }                
+            } 
 
             // Look for existing activity to maintain single record of batch on a particular task.
             $entry = null;
