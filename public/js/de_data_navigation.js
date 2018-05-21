@@ -142,6 +142,12 @@ function setFieldValue(key, value) {
         }       
     }    
 
+    // Apply character count for CRI and MON.
+    if (key == 'customer_reference_identifier' || key == 'merchant_order_number') {
+        var valueEL = $('#' + key);
+        charsLeft(valueEL[0], valueEL.attr('allowedLength'));
+    }
+
     // Toggle image link buttons.
     if ($('#image_id').val() != '' || $('#image_id').val() > 0) {
         $('.link-slip-btn').addClass('hidden');
