@@ -60,6 +60,7 @@ class Elements extends Component
                 'action' => 'end',
                 'iconClass' => 'power off icon'
             ];
+            if (!$auth['canEdit']) unset($this->_headerMenu['left']['edits']);
         } else {
             unset($this->_headerMenu['left']['home']);
             unset($this->_headerMenu['left']['edits']);

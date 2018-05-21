@@ -40,7 +40,8 @@ class SessionController extends ControllerBase
     {
         $this->session->set('auth', [
             'id' => $user->userID,
-            'name' => $user->userFirstName . ' ' . $user->userLastName
+            'name' => $user->userFirstName . ' ' . $user->userLastName,
+            'canEdit' => $user->canEdit
         ]);
     }
 
@@ -81,6 +82,7 @@ class SessionController extends ControllerBase
             );
             
             if ($user) {                        
+                $user->canEdit = ($user->canEdit == '0' ? false : true);
                 $r = $user->userPassword;    
                 if ($this->security->checkHash($password, $user->userPassword)) {                                    
                     // Lock user if attempts reaches 3.

@@ -102,6 +102,13 @@ class User extends \Phalcon\Mvc\Model
     public $createdBy;
 
     /**
+     *
+     * @var integer
+     * @Column(type="integer", length=1, nullable=false)
+     */
+    public $canEdit;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
