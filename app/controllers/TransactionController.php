@@ -104,8 +104,8 @@ class TransactionController extends ControllerBase
                 $sqlValuePart = $sqlValuePart . ($slip['installment_months_id'] == '' ? 'null' : $slip['installment_months_id']) . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['other_inst_term'] == '' ? 'null' : $slip['other_inst_term']) . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['airline_ticket_number'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['airline_ticket_number'], 'string') . '\'') . ',';
-                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : '\''. substr($filter->sanitize($slip['customer_reference_identifier'], 'string'), 17) . '\'') . ',';
-                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['merchant_order_number'], 'string') == '' ? 'null' : '\'' . substr($filter->sanitize($slip['merchant_order_number'], 'string'), 25) . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['customer_reference_identifier'], 'string') == '' ? 'null' : '\''. substr($filter->sanitize($slip['customer_reference_identifier'], 'string'), 0, 17) . '\'') . ',';
+                $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['merchant_order_number'], 'string') == '' ? 'null' : '\'' . substr($filter->sanitize($slip['merchant_order_number'], 'string'), 0, 25) . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($filter->sanitize($slip['commodity_code'], 'string') == '' ? 'null' : '\'' . $filter->sanitize($slip['commodity_code'], 'string') . '\'') . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['slip_pull_reason_id'] == '' ? 'null' : $slip['slip_pull_reason_id']) . ',';
                 $sqlValuePart = $sqlValuePart . ($slip['exception_id'] == '' ? 'null' : $slip['exception_id']) . ',';
