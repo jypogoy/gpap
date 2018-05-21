@@ -153,36 +153,25 @@ $(function() {
         toggleShow(); // See ruler.js
     });
 
-    // Grab and move to the left
+    // ---------------- Image movement using keyboard ---------------------------
+    // Move image to the left
     listener.simple_combo("shift left", function() {
-        alert();
-        // $('canvas').width(imageOrigSize);
-        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
-        // degree = 0;
+        $('#viewer').scrollLeft($('#viewer').scrollLeft() - 50);
     });
 
-    // Grab and move to the right
+    // Move image to the right
     listener.simple_combo("shift right", function() {
-        alert();
-        // $('canvas').width(imageOrigSize);
-        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
-        // degree = 0;
+        $('#viewer').scrollLeft($('#viewer').scrollLeft() + 50);
     });
 
-    // Grab and move to the top
+    // Move image to the top
     listener.simple_combo("shift up", function() {
-        alert();
-        // $('canvas').width(imageOrigSize);
-        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
-        // degree = 0;
+        $('#viewer').scrollTop($('#viewer').scrollTop() - 50);
     });
 
     // Grab and move to the bottom
     listener.simple_combo("shift down", function() {
-        alert();
-        // $('canvas').width(imageOrigSize);
-        // performRotate(getRotationDegrees($('canvas')) + (360 - getRotationDegrees($('canvas'))));
-        // degree = 0;
+        $('#viewer').scrollTop($('#viewer').scrollTop() + 50);
     });
 });
 
