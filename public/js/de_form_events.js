@@ -569,10 +569,10 @@ $(function() {
         charsLeft(this, $(this).attr('allowedLength'));
         var wrapper = $('#' + this.id + '_wrapper');
         $('#' + this.id + '_alert').remove();
-        if (this.value.length >= $(this).attr('allowedLength')) {                
+        if (this.value.length > $(this).attr('allowedLength')) {                
             $(wrapper).addClass('error');
             wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            '<span id="' + this.id + '_msg">Reached 17 chars</span>' +
+                            '<span id="' + this.id + '_msg">Exceeds 17 chars</span>' +
                             '</div>');
             return;
         } else {
@@ -585,10 +585,10 @@ $(function() {
         charsLeft(this, $(this).attr('allowedLength'));
         var wrapper = $('#' + this.id + '_wrapper');
         $('#' + this.id + '_alert').remove();
-        if (this.value.length >= $(this).attr('allowedLength')) {                
+        if (this.value.length > $(this).attr('allowedLength')) {                
             $(wrapper).addClass('error');
             wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            '<span id="' + this.id + '_msg">Reached 25 chars</span>' +
+                            '<span id="' + this.id + '_msg">Exceeds 25 chars</span>' +
                             '</div>');
             return;
         } else {
