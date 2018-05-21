@@ -216,9 +216,9 @@ $(function() {
     });
 
     $('#batch_pull_reason_id_dropdown').find('.search').focus(function() {        
-        // if ($('#headerDataForm').find('.error').length == 0) {
-        //     $('#transaction_date').focus();
-        // }
+        if ($('#headerDataForm').find('.error').length == 0) {
+            $('#transaction_date').focus();
+        }
     });    
     //------------- Transaction Events ---------------------------------
 

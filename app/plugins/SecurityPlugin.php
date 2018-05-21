@@ -30,10 +30,14 @@ class SecurityPlugin extends Plugin
 
 			// Register roles
 			$roles = [
+				'leads'	 => new Role(
+					'Leads',
+					'Full control privileges, granted after sign in.'
+				),
 				'users'  => new Role(
 					'Users',
 					'Member privileges, granted after sign in.'
-				),
+				),				
 				'guests' => new Role(
 					'Guests',
 					'Anyone browsing the site who is not signed in is considered to be a "Guest".'
@@ -44,8 +48,8 @@ class SecurityPlugin extends Plugin
 				$acl->addRole($role);
 			}
 
-			//Private area resources
-			$privateResources = [
+			//Lead resources
+			$leadResources = [
 				'home'      => 	['index'],
 				'edits'     => 	['index', 'getjobsbyregion', 'prep'],
 				'de'		=>	['index', 'prep', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
@@ -66,9 +70,34 @@ class SecurityPlugin extends Plugin
 				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
 			];
 
-			foreach ($privateResources as $resource => $actions) {
+			foreach ($leadResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);
 			}
+
+			//Private area resources
+			$privateResources = [
+				'home'      => 	['index'],
+				'de'		=>	['index', 'prep', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
+				'batch'		=>	['listavailable', 'get', 'getnextavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception', 'listbyregionjob', 'getprevoperator', 'getkeyer', 'getverifier', 'getbalancer', 'isavailable'],
+				'currency'	=>	['getbyregion'],
+				'image'		=>	['list', 'get'],
+				'installment_months'	=>	['list'],
+				'merchant'	=>	['get'],
+				'merchant_header'	=>	['get', 'save', 'getsame', 'getsameregionday'],
+				'other_exception'	=>	['list'],
+				'pull_reason'	=>	['getbylevel'],
+				'transaction'	=>	['getbyheader', 'deleteprevious', 'save', 'transdateelevenmonthsolder', 'transdatefuture'],
+				'transaction_type'	=>	['list'],
+				'user_task'		=>	['getbyuser'],
+				'data_entry'	=>	['getbyusertask', 'getbycountertask', 'getbylastcompleted'],
+				'dcn'			=>	['record', 'getsamemidamountregion', 'getsameregionday'],
+				'session'    	=> 	['changepassword', 'keepalive'],
+				'security'		=>	['checkbylastsixpasswords', 'passwordchangedsameday', 'passworddictionarycheck', 'passwordtrivialcheck', 'passwordpersonalinfocheck', 'updatepassword']
+			];
+
+			foreach ($privateResources as $resource => $actions) {
+				$acl->addResource(new Resource($resource), $actions);
+			}			
 
 			//Public area resources
 			$publicResources = [
