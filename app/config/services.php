@@ -81,6 +81,7 @@ $di->setShared('view', function () {
             // Enable macro calls
             $compiler = $volt->getCompiler();
             $compiler->addFunction('is_a', 'is_a');    
+            $compiler->addFunction('str_replace', 'str_replace');    
 
             return $volt;
         },

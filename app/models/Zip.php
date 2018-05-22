@@ -93,7 +93,7 @@ class Zip extends \Phalcon\Mvc\Model
 
     public function getSequence()
     {
-        return str_pad($this->sequence, 5 - strlen($this->sequence),"0",STR_PAD_LEFT );
+        return str_pad($this->sequence, 4 - strlen($this->sequence),"0",STR_PAD_LEFT );
     }
 
 }

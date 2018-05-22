@@ -68,23 +68,26 @@ function filterBatches() {
     // params.region_code = $('#region_code').val();    
     // params.rec_date = jobArr[0];
     // params.operator_id = jobArr[1];
-    // params.sequence = jobArr[2];    
-    $.post('batch/listbyregionjob/' + $('#job_dropdown').dropdown('get value'), function (data) {  
-        $(wrapper).empty();      
-        if (!data) {
-            $(wrapper).append('<tr><td colspan="6">No records found.</td></tr>');
-        } else {
-            if (data.indexOf('alert') != -1) {
-                toastr.error(data);
-            } else {                                
-                $(data).appendTo(wrapper);
-            }            
-        }       
-        $('.loader').fadeOut();         
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });   
+    // params.sequence = jobArr[2];   
+    var job = $('#job_dropdown').dropdown('get value'); 
+    if (job) {
+        $.post('batch/listbyregionjob/' + job, function (data) {  
+            $(wrapper).empty();      
+            if (!data) {
+                $(wrapper).append('<tr><td colspan="6">No records found.</td></tr>');
+            } else {
+                if (data.indexOf('alert') != -1) {
+                    toastr.error(data);
+                } else {                                
+                    $(data).appendTo(wrapper);
+                }            
+            }       
+            $('.loader').fadeOut();         
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });   
+    }
 }
 
 function edit(batchId, taskId, taskName) {    

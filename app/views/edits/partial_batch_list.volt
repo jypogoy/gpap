@@ -6,7 +6,7 @@
         <td>{{ batch.Zip.getSequence() }}</td>
         <td>{{ batch.id }}</td>#}
         <td>{{ row.region_code }}</td>            
-        <td>{{ row.rec_date }}_{{ row.operator_id }}_{{ row.sequence }}</td>        
+        <td>{{ str_replace('-', '', row.rec_date) }}-{{ row.operator_id }}-{{ row.sequence }}</td>        
         <td>{{ row.type }}</td> 
         <td>{{ row.file_name }}</td> 
         <td>{{ row.batch_id }}</td>

@@ -311,7 +311,7 @@ class BatchController extends ControllerBase
             //         ]
             //     ]
             // );
-            // $phql = "SELECT z.region_code, z.rec_date, tt.type, LPAD(z.sequence,4,'0'), b.id 
+            // $phql = "SELECT z.region_code, z.rec_date, tt.type, LPAD(z.sequence,3,'0'), b.id 
             //         FROM Batch b 
             //         INNER JOIN Zip z ON z.id = b.zip_id 
             //         INNER JOIN TransactionType tt ON tt.id = b.trans_type_id 
@@ -326,7 +326,7 @@ class BatchController extends ControllerBase
             //         "seq"       =>  $sequence
             //     ]
             // );        
-            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, z.operator_id, LPAD(z.sequence,4,'0') AS sequence, SUBSTRING_INDEX(i.path, '/', -1) AS file_name, b.id AS batch_id, a.last_activity, t.id AS task_id
+            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, z.operator_id, LPAD(z.sequence,3,'0') AS sequence, SUBSTRING_INDEX(i.path, '/', -1) AS file_name, b.id AS batch_id, a.last_activity, t.id AS task_id
                     FROM batch b 
                     INNER JOIN zip z ON z.id = b.zip_id 
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
