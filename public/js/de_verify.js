@@ -104,6 +104,8 @@ function applySlipChecks() {
                             var data = exceptionMap.get(rawValue);   
                             if (data) showMessage(field.id, data.id, data.title);
                         }
+                    } else {
+                        $('#' + field.id + '_wrapper').removeClass('error');
                     }
                 }
             });
@@ -122,6 +124,8 @@ function applySlipChecks() {
                             var data = exceptionMap.get(rawValue);   
                             if (data) showMessage(field.id, data.id, data.title);
                         }
+                    } else {
+                        $('#' + field.id + '_wrapper').removeClass('error');
                     }
                 }
             });
