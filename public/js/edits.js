@@ -3,6 +3,11 @@ $(function() {
     // Instantiate the region selection element.
     $('#region_dropdown').dropdown({
         onChange: function() {
+
+            var wrapper = $('.listBody');
+            $(wrapper).empty();
+            $(wrapper).append('<tr><td colspan="6">No records found.</td></tr>');
+
             var value = $(this).dropdown('get value');
             $.post('edits/getjobsbyregion/' + value, function (data) {
                 $('#job_dropdown').dropdown('restore defaults');
@@ -12,8 +17,8 @@ $(function() {
                     $('.job_field').addClass('disabled');
                 } else {                                                            
                     $(data).appendTo('#job_dropdown .menu');    
-                    $('.job_field').removeClass('disabled');  
-                    
+                    $('.job_field').removeClass('disabled');                                          
+
                     // Instantiate the job selection element.
                     $('#job_dropdown').dropdown({
                         onChange: function() {

@@ -46,12 +46,11 @@
 <table class="ui selectable celled striped table" style="margin-top: 0px;">
     <thead>
         <tr>
-            <th>Region</th>
-            <th>Type</th>
-            <th>Recording Date</th>       
-            <th>Operator</th>                         
-            <th>Sequence</th>
-            <th>Batch</th>
+            <th>Region Code</th>            
+            <th>Job Name</th>
+            <th>Transaction Type</th>
+            <th>File Name</th>
+            <th>Batch #</th>
             <th>Completed Task</th>
         </tr>
     </thead>
