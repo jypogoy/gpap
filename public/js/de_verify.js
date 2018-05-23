@@ -79,6 +79,12 @@ function applySlipChecks() {
                             }
                         }
                     } else {
+                        if (field.id == 'card_number') {
+                            field.value = cc_format(field.value); // See util.js
+                        }
+                        if (field.id == 'transaction_amount') {
+                            rawValue = rawValue.trim();
+                        }
                         if(rawValue && field.value !== rawValue) {         
                             showMessage(field.id, rawValue, rawValue);
                         } else {

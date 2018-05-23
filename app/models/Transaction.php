@@ -65,8 +65,8 @@ class Transaction extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var double
-     * @Column(column="transaction_amount", type="double", length=9, nullable=true)
+     * @var string
+     * @Column(column="transaction_amount", type="string", length=12, nullable=true)
      */
     public $transaction_amount;
 
