@@ -67,7 +67,7 @@ function applySlipChecks() {
         $.each(slipFields, function(i, field) {                      
             // Input fields
             $(field).blur(function(e) {                
-                $('#' + field.id + '_alert').remove();
+                $('#' + field.id + '_alert.mismatch-prompt').remove();
                 if (rawSlipMap.get(slipPage)) {
                     var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object         
                     if (field.id.indexOf('date') != -1) {
@@ -80,7 +80,7 @@ function applySlipChecks() {
                         }
                     } else {
                         if (field.id == 'card_number') {
-                            field.value = cc_format(field.value); // See util.js
+                            field.value = cc_format(field.value); // See util.js                            
                         }
                         if (field.id == 'transaction_amount') {
                             rawValue = rawValue.trim();
@@ -143,7 +143,7 @@ function applySlipChecks() {
 function showMessage(fieldId, value, msg) {
     var wrapper = $('#' + fieldId + '_wrapper');
     $(wrapper).addClass('error');
-    wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + fieldId + '_alert">' +
+    wrapper.append('<div class="ui basic red pointing prompt label transition mismatch-prompt" id="' + fieldId + '_alert">' +
                     '<span id="' + fieldId + '_msg">E1= ' + msg + '   <a onclick="acceptRaw(\'' + fieldId + '\',\'' + value + '\');">Accept</a></span>' +
                     '</div>');
 }
