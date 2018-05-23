@@ -84,6 +84,7 @@ function applySlipChecks() {
                         }
                         if (field.id == 'transaction_amount') {
                             rawValue = rawValue.trim();
+                            field.value = field.value.trim();
                         }
                         if(rawValue && field.value !== rawValue) {         
                             showMessage(field.id, rawValue, rawValue);
