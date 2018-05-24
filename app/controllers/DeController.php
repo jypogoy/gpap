@@ -118,33 +118,39 @@ class DeController extends ControllerBase
 
     public function completeAction()
     {
+        $this->view->disable();
+
         if (!$this->request->isPost()) {
             return $this->response->redirect('');
         }
 
+        $isSuccess = true;
+
         try {
+            // Start a transaction
+            $this->db->begin();
+
+            // Update the DE Activity record
             $entryId = $this->request->getPost('entry_id');
             $batchId = $this->request->getPost('batch_id');        
 
             $entry = DataEntry::findFirstByid($entryId);
             $entry->ended_at = new \Phalcon\Db\RawValue("NOW()");
 
-            if (!$entry->save()) {
-                
+            // The DE Activity failed to save, so rollback the transaction
+            if (!$entry->save()) {                
                 $this->db->rollback();
+                $isSuccess = false;
 
-                foreach ($entry->getMessages() as $message) {
-                    $this->flash->error($message);
+                $this->errorLogger->error('Unable to update activity information ID: ' . $entryId);
+                foreach ($dcn->getMessages() as $message) {
+                    $this->errorLogger->error($message->getMessage());
                 }
-
-                $this->dispatcher->forward([
-                    'controller' => "home",
-                    'action' => 'index'
-                ]);
 
                 return;
             }
 
+            // Update the Batch status
             $batch = Batch::findFirstByid($batchId);
             $batch->is_exception = (int) $batch->is_exception;
 
@@ -160,28 +166,66 @@ class DeController extends ControllerBase
                 $batch->balance_status = 'Complete';
             }       
 
+            // The Batch failed to save, so rollback the transaction
             if (!$batch->save()) {
-
                 $this->db->rollback();
-
-                foreach ($batch->getMessages() as $message) {
-                    $this->flash->error($message);
+                $isSuccess = false;
+                
+                $this->errorLogger->error('Unable to complete Batch ' . $batchId . '.');
+                foreach ($dcn->getMessages() as $message) {
+                    $this->errorLogger->error($message->getMessage());
                 }
 
-                $this->dispatcher->forward([
-                    'controller' => "home",
-                    'action' => 'index'
-                ]);
-
                 return;
+
+                // foreach ($batch->getMessages() as $message) {
+                //     $this->flash->error($message);
+                // }
+
+                // $this->dispatcher->forward([
+                //     'controller' => "home",
+                //     'action' => 'index'
+                // ]);
+
+                // return;
             }                                 
 
-            $this->deLogger->info($this->session->get('auth')['name'] . ' completed Batch ' . $batchId . ' successfully.');
-            return 'Batch <strong>' . $batchId . '</strong> was completed successfully.';
+            // Record new DCN information.
+            $dcn = new Dcn();
+            $dcn->task_id = $this->request->getPost('task_id');
+            $dcn->batch_id = $this->request->getPost('batch_id');
+            $dcn->region_code = $this->request->getPost('region_code');
+            $dcn->merchant_number = $this->request->getPost('merchant_number');
+            $dcn->dcn = $this->request->getPost('dcn');
+            $dcn->amount = $this->request->getPost('amount');
+            $dcn->image_path = $this->request->getPost('image_path');
+            
+            if (!$dcn->save()) {
 
-        } catch (\Exception $e) {            
+                $this->db->rollback();
+                $isSuccess = false;
+
+                $this->errorLogger->error('Unable to log DCN information: ' . json_encode($dcn));
+                foreach ($dcn->getMessages() as $message) {
+                    $this->errorLogger->error($message->getMessage());
+                }
+
+                return;
+            }
+
+            // Commit the transaction
+            $this->db->commit();
+
+            $this->deLogger->info($this->session->get('auth')['name'] . ' completed Batch ' . $batchId . ' successfully.');
+
+        } catch (\Exception $e) {      
+            $this->db->rollback();
+            $isSuccess = false;      
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
+
+        $this->response->setJsonContent($isSuccess);
+        $this->response->send();
     }
     
     public function redirectNoNextAction($taskName)

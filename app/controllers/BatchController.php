@@ -239,7 +239,7 @@ class BatchController extends ControllerBase
                 $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
 
             } else if ($taskName == 'Balancing') {
-                $phql = "SELECT COUNT(*) AS Total FROM Batch 
+                $sql = "SELECT COUNT(*) AS Total FROM Batch 
                         WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
                 
                 $result = $this->db->query($sql);
