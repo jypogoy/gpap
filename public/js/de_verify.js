@@ -89,7 +89,7 @@ function applySlipChecks() {
                         if(rawValue && field.value !== rawValue) {         
                             showMessage(field.id, rawValue, rawValue);
                         } else {
-                            hideMessage(field.id);
+                            //hideMessage(field.id);
                         }
                     }
                 }

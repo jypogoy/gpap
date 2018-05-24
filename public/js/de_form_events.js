@@ -315,7 +315,7 @@ $(function() {
                         $(alert).remove();
                         $(wrapper).addClass('error');
                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                '<span id="' + this.id + '_msg">Invalid Length: ' + this.value.length + ' of ' + this.maxLength + '</span>' +
+                                '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + this.maxLength + '</span>' +
                                 '</div>');
                         isPreInvalid = true;
                     } else {
