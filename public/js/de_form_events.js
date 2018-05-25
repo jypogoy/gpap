@@ -1014,34 +1014,41 @@ function validateTransCount(isSaveOnly, isSaveNew, isComplete) {
 
 function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     if (isComplete) {
-        $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
+        var resp = confirm('Are you sure you want to complete batch ' + $('#batch_id').val() + '? Click OK to proceed.');
+        if (resp == true) {
+            saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+        }
 
-        var modal = $('.modal:not(div.Transaction, div.warning)')
-        .modal({
-            inverted : true,
-            closable : true,
-            autofocus: false,
-            observeChanges : true, // <-- Helps retain the modal position on succeeding show.
-            onDeny : function(){
-                // Do nothing
-            },
-            onApprove : function() {
-                saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
-            },
-            onVisible : function() {
-                $(document).on('keypress', function(e) {                    
-                    var keyCode = e.keyCode || e.which;
-                    if (keyCode === 13) { 
-                        e.preventDefault();
-                        if($('.active.modal')) {
-                            saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
-                            $('.active.modal').modal('hide');
-                        }                           
-                    }
-                });
-            }
-        })
-        .modal('show');                
+        // $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
+
+        // var modal = $('.modal:not(div.Transaction, div.warning)')
+        // .modal({
+        //     inverted : true,
+        //     closable : true,
+        //     autofocus: false,
+        //     observeChanges : true, // <-- Helps retain the modal position on succeeding show.
+        //     onDeny : function(){
+        //         // Do nothing
+        //     },
+        //     onApprove : function() {
+        //         saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+        //     },
+        //     onVisible : function() {
+        //         $(document).on('keydown', function(e) {                    
+        //             var keyCode = e.keyCode || e.which;
+        //             if (keyCode == 13) { 
+        //                 //e.preventDefault();
+        //                 if($('.active.modal')) {
+        //                     alert();    
+        //                     //saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+        //                     $('.active.modal').modal('hide');
+        //                 }                           
+        //             }
+        //         });
+        //     }
+        // })
+        // .modal('show');     
+
 
     } else {
         saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
