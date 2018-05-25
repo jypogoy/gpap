@@ -1016,7 +1016,7 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     if (isComplete) {
         $('.custom-text').html('<p>Are you sure you want to complete batch <strong>' + $('#batch_id').val() + '</strong>? Click OK to proceed.</p>');
 
-        $('.modal:not(div.Transaction, div.warning)')
+        var modal = $('.modal:not(div.Transaction, div.warning)')
         .modal({
             inverted : true,
             closable : true,
@@ -1027,20 +1027,21 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
             },
             onApprove : function() {
                 saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+            },
+            onVisible : function() {
+                $(document).on('keypress', function(e) {                    
+                    var keyCode = e.keyCode || e.which;
+                    if (keyCode === 13) { 
+                        e.preventDefault();
+                        if($('.active.modal')) {
+                            saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
+                            $('.active.modal').modal('hide');
+                        }                           
+                    }
+                });
             }
         })
-        .modal('show');
-
-        $(document).on('keypress', function(e) {                    
-            var keyCode = e.keyCode || e.which;
-            if (keyCode === 13) { 
-                e.preventDefault();
-                if($('.active.modal')) {
-                    saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
-                    $('.active.modal').modal('hide');
-                }                           
-            }
-        });
+        .modal('show');                
 
     } else {
         saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
