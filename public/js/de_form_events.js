@@ -1031,7 +1031,7 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
         })
         .modal('show');
 
-        $(document).on('keyup keypress', function(e) {                    
+        $(document).on('keypress', function(e) {                    
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) { 
                 e.preventDefault();
