@@ -19,9 +19,9 @@ class HomeController extends ControllerBase
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Home page.'); 
     }
 
-    public function beforeExecuteRoute()
-	{
-        parent::checkSession();
-    }
+    // public function beforeExecuteRoute()
+	// {
+    //     parent::checkSession();
+    // }
 
 }

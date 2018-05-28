@@ -7,7 +7,7 @@ class EditsController extends ControllerBase
     {
         $this->tag->setTitle('Edits');
         parent::initialize();
-        parent::checkSession();
+        //parent::checkSession();
 
         if ($this->session->get('initLogin')) {
             return $this->response->redirect('session/changepassword');            
@@ -55,8 +55,8 @@ class EditsController extends ControllerBase
         $this->session->set('taskName', $taskName);
     }
 
-    public function beforeExecuteRoute()
-	{
-        parent::checkSession();
-    }
+    // public function beforeExecuteRoute()
+	// {
+    //     parent::checkSession();
+    // }
 }

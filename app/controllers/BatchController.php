@@ -8,10 +8,10 @@ class BatchController extends ControllerBase
         
     }
 
-    public function beforeExecuteRoute()
-	{
-        parent::checkSession();
-    }
+    // public function beforeExecuteRoute()
+	// {
+    //     parent::checkSession();
+    // }
 
     public function exceptionAction()
     {

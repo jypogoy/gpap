@@ -1,3 +1,4 @@
+<input type="hidden" id="session_lifetime" value="<?php echo $this->config->get('session_lifetime'); ?>"/>
 {{ hidden_field('session_region_code', 'value': session.get('regionCode')) }}
 {{ hidden_field('session_zip_id', 'value': session.get('zipId')) }}
 
@@ -66,3 +67,4 @@
 <div class="ui active loader"></div>
 
 {{ javascript_include('js/edits.js') }}
+{{ javascript_include('js/session_listener.js') }}

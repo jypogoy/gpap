@@ -7,10 +7,10 @@ class DataEntryController extends ControllerBase
         
     }
 
-    public function beforeExecuteRoute()
-	{
-        parent::checkSession();
-    }
+    // public function beforeExecuteRoute()
+	// {
+    //     parent::checkSession();
+    // }
 
     public function getByUserTaskAction($taskId)
     {

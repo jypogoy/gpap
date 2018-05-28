@@ -190,6 +190,21 @@ class SessionController extends ControllerBase
         );
     }
 
+    public function expiredAction()
+    {
+        $this->session->remove('auth');
+        
+        // Destroy the whole session
+        $this->session->destroy();
+
+        return $this->dispatcher->forward(
+            [
+                "controller" => "index",
+                "action"     => "index",
+            ]
+        );
+    }
+
     public function changePasswordAction()
     {        
         $this->tag->setTitle('Change Password');

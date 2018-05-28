@@ -1,3 +1,4 @@
+<input type="hidden" id="session_lifetime" value="<?php echo $this->config->get('session_lifetime'); ?>"/>
 {{ hidden_field('user_id', 'value': user['id'] ) }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
 
@@ -48,3 +49,4 @@
 <form id="beginForm"></form>
 
 {{ javascript_include('js/home.js') }}
+{{ javascript_include('js/session_listener.js') }}
