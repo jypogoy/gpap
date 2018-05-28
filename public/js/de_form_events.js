@@ -903,6 +903,7 @@ function linkSlip() {
         if (rawSlipMap.get(slipPage)) {
             var rawFile = rawSlipMap.get(slipPage).get(fileField[0].id); // See de_data_retrieval.js for map object            
             if(rawFile && fileField.val() !== rawFile) {    
+                hideMessage(fileField[0].id); // See de_verify.js
                 showMessage(fileField[0].id, rawFile, rawFile); // See de_verify.js
             } else {
                 hideMessage(fileField[0].id); // See de_verify.js
