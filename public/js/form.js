@@ -34,7 +34,7 @@ var Form = {
         $.each($(inputClass), function(i, field) {
             var wrapper = $('#' + field.id + '_wrapper');
             if ($(wrapper).hasClass('required') && !$(wrapper).hasClass('hidden')) {
-                if (field.value == '' || field.value == 0) {
+                if (field.value == '' || field.value === 0) {
                     $(wrapper).addClass('error');
                     isValid = false;
                 } else {
