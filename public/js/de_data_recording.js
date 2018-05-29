@@ -210,7 +210,16 @@ function writeSlips(headerId) {
 function getNewBatch() {
     $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
         if (data && data.id) {
-            redirectBack(data.id)
+            var params = {};
+            params.task_id = $('#session_task_id').val();
+            params.batch_id = data.id;
+            $.post('../batch/isavailable/', params, function (data) {  
+                if (data.id) {
+                    redirectBack(data.id); // If batch is still available, proceed to capture.
+                } else {            
+                    getNewBatch(); // If batch is already asigned to a different user, get another.        
+                } 
+            });            
         } else {
             window.location = '../de/redirectnonext/' + $('#session_task_name').val();
         }                

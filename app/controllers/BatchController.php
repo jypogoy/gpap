@@ -58,12 +58,17 @@ class BatchController extends ControllerBase
                 $batches = $this->modelsManager->executeQuery($phql);
 
             } else if ($taskName == 'Verify') {
-                $phql = "SELECT * FROM Batch 
-                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
-                            SELECT batch_id 
-                            FROM DataEntry 
-                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
-                        )";
+                // $phql = "SELECT * FROM Batch 
+                //         WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                //             SELECT batch_id 
+                //             FROM DataEntry 
+                //             WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                //         )";
+                $phql = "SELECT Batch.* FROM Batch
+                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id 
+                        INNER JOIN Task ON Task.id = DataEntry.task_id
+                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND Task.next_task_id = :taskId: AND DataEntry.user_id != :userId:";
+                
                 $batches = $this->modelsManager->executeQuery(
                     $phql, 
                     [
@@ -76,8 +81,8 @@ class BatchController extends ControllerBase
                 $phql = "SELECT * FROM Batch 
                         WHERE entry_status = 'Complete' AND verify_status = 'Complete' AND balance_status IS NULL AND is_exception = 1";
                 $batches = $this->modelsManager->executeQuery($phql);        
-            }          
-
+            }
+            
             echo $this->view->partial('batch/listavailable', [ 'batches' => $batches ]);  
 
         } catch (\Exception $e) {            
@@ -105,12 +110,17 @@ class BatchController extends ControllerBase
                 $result = $this->modelsManager->executeQuery($phql);
 
             } else if ($taskName == 'Verify') {
-                $phql = "SELECT * FROM Batch 
-                        WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
-                            SELECT batch_id 
-                            FROM DataEntry 
-                            WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
-                        ) LIMIT 1";
+                // $phql = "SELECT * FROM Batch 
+                //         WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
+                //             SELECT batch_id 
+                //             FROM DataEntry 
+                //             WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
+                //         ) LIMIT 1";
+                $phql = "SELECT Batch.* FROM Batch
+                        INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id 
+                        INNER JOIN Task ON Task.id = DataEntry.task_id
+                        WHERE Batch.entry_status = 'Complete' AND Batch.verify_status IS NULL AND Task.next_task_id = :taskId: AND DataEntry.user_id != :userId: 
+                        LIMIT 1";
 
                 $result = $this->modelsManager->executeQuery(
                     $phql, 
@@ -151,11 +161,11 @@ class BatchController extends ControllerBase
         try {            
             $task = Task::findFirst($taskId);
 
-            $isAvailable = true;
+            $batch = true;
             
             switch ($task->name) {
                 case 'Entry 1':
-                    $isAvailable = Batch::findFirst(
+                    $batch = Batch::findFirst(
                         [
                             'id = ?1 AND entry_status IS NULL',
                             'bind'  =>  [
@@ -166,7 +176,7 @@ class BatchController extends ControllerBase
                     break;
                 
                 case 'Verify':
-                    $isAvailable = Batch::findFirst(
+                    $batch = Batch::findFirst(
                         [
                             'id = ?1 AND verify_status IS NULL',
                             'bind'  =>  [
@@ -177,7 +187,7 @@ class BatchController extends ControllerBase
                     break;
 
                 default:
-                    $isAvailable = Batch::findFirst(
+                    $batch = Batch::findFirst(
                         [
                             'id = ?1 AND balance_status IS NULL',
                             'bind'  =>  [
@@ -188,7 +198,7 @@ class BatchController extends ControllerBase
                     break;
             }
             
-            $this->response->setJsonContent($isAvailable);
+            $this->response->setJsonContent($batch);
             $this->response->send();
 
         } catch (\Exception $e) {            
@@ -230,10 +240,15 @@ class BatchController extends ControllerBase
                 $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
 
             } else if ($taskName == 'Verify') {
+                // $sql = "SELECT COUNT(*) AS Total
+                //         FROM batch b
+                //         INNER JOIN data_entry de ON de.batch_id = b.id AND de.task_id = (SELECT id FROM task WHERE next_task_id = ?)
+                //         WHERE b.entry_status = 'Complete' AND b.verify_status IS NULL AND de.user_id != ?";
                 $sql = "SELECT COUNT(*) AS Total
                         FROM batch b
-                        INNER JOIN data_entry de ON de.batch_id = b.id AND de.task_id = (SELECT id FROM task WHERE next_task_id = ?)
-                        WHERE b.entry_status = 'Complete' AND b.verify_status IS NULL AND de.user_id != ?";
+                        INNER JOIN data_entry de ON de.batch_id = b.id 
+                        INNER JOIN task t ON t.id = de.task_id
+                        WHERE b.entry_status = 'Complete' AND b.verify_status IS NULL AND t.next_task_id = ? AND de.user_id != ?";
 
                 $result = $this->db->query($sql, [$task->id, $userId]);
                 $result = $result->fetch(\Phalcon\Db::FETCH_OBJ);
