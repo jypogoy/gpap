@@ -112,4 +112,22 @@ class DCNController extends ControllerBase
         }
     }
     
+    public function synchAction()
+    {
+        $this->view->disable();
+
+        if (!$this->request->isPost()) {
+            return $this->response->redirect('');
+        }
+
+        try {
+            $sql = "SELECT * FROM dcn d
+            INNER JOIN task t ON t.id = d.task_id
+            WHERE t.next_task_id = 6 AND region_code = 'BN' AND merchant_number = '0000000000000444' AND dcn = '2135465' AND amount = '500.00'";
+
+        } catch (\Exception $e) {            
+            echo false;
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
 }
