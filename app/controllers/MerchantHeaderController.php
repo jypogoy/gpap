@@ -41,7 +41,10 @@ class MerchantHeaderController extends ControllerBase
         $deId = $this->request->getPost('data_entry_id');
         $batchId = $this->request->getPost('batch_id');
 
-        try {                       
+        try {                      
+            // Start a transaction
+            $this->db->begin();
+            
             // Update any existing header content.
             $header = MerchantHeader::findFirst(
                 [
@@ -69,24 +72,30 @@ class MerchantHeaderController extends ControllerBase
             $header->batch_pull_reason_id = $this->request->getPost('batch_pull_reason_id') == '' ? null : $this->request->getPost('batch_pull_reason_id');
             
             if (!$header->save()) {
+                $this->db->rollback();                
                 $errorMsg = '';
                 foreach ($header->getMessages() as $message) {
                     $errorMsg = $errorMsg . $message;
                 }
                 return $errorMsg;
             } else {
-                // if ($this->session->get('fromEdits')) {
-                //     $sql = "UPDATE dcn d 
-                //             SET dcn = ?
-                //             WHERE region_code = ? AND merchant_number = ? AND amount = ? AND image_path = ?";
+                if ($this->session->get('fromEdits')) { // Update DCN on save action while in Edit Record mode.
+                    $sql = "UPDATE dcn d 
+                            SET merchant_number = ?, dcn = ?, amount = ? 
+                            WHERE image_path = ?";
 
-                //     $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount, $dcn->image_path]);     
-                // }
+                    $image_url = $this->request->getPost('image_path');    
+                    $this->db->query($sql, [$header->merchant_number, $header->dcn, $header->deposit_amount, $image_url]);     
+                }
             }
+
+            // Commit the transaction
+            $this->db->commit();
 
             return $header->id;
 
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {       
+            $this->db->rollback();                 
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
     }

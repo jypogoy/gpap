@@ -1,3 +1,5 @@
+var origDCN;
+
 $(function() {
 
     // Instantiate the region selection element.

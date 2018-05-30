@@ -91,6 +91,10 @@ function setFieldValue(key, value) {
             $('#' + key).prop('checked', false);
         }
     } else {        
+        
+        // For Edits only: keep a reference to the original DCN to exempt and avoid conflict during validation. See de_form_events.js for implementation.
+        if (key.indexOf('dcn') != -1) origDCN = value;
+
         $('#' + key).val(value);
         var calEl = $('#' + key + '_cal');
         if (calEl) { // If calendar element exists

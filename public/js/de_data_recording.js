@@ -80,6 +80,7 @@ function gatherHeaderValues() {
         }
     });
     data.id = $('#merchant_header_id').val();
+    data.image_path = imgArray[0].path;
     return data;
 }
 

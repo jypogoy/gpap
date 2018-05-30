@@ -113,6 +113,13 @@ $(function() {
         $('#currency_id_dropdown').find('.search').focus();
     });
 
+    $('#dcn').focusin(function() {
+        $('#' + this.id + '_wrapper').removeClass('error');
+        $('#' + this.id + '_alert').remove();    
+        $('#' + this.id + '_wrapper').removeClass('error');
+        $('#' + this.id + '_alert').remove();    
+    });
+
     $('#dcn').blur(function() {
         var el = this;
         this.value = this.value.toUpperCase();
@@ -127,47 +134,90 @@ $(function() {
                         '</div>');
             } else {       
                 $(wrapper).removeClass('error');
-                $('#' + el.id + '_alert').remove();    
-                
-                var params = {};
-                params.batch_id = $('#batch_id').val();
-                params.task_id = $('#session_task_id').val();
-                params.dcn = $('#dcn').val();
-                params.region_code = $('#region_code').val();
-                // Same DCN within the same Region on the same day
-                $.post('../dcn/getsameregionday/', params, function (data) {   
-                    if (data) {
-                        //$('#' + this.id + '_alert').remove();
-                        $(wrapper).addClass('error');
-                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
-                                '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN within the same Region on the same day</span>' +
-                                '</div>');
-                    } else {
-                        // $(wrapper).removeClass('error');
-                        // $('#' + el.id + '_alert').remove();
-                    }
-                });
+                $('#' + el.id + '_alert').remove();                    
+                if ($('#session_from_edits').val() > 0 && this.value != origDCN) { // For Edits only: validate other DCNs as the current value will be treated as valid.
+                    var params = {};
+                    params.batch_id = $('#batch_id').val();
+                    params.task_id = $('#session_task_id').val();
+                    params.dcn = $('#dcn').val();
+                    params.region_code = $('#region_code').val();
 
-                var params = {};
-                params.batch_id = $('#batch_id').val();
-                params.task_id = $('#session_task_id').val();
-                params.dcn = $('#dcn').val();
-                params.merchant_number = $('#merchant_number').val();                
-                params.deposit_amount =  $('#deposit_amount').val().trim();
-                params.region_code = $('#region_code').val();    
-                // Same DCN, same MID, same total amount within the same Region in the historical record
-                $.post('../dcn/getsamemidamountregion/', params, function (data) {      
-                    if (data) {
-                        //$('#' + el.id + '_alert').remove();
-                        $(wrapper).addClass('error');
-                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
-                                '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN, MID, Total Amount within the same Region in the historical record</span>' +
-                                '</div>');
-                    } else {
-                        // $(wrapper).removeClass('error');
-                        // $('#' + el.id + '_alert').remove();
-                    }
-                });                                          
+                    // Same DCN within the same Region on the same day
+                    $.post('../dcn/getsameregionday/', params, function (data) {   
+                        if (data) {
+                            //$('#' + this.id + '_alert').remove();
+                            $(wrapper).addClass('error');
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                    '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN within the same Region on the same day</span>' +
+                                    '</div>');                                 
+                        } else {
+                            // $(wrapper).removeClass('error');
+                            // $('#' + el.id + '_alert').remove();
+                        }
+                    });
+
+                    var params = {};
+                    params.batch_id = $('#batch_id').val();
+                    params.task_id = $('#session_task_id').val();
+                    params.dcn = $('#dcn').val();
+                    params.merchant_number = $('#merchant_number').val();                
+                    params.deposit_amount =  $('#deposit_amount').val().trim();
+                    params.region_code = $('#region_code').val();    
+                    // Same DCN, same MID, same total amount within the same Region in the historical record
+                    $.post('../dcn/getsamemidamountregion/', params, function (data) {      
+                        if (data) {
+                            //$('#' + el.id + '_alert').remove();
+                            $(wrapper).addClass('error');
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                    '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN, MID, Total Amount within the same Region in the historical record</span>' +
+                                    '</div>');                                 
+                        } else {
+                            // $(wrapper).removeClass('error');
+                            // $('#' + el.id + '_alert').remove();
+                        }
+                    });               
+                } else { // Other than Edits
+                    var params = {};
+                    params.batch_id = $('#batch_id').val();
+                    params.task_id = $('#session_task_id').val();
+                    params.dcn = $('#dcn').val();
+                    params.region_code = $('#region_code').val();
+
+                    // Same DCN within the same Region on the same day
+                    $.post('../dcn/getsameregionday/', params, function (data) {   
+                        if (data) {
+                            //$('#' + this.id + '_alert').remove();
+                            $(wrapper).addClass('error');
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                    '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN within the same Region on the same day</span>' +
+                                    '</div>');                                 
+                        } else {
+                            // $(wrapper).removeClass('error');
+                            // $('#' + el.id + '_alert').remove();
+                        }
+                    });
+
+                    var params = {};
+                    params.batch_id = $('#batch_id').val();
+                    params.task_id = $('#session_task_id').val();
+                    params.dcn = $('#dcn').val();
+                    params.merchant_number = $('#merchant_number').val();                
+                    params.deposit_amount =  $('#deposit_amount').val().trim();
+                    params.region_code = $('#region_code').val();    
+                    // Same DCN, same MID, same total amount within the same Region in the historical record
+                    $.post('../dcn/getsamemidamountregion/', params, function (data) {      
+                        if (data) {
+                            //$('#' + el.id + '_alert').remove();
+                            $(wrapper).addClass('error');
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + el.id + '_alert">' +
+                                    '<span id="' + el.id + '_msg">Exists in ' + data.image_path + ': Same DCN, MID, Total Amount within the same Region in the historical record</span>' +
+                                    '</div>');                                 
+                        } else {
+                            // $(wrapper).removeClass('error');
+                            // $('#' + el.id + '_alert').remove();
+                        }
+                    });               
+                }                          
             }    
         } else {
             $(wrapper).removeClass('error');
