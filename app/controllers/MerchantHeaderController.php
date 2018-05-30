@@ -74,6 +74,14 @@ class MerchantHeaderController extends ControllerBase
                     $errorMsg = $errorMsg . $message;
                 }
                 return $errorMsg;
+            } else {
+                // if ($this->session->get('fromEdits')) {
+                //     $sql = "UPDATE dcn d 
+                //             SET dcn = ?
+                //             WHERE region_code = ? AND merchant_number = ? AND amount = ? AND image_path = ?";
+
+                //     $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount, $dcn->image_path]);     
+                // }
             }
 
             return $header->id;

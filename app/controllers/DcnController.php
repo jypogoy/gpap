@@ -86,9 +86,6 @@ class DCNController extends ControllerBase
         }
 
         try {
-            // Start a transaction
-            $this->db->begin();
-
             $dcn = new Dcn();
             $dcn->task_id = $this->request->getPost('task_id');
             $dcn->batch_id = $this->request->getPost('batch_id');
@@ -103,32 +100,12 @@ class DCNController extends ControllerBase
                 foreach ($dcn->getMessages() as $message) {
                     $this->errorLogger->error($message->getMessage());
                 }
-
-                $this->db->rollback();
                 echo false;
             } else {
-                // Synchronized DCNs to all previous tasks.
-                a:
-                $prevTask = Task::findFirst('next_task_id = ' . $taskId);            
-                if ($prevTask) {
-                    $sql = "UPDATE dcn d 
-                            INNER JOIN task t ON t.id = d.task_id 
-                            SET dcn = ?
-                            WHERE t.next_task_id = ? AND region_code = ? AND merchant_number = ? AND amount = ?";
-
-                    $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount]);                
-                    $taskId = $prevTask->id;
-                    goto a;
-                }
-                
                 echo true;
             }
 
-            // Commit the transaction
-            $this->db->commit();
-            
         } catch (\Exception $e) {  
-            $this->db->rollback();          
             echo false;
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
