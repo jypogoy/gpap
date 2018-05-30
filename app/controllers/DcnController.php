@@ -86,6 +86,9 @@ class DCNController extends ControllerBase
         }
 
         try {
+            // Start a transaction
+            $this->db->begin();
+
             $dcn = new Dcn();
             $dcn->task_id = $this->request->getPost('task_id');
             $dcn->batch_id = $this->request->getPost('batch_id');
@@ -101,12 +104,31 @@ class DCNController extends ControllerBase
                     $this->errorLogger->error($message->getMessage());
                 }
 
+                $this->db->rollback();
                 echo false;
             } else {
+                // Synchronized DCNs to all previous tasks.
+                a:
+                $prevTask = Task::findFirst('next_task_id = ' . $taskId);            
+                if ($prevTask) {
+                    $sql = "UPDATE dcn d 
+                            INNER JOIN task t ON t.id = d.task_id 
+                            SET dcn = ?
+                            WHERE t.next_task_id = ? AND region_code = ? AND merchant_number = ? AND amount = ?";
+
+                    $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount]);                
+                    $taskId = $prevTask->id;
+                    goto a;
+                }
+                
                 echo true;
             }
 
-        } catch (\Exception $e) {            
+            // Commit the transaction
+            $this->db->commit();
+            
+        } catch (\Exception $e) {  
+            $this->db->rollback();          
             echo false;
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
@@ -121,9 +143,12 @@ class DCNController extends ControllerBase
         }
 
         try {
-            $sql = "SELECT * FROM dcn d
-            INNER JOIN task t ON t.id = d.task_id
-            WHERE t.next_task_id = 6 AND region_code = 'BN' AND merchant_number = '0000000000000444' AND dcn = '2135465' AND amount = '500.00'";
+            $sql = "UPDATE dcn d 
+                    INNER JOIN task t ON t.id = d.task_id 
+                    SET dcn = ?
+                    WHERE t.next_task_id = ? AND region_code = ? AND merchant_number = ? AND dcn = ? AND amount = ?";
+
+            $result = $this->db->query($sql, [$batchId, $merchantNumber, $dcn, $depositAmount, $regionCode, $taskId]);    
 
         } catch (\Exception $e) {            
             echo false;
