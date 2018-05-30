@@ -19,7 +19,7 @@ $(function() {
                     $('#currency_id_dropdown').find('.search').focus();
                 }
             }); 
-            padZero($(this));
+            if ($(this).val().trim().length > 0) padZero($(this)); // Pad only if there is a specified Merchant Number.
             $('#card_number_alert').remove();
             $('#card_number_wrapper').removeClass('error');            
         }
@@ -97,7 +97,7 @@ $(function() {
                 $('#currency_id_alert').remove();
             }   
         } else {
-            $('#merchant_number').focus();
+            //$('#merchant_number').focus(); !Editted for No MID handle
             $('#currency_id_wrapper').removeClass('error');
             $('#currency_id_alert').remove();
         }

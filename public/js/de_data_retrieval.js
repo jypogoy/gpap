@@ -159,7 +159,8 @@ function getContents(lastCompletedEntry, existingHeader) {
         } else {
             withHeaderContent = true;
             $('#merchant_header_id').val(headerData.id);                                     
-            if (headerData.merchant_number) {
+            //if (headerData.merchant_number) { !Editted for No MID handle
+            if (headerData.id) {
 
                 // Re-persist merchant information and filter dependent controls.
                 getMerchantInfo(headerData.merchant_number);
@@ -205,7 +206,7 @@ function getMerchantInfo(merchant_number) {
     $.post('../merchant/get/' + parseInt(merchant_number), function (merchantData) { 
         if (!merchantData) {
             toastr.info('The search did not match any merchant.');                    
-            Form.clear(true);
+            //Form.clear(true); !Editted for No MID handle
             $('#merchant_number').focus();
             $('#merchant_number').select();
         } else {

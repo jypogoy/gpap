@@ -159,7 +159,7 @@ function setFieldValue(key, value) {
 
     if (key.indexOf('merchant_number') != -1) {
         getMerchantInfo($('#' + key).val()); // See de_data_retrieval.js
-        padZero($('#' + key));
+        if ($('#' + key).val().trim().length > 0) padZero($('#' + key));
     }
 }
 

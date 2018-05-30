@@ -152,6 +152,7 @@ $(function() {
             }); 
         });
     } else {
+        getRegionCurrency();
         getPullReasons();
         getInstallmentMonths();
         getExceptions();
