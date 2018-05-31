@@ -52,7 +52,7 @@
             <th>Transaction Type</th>
             <th>File Name</th>
             <th>Batch #</th>
-            <th>Completed Task</th>
+            <th>Completed Tasks</th>
         </tr>
     </thead>
     <tbody class="listBody">
