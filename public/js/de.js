@@ -162,6 +162,10 @@ $(function() {
     if ($('#session_task_name').val().indexOf('Verify') != -1) {
         getRawContents();    
     }
+
+    if ($('#session_task_name').val().indexOf('Balancing') != -1) {
+        prepBalancingFields(); 
+    }
     
     $('#merchant_number').focus();
     $('.dropdown.icon').removeAttr('tabIndex');    
