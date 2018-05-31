@@ -167,10 +167,18 @@ function getNewBatch() {
 
 function redirectBack(batchId) {
     var form = $('#redirectForm');
-    $(form).attr('action', '../de/' + batchId);    
+    $(form).attr('action', '../de/');    
     $(form).attr('method', 'POST');
     $(form).submit();
 }
+
+
+// function redirectBack(batchId) {
+//     var form = $('#redirectForm');
+//     $(form).attr('action', '../de/' + batchId);    
+//     $(form).attr('method', 'POST');
+//     $(form).submit();
+// }
 
 function recordDCN() {
 

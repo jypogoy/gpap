@@ -9,7 +9,35 @@ class DeController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction($batchId = null)
+    public function indexAction()
+    {                
+        if (!$this->request->isPost()) {
+            $this->flashSession->error('Direct access to data entry URL is not permitted!');
+            return $this->response->redirect('');
+        }
+
+        $fromEdits = $this->session->get('fromEdits');
+        // $entryId = $this->session->get('entry_id');
+        // $batchId = $this->session->get('batch_id');        
+        
+        // try {
+        //     $entry = DataEntry::findFirstById($entryId); 
+        //     $batch = Batch::findFirstById($batchId); 
+            $entry = $this->session->get('entry');
+            $batch = $this->session->get('batch');
+
+            $this->view->dataEntry = $entry;
+            $this->view->batch = $batch;
+            $this->view->setTemplateAfter('de');
+
+        // } catch (\Exception $e) {    
+        //     $this->errorLogger->error(parent::_constExceptionMessage($e));
+        // }
+
+        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
+    }
+
+    public function indexAction_DEP($batchId = null) // Delete if not needed.
     {        
         $fromEdits = $this->session->get('fromEdits');
 
@@ -23,6 +51,9 @@ class DeController extends ControllerBase
         $taskName = $this->session->get('taskName');
         
         try {
+             // Start a transaction
+             $this->db->begin();
+
             $batch = Batch::findFirstById($batchId); 
             $batch->is_exception = (int) $batch->is_exception;
             
@@ -37,6 +68,7 @@ class DeController extends ControllerBase
                 }
 
                 if (!$batch->save()) {
+                    $this->db->rollback();
                     foreach ($batch->getMessages() as $message) {
                         $this->flash->error($message);
                     }
@@ -76,6 +108,7 @@ class DeController extends ControllerBase
                 $entry->task_id = $taskId;
 
                 if (!$entry->save()) {
+                    $this->db->rollback();
                     foreach ($entry->getMessages() as $message) {
                         $this->flash->error($message);
                     }
@@ -93,9 +126,13 @@ class DeController extends ControllerBase
             $this->view->batch = $batch;
             $this->view->setTemplateAfter('de');        
 
+            // Commit the transaction
+            $this->db->commit();
+
             $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $taskName . ' Record Edit' : $taskName) . ' on Batch ' .  $batchId . '.'); 
 
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {    
+            $this->db->rollback();        
             $this->errorLogger->error(parent::_constExceptionMessage($e));
         }
 
