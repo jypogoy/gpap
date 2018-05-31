@@ -349,6 +349,8 @@ $(function() {
             $(this).val('');
             $('#merchant_number').focus();
         } else {
+            refreshTransTypeDependentFields(); // See de_data_navigation.js
+
             if (this.value.length == 0) {
                 $(alert).remove();
                 $(wrapper).removeClass('error');
@@ -417,9 +419,10 @@ $(function() {
                             $(wrapper).removeClass('error');       
                             $(alert).remove();
                             var cardType = getCardType($(this).val()); // See util.js
+                            
                             if (this.value.trim() != '') {
                                 
-                                this.value = cc_format(this.value); // See util.js
+                                this.value = cc_format(this.value); // See util.js                                
                                 
                                 switch (cardType) {
                                     case 'Maestro':
@@ -463,7 +466,7 @@ $(function() {
                                                     '</div>');  
                                         }
                                         $(logo).attr('src', '../public/img/card/mastercard.png')
-                                        break;    
+                                        break;                                        
 
                                     case 'JCB':
                                         if ($.inArray('JCB', merchantAcceptedCards) < 0) {

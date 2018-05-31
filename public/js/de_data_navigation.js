@@ -168,6 +168,7 @@ function setFieldValue(key, value) {
 }
 
 function refreshTransTypeDependentFields() {
+    
     //var option = $('#transaction_type_id_dropdown').dropdown('get text');
     var option = $('#transaction_type_type').val();
     if (option.indexOf('Airline') != -1) {
@@ -177,12 +178,16 @@ function refreshTransTypeDependentFields() {
 
         $('#airline_ticket_number').keyup(function() {
             this.value = this.value.replace(/[\s]/g, '');        
-        });
-
-    } else if (option.indexOf('VI') != -1) {
+        });  
+    } else if (option.indexOf('VI') != -1) { 
         $('#other_fields_div').removeClass('hidden');
         $('.vi-field').parent().removeClass('hidden');
         $('.airline-field').parent().addClass('hidden');
+        // Hide CRI and MON fields for VI with Mastercard. See util.js
+        if (getCardType($('#card_number').val()) == 'Mastercard') {
+            $('#other_fields_div').addClass('hidden');
+            $('.vi-field').parent().addClass('hidden');
+        }
     } else {
         $('#other_fields_div').addClass('hidden');
         $('.airline-field').parent().addClass('hidden');
