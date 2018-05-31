@@ -15,7 +15,7 @@
         </div>#}
         <div class="column user-tasks"></div>
         <div class="right aligned column">
-            <a class="ui primary hidden button data-process-btn get-batch" onclick="getNewBatch();"><i class="plus icon"></i>Get Batch</a>
+            <a class="ui primary hidden button data-process-btn get-batch"><i class="plus icon"></i>Get Batch</a>
             <div id="batchCount" class="floating ui hidden label" style="margin-left: -40px !important; margin-top: 10px !important;">...</div>                      
         </div>        
     </div>     

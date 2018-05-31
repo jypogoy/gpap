@@ -6,9 +6,9 @@ $(function () {
 
     $('.loader').fadeOut();
 
-    // $('.get-batch').click(function(e) {        
-    //     loadAvailableBatches();
-    // });
+    $('.get-batch').click(function(e) {        
+        loadAvailableBatches();
+    });
     
     getUserTasks();        
 
@@ -256,21 +256,6 @@ function complete(fromHome, actionEl, entryId, batchId) {
         }
     })
     .modal('show');
-}
-
-function getNewBatch() {
-    $.post('batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
-        var form = $('#beginForm');
-        $(form).attr('action', 'de/');    
-        $(form).attr('method', 'POST');
-        $(form).submit();
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
 }
 
 function begin(batchId) {

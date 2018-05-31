@@ -163,7 +163,7 @@ function getContents(lastCompletedEntry, existingHeader) {
             if (headerData.id) {
 
                 // Re-persist merchant information and filter dependent controls.
-                getMerchantInfo(headerData.merchant_number);
+                if (headerData.merchant_number.trim().length > 0) getMerchantInfo(headerData.merchant_number);
                 
                 // Fill header fields with values.
                 $.each(headerData, function(key, value) {

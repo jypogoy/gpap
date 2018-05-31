@@ -210,12 +210,16 @@ class BatchController extends ControllerBase
             } 
 
             // Make Entry and Batch records persistent for the actual DE.
+            $this->session->set('fromGetNext', true);
             $this->session->set('entry', $entry);
             $this->session->set('batch', $batch);
 
             // Commit the transaction
             $this->db->commit();            
         
+            $this->response->setJsonContent($batch);
+            $this->response->send(); 
+
             if ($result && count($result) > 0) $this->deLogger->info($this->session->get('auth')['name'] . ' was given Batch ' . $result[0]->id . ' for ' . strtoupper($taskName) . '.');             
 
         } catch (\Exception $e) {    

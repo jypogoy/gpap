@@ -142,6 +142,26 @@ function writeSlips(headerId) {
 
 function getNewBatch() {
     $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
+        if (data && data.id) {            
+            if (data.id) {
+                redirectBack(data.id); // If batch is still available, proceed to capture.
+            } else {            
+                getNewBatch(); // If batch is already asigned to a different user, get another.        
+            }            
+        } else {
+            window.location = '../de/redirectnonext/' + $('#session_task_name').val();
+        }                
+    })
+    .done(function (msg) {
+        // Do nothing...
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    });
+}
+
+function getNewBatch_OLD() {
+    $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
         if (data && data.id) {
             var params = {};
             params.task_id = $('#session_task_id').val();
@@ -165,20 +185,13 @@ function getNewBatch() {
     });
 }
 
+
 function redirectBack(batchId) {
     var form = $('#redirectForm');
-    $(form).attr('action', '../de/');    
+    $(form).attr('action', '../de/' + batchId);    
     $(form).attr('method', 'POST');
     $(form).submit();
 }
-
-
-// function redirectBack(batchId) {
-//     var form = $('#redirectForm');
-//     $(form).attr('action', '../de/' + batchId);    
-//     $(form).attr('method', 'POST');
-//     $(form).submit();
-// }
 
 function recordDCN() {
 

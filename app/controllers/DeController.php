@@ -9,37 +9,38 @@ class DeController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
-    {                
-        if (!$this->request->isPost()) {
-            $this->flashSession->error('Direct access to data entry URL is not permitted!');
-            return $this->response->redirect('');
-        }
+    // public function indexAction()
+    // {                
+    //     if (!$this->request->isPost()) {
+    //         $this->flashSession->error('Direct access to data entry URL is not permitted!');
+    //         return $this->response->redirect('');
+    //     }
 
-        $fromEdits = $this->session->get('fromEdits');
-        // $entryId = $this->session->get('entry_id');
-        // $batchId = $this->session->get('batch_id');        
+    //     $fromEdits = $this->session->get('fromEdits');
+    //     // $entryId = $this->session->get('entry_id');
+    //     // $batchId = $this->session->get('batch_id');        
         
-        // try {
-        //     $entry = DataEntry::findFirstById($entryId); 
-        //     $batch = Batch::findFirstById($batchId); 
-            $entry = $this->session->get('entry');
-            $batch = $this->session->get('batch');
+    //     // try {
+    //     //     $entry = DataEntry::findFirstById($entryId); 
+    //     //     $batch = Batch::findFirstById($batchId); 
+    //         $entry = $this->session->get('entry');
+    //         $batch = $this->session->get('batch');
 
-            $this->view->dataEntry = $entry;
-            $this->view->batch = $batch;
-            $this->view->setTemplateAfter('de');
+    //         $this->view->dataEntry = $entry;
+    //         $this->view->batch = $batch;
+    //         $this->view->setTemplateAfter('de');
 
-        // } catch (\Exception $e) {    
-        //     $this->errorLogger->error(parent::_constExceptionMessage($e));
-        // }
+    //     // } catch (\Exception $e) {    
+    //     //     $this->errorLogger->error(parent::_constExceptionMessage($e));
+    //     // }
 
-        $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
-    }
+    //     $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
+    // }
 
-    public function indexAction_DEP($batchId = null) // Delete if not needed.
+    public function indexAction($batchId = null) // Delete if not needed.
     {        
         $fromEdits = $this->session->get('fromEdits');
+        $fromGetNext = $this->session->get('fromGetNext');
 
         if (!$this->request->isPost()) {
             $this->flashSession->error('Direct access to data entry URL is not permitted!');
@@ -50,90 +51,97 @@ class DeController extends ControllerBase
         $taskId = $this->session->get('taskId');
         $taskName = $this->session->get('taskName');
         
-        try {
-             // Start a transaction
-             $this->db->begin();
+        if (!$fromGetNext) {
+            try {
+                // Start a transaction
+                $this->db->begin();
 
-            $batch = Batch::findFirstById($batchId); 
-            $batch->is_exception = (int) $batch->is_exception;
-            
-            // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
-            if (!$fromEdits) {       
-                if (strpos($taskName, 'Entry') !== false) {
-                    $batch->entry_status = 'Doing';
-                } else if (strpos($taskName, 'Verify') !== false) {
-                    $batch->verify_status = 'Doing';
+                $batch = Batch::findFirstById($batchId); 
+                $batch->is_exception = (int) $batch->is_exception;
+                
+                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
+                if (!$fromEdits) {       
+                    if (strpos($taskName, 'Entry') !== false) {
+                        $batch->entry_status = 'Doing';
+                    } else if (strpos($taskName, 'Verify') !== false) {
+                        $batch->verify_status = 'Doing';
+                    } else {
+                        $batch->balance_status = 'Doing';
+                    }
+
+                    if (!$batch->save()) {
+                        $this->db->rollback();
+                        foreach ($batch->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
+
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }                
+                } 
+
+                // Look for existing activity to maintain single record of batch on a particular task.
+                $entry = null;
+                if (!$fromEdits) {
+                    $entry = DataEntry::findFirst(
+                        [
+                            "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
+                        ]
+                    );
                 } else {
-                    $batch->balance_status = 'Doing';
+                    $entry = DataEntry::findFirst(
+                        [
+                            "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
+                        ]
+                    );
                 }
 
-                if (!$batch->save()) {
-                    $this->db->rollback();
-                    foreach ($batch->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
+                // Create an activity if nothing has been recorded.
+                if (!$entry && !$fromEdits) {            
 
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
+                    // Write information for data entry activity.
+                    $entry = new DataEntry();
+                    $entry->user_id = $userId;
+                    $entry->batch_id = $batchId;
+                    $entry->task_id = $taskId;
 
-                    return;
-                }                
-            } 
+                    if (!$entry->save()) {
+                        $this->db->rollback();
+                        foreach ($entry->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
 
-            // Look for existing activity to maintain single record of batch on a particular task.
-            $entry = null;
-            if (!$fromEdits) {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "user_id = " . $userId . " AND batch_id = " . $batchId . " AND task_id = " . $taskId . " AND ended_at IS NULL"
-                    ]
-                );
-            } else {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
-                    ]
-                );
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }                                                       
+                }                            
+
+                // Commit the transaction
+                $this->db->commit();
+                
+                $this->view->dataEntry = $entry;
+                $this->view->batch = $batch;
+                $this->view->setTemplateAfter('de');        
+
+                $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $taskName . ' Record Edit' : $taskName) . ' on Batch ' .  $batchId . '.'); 
+
+            } catch (\Exception $e) {    
+                $this->db->rollback();        
+                $this->errorLogger->error(parent::_constExceptionMessage($e));
             }
-
-            // Create an activity if nothing has been recorded.
-            if (!$entry && !$fromEdits) {            
-
-                // Write information for data entry activity.
-                $entry = new DataEntry();
-                $entry->user_id = $userId;
-                $entry->batch_id = $batchId;
-                $entry->task_id = $taskId;
-
-                if (!$entry->save()) {
-                    $this->db->rollback();
-                    foreach ($entry->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
-
-                    return;
-                }                                                       
-            }            
-
-            $this->view->dataEntry = $entry;
-            $this->view->batch = $batch;
-            $this->view->setTemplateAfter('de');        
-
-            // Commit the transaction
-            $this->db->commit();
-
-            $this->deLogger->info($this->session->get('auth')['name'] . ' performed ' . ($fromEdits ? $taskName . ' Record Edit' : $taskName) . ' on Batch ' .  $batchId . '.'); 
-
-        } catch (\Exception $e) {    
-            $this->db->rollback();        
-            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        } else {
+            $this->view->dataEntry = $this->session->get('entry');
+            $this->view->batch = $this->session->get('batch');
+            $this->view->setTemplateAfter('de');  
+            $this->session->set('fromGetNext', false);      
         }
 
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Data Entry page.'); 
