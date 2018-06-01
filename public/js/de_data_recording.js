@@ -9,7 +9,7 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
         $.when(writeSlips(headerId))
         .done(function(isSuccess) {
             if (!isSuccess) {
-                toastr.error('Unable to record transactions.');
+                toastr.warning('Unable to record transactions. Kindly retry.');
             } else {
                 if (isComplete) {
                     var params = {};
