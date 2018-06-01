@@ -185,10 +185,10 @@ function refreshTransTypeDependentFields() {
         $('#other_fields_div').removeClass('hidden');
         $('.vi-field').parent().removeClass('hidden');
         $('.airline-field').parent().addClass('hidden');
-        // Hide CRI and MON fields for VI with Mastercard. See util.js
+        // Hide MON and Commodity Code fields for VI with Mastercard. See util.js
         if (getCardType($('#card_number').val()) == 'Mastercard') {
-            $('#other_fields_div').addClass('hidden');
-            $('.vi-field').parent().addClass('hidden');
+            $('#merchant_order_number_wrapper').addClass('hidden');
+            $('#commodity_code_wrapper').addClass('hidden');
         }
     } else {
         $('#other_fields_div').addClass('hidden');

@@ -104,12 +104,12 @@
             {{ text_field('airline_ticket_number', 'maxlength': 13, 'class': 'airline-field slip-field') }} 
         </div>        
         <div id="customer_reference_identifier_wrapper" class="six wide hidden field">    
-            <label>Cust Ref</label> 
+            <label>CRI</label> 
             {{ text_area('customer_reference_identifier', 'rows': 1, 'maxlength': 30, 'allowedLength': 17, 'class': 'vi-field slip-field') }}
             <div id="customer_reference_identifier_counter" class="charcount">17 chars left.</div>
         </div>
         <div id="merchant_order_number_wrapper" class="seven wide hidden field">    
-            <label>Order No.</label> 
+            <label>MON</label> 
             {{ text_area('merchant_order_number', 'rows': 1, 'maxlength': 40, 'allowedLength': 25, 'class': 'vi-field slip-field') }}
             <div id="merchant_order_number_counter" class="charcount">25 chars left.</div>
         </div>
