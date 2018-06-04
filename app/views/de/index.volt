@@ -15,16 +15,20 @@
             {% include 'de/transaction_form.volt' %}
                     
             <div class="ui small basic icon buttons slip-controls" style="margin-top: 10px;">
+                {% if session.get('taskName') != 'Balancing'  %}
                 <button class="ui icon button more-btn" data-tooltip="Add a new Slip [Alt+a]" data-position="right center"><i class="plus blue icon"></i></button>
+                {% endif %}
                 <button class="ui icon disabled button first-slip-btn" data-tooltip="First Slip [Ctrl+Home]" data-position="top center"><i class="arrow left green icon"></i></button>
                 <button class="ui icon disabled button prev-slip-btn" data-tooltip="Previous Slip [PgUp]" data-position="top center"><i class="chevron left green icon"></i></button>
                 <button class="ui icon disabled button next-slip-btn" data-tooltip="Next Slip [PgDown]" data-position="top center"><i class="chevron right green icon"></i></button>  
                 <button class="ui icon disabled button last-slip-btn" data-tooltip="Last Slip [Ctrl+End]" data-position="top center"><i class="arrow right green icon"></i></button>
+                {% if session.get('taskName') != 'Balancing'  %}
                 <button class="ui icon disabled button insert-slip-btn" data-tooltip="Insert Before [Alt+i]" data-position="top center"><i class="resize horizontal blue icon"></i></button>
                 <button class="ui icon disabled button delete-slip-btn" data-tooltip="Delete Slip [Ctrl+Del]" data-position="top center"><i class="remove red icon"></i></button>  
                 <button class="ui icon button reset-slip-btn" data-tooltip="Clear Form [Alt+c]" data-position="top center"><i class="recycle orange icon"></i></button>  
                 <button class="ui icon button link-slip-btn" data-tooltip="Link Image [Alt+l]" data-position="top center"><i class="linkify blue icon"></i></button>  
                 <button class="ui icon hidden button unlink-slip-btn" data-tooltip="Unlink Image [Alt+u]" data-position="top center"><i class="unlinkify blue icon"></i></button> 
+                {% endif %}
             </div>
 
             {% include 'de/summary_form.volt' %}
