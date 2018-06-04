@@ -17,6 +17,15 @@ var Form = {
             $('.slip-field').parent().parent().removeClass('error');            
             $('.slip-dropdown:not(.auto-fill)').dropdown('restore defaults');            
             $('.slip-dropdown').parent().removeClass('error');
+            if (imgArray.length == 1) {
+                // Retain linked image if only 1 is found. See de_form_events.js
+                linkSlip();
+                $('.unlink-slip-btn').addClass('hidden');    
+                $('.link-slip-btn').addClass('hidden');  
+            } else {
+                $('.unlink-slip-btn').addClass('hidden');    
+                $('.link-slip-btn').removeClass('hidden');  
+            }
         }
     },
     clearOnSupportingDoc: function() {
