@@ -186,7 +186,7 @@ function refreshTransTypeDependentFields() {
         $('.vi-field').parent().removeClass('hidden');
         $('.airline-field').parent().addClass('hidden');
         // Hide MON and Commodity Code fields for VI with Mastercard. See util.js
-        if (getCardType($('#card_number').val()) == 'Mastercard') {
+        if (getCardType(unformatValue($('#card_number').val())) == 'Mastercard') {
             $('#merchant_order_number_wrapper').addClass('hidden');
             $('#commodity_code_wrapper').addClass('hidden');
         }
