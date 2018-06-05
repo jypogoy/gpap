@@ -144,6 +144,58 @@ class BatchController extends ControllerBase
             $batch = $result[0];
             $batch->is_exception = (int) $batch->is_exception;
 
+            // Look for existing activity to maintain single record of batch on a particular task.
+            $entry = null;
+            if (!$fromEdits) {
+                $entry = DataEntry::findFirst(
+                    [
+                        "conditions" => "user_id = " . $userId . " AND batch_id = " . $batch->id . " AND task_id = " . $taskId . " AND ended_at IS NULL"
+                    ]
+                );
+            } else {
+                $entry = DataEntry::findFirst(
+                    [
+                        "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
+                    ]
+                );
+            }
+
+            // Create an activity if nothing has been recorded.
+            if (!$entry && !$fromEdits) {            
+
+                // Get any recorded activity to make sure that only 1 will exist on a particular task.
+                $entry = DataEntry::findFirst(
+                    [
+                        "conditions" => "batch_id = " . $batch->id . " AND task_id = " . $taskId
+                    ]
+                );
+
+                if ($entry) {
+                    $batch = null;
+                    goto a;
+                }
+
+                // Write information for data entry activity.
+                $entry = new DataEntry();
+                $entry->user_id = $userId;
+                $entry->batch_id = $batch->id;
+                $entry->task_id = $taskId;
+
+                if (!$entry->save()) {
+                    $this->db->rollback();
+                    foreach ($entry->getMessages() as $message) {
+                        $this->flash->error($message);
+                    }
+
+                    $this->dispatcher->forward([
+                        'controller' => "home",
+                        'action' => 'index'
+                    ]);
+
+                    return;
+                }                                                       
+            }
+
             // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
             if (!$fromEdits) {       
                 if (strpos($taskName, 'Entry') !== false) {
@@ -167,47 +219,7 @@ class BatchController extends ControllerBase
 
                     return;
                 }              
-            }
-
-            // Look for existing activity to maintain single record of batch on a particular task.
-            $entry = null;
-            if (!$fromEdits) {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "user_id = " . $userId . " AND batch_id = " . $batch->id . " AND task_id = " . $taskId . " AND ended_at IS NULL"
-                    ]
-                );
-            } else {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
-                    ]
-                );
-            }
-
-            // Create an activity if nothing has been recorded.
-            if (!$entry && !$fromEdits) {            
-
-                // Write information for data entry activity.
-                $entry = new DataEntry();
-                $entry->user_id = $userId;
-                $entry->batch_id = $batch->id;
-                $entry->task_id = $taskId;
-
-                if (!$entry->save()) {
-                    $this->db->rollback();
-                    foreach ($entry->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
-
-                    return;
-                }                                                       
-            } 
+            }             
 
             // Make Entry and Batch records persistent for the actual DE.
             $this->session->set('fromGetNext', true);
@@ -217,6 +229,7 @@ class BatchController extends ControllerBase
             // Commit the transaction
             $this->db->commit();            
         
+            a:
             $this->response->setJsonContent($batch);
             $this->response->send(); 
 
