@@ -158,12 +158,18 @@ class BatchController extends ControllerBase
                         "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
                     ]
                 );
+
+                // Ensure that only 1 activity will exist on a particular batch and task.
+                if ($entry) {
+                    $batch = null;
+                    goto a;
+                }
             }
 
             // Create an activity if nothing has been recorded.
             if (!$entry && !$fromEdits) {            
 
-                // Get any recorded activity to make sure that only 1 will exist on a particular task.
+                
                 $entry = DataEntry::findFirst(
                     [
                         "conditions" => "batch_id = " . $batch->id . " AND task_id = " . $taskId
@@ -171,7 +177,7 @@ class BatchController extends ControllerBase
                 );
 
                 if ($entry) {
-                    $batch = null;
+                    $batch->id = 0;
                     goto a;
                 }
 
@@ -228,12 +234,12 @@ class BatchController extends ControllerBase
 
             // Commit the transaction
             $this->db->commit();            
+
+            if ($result && count($result) > 0) $this->deLogger->info($this->session->get('auth')['name'] . ' was given Batch ' . $result[0]->id . ' for ' . strtoupper($taskName) . '.');     
         
             a:
             $this->response->setJsonContent($batch);
-            $this->response->send(); 
-
-            if ($result && count($result) > 0) $this->deLogger->info($this->session->get('auth')['name'] . ' was given Batch ' . $result[0]->id . ' for ' . strtoupper($taskName) . '.');             
+            $this->response->send();                    
 
         } catch (\Exception $e) {    
             $this->db->rollback();        
