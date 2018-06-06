@@ -245,37 +245,39 @@ class DeController extends ControllerBase
             $dcn->amount = $this->request->getPost('amount');
             $dcn->image_path = $this->request->getPost('image_path');
             
-            if (!$dcn->save()) {
+            if ($dcn->merchant_number != '' && $dcn->dcn != '' && $dcn->amount != '') {
+                if (!$dcn->save()) {
 
-                $this->db->rollback();
-                $isSuccess = false;
+                    $this->db->rollback();
+                    $isSuccess = false;
 
-                $this->errorLogger->error('Unable to log DCN information: ' . json_encode($dcn));
-                foreach ($dcn->getMessages() as $message) {
-                    $this->errorLogger->error($message->getMessage());
+                    $this->errorLogger->error('Unable to log DCN information: ' . json_encode($dcn));
+                    foreach ($dcn->getMessages() as $message) {
+                        $this->errorLogger->error($message->getMessage());
+                    }
+
+                    return;
+                } else {
+                    // Synchronized DCNs to all previous tasks.
+                    $sql = "UPDATE dcn d 
+                            SET merchant_number = ?, dcn = ?, amount = ? 
+                            WHERE image_path = ?";
+
+                    $this->db->query($sql, [$dcn->merchant_number, $dcn->dcn, $dcn->amount, $dcn->image_path]);     
+                    
+                    // a:
+                    // $prevTask = Task::findFirst('next_task_id = ' . $taskId);            
+                    // if ($prevTask) {
+                    //     $sql = "UPDATE dcn d 
+                    //             INNER JOIN task t ON t.id = d.task_id 
+                    //             SET dcn = ?
+                    //             WHERE t.next_task_id = ? AND region_code = ? AND merchant_number = ? AND amount = ? AND image_path = ?";
+
+                    //     $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount, $dcn->image_path]);                
+                    //     $taskId = $prevTask->id;
+                    //     goto a;
+                    // }
                 }
-
-                return;
-            } else {
-                // Synchronized DCNs to all previous tasks.
-                $sql = "UPDATE dcn d 
-                        SET merchant_number = ?, dcn = ?, amount = ? 
-                        WHERE image_path = ?";
-
-                $this->db->query($sql, [$dcn->merchant_number, $dcn->dcn, $dcn->amount, $dcn->image_path]);     
-                
-                // a:
-                // $prevTask = Task::findFirst('next_task_id = ' . $taskId);            
-                // if ($prevTask) {
-                //     $sql = "UPDATE dcn d 
-                //             INNER JOIN task t ON t.id = d.task_id 
-                //             SET dcn = ?
-                //             WHERE t.next_task_id = ? AND region_code = ? AND merchant_number = ? AND amount = ? AND image_path = ?";
-
-                //     $this->db->query($sql, [$dcn->dcn, $taskId, $dcn->region_code, $dcn->merchant_number, $dcn->amount, $dcn->image_path]);                
-                //     $taskId = $prevTask->id;
-                //     goto a;
-                // }
             }
 
             // Commit the transaction
