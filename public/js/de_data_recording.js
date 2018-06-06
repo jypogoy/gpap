@@ -159,7 +159,7 @@ function getNewBatch() {
         .fail(function (xhr, status, error) {
             toastr.error(error);
         });
-    }, Math.floor(Math.random() * 500)); // Delay between 0 to 1 second.
+    }, Math.floor(Math.random() * 300)); // Delay between 0 to .3 second.
 }
 
 function getNewBatch_OLD() {
