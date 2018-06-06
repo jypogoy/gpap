@@ -257,8 +257,8 @@ $(function() {
         //     this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
         // } 
         loadAndFormatAmounts();       
-
         calculateAmount(); // See de_data_navigation.js
+        
         var wrapper = $('#' + this.id + '_wrapper');
         if (this.value == '' || this.value == 0 || this.value == '0.00') {
             $('#' + this.id + '_alert').remove();

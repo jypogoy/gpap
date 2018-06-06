@@ -208,6 +208,58 @@ function refreshTransTypeDependentFields() {
 }
 
 function calculateAmount() {
+    var text = $('#currency_id_dropdown').dropdown('get text');   
+
+    var totalAmount = 0;
+    slipMap.forEach(function(valueMap, page) {
+        valueMap.forEach(function(value, fieldId) {
+            if (fieldId.indexOf('amount') != -1 && value && value != '0') {
+                value = unformatValue(value); // See utils.js
+                //totalAmount = Number(totalAmount ) + Number(parseFloat(value).toFixed(2));
+                totalAmount = Number(totalAmount ) + Number(value);
+            }
+        });
+    });
+       
+    var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js     
+    var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
+    
+    var totalAmountField = $('#total_transaction_amount');
+    var varianceField =  $('#variance');
+    
+    var variance = totalAmount - depAmount;
+    if (currNoDecimal) {        
+        // Format the total amount.
+        var wholeValue = totalAmount.indexOf('.') != -1 ? totalAmount.substring(0, totalAmount.indexOf('.')) : totalAmount; // Remove the decimal value
+        var noDecVal = noDecimal(wholeValue); // See utils.js
+        totalAmountField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js  
+        // Format the variance amount.
+        wholeValue = variance.indexOf('.') != -1 ? variance.substring(0, variance.indexOf('.')) : variance; // Remove the decimal value
+        noDecVal = noDecimal(wholeValue); // See utils.js   
+        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+    } else {
+        if (text.indexOf('Other') != -1) {
+            var otherCurrCode = $('#other_currency').val().toUpperCase();
+            if (otherCurrCode.indexOf('BHD') != -1 || otherCurrCode.indexOf('KWD') != -1 || otherCurrCode.indexOf('OMR') != -1) {
+                totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', precision: 3, format: '%v %s' }));
+                varianceField.val(accounting.formatMoney(variance, { symbol: '', precision: 3, format: '%v %s' }));
+            } else {
+                totalAmountField.val(accounting.formatMoney(totalAmount , { symbol: '', format: '%v %s' }));
+                varianceField.val(accounting.formatMoney(variance, { symbol: '', format: '%v %s' }));
+            }
+        } else {
+            if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
+                totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', precision: 3, format: '%v %s' }));
+                varianceField.val(accounting.formatMoney(variance, { symbol: '', precision: 3, format: '%v %s' }));
+            } else {
+                totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', format: '%v %s' }));
+                varianceField.val(accounting.formatMoney(variance, { symbol: '', format: '%v %s' }));
+            }
+        }
+    }
+}
+
+function calculateAmount_OLD() {
     var totalAmount = 0;
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
