@@ -141,23 +141,25 @@ function writeSlips(headerId) {
 }
 
 function getNewBatch() {
-    $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
-        if (data) {            
-            if (data.id) {
-                redirectBack(data.id); // If batch is still available, proceed to capture.
+    setTimeout(function() {
+        $.post('../batch/getnextavailable/' + $('#session_task_id').val(), function (data) {
+            if (data) {            
+                if (data.id) {
+                    redirectBack(data.id); // If batch is still available, proceed to capture.
+                } else {
+                    getNewBatch(); // If batch is already asigned to a different user, get another.        
+                }            
             } else {
-                getNewBatch(); // If batch is already asigned to a different user, get another.        
-            }            
-        } else {
-            window.location = '../de/redirectnonext/' + $('#session_task_name').val();
-        }                
-    })
-    .done(function (msg) {
-        // Do nothing...
-    })
-    .fail(function (xhr, status, error) {
-        toastr.error(error);
-    });
+                window.location = '../de/redirectnonext/' + $('#session_task_name').val();
+            }                
+        })
+        .done(function (msg) {
+            // Do nothing...
+        })
+        .fail(function (xhr, status, error) {
+            toastr.error(error);
+        });
+    }, Math.floor(Math.random() * 1000)); // Delay between 0 to 1 second.
 }
 
 function getNewBatch_OLD() {
