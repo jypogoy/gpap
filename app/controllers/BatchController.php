@@ -94,6 +94,7 @@ class BatchController extends ControllerBase
     {
         $this->view->disable();
         
+        $batch = null;
         $phql = '';
         $conditions = '';        
         $result = null;
@@ -101,10 +102,7 @@ class BatchController extends ControllerBase
         $fromEdits = $this->session->get('fromEdits');
         $userId = $this->session->get('auth')['id'];
 
-        try {     
-            // Start a transaction
-            $this->db->begin();
-
+        try {                 
             $task = Task::findFirst($taskId);  
             $taskId = $task->id;
             $taskName = $task->name;  
@@ -114,12 +112,6 @@ class BatchController extends ControllerBase
                 $result = $this->modelsManager->executeQuery($phql);
 
             } else if ($taskName == 'Verify') {
-                // $phql = "SELECT * FROM Batch 
-                //         WHERE entry_status = 'Complete' AND verify_status IS NULL AND Batch.id NOT IN (
-                //             SELECT batch_id 
-                //             FROM DataEntry 
-                //             WHERE task_id = (SELECT Task.id FROM Task WHERE next_task_id = :taskId:) AND user_id = :userId:
-                //         ) LIMIT 1";
                 $phql = "SELECT Batch.* FROM Batch
                         INNER JOIN DataEntry ON DataEntry.batch_id = Batch.id 
                         INNER JOIN Task ON Task.id = DataEntry.task_id
@@ -140,83 +132,88 @@ class BatchController extends ControllerBase
                 $result = $this->modelsManager->executeQuery($phql);        
             }          
 
-            // Assign the available batch to the requestor ----------------------------------------------------------------
-            $batch = $result[0];
-            $batch->is_exception = (int) $batch->is_exception;
+            if (count($result) > 0) {
+                // Assign the available batch to the requestor ----------------------------------------------------------------
+                $batch = $result[0];
+                $batch->is_exception = (int) $batch->is_exception;
 
-            // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
-            if (!$fromEdits) {       
-                if (strpos($taskName, 'Entry') !== false) {
-                    $batch->entry_status = 'Doing';
-                } else if (strpos($taskName, 'Verify') !== false) {
-                    $batch->verify_status = 'Doing';
-                } else {
-                    $batch->balance_status = 'Doing';
+                // Start a transaction
+                $this->db->begin();
+
+                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
+                if (!$fromEdits) {       
+                    if (strpos($taskName, 'Entry') !== false) {
+                        $batch->entry_status = 'Doing';
+                    } else if (strpos($taskName, 'Verify') !== false) {
+                        $batch->verify_status = 'Doing';
+                    } else {
+                        $batch->balance_status = 'Doing';
+                    }
+
+                    if (!$batch->save()) {
+                        $this->db->rollback();
+                        foreach ($batch->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
+
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }              
                 }
 
-                if (!$batch->save()) {
-                    $this->db->rollback();
-                    foreach ($batch->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
+                // Look for existing activity to maintain single record of batch on a particular task.
+                $entry = null;
+                if (!$fromEdits) {
+                    $entry = DataEntry::findFirst(
+                        [
+                            "conditions" => "user_id = " . $userId . " AND batch_id = " . $batch->id . " AND task_id = " . $taskId . " AND ended_at IS NULL"
+                        ]
+                    );
+                } else {
+                    $entry = DataEntry::findFirst(
+                        [
+                            "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
+                        ]
+                    );
+                }
 
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
+                // Create an activity if nothing has been recorded.
+                if (!$entry && !$fromEdits) {            
 
-                    return;
-                }              
+                    // Write information for data entry activity.
+                    $entry = new DataEntry();
+                    $entry->user_id = $userId;
+                    $entry->batch_id = $batch->id;
+                    $entry->task_id = $taskId;
+
+                    if (!$entry->save()) {
+                        $this->db->rollback();
+                        foreach ($entry->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
+
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }                                                       
+                } 
+
+                // Make Entry and Batch records persistent for the actual DE.
+                $this->session->set('fromGetNext', true);
+                $this->session->set('entry', $entry);
+                $this->session->set('batch', $batch);
+
+                // Commit the transaction
+                $this->db->commit();           
             }
-
-            // Look for existing activity to maintain single record of batch on a particular task.
-            $entry = null;
-            if (!$fromEdits) {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "user_id = " . $userId . " AND batch_id = " . $batch->id . " AND task_id = " . $taskId . " AND ended_at IS NULL"
-                    ]
-                );
-            } else {
-                $entry = DataEntry::findFirst(
-                    [
-                        "conditions" => "batch_id = " . $batchId . " AND task_id = " . $taskId
-                    ]
-                );
-            }
-
-            // Create an activity if nothing has been recorded.
-            if (!$entry && !$fromEdits) {            
-
-                // Write information for data entry activity.
-                $entry = new DataEntry();
-                $entry->user_id = $userId;
-                $entry->batch_id = $batch->id;
-                $entry->task_id = $taskId;
-
-                if (!$entry->save()) {
-                    $this->db->rollback();
-                    foreach ($entry->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-
-                    $this->dispatcher->forward([
-                        'controller' => "home",
-                        'action' => 'index'
-                    ]);
-
-                    return;
-                }                                                       
-            } 
-
-            // Make Entry and Batch records persistent for the actual DE.
-            $this->session->set('fromGetNext', true);
-            $this->session->set('entry', $entry);
-            $this->session->set('batch', $batch);
-
-            // Commit the transaction
-            $this->db->commit();            
-        
+            
             $this->response->setJsonContent($batch);
             $this->response->send(); 
 
