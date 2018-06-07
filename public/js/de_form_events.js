@@ -50,6 +50,7 @@ $(function() {
                 $('#currency_id_wrapper').removeClass('hidden');
                 if (value > 0) {
                     if (this.value != '') {
+                        // Validate if currency is accepted by the merchant.
                         $('#currency_id_wrapper').removeClass('error');
                         $('#currency_id_alert').remove();
                         var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];

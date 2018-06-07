@@ -112,6 +112,21 @@ function setFieldValue(key, value) {
                 getRegionCurrency().then(function() {
                     $(dropDownEl).dropdown('set selected', value);
                     loadAndFormatAmounts(); // See de_form.events.js
+                    // Validate if currency is accepted by the merchant.
+                    $('#currency_id_wrapper').removeClass('error');
+                    $('#currency_id_alert').remove();
+                    var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
+                    if (currency != merchantInfoMap.get('currency')) {
+                        if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
+                            $('#currency_id_wrapper').addClass('error');
+                            $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
+                                    '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
+                                    '</div>');
+                        }
+                    } else {
+                        $('#currency_id_wrapper').removeClass('error');
+                        $('#currency_id_alert').remove();
+                    }
                 });                                
             } else {
                 $(dropDownEl).dropdown('set selected', value);
