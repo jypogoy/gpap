@@ -54,35 +54,7 @@ class DeController extends ControllerBase
         if (!$fromGetNext) {
             try {
                 // Start a transaction
-                $this->db->begin();
-
-                $batch = Batch::findFirstById($batchId); 
-                $batch->is_exception = (int) $batch->is_exception;
-                
-                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
-                if (!$fromEdits) {       
-                    if (strpos($taskName, 'Entry') !== false) {
-                        $batch->entry_status = 'Doing';
-                    } else if (strpos($taskName, 'Verify') !== false) {
-                        $batch->verify_status = 'Doing';
-                    } else {
-                        $batch->balance_status = 'Doing';
-                    }
-
-                    if (!$batch->save()) {
-                        $this->db->rollback();
-                        foreach ($batch->getMessages() as $message) {
-                            $this->flash->error($message);
-                        }
-
-                        $this->dispatcher->forward([
-                            'controller' => "home",
-                            'action' => 'index'
-                        ]);
-
-                        return;
-                    }                
-                } 
+                $this->db->begin();                 
 
                 // Look for existing activity to maintain single record of batch on a particular task.
                 $entry = null;
@@ -124,6 +96,34 @@ class DeController extends ControllerBase
                     }                                                       
                 }                            
 
+                $batch = Batch::findFirstById($batchId); 
+                $batch->is_exception = (int) $batch->is_exception;
+                
+                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
+                if (!$fromEdits) {       
+                    if (strpos($taskName, 'Entry') !== false) {
+                        $batch->entry_status = 'Doing';
+                    } else if (strpos($taskName, 'Verify') !== false) {
+                        $batch->verify_status = 'Doing';
+                    } else {
+                        $batch->balance_status = 'Doing';
+                    }
+
+                    if (!$batch->save()) {
+                        $this->db->rollback();
+                        foreach ($batch->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
+
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }                
+                }
+
                 // Commit the transaction
                 $this->db->commit();
                 
@@ -136,6 +136,11 @@ class DeController extends ControllerBase
             } catch (\Exception $e) {    
                 $this->db->rollback();        
                 $this->errorLogger->error(parent::_constExceptionMessage($e));
+                
+                if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                    $this->flashSession->notice('Batch <b>' . $batchId . '</b> was already acquired or currently being processed by a different user. Kindly try another.');
+                    return $this->response->redirect('');
+                }
             }
         } else {
             $this->view->dataEntry = $this->session->get('entry');

@@ -263,9 +263,9 @@ function begin(batchId) {
     params.user_id = $('#user_id').val();
     params.task_id = activeTaskId;
     params.batch_id = batchId;
-    $.post('batch/isavailable/', params, function (data) {  
-        if (data.id) {
-            $.post('de/prep', function (data) {  
+    $.post('batch/isavailable/', params, function (entry) {  
+        if (!entry) {            
+            $.post('de/prep', function () {  
                 var form = $('#beginForm');
                 $(form).attr('action', 'de/' + batchId);    
                 $(form).attr('method', 'POST');

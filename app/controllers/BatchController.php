@@ -138,32 +138,7 @@ class BatchController extends ControllerBase
                 $batch->is_exception = (int) $batch->is_exception;
 
                 // Start a transaction
-                $this->db->begin();
-
-                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
-                if (!$fromEdits) {       
-                    if (strpos($taskName, 'Entry') !== false) {
-                        $batch->entry_status = 'Doing';
-                    } else if (strpos($taskName, 'Verify') !== false) {
-                        $batch->verify_status = 'Doing';
-                    } else {
-                        $batch->balance_status = 'Doing';
-                    }
-
-                    if (!$batch->save()) {
-                        $this->db->rollback();
-                        foreach ($batch->getMessages() as $message) {
-                            $this->flash->error($message);
-                        }
-
-                        $this->dispatcher->forward([
-                            'controller' => "home",
-                            'action' => 'index'
-                        ]);
-
-                        return;
-                    }              
-                }
+                $this->db->begin();                
 
                 // Look for existing activity to maintain single record of batch on a particular task.
                 $entry = null;
@@ -205,6 +180,31 @@ class BatchController extends ControllerBase
                     }                                                       
                 } 
 
+                // Determine task then set status to 'Doing' or in progress. Only on tasks other than Edits.  
+                if (!$fromEdits) {       
+                    if (strpos($taskName, 'Entry') !== false) {
+                        $batch->entry_status = 'Doing';
+                    } else if (strpos($taskName, 'Verify') !== false) {
+                        $batch->verify_status = 'Doing';
+                    } else {
+                        $batch->balance_status = 'Doing';
+                    }
+
+                    if (!$batch->save()) {
+                        $this->db->rollback();
+                        foreach ($batch->getMessages() as $message) {
+                            $this->flash->error($message);
+                        }
+
+                        $this->dispatcher->forward([
+                            'controller' => "home",
+                            'action' => 'index'
+                        ]);
+
+                        return;
+                    }              
+                }
+
                 // Make Entry and Batch records persistent for the actual DE.
                 $this->session->set('fromGetNext', true);
                 $this->session->set('entry', $entry);
@@ -222,6 +222,11 @@ class BatchController extends ControllerBase
         } catch (\Exception $e) {    
             $this->db->rollback();        
             $this->errorLogger->error(parent::_constExceptionMessage($e));
+
+            if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                $this->flashSession->notice('Batch <b>' . $batchId . '</b> was already acquired or currently being processed by a different user. Kindly try another.');
+                return $this->response->redirect('');
+            }
         }
     }
 
@@ -293,47 +298,58 @@ class BatchController extends ControllerBase
         $taskId = $this->request->getPost('task_id');
         $batchId = $this->request->getPost('batch_id');
 
-        try {            
-            $task = Task::findFirst($taskId);
-
-            $batch = true;
+        try {          
             
-            switch ($task->name) {
-                case 'Entry 1':
-                    $batch = Batch::findFirst(
-                        [
-                            'id = ?1 AND entry_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
+            $entry = DataEntry::findFirst(
+                [
+                    'batch_id = ?1 AND task_id = ?2',
+                    'bind'  =>  [
+                        1   =>  $batchId,
+                        2   =>  $taskId
+                    ]
+                ]
+            );
+            
+            // $task = Task::findFirst($taskId);
+
+            // $batch = true;
+            
+            // switch ($task->name) {
+            //     case 'Entry 1':
+            //         $batch = Batch::findFirst(
+            //             [
+            //                 'id = ?1 AND entry_status IS NULL',
+            //                 'bind'  =>  [
+            //                     1   =>  $batchId
+            //                 ]
+            //             ]
+            //         );
+            //         break;
                 
-                case 'Verify':
-                    $batch = Batch::findFirst(
-                        [
-                            'id = ?1 AND verify_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
+            //     case 'Verify':
+            //         $batch = Batch::findFirst(
+            //             [
+            //                 'id = ?1 AND verify_status IS NULL',
+            //                 'bind'  =>  [
+            //                     1   =>  $batchId
+            //                 ]
+            //             ]
+            //         );
+            //         break;
 
-                default:
-                    $batch = Batch::findFirst(
-                        [
-                            'id = ?1 AND balance_status IS NULL',
-                            'bind'  =>  [
-                                1   =>  $batchId
-                            ]
-                        ]
-                    );
-                    break;
-            }
+            //     default:
+            //         $batch = Batch::findFirst(
+            //             [
+            //                 'id = ?1 AND balance_status IS NULL',
+            //                 'bind'  =>  [
+            //                     1   =>  $batchId
+            //                 ]
+            //             ]
+            //         );
+            //         break;
+            // }
             
-            $this->response->setJsonContent($batch);
+            $this->response->setJsonContent($entry);
             $this->response->send();
 
         } catch (\Exception $e) {            
