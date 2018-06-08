@@ -238,20 +238,39 @@ function calculateAmount() {
        
     var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js     
     var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
-    
-    var totalAmountField = $('#total_transaction_amount');
-    var varianceField =  $('#variance');
-    
     var variance = totalAmount - depAmount;
+
+    var totalAmountField = $('#total_transaction_amount');
+    var varianceField =  $('#variance');    
+
+    if (text.indexOf('Other') != -1) {
+        var otherCurrCode = $('#other_currency').val().toUpperCase();
+        if (otherCurrCode.indexOf('JPY') != -1 || otherCurrCode.indexOf('KRW') != -1 || otherCurrCode.indexOf('IDR') != -1 
+            || ($('#region_code').val() == 'MY' && otherCurrCode.indexOf('TWD') != -1)) {
+            currNoDecimal = true;                
+        } else {
+            currNoDecimal = false;
+        }            
+    } else {
+        if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
+            || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
+            currNoDecimal = true;                
+        } else {
+            currNoDecimal = false;
+        }
+    }
+
     if (currNoDecimal) {        
-        // Format the total amount.
-        var wholeValue = totalAmount.indexOf('.') != -1 ? totalAmount.substring(0, totalAmount.indexOf('.')) : totalAmount; // Remove the decimal value
-        var noDecVal = noDecimal(wholeValue); // See utils.js
-        totalAmountField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js  
-        // Format the variance amount.
-        wholeValue = variance.indexOf('.') != -1 ? variance.substring(0, variance.indexOf('.')) : variance; // Remove the decimal value
-        noDecVal = noDecimal(wholeValue); // See utils.js   
-        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
+        // // Format the total amount.
+        // var wholeValue = totalAmount.indexOf('.') != -1 ? totalAmount.substring(0, totalAmount.indexOf('.')) : totalAmount; // Remove the decimal value
+        // var noDecVal = noDecimal(wholeValue); // See utils.js
+        // totalAmountField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js  
+        // // Format the variance amount.
+        // wholeValue = variance.indexOf('.') != -1 ? variance.substring(0, variance.indexOf('.')) : variance; // Remove the decimal value
+        // noDecVal = noDecimal(wholeValue); // See utils.js   
+        // varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js        
+        totalAmountField.val(totalAmount); // See accounting.min.js      
+        varianceField.val(variance); // See accounting.min.js  
     } else {
         if (text.indexOf('Other') != -1) {
             var otherCurrCode = $('#other_currency').val().toUpperCase();
