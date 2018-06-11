@@ -999,10 +999,10 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
         if (headerValidationResult && slipValidationResult) {            
             var wrapper = $('#variance_exception_wrapper');
             $('#variance_alert').remove();
-            if ($('#variance').val() < 0 && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
-                                '<span id="variance_msg">With variance</span>' +
+                                '<span id="variance_msg">With negative variance</span>' +
                                 '</div>');
                 return;
             } else {
@@ -1041,10 +1041,10 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
 function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
     var wrapper = $('#variance_exception_wrapper');
     $('#variance_alert').remove();
-    if ($('#variance').val() < 0 && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
         $(wrapper).addClass('error');
         wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
-                        '<span id="variance_msg">With variance</span>' +
+                        '<span id="variance_msg">With negative variance</span>' +
                         '</div>');
         return;
     } else {
@@ -1124,73 +1124,4 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     } else {
         saveBatch(isSaveOnly, isSaveNew, false); // See de_data_recording.js
     } 
-}
-
-function loadAndFormatAmounts() {
-    // Check if selected is either JPY, KRW or IDR that restricts decimal in amounts.
-    var amountFields = $('input[id*="amount"]');
-    var text = $('#currency_id_dropdown').dropdown('get text');   
-    //if (text.indexOf('Choose') == -1) {    
-        if (text.indexOf('Other') != -1) {
-            var otherCurrCode = $('#other_currency').val().toUpperCase();
-            if (otherCurrCode.indexOf('JPY') != -1 || otherCurrCode.indexOf('KRW') != -1 || otherCurrCode.indexOf('IDR') != -1 
-                || ($('#region_code').val() == 'MY' && otherCurrCode.indexOf('TWD') != -1)) {
-                currNoDecimal = true;                
-            } else {
-                currNoDecimal = false;
-            }            
-        } else {
-            if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-                || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
-                currNoDecimal = true;                
-            } else {
-                currNoDecimal = false;
-            }
-        }
-
-        $.each(amountFields, function(i, field) {
-            if (currNoDecimal) {
-                var wholeValue = field.value.indexOf('.') != -1 ? field.value.substring(0, field.value.indexOf('.')) : field.value; // Remove the decimal value
-                var noDecVal = noDecimal(wholeValue); // See utils.js
-                field.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
-            } else {
-                if (text.indexOf('Other') != -1) {                    
-                    var otherCurrCode = $('#other_currency').val().toUpperCase();
-                    if (otherCurrCode.indexOf('BHD') != -1 || otherCurrCode.indexOf('KWD') != -1 || otherCurrCode.indexOf('OMR') != -1) {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
-                    } else {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', format: '%v %s' }); // See accounting.min.js
-                    }
-                } else {                    
-                    if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
-                    } else {
-                        field.value = accounting.formatMoney(field.value, { symbol: '', format: '%v %s' }); // See accounting.min.js
-                    }
-                }
-            }
-        }); 
-    //}
-    
-    var varianceField =  $('#variance');
-    if (currNoDecimal) {
-        var wholeValue = varianceField.val().indexOf('.') != -1 ? varianceField.val().substring(0, varianceField.val().indexOf('.')) : varianceField.val(); // Remove the decimal value
-        var noDecVal = noDecimal(wholeValue); // See utils.js
-        varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js            
-    } else {
-        if (text.indexOf('Other') != -1) {
-            var otherCurrCode = $('#other_currency').val().toUpperCase();
-            if (otherCurrCode.indexOf('BHD') != -1 || otherCurrCode.indexOf('KWD') != -1 || otherCurrCode.indexOf('OMR') != -1) {
-                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', precision: 3, format: '%v %s' })); // See accounting.min.js
-            } else {
-                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', format: '%v %s' })); // See accounting.min.js
-            }
-        } else {
-            if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', precision: 3, format: '%v %s' })); // See accounting.min.js
-            } else {
-                varianceField.val(accounting.formatMoney(varianceField.val(), { symbol: '', format: '%v %s' })); // See accounting.min.js
-            }
-        }
-    }
 }
