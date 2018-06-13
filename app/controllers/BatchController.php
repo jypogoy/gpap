@@ -223,10 +223,10 @@ class BatchController extends ControllerBase
             $this->db->rollback();        
             $this->errorLogger->error(parent::_constExceptionMessage($e));
 
-            if (strpos($e->getMessage(), 'Duplicate') !== false) {
-                $this->flashSession->notice('Batch <b>' . $batchId . '</b> was already acquired or currently being processed by a different user. Kindly try another.');
-                return $this->response->redirect('');
-            }
+            // if (strpos($e->getMessage(), 'Duplicate') !== false) {
+            //     $this->flashSession->notice('Batch <b>' . $batchId . '</b> was already acquired or currently being processed by a different user. Kindly try another.');
+            //     return $this->response->redirect('');
+            // }
         }
     }
 
