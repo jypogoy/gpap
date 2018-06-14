@@ -207,7 +207,7 @@ function formatAmount(currencyCode, amountValue) {
             currNoDecimal = false;
         }
     }
-    console.log(typeof amountValue)
+    
     if (currNoDecimal) {
         var wholeValue = amountValue.indexOf('.') != -1 ? amountValue.substring(0, amountValue.indexOf('.')) : amountValue; // Remove the decimal value
         var noDecVal = noDecimal(wholeValue); // See utils.js

@@ -221,9 +221,7 @@ function getSlipContents(headerData) {
                 $('.next-slip-btn').removeClass('disabled'); 
                 $('.last-slip-btn').removeClass('disabled'); 
                 $('.delete-slip-btn').removeClass('disabled'); 
-            }
-            
-            calculateAmount(); // See de_data_navigation.js    
+            }                        
             
             // Refresh character counter.
             var counterEls = $('.charcount');
@@ -235,6 +233,7 @@ function getSlipContents(headerData) {
     })
     .done(function (msg) {
         refreshTransTypeDependentFields();
+        calculateAmount(); // See de_data_navigation.js    
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
