@@ -109,10 +109,8 @@ function setFieldValue(key, value) {
         } else {       
             if (key == 'currency_id') {
                 $(dropDownEl).find('.menu').empty();
-                getRegionCurrency().then(function() {
-                    $(dropDownEl).dropdown('set selected', value);
-                    
-                    //loadAndFormatAmounts(); // See de_form.events.js
+                getRegionCurrency().then(function() { // See de_data_retrieval.js
+                    $(dropDownEl).dropdown('set selected', value);                                        
                     
                     // Validate if currency is accepted by the merchant.
                     $('#currency_id_wrapper').removeClass('error');

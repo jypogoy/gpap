@@ -229,11 +229,20 @@ function getSlipContents(headerData) {
                 var valueEL = $('#' + el.id.substring(0, el.id.lastIndexOf('_')));
                 charsLeft(valueEL[0], valueEL.attr('allowedLength'));
             });
+
+            // Compute total and variance. See de_data_navigation.js   
+            calculateAmount();
+
+            // If currency selection is not set due to delay, wait for 2 seconds and recompute total and variance.
+            if (currencyCode.indexOf('Choose') != -1) {
+                setTimeout(function() {                    
+                    calculateAmount();
+                }, 2000);
+            }
         }                  
     })
     .done(function (msg) {
         refreshTransTypeDependentFields();
-        calculateAmount(); // See de_data_navigation.js    
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
