@@ -164,7 +164,7 @@ function getContents(lastCompletedEntry, existingHeader) {
                     $('#data_entry_id').val(dataEntryId);
                 } 
                 
-                //loadAndFormatAmounts(); // See de_form_events.js                
+                calculateAmount(); // See util.js                
             }       
         }
     });
@@ -232,13 +232,6 @@ function getSlipContents(headerData) {
 
             // Compute total and variance. See de_data_navigation.js   
             calculateAmount();
-
-            // If currency selection is not set due to delay, wait for 2 seconds and recompute total and variance.
-            if (currencyCode.indexOf('Choose') != -1) {
-                setTimeout(function() {                    
-                    calculateAmount();
-                }, 2000);
-            }
         }                  
     })
     .done(function (msg) {
