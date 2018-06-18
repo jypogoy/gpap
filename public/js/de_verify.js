@@ -144,7 +144,7 @@ function showMessage(fieldId, value, msg) {
     var wrapper = $('#' + fieldId + '_wrapper');
     $(wrapper).addClass('error');
     wrapper.append('<div class="ui basic red pointing prompt label transition mismatch-prompt" id="' + fieldId + '_alert">' +
-                    '<span id="' + fieldId + '_msg">E1= ' + msg + '   <a onclick="acceptRaw(\'' + fieldId + '\',\'' + value + '\');">Accept</a></span>' +
+                    '<span id="' + fieldId + '_msg">E1= ' + msg.toUpperCase() + '   <a onclick="acceptRaw(\'' + fieldId + '\',\'' + value + '\');">Accept</a></span>' +
                     '</div>');
 }
 

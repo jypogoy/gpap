@@ -29,6 +29,9 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                 var currency = currencyMapForRef.get(headerData['currency_id']);
                 var currencyCode = currency ? currency.alpha_code : '';
                 
+                // If Other currency option is used.
+                if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase();
+
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
                         value = formatAmount(currencyCode, value);                                                
@@ -56,7 +59,10 @@ function getRawContents() {  // Only called during Verify to get the previous ta
 
                 var currency = currencyMapForRef.get(rawHeaderMap.get('currency_id'));
                 var currencyCode = currency ? currency.alpha_code : '';
-
+                
+                // If Other currency option is used.
+                if (!currency && rawHeaderMap.get('other_currency').length > 0) currencyCode = rawHeaderMap.get('other_currency').toUpperCase();
+                
                 $.each(data, function(id, fieldValueArray) {
                     var slipValueMap = new HashMap();
                     var key;
@@ -146,7 +152,7 @@ function getContents(lastCompletedEntry, existingHeader) {
                 
                 var currency = currencyMapForRef.get(headerData['currency_id']);
                 var currencyCode = currency ? currency.alpha_code : '';
-
+                                
                 // Fill header fields with values.
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
@@ -156,6 +162,11 @@ function getContents(lastCompletedEntry, existingHeader) {
                     }                    
                 });
                 
+                // If Other currency option is used.
+                if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase(); 
+                
+                loadAndFormatAmounts(currencyCode);
+
                 // Load transactions
                 getSlipContents(headerData);
 
@@ -184,6 +195,9 @@ function getSlipContents(headerData) {
 
     var currency = currencyMapForRef.get(headerData['currency_id']);
     var currencyCode = currency ? currency.alpha_code : '';
+
+    // If Other currency option is used.
+    if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase(); 
 
     $.post('../transaction/getbyheader/' + headerData.id, function (data) {
         if (!data || data.length == 0) {

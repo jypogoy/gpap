@@ -28,5 +28,20 @@ class CurrencyController extends ControllerBase
         }
     }
 
+    public function getByAlphaCodeAction($alphaCode)
+    {
+        $this->view->disable();
+
+        try {
+            $currency = Currency::findFirstByAlphaCode($alphaCode);
+
+            $this->response->setJsonContent($currency);
+            $this->response->send();     
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }
+    }
+
 }
 

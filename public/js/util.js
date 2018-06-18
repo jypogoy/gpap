@@ -231,12 +231,18 @@ function formatAmount(currencyCode, amountValue) {
     return amountValue;
 }
 
-function loadAndFormatAmounts() {
+function loadAndFormatAmounts(currencyCode) {
     // Apply formatting to displayed amount form fields.
     var amountFields = $('input[id*="amount"]');
-    var currencyCode = $('#currency_id_dropdown').dropdown('get text');   
+    if (!currencyCode) {
+        currencyCode = $('#currency_id_dropdown').dropdown('get text');   
+
+        // Use the keyed currency code if Other option is selected.
+        if (currencyCode == 'Other') currencyCode = $('#other_currency').val().toUpperCase();
+    }
+
     $.each(amountFields, function(i, field) {
-        field.value = formatAmount(currencyCode, field.value);        
+        field.value = formatAmount(currencyCode, field.value);
     });
 
     // Apply formatting to the variance field.

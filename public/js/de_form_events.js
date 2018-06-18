@@ -92,7 +92,19 @@ $(function() {
     });
 
     $('#other_currency').blur(function(e) {
-        loadAndFormatAmounts();
+        var el = this;
+        var otherCurrencyCode = el.value;
+        $.post('../currency/getbyalphacode/' + otherCurrencyCode, function (currency) {
+            if (currency) {
+                loadAndFormatAmounts();
+                $('#deposit_amount').focus();
+            } else {                
+                toastr.info('Currency with code <b>' + otherCurrencyCode.toUpperCase() + '</b> does note exist!');
+                $(el).focus();
+                $(el).select();
+                return;
+            }
+        });        
     });
 
     $('#currency_id_dropdown').find('.search').blur(function() {
@@ -995,7 +1007,7 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
     if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
         slipValidationResult = Form.validate(false);
     }
-    if(headerValidationResult) {            
+    if(headerValidationResult) {
         if (headerValidationResult && slipValidationResult) {            
             var wrapper = $('#variance_exception_wrapper');
             $('#variance_alert').remove();
