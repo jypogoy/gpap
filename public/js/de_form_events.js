@@ -1016,7 +1016,12 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
                                 '<span id="variance_msg">With negative variance</span>' +
                                 '</div>');
-                return;
+                
+                // var resp = confirm('Warning: This Batch has negative variance and should be tagged as exception. Click OK to ignore and proceed.');
+                // if (resp == false) {
+                //     return;
+                // }
+                return;                
             } else {
                 $(wrapper).removeClass('error');                
             }
@@ -1058,6 +1063,11 @@ function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
         wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
                         '<span id="variance_msg">With negative variance</span>' +
                         '</div>');
+        
+        // var resp = confirm('Warning: This Batch has negative variance and should be tagged as exception. Click OK to ignore and proceed.');
+        // if (resp == false) {
+        //     return;
+        // } 
         return;
     } else {
         $(wrapper).removeClass('error');                

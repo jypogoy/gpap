@@ -127,9 +127,21 @@ function setFieldValue(key, value) {
                         $('#currency_id_wrapper').removeClass('error');
                         $('#currency_id_alert').remove();
                     }
-                });                                
+                });                          
+                // FOR VERIFY: Load the free text currency code if Other option is used. Other option is null from currencyMap by default.
+                if ($('#session_task_name').val().indexOf('Verify') != -1 && (!currencyMap.get(value) && rawHeaderMap.get('other_currency').length > 0)) {
+                    $('#other_currency').val(rawHeaderMap.get('other_currency').toUpperCase());
+                }      
             } else {
                 $(dropDownEl).dropdown('set selected', value);
+                // FOR VERIFY: Load the free text installment months if Other option is used. 
+                if ($('#session_task_name').val().indexOf('Verify') != -1 && key == 'installment_months_id') {
+                    var rawValue = rawSlipMap.get(slipPage).get(key); // See de_data_retrieval.js for map object    
+                    var data = installMonthsMap.get(rawValue);  
+                    if (data.on_display.indexOf('Other') != -1) {
+                        $('#other_inst_term').val(rawSlipMap.get(slipPage).get('other_inst_term'));
+                    }
+                }            
             }                        
         } 
     }               

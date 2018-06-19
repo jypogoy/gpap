@@ -38,8 +38,11 @@ function applyHeaderChecks(fields) {
             var rawValue = rawHeaderMap.get(field.id); // See de_data_retrieval.js for map object    
             if ($(dropdown).dropdown('get value') !== rawValue) {   
                 if (field.id == 'currency_id') {    
-                    var data = currencyMap.get(rawValue);                    
+                    var data = currencyMap.get(rawValue);
+                    // If existing currency is selected.              
                     if (data) showMessage(field.id, rawValue, data.alpha_code);
+                    // If Other option is used.
+                    if (!data && rawHeaderMap.get('other_currency').length > 0) showMessage(field.id, rawValue, rawHeaderMap.get('other_currency').toUpperCase(), true, true);
                 } else if (field.id == 'batch_pull_reason_id') {
                     var data = batchPullReasonMap.get(rawValue);   
                     if (data) showMessage(field.id, data.id, data.on_display);
@@ -102,8 +105,8 @@ function applySlipChecks() {
                     var rawValue = rawSlipMap.get(slipPage).get(field.id); // See de_data_retrieval.js for map object    
                     if (rawValue && $(dropdown).dropdown('get value') !== rawValue) {                    
                         if (field.id == 'installment_months_id') {    
-                            var data = installMonthsMap.get(rawValue);                    
-                            if (data) showMessage(field.id, rawValue, data.on_display);
+                            var data = installMonthsMap.get(rawValue);    
+                            if (data) showMessage(field.id, rawValue, data.on_display + (data.on_display.indexOf('Other') != -1 ? ':' + rawSlipMap.get(slipPage).get('other_inst_term') : ''));
                         } else if (field.id == 'slip_pull_reason_id') {
                             var data = slipPullReasonMap.get(rawValue);   
                             if (data) showMessage(field.id, data.id, data.on_display);
@@ -140,11 +143,11 @@ function applySlipChecks() {
     }
 }
 
-function showMessage(fieldId, value, msg) {
+function showMessage(fieldId, value, msg, msgToUpper, showOtherLabel) {
     var wrapper = $('#' + fieldId + '_wrapper');
     $(wrapper).addClass('error');
     wrapper.append('<div class="ui basic red pointing prompt label transition mismatch-prompt" id="' + fieldId + '_alert">' +
-                    '<span id="' + fieldId + '_msg">E1= ' + msg.toUpperCase() + '   <a onclick="acceptRaw(\'' + fieldId + '\',\'' + value + '\');">Accept</a></span>' +
+                    '<span id="' + fieldId + '_msg">E1= ' + (showOtherLabel ? 'Other:' : '') + (msgToUpper ? msg.toUpperCase() : msg) + '   <a onclick="acceptRaw(\'' + fieldId + '\',\'' + value + '\');">Accept</a></span>' +
                     '</div>');
 }
 
