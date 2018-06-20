@@ -92,19 +92,21 @@ $(function() {
     });
 
     $('#other_currency').blur(function(e) {
-        var el = this;
-        var otherCurrencyCode = el.value;
-        $.post('../currency/getbyalphacode/' + otherCurrencyCode, function (currency) {
-            if (currency) {
-                loadAndFormatAmounts();
-                $('#deposit_amount').focus();
-            } else {                
-                toastr.info('Currency with code <b>' + otherCurrencyCode.toUpperCase() + '</b> does note exist!');
-                $(el).focus();
-                $(el).select();
-                return;
-            }
-        });        
+        loadAndFormatAmounts();
+        $('#deposit_amount').focus();
+        // var el = this;
+        // var otherCurrencyCode = el.value;
+        // $.post('../currency/getbyalphacode/' + otherCurrencyCode, function (currency) {
+        //     if (currency) {
+        //         loadAndFormatAmounts();
+        //         $('#deposit_amount').focus();
+        //     } else {                
+        //         toastr.info('Currency with code <b>' + otherCurrencyCode.toUpperCase() + '</b> does note exist!');
+        //         $(el).focus();
+        //         $(el).select();
+        //         return;
+        //     }
+        // });        
     });
 
     $('#currency_id_dropdown').find('.search').blur(function() {
