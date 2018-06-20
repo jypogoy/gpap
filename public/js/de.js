@@ -156,12 +156,14 @@ $(function() {
         getPullReasons();
         getInstallmentMonths();
         getExceptions();
-        getContents();
-    }        
-
-    if ($('#session_task_name').val().indexOf('Verify') != -1) {
-        getRawContents();    
-    }
+        if ($('#session_task_name').val().indexOf('Verify') != -1) {
+            getRawContents().then(function() {
+                getContents();
+            });
+        } else {
+            getContents();
+        }
+    }            
 
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         prepBalancingFields(); 

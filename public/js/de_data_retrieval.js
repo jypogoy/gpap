@@ -11,6 +11,8 @@ var rawHeaderMap; // <field_id, value>
 var rawSlipMap; // <index, map<field_id, value>>  
 function getRawContents() {  // Only called during Verify to get the previous task values e.g. Entry 1  
 
+    var d = $.Deferred();
+
     rawHeaderMap = new HashMap();
     rawSlipMap = new HashMap();    
 
@@ -44,6 +46,8 @@ function getRawContents() {  // Only called during Verify to get the previous ta
 
                 // Retrieve transactions.
                 getSlips(headerData);   
+
+                d.resolve(rawHeaderMap);
             }            
         })
     });
@@ -86,6 +90,8 @@ function getRawContents() {  // Only called during Verify to get the previous ta
             }
         })
     }
+
+    return d.promise();
 }
 
 function getLastCompleted(bastchId) {
@@ -163,7 +169,7 @@ function getContents(lastCompletedEntry, existingHeader) {
                 });
                 
                 // If Other currency option is used.
-                if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase(); 
+                if (!currency && (headerData['other_currency'] && headerData['other_currency'].length > 0)) currencyCode = headerData['other_currency'].toUpperCase(); 
                 
                 loadAndFormatAmounts(currencyCode);
 
@@ -197,7 +203,7 @@ function getSlipContents(headerData) {
     var currencyCode = currency ? currency.alpha_code : '';
 
     // If Other currency option is used.
-    if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase(); 
+    if (!currency && (headerData['other_currency'] && headerData['other_currency'].length > 0)) currencyCode = headerData['other_currency'].toUpperCase(); 
 
     $.post('../transaction/getbyheader/' + headerData.id, function (data) {
         if (!data || data.length == 0) {

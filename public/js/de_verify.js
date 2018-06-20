@@ -25,8 +25,14 @@ function applyHeaderChecks(fields) {
                     }
                 }
             } else {
-                if(rawValue && field.value.trim() != rawValue.trim()) {                                                    
-                    showMessage(field.id, rawValue, rawValue);
+                if (field.id.indexOf('other_currency') != -1) {
+                    if(rawValue && field.value.trim().toUpperCase() != rawValue.trim().toUpperCase()) {                                                    
+                        showMessage(field.id, rawValue, rawValue, true);
+                    }
+                } else {
+                    if(rawValue && field.value.trim() != rawValue.trim()) {                                                    
+                        showMessage(field.id, rawValue, rawValue);
+                    }
                 }
             }
         });
@@ -86,7 +92,7 @@ function applySlipChecks() {
                             field.value = cc_format(field.value); // See util.js                            
                         }
                         if (field.id == 'transaction_amount') {
-                            rawValue = rawValue.trim();
+                            if (rawValue) rawValue = rawValue.trim();
                             field.value = field.value.trim();
                         }
                         if(rawValue && field.value !== rawValue) {         

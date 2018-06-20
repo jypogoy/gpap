@@ -548,7 +548,7 @@ $(function() {
                                         break;      
                                 
                                     default:
-                                        if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
+                                        if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0) {
                                             //toastr.info('Merchant does not accept Private Label.');  
                                             $(alert).remove();
                                             $(wrapper).addClass('error');
