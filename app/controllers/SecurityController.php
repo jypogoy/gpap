@@ -89,13 +89,14 @@ class SecurityController extends ControllerBase
             //$user->password = $this->security->hash($newPassword);
             $user->password = preg_replace('/2y/', '2a', $this->security->hash($newPassword), 3);
 
-            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName: WHERE userID = :userId:");
+            $query = $this->modelsManager->createQuery("UPDATE User SET userPassword = :pass:, userLastPasswordChange = NOW(), createdBy = :userName:, canEdit = :canEdit: WHERE userID = :userId:");
 
             $result = $query->execute(
                 [
-                    'pass' => $user->password,
-                    'userName' => $user->userName,
-                    'userId' => $userId
+                    'pass'      => $user->password,
+                    'userName'  => $user->userName,
+                    'userId'    => $userId,
+                    'canEdit'   => $user->canEdit
                 ]
             );
 

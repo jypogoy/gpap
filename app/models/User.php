@@ -127,4 +127,15 @@ class User extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public function canEdit()
+    {
+        return $this->canEdit == 1 ? true : false;
+    }
+
+    public function setCanEdit($canEdit)
+    {
+        $this->canEdit = (int) ((bool) $canEdit);
+        return $this;
+    }
+
 }
