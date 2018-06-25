@@ -201,9 +201,7 @@ function setFieldValue(key, value) {
     }
 }
 
-function refreshTransTypeDependentFields() {
-    
-    //var option = $('#transaction_type_id_dropdown').dropdown('get text');
+function refreshTransTypeDependentFields() {    
     var option = $('#transaction_type_type').val();
     if (option.indexOf('Airline') != -1) {
         $('#other_fields_div').removeClass('hidden');
@@ -220,7 +218,7 @@ function refreshTransTypeDependentFields() {
         // Hide MON and Commodity Code fields for VI with Mastercard. See util.js
         if (getCardType(unformatValue($('#card_number').val())) == 'Mastercard') {
             $('#merchant_order_number_wrapper').addClass('hidden');
-            $('#commodity_code_wrapper').addClass('hidden');
+            //$('#commodity_code_wrapper').addClass('hidden');
         }
     } else {
         $('#other_fields_div').addClass('hidden');
@@ -230,7 +228,6 @@ function refreshTransTypeDependentFields() {
 
     // Auth Code option in Credit and Airline Credit
     if (option.indexOf('Airline') != -1 || option.indexOf('Credit') != -1) {
-        //$('#authorization_code_wrapper').removeClass('required');
         $('#authorization_code_wrapper').addClass('hidden');
     } else {
         var pullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
@@ -238,102 +235,6 @@ function refreshTransTypeDependentFields() {
         $('#authorization_code_wrapper').removeClass('hidden');
     }
 }
-
-// function calculateAmount() {
-//     var text = $('#currency_id_dropdown').dropdown('get text');   
-
-//     var totalAmount = 0;
-//     slipMap.forEach(function(valueMap, page) {
-//         valueMap.forEach(function(value, fieldId) {
-//             if (fieldId.indexOf('amount') != -1 && value && value != '0') {
-//                 value = unformatValue(value); // See utils.js
-//                 //totalAmount = Number(totalAmount ) + Number(parseFloat(value).toFixed(2));
-//                 totalAmount = Number(totalAmount ) + Number(value);
-//             }
-//         });
-//     });
-       
-//     var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js     
-//     var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
-//     var variance = totalAmount - depAmount;
-
-//     var totalAmountField = $('#total_transaction_amount');
-//     var varianceField =  $('#variance');    
-
-//     if (text.indexOf('Other') != -1) {
-//         var otherCurrCode = $('#other_currency').val().toUpperCase();
-//         if (otherCurrCode.indexOf('JPY') != -1 || otherCurrCode.indexOf('KRW') != -1 || otherCurrCode.indexOf('IDR') != -1 
-//             || ($('#region_code').val() == 'MY' && otherCurrCode.indexOf('TWD') != -1)) {
-//             currNoDecimal = true;                
-//         } else {
-//             currNoDecimal = false;
-//         }            
-//     } else {
-//         if (text.indexOf('JPY') != -1 || text.indexOf('KRW') != -1 || text.indexOf('IDR') != -1 
-//             || ($('#region_code').val() == 'MY' && text.indexOf('TWD') != -1)) {
-//             currNoDecimal = true;                
-//         } else {
-//             currNoDecimal = false;
-//         }
-//     }
-
-//     if (currNoDecimal) {        
-//         // // Format the total amount.
-//         // var wholeValue = totalAmount.indexOf('.') != -1 ? totalAmount.substring(0, totalAmount.indexOf('.')) : totalAmount; // Remove the decimal value
-//         // var noDecVal = noDecimal(wholeValue); // See utils.js
-//         // totalAmountField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js  
-//         // // Format the variance amount.
-//         // wholeValue = variance.indexOf('.') != -1 ? variance.substring(0, variance.indexOf('.')) : variance; // Remove the decimal value
-//         // noDecVal = noDecimal(wholeValue); // See utils.js   
-//         // varianceField.val(accounting.formatNumber(noDecVal)); // See accounting.min.js        
-//         totalAmountField.val(totalAmount); // See accounting.min.js      
-//         varianceField.val(variance); // See accounting.min.js  
-//     } else {
-//         if (text.indexOf('Other') != -1) {
-//             var otherCurrCode = $('#other_currency').val().toUpperCase();
-//             if (otherCurrCode.indexOf('BHD') != -1 || otherCurrCode.indexOf('KWD') != -1 || otherCurrCode.indexOf('OMR') != -1) {
-//                 totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', precision: 3, format: '%v %s' }));
-//                 varianceField.val(accounting.formatMoney(variance, { symbol: '', precision: 3, format: '%v %s' }));
-//             } else {
-//                 totalAmountField.val(accounting.formatMoney(totalAmount , { symbol: '', format: '%v %s' }));
-//                 varianceField.val(accounting.formatMoney(variance, { symbol: '', format: '%v %s' }));
-//             }
-//         } else {
-//             if (text.indexOf('BHD') != -1 || text.indexOf('KWD') != -1 || text.indexOf('OMR') != -1) {
-//                 totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', precision: 3, format: '%v %s' }));
-//                 varianceField.val(accounting.formatMoney(variance, { symbol: '', precision: 3, format: '%v %s' }));
-//             } else {
-//                 totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '', format: '%v %s' }));
-//                 varianceField.val(accounting.formatMoney(variance, { symbol: '', format: '%v %s' }));
-//             }
-//         }
-//     }
-// }
-
-// function calculateAmount_OLD() {
-//     var totalAmount = 0;
-//     slipMap.forEach(function(valueMap, page) {
-//         valueMap.forEach(function(value, fieldId) {
-//             if (fieldId.indexOf('amount') != -1 && value && value != '0') {
-//                 value = unformatValue(value); // See utils.js
-//                 totalAmount = Number(totalAmount ) + Number(parseFloat(value).toFixed(2));
-//             }
-//         });
-//     });
-       
-//     var fAmount = accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }); // See accounting.min.js     
-//     var depAmount = unformatValue($('#deposit_amount').val()); // See utils.js    
-    
-//     var totalAmountField = $('#total_transaction_amount');
-//     var varianceField =  $('#variance');
-//     if (currNoDecimal) {
-//         totalAmountField.val(accounting.formatNumber(fAmount));   
-//         varianceField.val(accounting.formatNumber(totalAmount - depAmount)); // See accounting.min.js            
-//     } else {
-//         totalAmountField.val(accounting.formatMoney(totalAmount, { symbol: '',  format: '%v %s' }));   
-//         varianceField.val(accounting.formatMoney(totalAmount - depAmount, { symbol: '',  format: '%v %s' })); // See accounting.min.js
-//     }
-// }
 
 function setAsException(batchId, isException) {
     var params = {};
