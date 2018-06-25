@@ -85,9 +85,9 @@ function validateCard(value) { // Luhn algorithm or MOD 10
 function limitCardLengthByStartingNumbers(el) {
     var number = el.value;
     // Supported starting numbers
-    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)");
+    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
     if (number.match(re) != null) {
-        re = new RegExp("^(3|4|9|51|52|53|54|55|589460)");
+        re = new RegExp("^(2|3|4|9|51|52|53|54|55|589460)");
         if (number.match(re) != null) $(el).attr('maxlength', 16);
         re = new RegExp("^(2131|1800)");
         if (number.match(re) != null) $(el).attr('maxlength', 15);
@@ -96,7 +96,7 @@ function limitCardLengthByStartingNumbers(el) {
 
 function withinCardCollection(value) {
     // Supported starting numbers
-    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)");
+    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
     return value.match(re) != null ? true : false;
 }
 

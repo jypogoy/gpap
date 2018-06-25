@@ -390,10 +390,11 @@ $(function() {
                     $(alert).remove();
                     $(wrapper).addClass('error');
                     $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
+                            '<span id="' + this.id + '_msg">Not In Collection</span>' +
                             '</div>');
                     isPreInvalid = true;
                 } else {
+                    console.log(this.id + ' : ' + this.value.length + ' < ' + this.maxLength);
                     if (this.value.length < this.maxLength) {
                         $(alert).remove();
                         $(wrapper).addClass('error');
@@ -410,42 +411,7 @@ $(function() {
                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                     '<span id="' + this.id + '_msg">Invalid PAN: MOD10 Failed</span>' +
                                     '</div>');
-                            $(logo).attr('src', '../public/img/card/private.png')
-
-                            // var isPreInvalid = false;
-                            // var cardType = getCardType($(this).val()); // See util.js
-                            // switch (cardType) {
-                            //     case 'Maestro':
-                            //         $(alert).remove();
-                            //         $(wrapper).addClass('error');
-                            //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            //                 '<span id="' + this.id + '_msg">PAN Issuer Identification Number is not supported</span>' +
-                            //                 '</div>');
-                            //         $(logo).attr('src', '../public/img/card/maestro.png');
-                            //         isPreInvalid = true;
-                            //         break;
-
-                            //     case 'NotSupported':
-                            //         $(alert).remove();
-                            //         $(wrapper).addClass('error');
-                            //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            //                 '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
-                            //                 '</div>');
-                            //         isPreInvalid = true;
-                            //         break;
-
-                            //     default:                            
-                            //             break;
-                            // }
-                            
-                            // if (!isPreInvalid) {
-                            //     $(alert).remove();
-                            //     $(wrapper).addClass('error');
-                            //     $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            //             '<span id="' + this.id + '_msg">Invalid Credit Card number</span>' +
-                            //             '</div>');
-                            //     $(logo).attr('src', '../public/img/card/private.png')
-                            // }
+                            $(logo).attr('src', '../public/img/card/private.png')                            
                         } else {
                             $(wrapper).removeClass('error');       
                             $(alert).remove();
