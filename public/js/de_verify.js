@@ -158,17 +158,21 @@ function showMessage(fieldId, value, msg, msgToUpper, showOtherLabel) {
 }
 
 function acceptRaw(fieldId, value) {
-    setFieldValue(fieldId, value) // See de_data_navigation.js
-    hideMessage(fieldId);   
+    setFieldValue(fieldId, value) // See de_data_navigation.js   
     $('#' + fieldId).focus();
+    hideMessage(fieldId);
     if (fieldId.indexOf('image') != -1) {
         var rawId = rawSlipMap.get(slipPage).get('image_id'); // See de_data_retrieval.js for map object  
         $('#image_id').val(rawId);
     } 
-    if (fieldId == 'merchant_number') getRegionCurrency(); // See de_data_retrieval.js
+    if (fieldId == 'merchant_number') getRegionCurrency(); // See de_data_retrieval.js    
+    if (fieldId == 'card_number') {
+        $('#' + fieldId).trigger('blur');
+        $('#' + fieldId).focus();
+    }
 }
 
-function hideMessage(fieldId) {
-    $('#' + fieldId + '_alert').remove();
-    $('#' + fieldId + '_wrapper').removeClass('error');
+function hideMessage(fieldId) {    
+    $('#' + fieldId + '_alert').remove();    
+    $('#' + fieldId + '_wrapper').removeClass('error');    
 }

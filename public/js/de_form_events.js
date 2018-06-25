@@ -394,7 +394,6 @@ $(function() {
                             '</div>');
                     isPreInvalid = true;
                 } else {
-                    console.log(this.id + ' : ' + this.value.length + ' < ' + this.maxLength);
                     if (this.value.length < this.maxLength) {
                         $(alert).remove();
                         $(wrapper).addClass('error');
@@ -531,6 +530,11 @@ $(function() {
                 }
             }
         }
+    });
+
+    $('#card_number').focus(function() {
+        unformat(this); // See util.js
+        limitCardLengthByStartingNumbers(this); // See util.js
     });
 
     $('#card_number').keyup(function() {

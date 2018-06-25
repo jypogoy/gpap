@@ -153,7 +153,7 @@ function getCardType(number)
         return "Maestro";
 
     // Not supported starting numbers
-    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)");
+    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
     if (number.match(re) == null)
         return "NotSupported";
 
