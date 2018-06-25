@@ -202,7 +202,7 @@ function formatAmount(currencyCode, amountValue) {
     } else {
         //|| ($('#region_code').val() == 'MY' && currencyCode.indexOf('TWD') != -1)
         if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1) {
-            currNoDecimal = true;                
+            currNoDecimal = true;
         } else {
             currNoDecimal = false;
         }
@@ -267,13 +267,14 @@ function calculateAmount() {
     var totalAmount = 0;
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
-            if (fieldId.indexOf('amount') != -1 && value && value != '0') {                
+            if (fieldId.indexOf('amount') != -1 && value && value != '0') {      
+                value = unformatValue(value);
                 totalAmount = Math.round((parseFloat(totalAmount) + parseFloat(value)) * 1e12) / 1e12;
             }
         });
     });
 
-    var deposit = Number($('#deposit_amount').val()); // See utils.js    
+    var deposit = unformatValue($('#deposit_amount').val()); // See utils.js    
     var variance = totalAmount - deposit;
     
     $('#total_transaction_amount').val(formatAmount(currencyCode, String(totalAmount)));    
