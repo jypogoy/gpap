@@ -434,112 +434,126 @@ $(function() {
                                 
                                 this.value = cc_format(this.value); // See util.js                                
                                 
-                                switch (cardType) {
-                                    case 'Maestro':
-                                        $(alert).remove();
+                                if (slipPage > 1) { // Get the previous transaction and check if PAN is already used.
+                                    var exists = findSlipValueMatch('card_number', this.value);
+                                    if (exists) {
                                         $(wrapper).addClass('error');
                                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                '<span id="' + this.id + '_msg">PAN Issuer Identification Number is not supported</span>' +
+                                                '<span id="' + this.id + '_msg">PAN with duplicate</span>' +
                                                 '</div>');
-                                        $(logo).attr('src', '../public/img/card/maestro.png');
-                                        isPreInvalid = true;
-                                        break;
-
-                                    case 'NotSupported':
-                                        $(alert).remove();
-                                        $(wrapper).addClass('error');
-                                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
-                                                '</div>');
-                                        isPreInvalid = true;
-                                        break;
-
-                                    case 'Visa':
-                                        if ($.inArray('Visa', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept Visa.');
+                                        $(this).focus();
+                                        $(this).select();
+                                    }                                    
+                                } else {
+                                    $(wrapper).removeClass('error');
+                               
+                                    switch (cardType) {
+                                        case 'Maestro':
                                             $(alert).remove();
                                             $(wrapper).addClass('error');
                                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept Visa</span>' +
+                                                    '<span id="' + this.id + '_msg">PAN Issuer Identification Number is not supported</span>' +
                                                     '</div>');
-                                        }   
-                                        $(logo).attr('src', '../public/img/card/visa.png')
-                                        break;
-                                    
-                                    case 'Mastercard':
-                                        if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept Mastercard.'); 
-                                            $(alert).remove();
-                                            $(wrapper).addClass('error');
-                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept Mastercard</span>' +
-                                                    '</div>');  
-                                        }
-                                        $(logo).attr('src', '../public/img/card/mastercard.png')
-                                        break;                                        
+                                            $(logo).attr('src', '../public/img/card/maestro.png');
+                                            isPreInvalid = true;
+                                            break;
 
-                                    case 'JCB':
-                                        if ($.inArray('JCB', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept JCB.');  
+                                        case 'NotSupported':
                                             $(alert).remove();
                                             $(wrapper).addClass('error');
                                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept JCB</span>' +
-                                                    '</div>'); 
-                                        }
-                                        $(logo).attr('src', '../public/img/card/jcb.png')
-                                        break;    
+                                                    '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
+                                                    '</div>');
+                                            isPreInvalid = true;
+                                            break;
+
+                                        case 'Visa':
+                                            if ($.inArray('Visa', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept Visa.');
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Visa</span>' +
+                                                        '</div>');
+                                            }   
+                                            $(logo).attr('src', '../public/img/card/visa.png')
+                                            break;
                                         
-                                    case 'AMEX':
-                                        if ($.inArray('Amex', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept AMEX.');  
-                                            $(alert).remove();
-                                            $(wrapper).addClass('error');
-                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept AMEX</span>' +
-                                                    '</div>');
-                                        }
-                                        $(logo).attr('src', '../public/img/card/amex.png')
-                                        break;     
+                                        case 'Mastercard':
+                                            if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept Mastercard.'); 
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Mastercard</span>' +
+                                                        '</div>');  
+                                            }
+                                            $(logo).attr('src', '../public/img/card/mastercard.png')
+                                            break;                                        
 
-                                    case 'CUP':
-                                        if ($.inArray('Amex', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept CUP.');  
-                                            $(alert).remove();
-                                            $(wrapper).addClass('error');
-                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept CUP</span>' +
-                                                    '</div>');
-                                        }
-                                        $(logo).attr('src', '../public/img/card/cup.png')
-                                        break;     
+                                        case 'JCB':
+                                            if ($.inArray('JCB', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept JCB.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept JCB</span>' +
+                                                        '</div>'); 
+                                            }
+                                            $(logo).attr('src', '../public/img/card/jcb.png')
+                                            break;    
+                                            
+                                        case 'AMEX':
+                                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept AMEX.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept AMEX</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/amex.png')
+                                            break;     
 
-                                    case 'Discover':
-                                        if ($.inArray('Discover', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept Discover.');  
-                                            $(alert).remove();
-                                            $(wrapper).addClass('error');
-                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept Discover</span>' +
-                                                    '</div>');
-                                        }
-                                        $(logo).attr('src', '../public/img/card/discover.png')
-                                        break;      
-                                
-                                    case 'PrivateLabel':
-                                        if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0) {
-                                            //toastr.info('Merchant does not accept Private Label.');  
-                                            $(alert).remove();
-                                            $(wrapper).addClass('error');
-                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                                    '<span id="' + this.id + '_msg">Merchant does not accept Private Label</span>' +
-                                                    '</div>');
-                                        }
-                                        $(logo).attr('src', '../public/img/card/private.png')
-                                        break;
+                                        case 'CUP':
+                                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept CUP.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept CUP</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/cup.png')
+                                            break;     
 
-                                    default:
-                                        break;        
+                                        case 'Discover':
+                                            if ($.inArray('Discover', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept Discover.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Discover</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/discover.png')
+                                            break;      
+                                    
+                                        case 'PrivateLabel':
+                                            if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0) {
+                                                //toastr.info('Merchant does not accept Private Label.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Private Label</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/private.png')
+                                            break;
+
+                                        default:
+                                            break;        
+                                    }
                                 }
                             }
                         }
@@ -645,12 +659,25 @@ $(function() {
         var wrapper = $('#installment_months_id_wrapper')
         $(wrapper).removeClass('error');    
         $('#' + this.id + '_alert').remove();
-        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                        
-            var value = $('#installment_months_id_dropdown').dropdown('get value');  
+        var value = $('#installment_months_id_dropdown').dropdown('get value');  
+
+        // Remind user that merchant accepts installment and might just be overlooked.
+        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                                                
             if (value == '' || value == 0) {                
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                 '<span id="' + this.id + '_msg">Accepts Installment</span>' +
+                                '</div>');
+            }            
+        }    
+        
+        // Check if the succeeding values are not the same with the first recorded.
+        if (value != '' || value != 0) { 
+            var differs = checkSlipValueIfNotSame(1, 'installment_months_id', value);
+            if (differs) {
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">1st IPP Term mismatched</span>' +
                                 '</div>');
             }
         }
