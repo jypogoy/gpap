@@ -441,8 +441,6 @@ $(function() {
                                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                                 '<span id="' + this.id + '_msg">PAN with duplicate</span>' +
                                                 '</div>');
-                                        $(this).focus();
-                                        $(this).select();
                                     }                                    
                                 } else {
                                     $(wrapper).removeClass('error');
