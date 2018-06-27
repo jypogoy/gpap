@@ -210,6 +210,7 @@ Mon 25 11:52:20 [INFO] Rommel Villanueva logged in using IP: ::1 with SESSION ID
 Mon 25 11:52:21 [INFO] Rommel Villanueva @ Home page.
 Mon 25 11:52:30 [INFO] Rommel Villanueva @ Data Entry page.
 Mon 25 11:53:49 [INFO] Rommel Villanueva @ Data Entry page.
+<<<<<<< HEAD
 Mon 25 12:38:29 [INFO] Rommel Villanueva @ Data Entry page.
 Mon 25 12:41:12 [INFO] Rommel Villanueva @ Data Entry page.
 Mon 25 12:42:43 [INFO] Rommel Villanueva @ Data Entry page.
@@ -439,3 +440,5 @@ Wed 27 07:57:17 [INFO] Danilo Madrigalejos @ Data Entry page.
 Wed 27 08:03:00 [INFO] Danilo Madrigalejos @ Home page.
 Wed 27 08:03:17 [INFO] Rommel Villanueva logged in using IP: 192.168.35.12 with SESSION ID: h7u2rnpkp1tmia0dthi1ure453.
 Wed 27 08:03:17 [INFO] Rommel Villanueva @ Home page.
+=======
+>>>>>>> parent of 4830e13... Summary Calculation: Apply proper formatting and computation.
