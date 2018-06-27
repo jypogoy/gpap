@@ -227,8 +227,14 @@ function refreshTransTypeDependentFields() {
     }
 
     // Auth Code option in Credit and Airline Credit
-    if (option.indexOf('Airline') != -1 || option.indexOf('Credit') != -1) {
-        $('#authorization_code_wrapper').addClass('hidden');
+    if (option == 'Credit' || option == 'Airline Credit') {
+        if ($('#region_code').val() == 'IN') {
+            if (option == 'Airline Credit') { 
+                $('#authorization_code_wrapper').addClass('hidden');
+            } 
+        } else {
+            $('#authorization_code_wrapper').addClass('hidden');
+        }
     } else {
         var pullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
         if (!pullReasonId) $('#authorization_code_wrapper').addClass('required');
