@@ -32,7 +32,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                 var currencyCode = currency ? currency.alpha_code : '';
                 
                 // If Other currency option is used.
-                if (!currency && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase();
+                if (!currency && headerData['other_currency'] && headerData['other_currency'].length > 0) currencyCode = headerData['other_currency'].toUpperCase();
 
                 $.each(headerData, function(key, value) {
                     if (value && key.indexOf('amount') != -1) {                                                            
@@ -65,7 +65,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                 var currencyCode = currency ? currency.alpha_code : '';
                 
                 // If Other currency option is used.
-                if (!currency && rawHeaderMap.get('other_currency').length > 0) currencyCode = rawHeaderMap.get('other_currency').toUpperCase();
+                if (!currency && rawHeaderMap.get('other_currency') && rawHeaderMap.get('other_currency').length > 0) currencyCode = rawHeaderMap.get('other_currency').toUpperCase();
                 
                 $.each(data, function(id, fieldValueArray) {
                     var slipValueMap = new HashMap();

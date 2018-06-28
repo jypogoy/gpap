@@ -130,7 +130,7 @@ function setFieldValue(key, value) {
                 });                          
                 
                 // FOR VERIFY: Load the free text currency code if Other option is used. Other option is null from currencyMap by default.     
-                if ($('#session_task_name').val().indexOf('Verify') != -1 && (!currencyMap.get(value) && rawHeaderMap.get('other_currency').length > 0)) {
+                if ($('#session_task_name').val().indexOf('Verify') != -1 && (!currencyMap.get(value) && rawHeaderMap.get('other_currency') && rawHeaderMap.get('other_currency').length > 0)) {
                     $('#other_currency').val(rawHeaderMap.get('other_currency').toUpperCase());
                 }      
 
