@@ -25,7 +25,7 @@ class DCNController extends ControllerBase
         try {
             $dcn = Dcn::findFirst(
                 [
-                    'task_id = ?1 AND dcn = ?2 AND merchant_number = ?3 AND amount = ?4 AND region_code = ?5 ',
+                    'task_id = ?1 AND dcn = ?2 AND merchant_number = ?3 AND amount = ?4 AND region_code = ?5 AND DATE(created_at) < DATE(NOW())',
                     'bind'  => [
                         1   =>  $task_id,
                         2   =>  $dcn,
