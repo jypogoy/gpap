@@ -105,12 +105,12 @@ $di->setShared('db', function () {
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
         'charset'  => $config->database->charset,
-        'options'  => array(
-            //PDO::ATTR_PERSISTENT        => 1,
-            PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-key.pem',
-            PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-cert.pem',
-            PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\ca-cert.pem'
-        )
+        // 'options'  => array(
+        //     //PDO::ATTR_PERSISTENT        => 1,
+        //     PDO::MYSQL_ATTR_SSL_KEY     => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-key.pem',
+        //     PDO::MYSQL_ATTR_SSL_CERT    => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\client-cert.pem',
+        //     PDO::MYSQL_ATTR_SSL_CA      => 'C:\Users\jeffrey.pogoy\Downloads\MariaDB Certs\ca-cert.pem'
+        // )
     ];
 
     if ($config->database->adapter == 'Postgresql') {

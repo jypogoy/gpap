@@ -192,7 +192,7 @@ $(function() {
                     params.task_id = $('#session_task_id').val();
                     params.dcn = $('#dcn').val();
                     params.merchant_number = $('#merchant_number').val();                
-                    params.deposit_amount =  $('#deposit_amount').val().trim();
+                    params.deposit_amount =  unformatValue($('#deposit_amount').val().trim());
                     params.region_code = $('#region_code').val();    
                     // Same DCN, same MID, same total amount within the same Region in the historical record
                     $.post('../dcn/getsamemidamountregion/', params, function (data) {      
@@ -233,8 +233,9 @@ $(function() {
                     params.task_id = $('#session_task_id').val();
                     params.dcn = $('#dcn').val();
                     params.merchant_number = $('#merchant_number').val();                
-                    params.deposit_amount =  $('#deposit_amount').val().trim();
+                    params.deposit_amount =  unformatValue($('#deposit_amount').val().trim());
                     params.region_code = $('#region_code').val();    
+                    
                     // Same DCN, same MID, same total amount within the same Region in the historical record
                     $.post('../dcn/getsamemidamountregion/', params, function (data) {      
                         if (data) {
