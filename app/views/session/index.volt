@@ -29,6 +29,7 @@
         </form>
         <div class="footer text-muted">
             <p>&copy; ADEC Innovations, Copyright 2018, All rights reserved. | <a href class="policy">Privacy Policy</a></p>
+            <p><?php echo $this->config->get('version'); ?></p>
         </div>
     </div>
 
