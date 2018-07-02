@@ -391,16 +391,30 @@ $(function() {
                     $(alert).remove();
                     $(wrapper).addClass('error');
                     $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                            '<span id="' + this.id + '_msg">Not In Collection</span>' +
+                            '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
                             '</div>');
                     isPreInvalid = true;
                 } else {
                     if (this.value.length < this.maxLength) {
+
                         $(alert).remove();
                         $(wrapper).addClass('error');
-                        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+
+                        // Check if Visa (starting with 4) if meets the other accepted length (13).
+                        re = new RegExp("^(4)");
+                        if (this.value.match(re) != null && (this.value.length < 13 || this.value.length < this.maxLength)) {
+                            if (this.value.length == 13) {
+                                $(wrapper).removeClass('error');
+                                return;
+                            }
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ', s/b ' + 13 + ' or ' + this.maxLength + '</span>' +
+                                '</div>');
+                        } else {
+                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                 '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + this.maxLength + '</span>' +
                                 '</div>');
+                        }                                                
                         isPreInvalid = true;
                     } else {
                         var mod10Valid = validateCard($(this).val()); // MOD 10 check. See util.js
@@ -513,7 +527,7 @@ $(function() {
                                         $(logo).attr('src', '../public/img/card/discover.png')
                                         break;      
                                 
-                                    default:
+                                    case 'PrivateLabel':
                                         if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0) {
                                             //toastr.info('Merchant does not accept Private Label.');  
                                             $(alert).remove();
@@ -524,6 +538,8 @@ $(function() {
                                         }
                                         $(logo).attr('src', '../public/img/card/private.png')
                                         break;
+									default:
+                                        break; 
                                 }
                             }
                         }
@@ -625,6 +641,20 @@ $(function() {
         }
     });
 
+    $('#installment_months_id_dropdown').find('.search').blur(function() {
+        var wrapper = $('#installment_months_id_wrapper')
+        $(wrapper).removeClass('error');    
+        $('#' + this.id + '_alert').remove();
+        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                        
+            var value = $('#installment_months_id_dropdown').dropdown('get value');  
+            if (value == '' || value == 0) {                
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Accepts Installment</span>' +
+                                '</div>');
+            }
+        }
+    });
     $('#other_inst_term').keyup(function() {
         toNum(this);
     });
@@ -641,6 +671,19 @@ $(function() {
         }
     });
 
+	$('#other_inst_term').blur(function(e) {
+        var wrapper = $('#' + this.id + '_wrapper');
+        $(wrapper).removeClass('error');    
+        $('#' + this.id + '_alert').remove();
+        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                        
+            if (this.value == '' || this.value == 0) {                
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">Accepts Installment</span>' +
+                                '</div>');
+            }
+        }
+    });
     $('#otherInstBtn').click(function(e) {
         e.preventDefault();
         $('#other_inst_term').val('');
