@@ -280,3 +280,26 @@ function calculateAmount() {
     $('#total_transaction_amount').val(formatAmount(currencyCode, String(totalAmount)));    
     $('#variance').val(formatAmount(currencyCode, String(variance)));
 };
+function findSlipValueMatch(key, value) {
+    var exists = false;
+    slipMap.forEach(function(valueMap, page) {
+        valueMap.forEach(function(fieldValue, fieldId) {
+            if (fieldId == key && fieldValue == value) {      
+                exists = true;
+            }
+        });
+    });
+    return exists;
+}
+
+function checkSlipValueIfNotSame(page, key, value) {
+    var differs = false;
+    var slipValueMap = slipMap.get(page);
+    if (slipValueMap) {
+        var recValue = slipValueMap.get(key);
+        if (recValue && recValue.length > 0 && recValue !== value) {
+            differs = true;
+        }
+    }
+    return differs;
+}
