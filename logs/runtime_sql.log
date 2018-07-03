@@ -16045,3 +16045,562 @@
 [Mon, 02 Jul 18 14:04:30 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
 [Mon, 02 Jul 18 14:04:30 +0000][DEBUG] DESCRIBE `gpap`.`currency`
 [Mon, 02 Jul 18 14:04:30 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:40:01 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:01 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Tue, 03 Jul 18 06:40:01 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userFirstName`, `user`.`userLastName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`canEdit`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :1 AND `user`.`createStatus` = 'ACTIVE' LIMIT :APL0
+[Tue, 03 Jul 18 06:40:02 +0000][DEBUG] SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Tue, 03 Jul 18 06:40:02 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 24 DAY)) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Tue, 03 Jul 18 06:40:02 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userFirstName` = ?, `userLastName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `canEdit` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:03 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:04 +0000][DEBUG] SELECT COUNT(*) AS Total FROM batch WHERE entry_status IS NULL
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:40:06 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:40:07 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:40:09 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:46:57 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:46:58 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:47:16 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:49:20 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:49:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:21 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 06:49:21 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:49:22 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:49:23 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:50:12 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:50:13 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:50:14 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:50:15 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 06:51:21 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 06:51:23 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 06:51:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:24 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 06:51:24 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 06:51:25 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 06:51:25 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 06:51:25 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] DESCRIBE `gpap`.`user`
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] SELECT `user`.`userID`, `user`.`userName`, `user`.`userFirstName`, `user`.`userLastName`, `user`.`userPassword`, `user`.`userLastLogin`, `user`.`userInvalidLoginAttempt`, `user`.`userLastPasswordChange`, `user`.`canEdit`, `user`.`createStatus`, `user`.`createdBy` FROM `gpap`.`user` WHERE `user`.`userName` = :1 AND `user`.`createStatus` = 'ACTIVE' LIMIT :APL0
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] SELECT (userLastPasswordChange > DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 0 SECOND) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] SELECT (userLastPasswordChange >= DATE(NOW() - INTERVAL 24 DAY)) AS NotExpired
+                    FROM user   
+                    WHERE userid = 2
+[Tue, 03 Jul 18 07:25:34 +0000][DEBUG] UPDATE `gpap`.`user` SET `userName` = ?, `userFirstName` = ?, `userLastName` = ?, `userPassword` = ?, `userLastLogin` = ?, `userInvalidLoginAttempt` = ?, `userLastPasswordChange` = ?, `canEdit` = ?, `createStatus` = ?, `createdBy` = ? WHERE `userID` = ?
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'user_task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] DESCRIBE `gpap`.`user_task`
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT `user_task`.`id`, `user_task`.`user_id`, `user_task`.`task_id` FROM `gpap`.`user_task` WHERE `user_task`.`user_id` = 2
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:35 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL ORDER BY `data_entry`.`started_at` DESC
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'region' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`region`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `region`.`code`, `region`.`num_code`, `region`.`name`, `region`.`created_by`, `region`.`regioncol` FROM `gpap`.`region` WHERE `region`.`code` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'task' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] DESCRIBE `gpap`.`task`
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT `task`.`id`, `task`.`name`, `task`.`description`, `task`.`next_task_id` FROM `gpap`.`task` WHERE `task`.`id` = 4 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:36 +0000][DEBUG] SELECT COUNT(*) AS Total FROM batch WHERE entry_status IS NULL
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:25:42 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:25:43 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:25:44 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:44 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:25:44 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:25:50 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:27:27 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:27:29 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:27:31 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:29:54 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:29:55 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:29:56 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:29:58 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:34:16 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:34:18 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:34:19 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:35:23 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:35:24 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:35:25 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:35:27 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'data_entry' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] DESCRIBE `gpap`.`data_entry`
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT `data_entry`.`id`, `data_entry`.`user_id`, `data_entry`.`batch_id`, `data_entry`.`task_id`, `data_entry`.`started_at`, `data_entry`.`ended_at` FROM `gpap`.`data_entry` WHERE `data_entry`.`user_id` = 2 AND `data_entry`.`batch_id` = 3 AND `data_entry`.`task_id` = 4 AND `data_entry`.`ended_at`  IS NULL LIMIT :APL0
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'batch' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] DESCRIBE `gpap`.`batch`
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT `batch`.`id`, `batch`.`zip_id`, `batch`.`trans_type_id`, `batch`.`batch_number`, `batch`.`entry_status`, `batch`.`verify_status`, `batch`.`balance_status`, `batch`.`is_exception`, `batch`.`created_by`, `batch`.`create_date` FROM `gpap`.`batch` WHERE `batch`.`id` = :0 LIMIT :APL0
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] UPDATE `gpap`.`batch` SET `batch_number` = ?, `entry_status` = ?, `verify_status` = null, `balance_status` = null, `is_exception` = ?, `created_by` = ?, `create_date` = ? WHERE `id` = ? AND `zip_id` = ? AND `trans_type_id` = ?
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'zip' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] DESCRIBE `gpap`.`zip`
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT `zip`.`id`, `zip`.`region_code`, `zip`.`rec_date`, `zip`.`operator_id`, `zip`.`sequence`, `zip`.`is_ppcf`, `zip`.`created_by` FROM `gpap`.`zip` WHERE `zip`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'transaction_type' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] DESCRIBE `gpap`.`transaction_type`
+[Tue, 03 Jul 18 07:36:54 +0000][DEBUG] SELECT `transaction_type`.`id`, `transaction_type`.`type`, `transaction_type`.`description`, `transaction_type`.`created_by` FROM `gpap`.`transaction_type` WHERE `transaction_type`.`id` = :APR0 LIMIT :APL0
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'image' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`image`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `image`.`id`, `image`.`path`, `image`.`type`, `image`.`zip_id`, `image`.`trans_type_id`, `image`.`batch_id`, `image`.`is_start`, `image`.`is_completed`, `image`.`created_by` FROM `gpap`.`image` WHERE `image`.`batch_id` = 3
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Batch'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'pull_reason' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`pull_reason`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `pull_reason`.`id`, `pull_reason`.`on_display`, `pull_reason`.`on_report`, `pull_reason`.`level` FROM `gpap`.`pull_reason` WHERE `pull_reason`.`level` = 'Slip'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'installment_months' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `installment_months`.`id`, `installment_months`.`on_display`, `installment_months`.`on_report`, `installment_months`.`charge_type` FROM `gpap`.`installment_months`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'other_exception' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] DESCRIBE `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:36:55 +0000][DEBUG] SELECT `other_exception`.`id`, `other_exception`.`title` FROM `gpap`.`other_exception`
+[Tue, 03 Jul 18 07:36:56 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'merchant_header' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:56 +0000][DEBUG] DESCRIBE `gpap`.`merchant_header`
+[Tue, 03 Jul 18 07:36:56 +0000][DEBUG] SELECT `merchant_header`.`id`, `merchant_header`.`data_entry_id`, `merchant_header`.`batch_id`, `merchant_header`.`merchant_number`, `merchant_header`.`merchant_name`, `merchant_header`.`currency_id`, `merchant_header`.`other_currency`, `merchant_header`.`dcn`, `merchant_header`.`deposit_date`, `merchant_header`.`deposit_amount`, `merchant_header`.`batch_pull_reason_id` FROM `gpap`.`merchant_header` WHERE `merchant_header`.`data_entry_id` = 3 AND `merchant_header`.`batch_id` = 3 LIMIT :APL0
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'demographic' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] DESCRIBE `gpap`.`demographic`
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] SELECT `demographic`.`id`, `demographic`.`corporate`, `demographic`.`region`, `demographic`.`principal`, `demographic`.`associate`, `demographic`.`chain`, `demographic`.`merchant`, `demographic`.`merchantStatus`, `demographic`.`merchantCategoryCode`, `demographic`.`currency`, `demographic`.`doingBusinessAs`, `demographic`.`attention`, `demographic`.`firstAddress`, `demographic`.`secondAddress`, `demographic`.`city`, `demographic`.`stateCountry`, `demographic`.`postal`, `demographic`.`spokenLanguage`, `demographic`.`telephoneNumber`, `demographic`.`acceptOtherCurrency`, `demographic`.`acceptInstallment`, `demographic`.`acceptRetailSales`, `demographic`.`acceptCashAdvance`, `demographic`.`acceptAmex`, `demographic`.`acceptCup`, `demographic`.`acceptJcb`, `demographic`.`acceptMasterCard`, `demographic`.`acceptPrivateLabel`, `demographic`.`acceptVisa`, `demographic`.`createdBy`, `demographic`.`createdDate` FROM `gpap`.`demographic` WHERE `demographic`.`merchant` = 444 LIMIT :APL0
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`= 'currency' AND `TABLE_SCHEMA` = 'gpap'
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] DESCRIBE `gpap`.`currency`
+[Tue, 03 Jul 18 07:36:57 +0000][DEBUG] SELECT `currency`.`id`, `currency`.`num_code`, `currency`.`alpha_code`, `currency`.`remarks` FROM `gpap`.`currency`  INNER JOIN `gpap`.`region_currency` AS `rc` ON `currency`.`id` = `rc`.`currency_id` WHERE `rc`.`region_code` = 'BN' ORDER BY `currency`.`alpha_code`

@@ -445,7 +445,6 @@ $(function() {
                                     }                                    
                                 } else {
                                     $(wrapper).removeClass('error');
-
                                     switch (cardType) {
                                         case 'Maestro':
                                             $(alert).remove();
@@ -657,16 +656,31 @@ $(function() {
         var wrapper = $('#installment_months_id_wrapper')
         $(wrapper).removeClass('error');    
         $('#' + this.id + '_alert').remove();
-        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                        
-            var value = $('#installment_months_id_dropdown').dropdown('get value');  
+
+        var value = $('#installment_months_id_dropdown').dropdown('get value');  
+
+        // Remind user that merchant accepts installment and might just be overlooked.
+        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                                                
             if (value == '' || value == 0) {                
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                 '<span id="' + this.id + '_msg">Accepts Installment</span>' +
                                 '</div>');
+            }            
+        }    
+        
+        // Check if the succeeding values are not the same with the first recorded.
+        if (value != '' || value != 0) { 
+            var differs = checkSlipValueIfNotSame(1, 'installment_months_id', value);
+            if (differs) {
+                $(wrapper).addClass('error');
+                wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                '<span id="' + this.id + '_msg">1st IPP Term mismatched</span>' +
+                                '</div>');
             }
         }
     });
+    
     $('#other_inst_term').keyup(function() {
         toNum(this);
     });
