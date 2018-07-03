@@ -272,6 +272,7 @@ function getMerchantInfo(merchant_number) {
             //Form.clear(true); !Editted for No MID handle
             $('#merchant_number').focus();
             $('#merchant_number').select();
+            $('#merchant_name').val('');
         } else {
             // Reset merchant details map.
             merchantInfoMap.clear();
