@@ -680,7 +680,6 @@ $(function() {
             }
         }
     });
-    
     $('#other_inst_term').keyup(function() {
         toNum(this);
     });
@@ -1149,6 +1148,16 @@ function validateTransCount(isSaveOnly, isSaveNew, isComplete) {
 
 function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     if (isComplete) {
+
+        // If Supporting Document, make sure to clean form information mainly PAN and Transaction Date.
+        var slipReason = $('#slip_pull_reason_id_dropdown').dropdown('get text'); 
+        if (slipReason.indexOf('Supporting') != -1 && $('#transaction_date').val() != '' && $('#card_number').val() != '') {
+            $('#transaction_date_wrapper').addClass('error');
+            $('#card_number_wrapper').addClass('error');
+            toastr.error('Cannot complete Supporting Document unless all other fields are empty.'); 
+            return;
+        }
+
         var resp = confirm('Are you sure you want to complete batch ' + $('#batch_id').val() + '? Click OK to proceed.');
         if (resp == true) {
             saveBatch(isSaveOnly, isSaveNew, true); // See de_data_recording.js
