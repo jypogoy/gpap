@@ -272,6 +272,7 @@ function getMerchantInfo(merchant_number) {
             //Form.clear(true); !Editted for No MID handle
             $('#merchant_number').focus();
             $('#merchant_number').select();
+            clearValidateMerchantSpecsMsg();
         } else {
             // Reset merchant details map.
             merchantInfoMap.clear();
@@ -293,33 +294,7 @@ function getMerchantInfo(merchant_number) {
                 $('#multi_currency').html('');
             }
 
-            // Perform merchant specific validations.
-            var wrapper = $('#merchant_number_wrapper');
-            var alert = $('#merchant_number_alert');
-            if (merchantInfoMap.get('merchantStatus') !== 'O' && merchantInfoMap.get('merchantStatus') !== 'R') {
-                $(alert).remove();
-                $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
-                        '<span id="merchant_number_msg">Invalid Merchant: In ' + merchantInfoMap.get('merchantStatus') + ' Status</span>' +
-                        '</div>');
-                $('#merchant_number').select(); 
-                //toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
-            } else {
-                $(alert).remove();
-                $(wrapper).removeClass('error');
-            }
-            
-            if (merchantInfoMap.get('stateCountry') != $('#region_code').val()) {
-                $(alert).remove();
-                $(wrapper).addClass('error');
-                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert">' +
-                        '<span id="merchant_number_msg">Merchant is out of Region (' + merchantInfoMap.get('stateCountry') + ')</span>' +
-                        '</div>');
-                $('#merchant_number').select();
-            } else {
-                $(alert).remove();
-                $(wrapper).removeClass('error');
-            }
+            validateMerchantSpecs();
 
             if (merchantInfoMap.get('acceptInstallment') != 'N') {
                 $('#installment_months_id_wrapper').removeClass('hidden');
@@ -360,6 +335,45 @@ function getMerchantInfo(merchant_number) {
     });
 
     return d.promise();
+}
+
+function clearValidateMerchantSpecsMsg() {
+    var wrapper = $('#merchant_number_wrapper');
+    var alertInvalid = $('#merchant_number_alert_invalid');            
+    var alertOutOfRegion = $('#merchant_number_alert_outofregion');
+    $(alertInvalid).remove();  
+    $(alertOutOfRegion).remove();
+}
+
+function validateMerchantSpecs() {
+    // Perform merchant specific validations.
+    var wrapper = $('#merchant_number_wrapper');
+    var alertInvalid = $('#merchant_number_alert_invalid');            
+    if (merchantInfoMap.get('merchantStatus') !== 'O' && merchantInfoMap.get('merchantStatus') !== 'R') {
+        $(alertInvalid).remove();                
+        $(wrapper).addClass('error');
+        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert_invalid">' +
+                '<span id="merchant_number_msg">Invalid Merchant: In ' + merchantInfoMap.get('merchantStatus') + ' Status</span>' +
+                '</div>');
+        $('#merchant_number').select(); 
+        //toastr.info($('#merchant_name').val() + ' is an Invalid Merchant!');   
+    } else {
+        $(alertInvalid).remove();
+        $(wrapper).removeClass('error');
+    }
+    
+    var alertOutOfRegion = $('#merchant_number_alert_outofregion');
+    if (merchantInfoMap.get('stateCountry') != $('#region_code').val()) {
+        $(alertOutOfRegion).remove();
+        $(wrapper).addClass('error');
+        $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="merchant_number_alert_outofregion">' +
+                '<span id="merchant_number_msg">Merchant is out of Region (' + merchantInfoMap.get('stateCountry') + ')</span>' +
+                '</div>');
+        $('#merchant_number').select();
+    } else {
+        $(alertOutOfRegion).remove();
+        $(wrapper).removeClass('error');
+    }
 }
 
 function getRegionCurrencyForRef() {

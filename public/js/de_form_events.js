@@ -28,6 +28,7 @@ $(function() {
     
     $('#merchant_number').blur(function() {
         if (this.value != '') $('#merchant_number_wrapper').removeClass('error');                    
+        if (this.value.length != this.maxLength) clearValidateMerchantSpecsMsg(); // See de_data_retrieval.js
     });
 
     $('#currency_id_dropdown').dropdown({
@@ -77,6 +78,29 @@ $(function() {
         }
     });    
 
+    $('#currency_id_dropdown').find('.search').blur(function() {
+        $('#currency_id_wrapper').removeClass('error');
+        $('#currency_id_alert').remove();
+        var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
+        if ($('#merchant_number').val() != '') {
+            if (currency != 'Choose' && currency != merchantInfoMap.get('currency')) {
+                if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
+                    $('#currency_id_wrapper').addClass('error');
+                    $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
+                            '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
+                            '</div>');
+                }
+            } else {
+                $('#currency_id_wrapper').removeClass('error');
+                $('#currency_id_alert').remove();
+            }   
+        } else {
+            //$('#merchant_number').focus(); !Editted for No MID handle
+            $('#currency_id_wrapper').removeClass('error');
+            $('#currency_id_alert').remove();
+        }
+    });
+
     $('#other_currency').keyup(function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 27) { 
@@ -107,29 +131,6 @@ $(function() {
         //         return;
         //     }
         // });        
-    });
-
-    $('#currency_id_dropdown').find('.search').blur(function() {
-        $('#currency_id_wrapper').removeClass('error');
-        $('#currency_id_alert').remove();
-        var currency = $('#currency_id_dropdown').dropdown('get text').split(' ')[0];
-        if ($('#merchant_number').val() != '') {
-            if (currency != 'Choose' && currency != merchantInfoMap.get('currency')) {
-                if (merchantInfoMap.get('acceptOtherCurrency') == 'N') {                
-                    $('#currency_id_wrapper').addClass('error');
-                    $('#currency_id_wrapper').append('<div class="ui basic red pointing prompt label transition" id="currency_id_alert">' +
-                            '<span id="currency_id_msg">Currency is not accepted by the merchant</span>' +
-                            '</div>');
-                }
-            } else {
-                $('#currency_id_wrapper').removeClass('error');
-                $('#currency_id_alert').remove();
-            }   
-        } else {
-            //$('#merchant_number').focus(); !Editted for No MID handle
-            $('#currency_id_wrapper').removeClass('error');
-            $('#currency_id_alert').remove();
-        }
     });
 
     $('#otherCurrencyBtn').click(function(e) {
