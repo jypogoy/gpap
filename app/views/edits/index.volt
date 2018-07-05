@@ -51,7 +51,7 @@
             <th>Job Name</th>
             <th>Transaction Type</th>
             <th>File Name</th>
-            <th>Batch #</th>
+            <th>Reference #</th>
             <th>Completed Tasks</th>
         </tr>
     </thead>

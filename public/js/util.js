@@ -85,10 +85,10 @@ function validateCard(value) { // Luhn algorithm or MOD 10
 function limitCardLengthByStartingNumbers(el) {
     var number = el.value;
     // Supported starting numbers
-    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
+    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
     if (number.match(re) != null) {
-        re = new RegExp("^(2|3|4|9|51|52|53|54|55|589460)");
-        if (number.match(re) != null) $(el).attr('maxlength', 16);
+        re = new RegExp("^(3|4|9|51|52|53|54|55|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
+        if (number.match(re) != null) $(el).attr('maxlength', 16)
         re = new RegExp("^(2131|1800)");
         if (number.match(re) != null) $(el).attr('maxlength', 15);
     }
@@ -96,7 +96,7 @@ function limitCardLengthByStartingNumbers(el) {
 
 function withinCardCollection(value) {
     // Supported starting numbers
-    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
+    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
     return value.match(re) != null ? true : false;
 }
 
@@ -153,11 +153,11 @@ function getCardType(number)
         return "Maestro";
 
     // Not supported starting numbers
-    re = new RegExp("^(2|3|4|9|51|52|53|54|55|2131|1800|589460)");
-    if (number.match(re) == null)
-        return "NotSupported";
+    // re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
+    // if (number.match(re) == null)
+    //     return "NotSupported";
 
-    return "";
+    // return "";
 }
 
 function checkWebStorageSupport() {
@@ -280,3 +280,26 @@ function calculateAmount() {
     $('#total_transaction_amount').val(formatAmount(currencyCode, String(totalAmount)));    
     $('#variance').val(formatAmount(currencyCode, String(variance)));
 };
+function findSlipValueMatch(key, value) {
+    var exists = false;
+    slipMap.forEach(function(valueMap, page) {
+        valueMap.forEach(function(fieldValue, fieldId) {
+            if (fieldId == key && fieldValue == value) {      
+                exists = true;
+            }
+        });
+    });
+    return exists;
+}
+
+function checkSlipValueIfNotSame(page, key, value) {
+    var differs = false;
+    var slipValueMap = slipMap.get(page);
+    if (slipValueMap) {
+        var recValue = slipValueMap.get(key);
+        if (recValue && recValue.length > 0 && recValue !== value) {
+            differs = true;
+        }
+    }
+    return differs;
+}
