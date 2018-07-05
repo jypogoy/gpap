@@ -29,6 +29,11 @@ $(function() {
     $('#merchant_number').blur(function() {
         if (this.value != '') $('#merchant_number_wrapper').removeClass('error');                    
         if (this.value.length != this.maxLength) clearValidateMerchantSpecsMsg(); // See de_data_retrieval.js
+        if (this.value.length == 16) {
+            $('#merchant_number_length_alert').remove();
+        } else {
+            showMerchNumLengthChkMsg();
+        }
     });
 
     $('#currency_id_dropdown').dropdown({
@@ -1147,6 +1152,17 @@ function validateTransCount(isSaveOnly, isSaveNew, isComplete) {
     }
 }
 
+function showMerchNumLengthChkMsg() {
+    $('#merchant_number_length_alert').remove();    
+    var wrapper = $('#merchant_number_wrapper');
+    $(wrapper).addClass('error');
+    wrapper.append('<div class="ui basic red pointing prompt label transition" id="merchant_number_length_alert">' +
+                    '<span id="merchant_number_length_msg">Invalid Length, Must be pulled</span>' +
+                    '</div>');
+    $('#merchant_number').focus();
+    $('#merchant_number').select();
+}
+
 function executeWrite(isSaveOnly, isSaveNew, isComplete) {
     if (isComplete) {
 
@@ -1157,6 +1173,15 @@ function executeWrite(isSaveOnly, isSaveNew, isComplete) {
             $('#card_number_wrapper').addClass('error');
             toastr.error('Cannot complete Supporting Document unless all other fields are empty.'); 
             return;
+        }
+
+        // If Merchant Number is less than 16 and missing a Batch pull reason.
+        if ($('#merchant_number').val().length < 16) {
+            var pullReason = $('#batch_pull_reason_id').val();
+            if (pullReason == '' || pullReason == 0) {    
+                showMerchNumLengthChkMsg();
+                return;
+            }
         }
 
         var resp = confirm('Are you sure you want to complete batch ' + $('#batch_id').val() + '? Click OK to proceed.');
