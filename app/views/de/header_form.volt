@@ -38,7 +38,7 @@
         </div>      
         <div id="deposit_amount_wrapper" class="eight wide required field">
             <label>Batch Amt</label>
-            {{ text_field('deposit_amount', 'maxlength': '13', 'class': 'header-field balancing-enabled') }}
+            {{ text_field('deposit_amount', 'maxlength': '14', 'class': 'header-field balancing-enabled') }}
         </div>  
         <div id="dcn_wrapper" class="four wide required field">
             <label>DCN</label>

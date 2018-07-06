@@ -45,7 +45,7 @@
         </div>  
         <div id="transaction_amount_wrapper" class="required field">
             <label>Trans Amt</label>
-            {{ text_field('transaction_amount', 'maxlength': '9', 'class': 'slip-field balancing-enabled') }}
+            {{ text_field('transaction_amount', 'maxlength': '10', 'class': 'slip-field balancing-enabled') }}
         </div>    
         {#<div id="installment_months_id_wrapper" class="field">    
             <label>Inst. Term</label>
