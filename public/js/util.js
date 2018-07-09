@@ -235,7 +235,7 @@ function loadAndFormatAmounts(currencyCode) {
     // Apply formatting to displayed amount form fields.
     var amountFields = $('input[id*="amount"]');
     if (!currencyCode) {
-        currencyCode = $('#currency_id_dropdown').dropdown('get text');   
+        currencyCode = $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
 
         // Use the keyed currency code if Other option is selected.
         if (currencyCode == 'Other') currencyCode = $('#other_currency').val().toUpperCase();
@@ -260,9 +260,9 @@ function loadAndFormatAmounts(currencyCode) {
     });
 }
 
-function calculateAmount() {
+function calculateAmount(currencyCode) {
 
-    var currencyCode = $('#currency_id_dropdown').dropdown('get text');  
+    var currencyCode = currencyCode ? currencyCode : $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
 
     var totalAmount = 0;
     slipMap.forEach(function(valueMap, page) {

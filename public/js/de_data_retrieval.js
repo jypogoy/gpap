@@ -179,9 +179,7 @@ function getContents(lastCompletedEntry, existingHeader) {
                 // For Balancing Only: Revert back to current task's activity ID to correct saving of records.
                 if (lastCompletedEntry) {
                     $('#data_entry_id').val(dataEntryId);
-                } 
-                
-                calculateAmount(); // See util.js                
+                }
             }       
         }
     });
@@ -251,7 +249,7 @@ function getSlipContents(headerData) {
             });
 
             // Compute total and variance. See de_data_navigation.js   
-            calculateAmount();
+            calculateAmount(currencyCode);
         }                  
     })
     .done(function (msg) {
