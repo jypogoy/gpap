@@ -29,10 +29,10 @@ $(function() {
     $('#merchant_number').blur(function() {
         if (this.value != '') $('#merchant_number_wrapper').removeClass('error');                    
         if (this.value.length != this.maxLength) clearValidateMerchantSpecsMsg(); // See de_data_retrieval.js
-        if (this.value.length == 16) {
-            $('#merchant_number_length_alert').remove();
+        if (this.value.length > 0 && this.value.length < 16) {
+            showMerchNumLengthChkMsg();            
         } else {
-            showMerchNumLengthChkMsg();
+            $('#merchant_number_length_alert').remove();
         }
     });
 
@@ -1159,8 +1159,6 @@ function showMerchNumLengthChkMsg() {
     wrapper.append('<div class="ui basic red pointing prompt label transition" id="merchant_number_length_alert">' +
                     '<span id="merchant_number_length_msg">Invalid Length, Must be pulled</span>' +
                     '</div>');
-    $('#merchant_number').focus();
-    $('#merchant_number').select();
 }
 
 function executeWrite(isSaveOnly, isSaveNew, isComplete) {
