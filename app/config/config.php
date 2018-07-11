@@ -61,5 +61,6 @@ return new \Phalcon\Config([
     'AES_Key'       =>  'bM6xyt`8P!Ubkw:Lf*',
     'policy_url'    =>  'https://gpapde-qa-web.amdatex.com/deccpolicy/',
     'session_lifetime'  =>  900,
+    'until_timeout' =>  60,
     'version'       => 'v0.0.1'
 ]);

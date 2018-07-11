@@ -1,4 +1,5 @@
 <input type="hidden" id="session_lifetime" value="<?php echo $this->config->get('session_lifetime'); ?>"/>
+<input type="hidden" id="until_timeout" value="<?php echo $this->config->get('until_timeout'); ?>"/>
 {{ hidden_field('user_id', 'value': user['id'] ) }}
 {{ hidden_field('session_task_id', 'value': session.get('taskId')) }}
 

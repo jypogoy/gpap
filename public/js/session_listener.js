@@ -1,6 +1,7 @@
 $(function() {
 
     var global = $('#session_lifetime').val();    
+    var untilTimeout = $('#until_timeout').val();    
 
     initListeners();
 
@@ -28,7 +29,7 @@ $(function() {
             // })
             // .modal('show');        
             
-        } else if (global <= 60) { // Give a minute for a user to extend session.             
+        } else if (global <= untilTimeout) { // Give a minute for a user to extend session.             
             if ($('.extension').length == 0) {                
                 $(document.body).append('<div class="ui tiny modal extension"><i class="close icon"></i><div class="header"><i class="time icon"></i>Need More Time?</div><div class="content extension-text" style="min-height: 30px;"></div><div class="actions"><div class="ui positive button">Stay Signed In</div><div class="ui negative button">Sign Out</div></div></div>');
 
