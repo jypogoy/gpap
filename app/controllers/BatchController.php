@@ -457,7 +457,7 @@ class BatchController extends ControllerBase
         }
     }
 
-    public function listByRegionJobAction($zipId)
+    public function listByRegionJobAction()
     {
         $this->view->disable();        
 
@@ -465,8 +465,13 @@ class BatchController extends ControllerBase
         // $recDate = $this->request->getPost('rec_date');
         // $operatorId = $this->request->getPost('operator_id');
         // $sequence = $this->request->getPost('sequence');
+        $regionCode = $this->request->getPost('regionCode');
+        $zipId = $this->request->getPost('zipId'); 
+        $recDate = $this->request->getPost('recDate');
 
-        $this->session->set('zipId', $zipId); // Keep reference of the selected job.        
+        // Keep reference of the selected job and/or recording date.        
+        $this->session->set('zipId', $zipId); 
+        $this->session->set('recDate', $recDate); 
 
         try {
             // $batches = Batch::find(
@@ -515,14 +520,9 @@ class BatchController extends ControllerBase
                     ) AS a ON a.id = b.id 
                     LEFT JOIN task t ON t.name = a.last_activity 
                     INNER JOIN image i ON i.batch_id = b.id 
-                    WHERE b.zip_id = ? AND i.is_start";
-
-            $rows = $this->db->query(
-                $sql,
-                [
-                    $zipId
-                ]
-            );
+                    WHERE i.is_start" . ($regionCode ? " AND z.region_code = '" . $regionCode . "'" : "") . ($zipId ? " AND b.zip_id = " . $zipId : "") . (strpos($recDate, 'aN') === false ? " AND DATE(b.create_date) = '" . $recDate . "'" : "");
+            
+            $rows = $this->db->query($sql);
             $rows->setFetchMode(\Phalcon\Db::FETCH_OBJ);
             $rows = $rows->fetchAll($rows);    
 

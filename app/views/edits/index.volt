@@ -1,5 +1,7 @@
 <input type="hidden" id="session_lifetime" value="<?php echo $this->config->get('session_lifetime'); ?>"/>
+<input type="hidden" id="until_timeout" value="<?php echo $this->config->get('until_timeout'); ?>"/>
 {{ hidden_field('session_region_code', 'value': session.get('regionCode')) }}
+{{ hidden_field('session_rec_date', 'value': session.get('recDate')) }}
 {{ hidden_field('session_zip_id', 'value': session.get('zipId')) }}
 
 <div class="ui warning message static">
@@ -26,8 +28,17 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div>                
+                <div class="disabled field job_date_field" style="margin-left: 10px;">                    
+                    <div class="ui calendar" id="job_date_cal">
+                        <label>Index Date</label>
+                        <div class="ui input left icon" style="margin-left: 10px;">
+                            <i class="calendar icon"></i>
+                            {{ text_field('job_date', 'placeholder': 'Job Date') }}
+                        </div>
+                    </div>
                 </div>
-                <div class="disabled field job_field" style="margin-left: 10px;">            
+                <div class="disabled field job_field" style="margin-left: 20px;">            
                     <label>Job</label>       
                     <div id="job_dropdown" class="ui search selection dropdown">
                         <input id="zip_id" type="hidden">
@@ -37,6 +48,7 @@
                     </div>
                 </div>
                 <div id="filterBtn" class="ui disabled primary button">Filter</div>
+                <div id="resetBtn" class="ui red button">Reset</div>
             </div>
         </div>
         <div>

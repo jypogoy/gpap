@@ -27,14 +27,27 @@ class EditsController extends ControllerBase
         $this->sessionLogger->info($this->session->get('auth')['name'] . ' @ Edits page.'); 
     }
 
-    public function getJobsByRegionAction($regionCode)
+    public function getJobsByRegionAction()
     {
         $this->view->disable();
 
+        $regionCode = $this->request->getPost('regionCode');
+        $recDate = $this->request->getPost('recDate');
+        
+        // Keep reference of the selected region.        
+        $this->session->set('regionCode', $regionCode); 
+        $this->session->set('recDate', $recDate);
+
         try {
-            $zips = Zip::findByRegionCode($regionCode);
-            $this->session->set('regionCode', $regionCode); // Keep reference of the selected region.        
-            
+            // $zips = Zip::findByRegionCode($regionCode);            
+            $phql = "SELECT DISTINCT * 
+                    FROM Zip 
+                    INNER JOIN Batch ON Batch.zip_id = Zip.id
+                    WHERE region_code = '" . $regionCode . "'" . (strpos($recDate, 'aN') === false ? " AND DATE(Batch.create_date) = '" . $recDate . "'" : "") . "
+                    GROUP BY Zip.id";
+
+            $zips = $this->modelsManager->executeQuery($phql);        
+
             echo $this->view->partial('edits/partial_job_selection', [ 'zips' => $zips ]);  
 
         } catch (\Exception $e) {            
@@ -53,6 +66,13 @@ class EditsController extends ControllerBase
         $this->session->set('fromEdits', true);
         $this->session->set('taskId', $taskId);
         $this->session->set('taskName', $taskName);
+    }
+
+    public function resetFiltersAction()
+    {
+        $this->session->remove('regionCode');
+        $this->session->remove('recDate'); 
+        $this->session->remove('zipId'); 
     }
 
     // public function beforeExecuteRoute()
