@@ -130,6 +130,10 @@ $(function() {
                 })
             });
         }
+
+        // Show the recent Editor.
+        getEditor();
+
     } else {
         if ($('#session_task_name').val().indexOf('Verify') != -1) {
             getKeyer();

@@ -51,7 +51,7 @@ class SecurityPlugin extends Plugin
 			//Lead resources
 			$leadResources = [
 				'home'      => 	['index'],
-				'edits'     => 	['index', 'getjobsbyregion', 'prep', 'resetfilters', 'recordeditor'],
+				'edits'     => 	['index', 'getjobsbyregion', 'prep', 'resetfilters', 'recordeditor', 'getrecenteditor'],
 				'de'		=>	['index', 'prep', 'start', 'complete', 'redirectnonext', 'redirectsuccess'],
 				'batch'		=>	['listavailable', 'get', 'getnextavailable', 'countavailable', 'countwithvariance', 'listwithvariance', 'exception', 'listbyregionjob', 'getprevoperator', 'getkeyer', 'getverifier', 'getbalancer', 'isavailable'],
 				'currency'	=>	['getbyregion', 'getbyalphacode'],

@@ -38,18 +38,28 @@ function saveBatch(isSaveOnly, isSaveNew, isComplete) {
                     
                     // For Edits Only: Record the current editor for review purposes.
                     if ($('#session_from_edits').val()) {
-                        recordEditor();
-                    }
-                    
-                    if (isSaveOnly) {
-                        toastr.success('Batch was saved successfully.'); 
+                        $.when(recordEditor()).then(function() {
+                            if (isSaveOnly) {
+                                toastr.success('Batch was saved successfully.'); 
+                            } else {
+                                if (isSaveNew) {
+                                    getNewBatch();
+                                } else {
+                                    window.location = '../de/redirectsuccess/' + true;
+                                }
+                            }        
+                        });
                     } else {
-                        if (isSaveNew) {
-                            getNewBatch();
+                        if (isSaveOnly) {
+                            toastr.success('Batch was saved successfully.'); 
                         } else {
-                            window.location = '../de/redirectsuccess/' + true;
+                            if (isSaveNew) {
+                                getNewBatch();
+                            } else {
+                                window.location = '../de/redirectsuccess/' + true;
+                            }
                         }
-                    }                    
+                    }                                                        
                 }
             }                        
         });
@@ -229,9 +239,15 @@ function recordDCN() {
 
 function recordEditor() {
 
+    var d = $.Deferred();
+
     var params = {};
     params.batch_id = $('#batch_id').val();
     params.task_id = $('#session_task_id').val();
     
-    $.post('../edits/recordeditor/', params);    
+    $.post('../edits/recordeditor/', params, function() {
+        d.resolve();
+    });    
+
+    return d.promise();
 }

@@ -98,17 +98,30 @@ class EditsController extends ControllerBase
         }  
     }
 
-    public function getRecentEditor()
-    {
-        $batchId = $this->request->getPost('batch_id');
+    public function getRecentEditorAction()
+    {        
+        $this->view->disable();
+
         $taskId = $this->request->getPost('task_id');
+        $batchId = $this->request->getPost('batch_id');
         
         try {
-            $editor = BatchEdit::find(
+            $phql = 'SELECT * 
+                    FROM BatchEdit 
+                    INNER JOIN User ON User.userID = BatchEdit.user_id
+                    WHERE BatchEdit.task_id = :taskId: AND BatchEdit.batch_id = :batchId: 
+                    ORDER BY create_date DESC LIMIT 1';
+
+            $editor = $this->modelsManager->executeQuery(
+                $phql, 
                 [
-                    
+                    'taskId' => $taskId,
+                    'batchId' => $batchId
                 ]
-            );
+            );    
+
+            $this->response->setJsonContent($editor[0]);
+            $this->response->send();     
 
         } catch (\Exception $e) {            
             $this->errorLogger->error(parent::_constExceptionMessage($e));

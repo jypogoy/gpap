@@ -88,7 +88,7 @@ function getRawContents() {  // Only called during Verify to get the previous ta
                   
                 applySlipChecks(); // See de_verify.js
             }
-        })
+        });
     }
 
     return d.promise();
@@ -574,6 +574,26 @@ function getBalancer() {
             $('.prev-operator').append('<a class="ui tag label">Balancer: ' + data.first_name + '</a>');  
         }            
         d.resolve(data);      
+    })
+    .fail(function (xhr, status, error) {
+        toastr.error(error);
+    }); 
+
+    return d.promise();
+}
+
+function getEditor() {
+    var d = $.Deferred();
+
+    var params = {};
+    params.batch_id = $('#batch_id').val();
+    params.task_id = $('#session_task_id').val();
+    $.post('../edits/getrecenteditor/', params, function (editor) {     
+        if (editor) {
+            $('.prev-operator').removeClass('hidden');
+            $('.prev-operator').append('<a class="ui tag label">Editor: ' + editor.user.userFirstName + '</a>');  
+        }            
+        d.resolve(editor);      
     })
     .fail(function (xhr, status, error) {
         toastr.error(error);
