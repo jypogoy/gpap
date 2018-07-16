@@ -65,7 +65,54 @@ class EditsController extends ControllerBase
 
         $this->session->set('fromEdits', true);
         $this->session->set('taskId', $taskId);
-        $this->session->set('taskName', $taskName);
+        $this->session->set('taskName', $taskName);  
+    }
+
+    public function recordEditorAction()
+    {
+        $userId = $this->session->get('auth')['id'];
+        $batchId = $this->request->getPost('batch_id');
+        $taskId = $this->request->getPost('task_id');
+        
+        try {
+            $batchEdit = new BatchEdit();
+            $batchEdit->task_id = $taskId;
+            $batchEdit->batch_id = $batchId;
+            $batchEdit->user_id = $userId;
+
+            if (!$batchEdit->save()) {
+                foreach ($entry->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+
+                $this->dispatcher->forward([
+                    'controller' => "home",
+                    'action' => 'index'
+                ]);
+
+                return;
+            }
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }  
+    }
+
+    public function getRecentEditor()
+    {
+        $batchId = $this->request->getPost('batch_id');
+        $taskId = $this->request->getPost('task_id');
+        
+        try {
+            $editor = BatchEdit::find(
+                [
+                    
+                ]
+            );
+
+        } catch (\Exception $e) {            
+            $this->errorLogger->error(parent::_constExceptionMessage($e));
+        }  
     }
 
     public function resetFiltersAction()

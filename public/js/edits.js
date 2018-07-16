@@ -28,7 +28,6 @@ $(function() {
                 $('#filterBtn').removeClass('disabled');                                
                 
                 $.when(filterJobs()).done(function(jobs) {         
-                    console.log(jobs)           
                     if (!jobs) {
                         toastr.info('There are currently no jobs for this region or filters did not match any record. \nPlease choose another.');
                         $('.job_date_field').removeClass('disabled');  
