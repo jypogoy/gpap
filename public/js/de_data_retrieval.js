@@ -405,7 +405,7 @@ function getRegionCurrency() {
         if (!data) {
             toastr.warning('The search did not match any currency.'); 
         } else {
-            var menuWrapper = $('#currency_id_dropdown .menu');
+            var menuWrapper = $('#currency_id_dropdown').find('.menu');
             $(menuWrapper).empty();
             $('<div class="item" data-value="0">- None -</div>').appendTo(menuWrapper); 
             $.each(data, function(i, currency) {
@@ -415,6 +415,7 @@ function getRegionCurrency() {
             if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
                 $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);              
             }            
+            $('.dropdown.icon').empty(); // Remove extra dropdown shown upon populating items.
         }   
         d.resolve(data);             
     })
