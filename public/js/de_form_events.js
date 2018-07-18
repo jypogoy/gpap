@@ -667,7 +667,7 @@ $(function() {
         var value = $('#installment_months_id_dropdown').dropdown('get value');  
 
         // Remind user that merchant accepts installment and might just be overlooked.
-        if (merchantInfoMap.get('acceptInstallment') == 'Y') {                                                
+        if (merchantInfoMap.get('acceptInstallment') == 'Y' || merchantInfoMap.get('acceptInstallment') == 'C') {                                                
             if (value == '' || value == 0) {                
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
