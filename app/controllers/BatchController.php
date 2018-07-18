@@ -497,7 +497,7 @@ class BatchController extends ControllerBase
             //         "seq"       =>  $sequence
             //     ]
             // );        
-            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, z.operator_id, LPAD(z.sequence,3,'0') AS sequence, SUBSTRING_INDEX(i.path, '/', -1) AS file_name, b.id AS batch_id, a.last_activity, t.id AS task_id
+            $sql = "SELECT z.region_code AS region_code, z.rec_date AS rec_date, tt.type AS type, z.operator_id, LPAD(z.sequence,3,'0') AS sequence, SUBSTRING_INDEX(i.path, '/', -1) AS file_name, b.id AS batch_id, a.last_activity, t.id AS task_id, mh.pulled 
                     FROM batch b 
                     INNER JOIN zip z ON z.id = b.zip_id 
                     INNER JOIN transaction_type tt ON tt.id = b.trans_type_id 
@@ -520,6 +520,11 @@ class BatchController extends ControllerBase
                     ) AS a ON a.id = b.id 
                     LEFT JOIN task t ON t.name = a.last_activity 
                     INNER JOIN image i ON i.batch_id = b.id 
+                    LEFT JOIN (
+						SELECT de.batch_id, de.task_id, mh.data_entry_id, CASE WHEN mh.batch_pull_reason_id THEN true ELSE false END AS pulled 
+						FROM data_entry de 
+						INNER JOIN merchant_header mh ON mh.data_entry_id = de.id 
+                    ) AS mh ON mh.batch_id = b.id AND mh.task_id = t.id 
                     WHERE i.is_start" . ($regionCode ? " AND z.region_code = '" . $regionCode . "'" : "") . ($zipId ? " AND b.zip_id = " . $zipId : "") . (strpos($recDate, 'aN') === false ? " AND DATE(b.create_date) = '" . $recDate . "'" : "");
             
             $rows = $this->db->query($sql);

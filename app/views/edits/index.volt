@@ -64,11 +64,12 @@
             <th>Transaction Type</th>
             <th>File Name</th>
             <th>Reference #</th>
+            <th>Pulled?</th>
             <th>Completed Tasks</th>
         </tr>
     </thead>
     <tbody class="listBody">
-        <tr><td colspan="6">No records found.</td></tr>        
+        <tr><td colspan="7">No records found.</td></tr>        
     </tbody>    
 </table>
 
