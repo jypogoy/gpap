@@ -286,7 +286,7 @@ function findSlipValueMatch(key, value) {
     var exists = false;
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(fieldValue, fieldId) {
-            if (fieldId == key && fieldValue == value) {      
+            if (fieldId == key && fieldValue == value && parseInt(page) != parseInt(slipPage)) {      
                 exists = true;
             }
         });
