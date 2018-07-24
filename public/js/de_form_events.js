@@ -1058,8 +1058,10 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
     if(headerValidationResult) {
         if (headerValidationResult && slipValidationResult) {            
             var wrapper = $('#variance_exception_wrapper');
+            var pullReason = $('#batch_pull_reason_id').val();
             $('#variance_alert').remove();
-            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+            // Do not proceed with negative variance and without batch pull reason.                
+            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
                                 '<span id="variance_msg">With negative variance</span>' +
@@ -1106,7 +1108,8 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
 function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
     var wrapper = $('#variance_exception_wrapper');
     $('#variance_alert').remove();
-    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked')) { // Do not proceed with variance.                
+    // Do not proceed with negative variance and without batch pull reason. 
+    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
         $(wrapper).addClass('error');
         wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
                         '<span id="variance_msg">With negative variance</span>' +
