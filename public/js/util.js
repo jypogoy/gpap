@@ -264,12 +264,12 @@ function calculateAmount(currencyCode) {
 
     var currencyCode = currencyCode ? currencyCode : $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
 
-    var totalAmount = 0;
+    var totalAmount = new Decimal(0);
     slipMap.forEach(function(valueMap, page) {
         valueMap.forEach(function(value, fieldId) {
             if (fieldId.indexOf('amount') != -1 && value && value != '0') {      
                 value = unformatValue(value);
-                totalAmount = new Decimal(totalAmount).plus(value);
+                totalAmount = totalAmount.plus(value);
                 //totalAmount = Math.round((parseFloat(totalAmount) + parseFloat(value)) * 1e12) / 1e12;
             }
         });

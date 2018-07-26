@@ -1107,6 +1107,7 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
 
 function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
     var wrapper = $('#variance_exception_wrapper');
+    var pullReason = $('#batch_pull_reason_id').val();
     $('#variance_alert').remove();
     // Do not proceed with negative variance and without batch pull reason. 
     if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
