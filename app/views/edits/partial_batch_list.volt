@@ -9,7 +9,7 @@
         <td>{{ str_replace('-', '', row.rec_date) }}-{{ row.operator_id }}-{{ row.sequence }}</td>        
         <td>{{ row.type }}</td> 
         <td>{{ row.file_name }}</td> 
-        <td>{{ row.batch_id }}</td>
+        <td>{{ row.ref_number }}</td>
         <td>{{ row.pulled == 1 ? image('public/img/check_green.png', 'style': 'width: 20px;') : '' }}</td>
         <td>
             {#<a onclick="edit({{ row.batch_id }}, {{ row.task_id }}, '{{ row.last_activity }}'); return false;" data-tooltip="Edit" data-position="bottom center">
