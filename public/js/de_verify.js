@@ -166,7 +166,7 @@ function acceptRaw(fieldId, value) {
         $('#image_id').val(rawId);
     } 
     if (fieldId == 'merchant_number') getRegionCurrency(); // See de_data_retrieval.js    
-    if (fieldId == 'card_number') {
+    if (fieldId == 'card_number' || fieldId == 'transaction_date') {
         $('#' + fieldId).trigger('blur');
         $('#' + fieldId).focus();
     }
