@@ -257,12 +257,12 @@ class SecurityController extends ControllerBase
 
         try {
             $sql = 'SELECT userID,
-                        POSITION(userName IN \'?\') AS m1,
-                        POSITION(userLastName IN \'?\') AS m2,
-                        POSITION(userFirstName IN \'?\') AS m3
+                        POSITION(userName IN \'' . $password . '\') AS m1,
+                        POSITION(userLastName IN \'' . $password . '\') AS m2,
+                        POSITION(userFirstName IN \'' . $password . '\') AS m3
                     FROM user WHERE userID = ' . $userId . ' HAVING m1 > 0 OR m2 > 0 OR m3 > 0';
 
-            $result = $this->db->query($sql, [$password, $password, $password]);
+            $result = $this->db->query($sql);
             $r = $result->numRows();
             return $result->numRows() > 0 ? true : false;
 
