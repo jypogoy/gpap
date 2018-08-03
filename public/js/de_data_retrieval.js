@@ -415,7 +415,8 @@ function getRegionCurrency() {
             if (merchantInfoMap.get('acceptOtherCurrency') == 'Y') {
                 $('<div class="item" data-value="34">Other</div>').appendTo(menuWrapper);              
             }            
-            $('.dropdown.icon').empty(); // Remove extra dropdown shown upon populating items.
+            console.log($('.dropdown.icon:not(#rulerIcon)'));
+            $('i.dropdown.icon').empty(); // Remove extra dropdown shown upon populating items.
         }   
         d.resolve(data);             
     })
