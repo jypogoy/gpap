@@ -331,7 +331,9 @@ $(function() {
                 $(wrapper).addClass('error');
                 $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="transaction_date_alert">' +
                         '<span id="transaction_date_msg">Invalid Date s/b in MM/DD/YY Format</span>' +
-                        '</div>');          
+                        '</div>');
+                $(this).focus();
+                $(this).select();                
             } else {
                 var date = $.datepicker.formatDate('yy-mm-dd', new Date(this.value));
 
