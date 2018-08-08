@@ -379,7 +379,8 @@ $(function() {
         var alert = $('#' + this.id + '_alert');
         var msg = $('#' + this.id + '_msg');
         var logo = $('#cardLogo');
-        if ($('#merchant_number').val() == '') {
+        var batchPullReason = $('#batch_pull_reason_id').val();
+        if ($('#merchant_number').val() == '' && (batchPullReason == 0 || batchPullReason == '')) {
             $(alert).remove();
             $(wrapper).addClass('error');
             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
@@ -473,7 +474,7 @@ $(function() {
                                             break;
 
                                         case 'Visa':
-                                            if ($.inArray('Visa', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('Visa', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Visa.');
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -485,7 +486,7 @@ $(function() {
                                             break;
                                         
                                         case 'Mastercard':
-                                            if ($.inArray('Mastercard', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('Mastercard', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Mastercard.'); 
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -497,7 +498,7 @@ $(function() {
                                             break;                                        
 
                                         case 'JCB':
-                                            if ($.inArray('JCB', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('JCB', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept JCB.');  
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -509,7 +510,7 @@ $(function() {
                                             break;    
                                             
                                         case 'AMEX':
-                                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('Amex', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept AMEX.');  
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -521,7 +522,7 @@ $(function() {
                                             break;     
 
                                         case 'CUP':
-                                            if ($.inArray('Amex', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('Amex', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept CUP.');  
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -533,7 +534,7 @@ $(function() {
                                             break;     
 
                                         case 'Discover':
-                                            if ($.inArray('Discover', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('Discover', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Discover.');  
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
@@ -545,7 +546,7 @@ $(function() {
                                             break;      
                                     
                                         case 'PrivateLabel':
-                                            if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0) {
+                                            if ($.inArray('PrivateLabel', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Private Label.');  
                                                 $(alert).remove();
                                                 $(wrapper).addClass('error');
