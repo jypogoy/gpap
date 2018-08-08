@@ -763,7 +763,6 @@ $(function() {
         $(this).val($(this).val().toUpperCase());
     });
 
-    //TODO
     //------------- Transaction Control Events ---------------------------------
     $('.more-btn').click(function(e) {
         e.preventDefault();        
@@ -885,6 +884,9 @@ function addNewSlip() {
             $('.unlink-slip-btn').addClass('hidden');    
             $('.link-slip-btn').addClass('hidden');  
         }
+
+        // Re-apply required mark on both batch header and transaction form.
+        overrideHeader($('#batch_pull_reason_id').val());
     } 
 }
 
@@ -938,6 +940,9 @@ function insertSlip() {
         $('.link-slip-btn').removeClass('hidden');
         $('.unlink-slip-btn').addClass('hidden');
         $('#transaction_date').focus();
+
+        // Re-apply required mark on both batch header and transaction form.
+        overrideHeader($('#batch_pull_reason_id').val());
     }
 }
 
@@ -1004,7 +1009,10 @@ function deleteSlip() {
 
                 calculateAmount(); // See de_data_navigation.js
 
-                //toastr.success('Transaction was deleted successfully.');                
+                //toastr.success('Transaction was deleted successfully.');    
+                
+                // Re-apply required mark on both batch header and transaction form.
+                overrideHeader($('#batch_pull_reason_id').val());
             }
         })
         .modal('show');   
@@ -1014,6 +1022,9 @@ function clearForm() {
     Form.clear(false);
     Form.resetErrors(false);
     $(slipRequiredFields).addClass('required');
+    
+    // Re-apply required mark on both batch header and transaction form.
+    overrideHeader($('#batch_pull_reason_id').val());
 }
 
 function linkSlip() {

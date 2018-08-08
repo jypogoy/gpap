@@ -236,8 +236,11 @@ function refreshTransTypeDependentFields() {
             $('#authorization_code_wrapper').addClass('hidden');
         }
     } else {
-        var pullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
-        if (!pullReasonId) $('#authorization_code_wrapper').addClass('required');
+        var batchPullReason = $('#batch_pull_reason_id').val();
+        var slipPullReasonId = $('#slip_pull_reason_id_dropdown').dropdown('get value');
+        if (!slipPullReasonId && (batchPullReason == 0 || batchPullReason == '')) {
+            $('#authorization_code_wrapper').addClass('required');
+        }
         $('#authorization_code_wrapper').removeClass('hidden');
     }
 }

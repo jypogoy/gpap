@@ -179,22 +179,16 @@ $(function() {
 
 function overrideHeader(pullReasonId) {
     if (pullReasonId && pullReasonId > 0) {
-        //$('#transactionDataForm').filter(":visible").find('.field, .fields').addClass('disabled');                
         $(headerRequiredFields).removeClass('required');
         $(slipRequiredFields).removeClass('required');
         Form.resetErrors(true);
-        Form.resetErrors(false);
-        // $('.slip-field:not(.auto-fill)').attr('disabled', true);
-        // $('.slip-dropdown').addClass('disabled');
-        // $('.slip-controls').addClass('hidden');        
+        Form.resetErrors(false);        
+        $('#image_file_wrapper').addClass('required');
     } else {
-        //$('#transactionDataForm').filter(":visible").find('.field, .fields').removeClass('disabled');                
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
-        // $(slipRequiredFields).addClass('required');
-        // $('.slip-field:not(.auto-fill, .image-link)').removeAttr('disabled');
-        // $('.slip-dropdown').removeClass('disabled');
-        // $('.slip-controls').removeClass('hidden');
+        // Re-apply required flags to transaction fields.
+        overrideSlip();
     }
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         //prepBalancingFields(); 
@@ -202,10 +196,11 @@ function overrideHeader(pullReasonId) {
 }
 
 function overrideSlip(pullReasonId) {
-    if (pullReasonId && pullReasonId > 0) {
-        $(slipRequiredFields).removeClass('required');
-        Form.resetErrors(false);
+    var batchPullReason = $('#batch_pull_reason_id').val();
+    if (pullReasonId && pullReasonId > 0 || (batchPullReason > 0 || batchPullReason != '')) {
+        $(slipRequiredFields).removeClass('required');        
         $('#image_file_wrapper').addClass('required');
+        Form.resetErrors(false);
     } else {
         $('#slip_pull_reason_id_dropdown').dropdown('restore defaults');
         $(slipRequiredFields).addClass('required');
