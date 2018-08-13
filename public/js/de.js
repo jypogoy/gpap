@@ -75,6 +75,9 @@ $(function() {
     $('#slip_pull_reason_id_dropdown').dropdown({
         onChange: function() {
             var value = $(this).dropdown('get value'); 
+            if (value == 0) {
+                $(this).dropdown('restore defaults');                
+            }
             overrideSlip(value);              
             var text = $(this).dropdown('get text');    
             if (text.indexOf('Supporting') != -1) { // Clear form content if Supporting Document.
