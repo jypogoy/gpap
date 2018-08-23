@@ -1064,9 +1064,9 @@ function unlinkSlip() {
 function preSave(isSaveOnly, isSaveNew, isComplete) {    
     var headerValidationResult = Form.validate(true);        
     var slipValidationResult = true;
-    if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
+    //if ($('#batch_pull_reason_id').val() == 0 || $('#batch_pull_reason_id').val() == '') {
         slipValidationResult = Form.validate(false);
-    }
+    //}
     if(headerValidationResult) {
         if (headerValidationResult && slipValidationResult) {            
             var wrapper = $('#variance_exception_wrapper');
