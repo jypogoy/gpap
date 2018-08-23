@@ -1,21 +1,46 @@
 var global = parseInt($('#session_lifetime').val());    
 var untilTimeout = parseInt($('#until_timeout').val());    
-var timer;
+var stopInterval = false;
+var session_timer;
 
 $(function() {
     initListeners();
-    timer = setInterval(function(){ noMovement() }, 1000);
+    runInterval();
 });
 
+function runInterval() {
+    if (stopInterval == false) {
+        setTimeout(function() {
+            noMovement();
+            runInterval();
+        }, 1000);
+    }
+}
+
+// function beingInterval() {
+//     session_timer = setInterval(function() { 
+//         if (session_interval_stopped) {
+//             clearInterval(session_timer);
+//         } else {
+//             noMovement();
+//         }
+//     }, 1000);
+// }
+
 function noMovement() {
-    if (global == 0) {         
-        
+    
+    console.log('Detecting movement... ' + global + ' second(s) until timeout.');
+    
+    if (global == 0) {     
+        stopInterval = true;            
         signOut();
-        clearInterval(timer);                     
 
     } else if (global <= untilTimeout) { // Give a minute for a user to extend session.         
         if ($('.extension.transition.visible').length == 0) {               
             
+            // Hide or close any displayed modals.
+            $('.modal').hide();
+
             buildModal();                     
 
             $('.modal.extension')
@@ -26,9 +51,8 @@ function noMovement() {
                 observeChanges : true, // <-- Helps retain the modal position on succeeding show.
                 onDeny : function(){
                     signOut();
-                    clearInterval(timer);
                 },
-                onApprove : function() {
+                onApprove : function() {                          
                     resetGlobal();
                     initListeners();
                     return;
@@ -37,9 +61,7 @@ function noMovement() {
             .modal('show');
 
             // Remove listening events.
-            $('html').off('mousemove');
-            $('html').off('click');
-            $('html').off('keyup');
+            unbindListeners();
         }
         $('#countDown').html(global);
     }
@@ -66,11 +88,19 @@ function signOut() {
     window.location = '/gpap/session/expired/'; // Redirect to login page.
 }
 
-function resetGlobal() {
-    global = $('#session_lifetime').val();            
+function resetGlobal() {    
+    global = $('#session_lifetime').val();        
+    console.log('>> Session counter reset to ' + global + ' seconds.');    
 }    
 
+function unbindListeners() {
+    $('html').off('mousemove');
+    $('html').off('click');
+    $('html').off('keyup');
+}
+
 function initListeners() {
+
     $('html').mousemove(function(event){
         resetGlobal();
     });

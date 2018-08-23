@@ -190,6 +190,12 @@ function filterBatches() {
 }
 
 function edit(batchId, taskId, taskName) {    
+
+    // Disable movement check to persist active session. See session_listener.js
+    stopInterval = true;
+    resetGlobal();
+    unbindListeners();
+
     var params = {};
     params.batch_id = batchId;
     params.task_id = taskId;

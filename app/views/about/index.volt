@@ -11,4 +11,5 @@
     <p>The main client for this project is Global Payments Asia Pacific.</p>
 </div>
 
+{{ javascript_include('js/heartbeat.js') }}
 {{ javascript_include('js/session_listener.js') }}

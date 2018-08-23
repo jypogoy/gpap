@@ -49,5 +49,6 @@
 
 <form id="beginForm"></form>
 
-{{ javascript_include('js/home.js') }}
+{{ javascript_include('js/heartbeat.js') }}
 {{ javascript_include('js/session_listener.js') }}
+{{ javascript_include('js/home.js') }}

@@ -79,5 +79,6 @@
 
 <div class="ui active loader"></div>
 
-{{ javascript_include('js/edits.js') }}
+{{ javascript_include('js/heartbeat.js') }}
 {{ javascript_include('js/session_listener.js') }}
+{{ javascript_include('js/edits.js') }}

@@ -144,7 +144,7 @@ var BatchModal = {
         
         $('#modal_task_label').html($('#task_id_dropdown').dropdown('get text'));
         
-        var modal = $('.modal:not(div.complete)');
+        var modal = $('.modal:not(div.complete,.extension)');
 
         $(modal)
         .modal('setting',
@@ -259,6 +259,12 @@ function complete(fromHome, actionEl, entryId, batchId) {
 }
 
 function begin(batchId) {
+
+    // Disable movement check to persist active session. See session_listener.js
+    stopInterval = true;
+    resetGlobal();
+    unbindListeners();
+
     var params = {};
     params.user_id = $('#user_id').val();
     params.task_id = activeTaskId;
@@ -280,6 +286,12 @@ function begin(batchId) {
 }
 
 function edit(batchId) {
+    
+    // Disable movement check to persist active session. See session_listener.js
+    stopInterval = true;
+    resetGlobal();
+    unbindListeners();
+
     $.post('de/prep', function (data) {  
         var form = $('#beginForm');
         $(form).attr('action', 'de/' + batchId);    
