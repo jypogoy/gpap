@@ -104,7 +104,7 @@ function setFieldValue(key, value) {
     // Set value for dropdown or comboboxes.  
     var dropDownEl = $('#' + key + '_dropdown');
     if (dropDownEl.length > 0) {
-        if (value == '') {
+        if (value == '' || value == null) {
             $(dropDownEl).dropdown('restore defaults');
         } else {       
             if (key == 'currency_id') {
@@ -146,7 +146,11 @@ function setFieldValue(key, value) {
                             $('#other_inst_term').val(rawSlipMap.get(slipPage).get('other_inst_term'));
                         }
                     }
-                }            
+                }   
+
+                if(key == 'slip_pull_reason_id') {
+                    overrideSlip(value);
+                }
             }                        
         } 
     }               

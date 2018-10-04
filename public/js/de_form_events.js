@@ -1012,7 +1012,10 @@ function deleteSlip() {
                 //toastr.success('Transaction was deleted successfully.');    
                 
                 // Re-apply required mark on both batch header and transaction form.
-                overrideHeader($('#batch_pull_reason_id').val());
+                //overrideHeader($('#batch_pull_reason_id').val());
+
+                // Re-apply required flags to transaction fields.
+                overrideSlip($('#slip_pull_reason_id').val());
             }
         })
         .modal('show');   

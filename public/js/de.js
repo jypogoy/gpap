@@ -191,7 +191,7 @@ function overrideHeader(pullReasonId) {
         $('#batch_pull_reason_id_dropdown').dropdown('restore defaults');
         $(headerRequiredFields).addClass('required');
         // Re-apply required flags to transaction fields.
-        overrideSlip();
+        //overrideSlip();
     }
     if ($('#session_task_name').val().indexOf('Balancing') != -1) {
         //prepBalancingFields(); 
@@ -200,12 +200,13 @@ function overrideHeader(pullReasonId) {
 
 function overrideSlip(pullReasonId) {
     var batchPullReason = $('#batch_pull_reason_id').val();
+    console.log(pullReasonId)
     if (pullReasonId && pullReasonId > 0 || (batchPullReason > 0 || batchPullReason != '')) {
         $(slipRequiredFields).removeClass('required');        
         $('#image_file_wrapper').addClass('required');
         Form.resetErrors(false);
     } else {
-        $('#slip_pull_reason_id_dropdown').dropdown('restore defaults');
+        //$('#slip_pull_reason_id_dropdown').dropdown('restore defaults');
         $(slipRequiredFields).addClass('required');
     }
 }
