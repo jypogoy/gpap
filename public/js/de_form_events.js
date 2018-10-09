@@ -121,7 +121,7 @@ $(function() {
     });
 
     $('#other_currency').blur(function(e) {
-        loadAndFormatAmounts();
+        loadAndFormatAmounts('Other');
         $('#deposit_amount').focus();
         // var el = this;
         // var otherCurrencyCode = el.value;
@@ -279,9 +279,14 @@ $(function() {
         // } else {
         //     this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
         // } 
-        loadAndFormatAmounts();       
-        calculateAmount(); // See de_data_navigation.js
-        
+        if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
+            loadAndFormatAmounts('Other');
+            calculateAmount('Other'); // See de_data_navigation.js
+        } else {
+            loadAndFormatAmounts();
+            calculateAmount(); // See de_data_navigation.js
+        }
+                                        
         var wrapper = $('#' + this.id + '_wrapper');
         if (this.value == '' || this.value == 0 || this.value == '0.00') {
             $('#' + this.id + '_alert').remove();
@@ -297,6 +302,23 @@ $(function() {
 
     $('#deposit_amount').keyup(function() {
         unformat(this); // See utils.js
+
+        // Limit the keyed number until the decimal point.
+        var currencyCode = $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
+        if (currencyCode.indexOf('BHD') != -1 || currencyCode.indexOf('KWD') != -1 || currencyCode.indexOf('OMR') != -1) {
+            if (this.value.length > 10 && this.value.indexOf('.') == -1) {
+                this.value = this.value.substring(0, 10);
+            }
+        } else {
+            // Apply custom handle for non-decimal.
+            if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1) {
+                // Do nothing...
+            } else {
+                if (this.value.length > 11 && this.value.indexOf('.') == -1) {
+                    this.value = this.value.substring(0, 11);
+                }
+            }
+        }
     });
 
     $('#deposit_amount').focus(function() {
@@ -628,14 +650,37 @@ $(function() {
         // } else {
         //     this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
         // }
-        loadAndFormatAmounts();
+        if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
+            loadAndFormatAmounts('Other');
+            calculateAmount('Other'); // See de_data_navigation.js
+        } else {
+            loadAndFormatAmounts();
+            calculateAmount(); // See de_data_navigation.js
+        }
+
         if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
-        saveSlip(); // Make sure to save the current slip to apply amount.
-        calculateAmount(); // See de_data_navigation.js
+        saveSlip(); // Make sure to save the current slip to apply amount.        
     }); 
 
     $('#transaction_amount').keyup(function() {
         unformat(this); // See utils.js
+
+        // Limit the keyed number until the decimal point.
+        var currencyCode = $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
+        if (currencyCode.indexOf('BHD') != -1 || currencyCode.indexOf('KWD') != -1 || currencyCode.indexOf('OMR') != -1) {
+            if (this.value.length > 6 && this.value.indexOf('.') == -1) {
+                this.value = this.value.substring(0, 6);
+            }
+        } else {
+            // Apply custom handle for non-decimal.
+            if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1) {
+                // Do nothing...
+            } else {
+                if (this.value.length > 7 && this.value.indexOf('.') == -1) {
+                    this.value = this.value.substring(0, 7);
+                }
+            }
+        }    
     });
 
     $('#transaction_amount').focus(function() {

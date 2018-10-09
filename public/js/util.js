@@ -217,6 +217,7 @@ function formatAmount(currencyCode, amountValue) {
             var otherCurrCode = $('#other_currency').val().toUpperCase();
             if (otherCurrCode.indexOf('BHD') != -1 || otherCurrCode.indexOf('KWD') != -1 || otherCurrCode.indexOf('OMR') != -1) {
                 amountValue = accounting.formatMoney(amountValue, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
+                //amountValue = accounting.formatMoney(amountValue, 3, ','); // See accounting.min.js
             } else {
                 amountValue = accounting.formatMoney(amountValue, { symbol: '', format: '%v %s' }); // See accounting.min.js
             }
