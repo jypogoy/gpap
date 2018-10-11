@@ -278,15 +278,7 @@ $(function() {
         //     this.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
         // } else {
         //     this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-        // } 
-        if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
-            loadAndFormatAmounts('Other');
-            calculateAmount('Other'); // See de_data_navigation.js
-        } else {
-            loadAndFormatAmounts();
-            calculateAmount(); // See de_data_navigation.js
-        }
-                                        
+        // }                                                 
         var wrapper = $('#' + this.id + '_wrapper');
         if (this.value == '' || this.value == 0 || this.value == '0.00') {
             $('#' + this.id + '_alert').remove();
@@ -297,6 +289,14 @@ $(function() {
         } else {
             $(wrapper).removeClass('error');
             $('#' + this.id + '_alert').remove();
+        }
+
+        if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
+            loadAndFormatAmounts('Other');
+            calculateAmount('Other'); // See de_data_navigation.js
+        } else {
+            loadAndFormatAmounts();
+            calculateAmount(); // See de_data_navigation.js
         }
     });  
 
@@ -649,7 +649,10 @@ $(function() {
         //     this.value = accounting.formatNumber(noDecVal); // See accounting.min.js            
         // } else {
         //     this.value = accounting.formatMoney(this.value, { symbol: '',  format: '%v %s' }); // See accounting.min.js
-        // }
+        // }        
+        if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
+        saveSlip(); // Make sure to save the current slip to apply amount.        
+
         if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
             loadAndFormatAmounts('Other');
             calculateAmount('Other'); // See de_data_navigation.js
@@ -657,9 +660,6 @@ $(function() {
             loadAndFormatAmounts();
             calculateAmount(); // See de_data_navigation.js
         }
-
-        if (this.value != '') $('#transaction_amount_wrapper').removeClass('error');
-        saveSlip(); // Make sure to save the current slip to apply amount.        
     }); 
 
     $('#transaction_amount').keyup(function() {

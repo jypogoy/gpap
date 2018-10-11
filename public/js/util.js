@@ -263,7 +263,9 @@ function loadAndFormatAmounts(currencyCode) {
 
 function calculateAmount(currencyCode) {
 
-    var currencyCode = currencyCode ? currencyCode : $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
+    var currencyCode = currencyCode ? 
+                        (currencyCode == 'Other' ? $('#other_currency').val() : currencyCode) : 
+                        $('#currency_id_dropdown').dropdown('get text').substring(0, 3);
 
     var totalAmount = new Decimal(0);
     slipMap.forEach(function(valueMap, page) {
