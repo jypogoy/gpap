@@ -293,10 +293,10 @@ $(function() {
 
         if ($('#currency_id_dropdown').dropdown('get text') == 'Other') {
             loadAndFormatAmounts('Other');
-            calculateAmount('Other'); // See de_data_navigation.js
+            calculateAmount('Other'); // See util.js
         } else {
             loadAndFormatAmounts();
-            calculateAmount(); // See de_data_navigation.js
+            calculateAmount(); // See util.js
         }
     });  
 

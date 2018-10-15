@@ -221,7 +221,8 @@ function formatAmount(currencyCode, amountValue) {
             } else {
                 amountValue = accounting.formatMoney(amountValue, { symbol: '', format: '%v %s' }); // See accounting.min.js
             }
-        } else {                    
+        } else {
+            currencyCode = currencyCode.toUpperCase();                    
             if (currencyCode.indexOf('BHD') != -1 || currencyCode.indexOf('KWD') != -1 || currencyCode.indexOf('OMR') != -1) {
                 amountValue = accounting.formatMoney(amountValue, { symbol: '', precision: 3, format: '%v %s' }); // See accounting.min.js
             } else {
@@ -281,7 +282,6 @@ function calculateAmount(currencyCode) {
     var deposit = unformatValue($('#deposit_amount').val()); // See utils.js    
     var variance = totalAmount.minus(deposit);
     //var variance = totalAmount - deposit;
-    
     $('#total_transaction_amount').val(formatAmount(currencyCode, String(totalAmount)));    
     $('#variance').val(formatAmount(currencyCode, String(variance)));
 };

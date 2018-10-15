@@ -200,7 +200,6 @@ function overrideHeader(pullReasonId) {
 
 function overrideSlip(pullReasonId) {
     var batchPullReason = $('#batch_pull_reason_id').val();
-    console.log(pullReasonId)
     if (pullReasonId && pullReasonId > 0 || (batchPullReason > 0 || batchPullReason != '')) {
         $(slipRequiredFields).removeClass('required');        
         $('#image_file_wrapper').addClass('required');
