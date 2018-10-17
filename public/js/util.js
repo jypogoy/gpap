@@ -127,6 +127,26 @@ function getCardType(number)
     if (number.match(re) != null)
         return "Diners";
 
+    // // Diners 30000000 - 30599999
+    // re = new RegExp("^(30[0-4][0-9]{5}|305[0-8][0-9]{4}|3059[0-8][0-9]{3}|30599[0-8][0-9]{2}|305999[0-8][0-9]|3059999[0-9])");
+    // if (number.match(re) != null)
+    //     return "Diners";    
+
+    // // Diners 30950000 - 30959999
+    // re = new RegExp("^(3095[0-8][0-9]{3}|30959[0-8][0-9]{2}|309599[0-8][0-9]|3095999[0-9])");
+    // if (number.match(re) != null)
+    //     return "Diners";    
+
+    // // Diners 36000000 - 36999999
+    // re = new RegExp("^(36[0-8][0-9]{5}|369[0-8][0-9]{4}|3699[0-8][0-9]{3}|36999[0-8][0-9]{2}|369999[0-8][0-9]|3699999[0-9])");
+    // if (number.match(re) != null)
+    //     return "Diners";    
+
+    // // Diners 38000000 - 39999999
+    // re = new RegExp("^(38[0-9]{6}|39[0-8][0-9]{5}|399[0-8][0-9]{4}|3999[0-8][0-9]{3}|39999[0-8][0-9]{2}|399999[0-8][0-9]|3999999[0-9])");
+    // if (number.match(re) != null)
+    //     return "Diners";
+
     // Diners - Carte Blanche
     re = new RegExp("^30[0-5]");
     if (number.match(re) != null)

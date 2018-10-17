@@ -414,6 +414,7 @@ $(function() {
             refreshTransTypeDependentFields(); // See de_data_navigation.js
 
             if (this.value.length == 0) {
+                $(logo).attr('src', '../public/img/card/private.png')
                 $(alert).remove();
                 $(wrapper).removeClass('error');
             } else {
@@ -425,28 +426,28 @@ $(function() {
                             '</div>');
                     isPreInvalid = true;
                 } else {
-                    if (this.value.length < this.maxLength) {
+                    // if (this.value.length < this.maxLength) {
 
-                        $(alert).remove();
-                        $(wrapper).addClass('error');
+                    //     $(alert).remove();
+                    //     $(wrapper).addClass('error');
 
-                        // Check if Visa (starting with 4) if meets the other accepted length (13).
-                        re = new RegExp("^(4)");
-                        if (this.value.match(re) != null && (this.value.length < 13 || this.value.length < this.maxLength)) {
-                            if (this.value.length == 13) {
-                                $(wrapper).removeClass('error');
-                                return;
-                            }
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ', s/b ' + 13 + ' or ' + this.maxLength + '</span>' +
-                                '</div>');
-                        } else {
-                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                                '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + this.maxLength + '</span>' +
-                                '</div>');
-                        }                                                
-                        isPreInvalid = true;
-                    } else {
+                    //     // Check if Visa (starting with 4) if meets the other accepted length (13).
+                    //     re = new RegExp("^(4)");
+                    //     if (this.value.match(re) != null && (this.value.length < 13 || this.value.length < this.maxLength)) {
+                    //         if (this.value.length == 13) {
+                    //             $(wrapper).removeClass('error');
+                    //             return;
+                    //         }
+                    //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                    //             '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ', s/b ' + 13 + ' or ' + this.maxLength + '</span>' +
+                    //             '</div>');
+                    //     } else {
+                    //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                    //             '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + this.maxLength + '</span>' +
+                    //             '</div>');
+                    //     }                                                
+                    //     isPreInvalid = true;
+                    // } else {
                         var mod10Valid = validateCard($(this).val()); // MOD 10 check. See util.js
                         if (!mod10Valid) {
 
@@ -460,7 +461,7 @@ $(function() {
                             $(wrapper).removeClass('error');       
                             $(alert).remove();
                             var cardType = getCardType($(this).val()); // See util.js
-                            
+                            console.log(cardType)
                             if (this.value.trim() != '') {
                                 
                                 this.value = cc_format(this.value); // See util.js                                
@@ -555,6 +556,18 @@ $(function() {
                                             $(logo).attr('src', '../public/img/card/cup.png')
                                             break;     
 
+                                        case 'Diners':
+                                            if ($.inArray('Diners', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
+                                                //toastr.info('Merchant does not accept Discover.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Diners</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/diners.png')
+                                            break;      
+
                                         case 'Discover':
                                             if ($.inArray('Discover', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Discover.');  
@@ -578,13 +591,18 @@ $(function() {
                                             }
                                             $(logo).attr('src', '../public/img/card/private.png')
                                             break;
-                                        default:
+                                        default:   
+                                            $(alert).remove();
+                                            $(wrapper).addClass('error');
+                                            $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                    '<span id="' + this.id + '_msg">Card Unknown</span>' +
+                                                    '</div>');                                     
                                             break; 
                                     }
                                 }
                             }
                         }
-                    }
+                    //}
                 }
             }
         }
