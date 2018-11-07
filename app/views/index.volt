@@ -35,6 +35,7 @@
         {{ javascript_include('js/util.js') }}
         {{ javascript_include('js/list.js') }}
         {{ javascript_include('js/message.js') }}
-        {{ javascript_include('js/form.js') }}        
+        {{ javascript_include('js/form.js') }}
+        {{ javascript_include('js/cc_helpers.js') }}          
     </body>
 </html>

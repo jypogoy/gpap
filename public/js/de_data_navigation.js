@@ -96,6 +96,13 @@ function setFieldValue(key, value) {
         if (key.indexOf('dcn') != -1) origDCN = value;
 
         $('#' + key).val(value);
+        
+        // Load card logo. See cc_helpers.js
+        if (key.indexOf('card') != -1) {
+            var cardType = getCardType(value);
+            showCardLogo(cardType);
+        }
+
         var calEl = $('#' + key + '_cal');
         if (calEl) { // If calendar element exists
             $(calEl).calendar('set date', value);

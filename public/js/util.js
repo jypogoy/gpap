@@ -59,125 +59,54 @@ function createCORSRequest(method, url) {
     return xhr;
 }
 
-function validateCard(value) { // Luhn algorithm or MOD 10
-    // accept only digits, dashes or spaces
-    if (/[^0-9-\s]+/.test(value)) return false;
+function getLengthByCard(card) {
+    var lengths = [];
+    switch (card) {
+        case "Visa":
+            lengths.push(13);
+            lengths.push(16);
+            break;
 
-    // The Luhn Algorithm. It's so pretty.
-    var nCheck = 0, nDigit = 0, bEven = false;
-    value = value.replace(/\D/g, "");
+        case "Visa Electron":
+            lengths.push(13);
+            lengths.push(16);
+            break;    
 
-    for (var n = value.length - 1; n >= 0; n--) {
-      var cDigit = value.charAt(n),
-          nDigit = parseInt(cDigit, 10);
+        case "Mastercard":
+            lengths.push(16);
+            break;    
+        
+        case "AMEX":
+            lengths.push(16);
+            break;     
 
-      if (bEven) {
-        if ((nDigit *= 2) > 9) nDigit -= 9;
-      }
+        case "Discover":
+            lengths.push(16);
+            break;
+        
+        case "Diners":
+            lengths.push(16);   
+            break;  
 
-      nCheck += nDigit;
-      bEven = !bEven;
+        case "Diners - Carte Blanche":
+            lengths.push(16);
+            break;    
+
+        case "JCB":
+            
+            break;                     
+            
+        case "CUP":
+            
+            break; 
+            
+        case "Maestro":
+            
+            break;     
+
+        default:
+            break;
     }
-
-    return (nCheck % 10) == 0;
-}
-
-function limitCardLengthByStartingNumbers(el) {
-    var number = el.value;
-    // Supported starting numbers
-    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
-    if (number.match(re) != null) {
-        re = new RegExp("^(3|4|9|51|52|53|54|55|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
-        if (number.match(re) != null) $(el).attr('maxlength', 16)
-        re = new RegExp("^(2131|1800)");
-        if (number.match(re) != null) $(el).attr('maxlength', 15);
-    }
-}
-
-function withinCardCollection(value) {
-    // Supported starting numbers
-    re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
-    return value.match(re) != null ? true : false;
-}
-
-function getCardType(number)
-{
-    // Visa
-    var re = new RegExp("^4");
-    if (number.match(re) != null)
-        return "Visa";
-
-    // Mastercard 
-    // Updated for Mastercard 2017 BINs expansion
-     if (/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/.test(number)) 
-        return "Mastercard";
-
-    // AMEX
-    re = new RegExp("^3[47]");
-    if (number.match(re) != null)
-        return "AMEX";
-
-    // Discover
-    re = new RegExp("^(6011|622(12[6-9]|1[3-9][0-9]|[2-8][0-9]{2}|9[0-1][0-9]|92[0-5]|64[4-9])|65)");
-    if (number.match(re) != null)
-        return "Discover";
-
-    // Diners
-    re = new RegExp("^36");
-    if (number.match(re) != null)
-        return "Diners";
-
-    // // Diners 30000000 - 30599999
-    // re = new RegExp("^(30[0-4][0-9]{5}|305[0-8][0-9]{4}|3059[0-8][0-9]{3}|30599[0-8][0-9]{2}|305999[0-8][0-9]|3059999[0-9])");
-    // if (number.match(re) != null)
-    //     return "Diners";    
-
-    // // Diners 30950000 - 30959999
-    // re = new RegExp("^(3095[0-8][0-9]{3}|30959[0-8][0-9]{2}|309599[0-8][0-9]|3095999[0-9])");
-    // if (number.match(re) != null)
-    //     return "Diners";    
-
-    // // Diners 36000000 - 36999999
-    // re = new RegExp("^(36[0-8][0-9]{5}|369[0-8][0-9]{4}|3699[0-8][0-9]{3}|36999[0-8][0-9]{2}|369999[0-8][0-9]|3699999[0-9])");
-    // if (number.match(re) != null)
-    //     return "Diners";    
-
-    // // Diners 38000000 - 39999999
-    // re = new RegExp("^(38[0-9]{6}|39[0-8][0-9]{5}|399[0-8][0-9]{4}|3999[0-8][0-9]{3}|39999[0-8][0-9]{2}|399999[0-8][0-9]|3999999[0-9])");
-    // if (number.match(re) != null)
-    //     return "Diners";
-
-    // Diners - Carte Blanche
-    re = new RegExp("^30[0-5]");
-    if (number.match(re) != null)
-        return "Diners - Carte Blanche";
-
-    // JCB
-    re = new RegExp("^35(2[89]|[3-8][0-9])");
-    if (number.match(re) != null)
-        return "JCB";
-
-    // Visa Electron
-    re = new RegExp("^(4026|417500|4508|4844|491(3|7))");
-    if (number.match(re) != null)
-        return "Visa Electron";
-
-    // China Union Pay
-    re = new RegExp("^(62[0-9]{14,17})$");
-    if (number.match(re) != null)
-        return "CUP";
-
-    // Maestro
-    re = new RegExp("^(5018)");
-    if (number.match(re) != null)
-        return "Maestro";
-
-    // Not supported starting numbers
-    // re = new RegExp("^(3|4|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
-    // if (number.match(re) == null)
-    //     return "NotSupported";
-
-    // return "";
 }
 
 function checkWebStorageSupport() {

@@ -396,6 +396,25 @@ $(function() {
         }
     });    
 
+    var cardLengths = {};
+    $('#card_number').focus(function() {
+        unformat(this); // See util.js
+        //limitCardLengthByStartingNumbers(this); // See util.js
+        var cardType = getCardType(this.value);
+        showCardLogo(cardType);
+        cardLengths = getValidLengths(cardType);
+        limitCardInputLength(this, cardType);
+    });
+    
+    $('#card_number').keyup(function() {
+        unformat(this); // See util.js
+        //limitCardLengthByStartingNumbers(this); // See util.js
+        var cardType = getCardType(this.value);
+        showCardLogo(cardType);
+        cardLengths = getValidLengths(cardType);
+        limitCardInputLength(this, cardType);
+    });
+
     $('#card_number').blur(function() {
         var wrapper = $('#' + this.id + '_wrapper');
         var alert = $('#' + this.id + '_alert');
@@ -425,41 +444,56 @@ $(function() {
                             '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
                             '</div>');
                     isPreInvalid = true;
+                    $(logo).attr('src', '../public/img/card/card_warning.png');
                 } else {
-                    // if (this.value.length < this.maxLength) {
 
-                    //     $(alert).remove();
-                    //     $(wrapper).addClass('error');
+                    // Check if the card allows multiple lengths. If multiple, use the next length as max. Otherwise, use the first length as max.
+                    var maxLength = cardLengths.length2 ? cardLengths.length2 : cardLengths.length1;
+                    
+                    if (this.value.length < cardLengths.length1 && this.value.length < maxLength) {
 
-                    //     // Check if Visa (starting with 4) if meets the other accepted length (13).
-                    //     re = new RegExp("^(4)");
-                    //     if (this.value.match(re) != null && (this.value.length < 13 || this.value.length < this.maxLength)) {
-                    //         if (this.value.length == 13) {
-                    //             $(wrapper).removeClass('error');
-                    //             return;
-                    //         }
-                    //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                    //             '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ', s/b ' + 13 + ' or ' + this.maxLength + '</span>' +
-                    //             '</div>');
-                    //     } else {
-                    //         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
-                    //             '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + this.maxLength + '</span>' +
-                    //             '</div>');
-                    //     }                                                
-                    //     isPreInvalid = true;
-                    // } else {
+                        $(alert).remove();
+                        $(wrapper).addClass('error');
+
+                        // Check if Visa (starting with 4) if meets the other accepted length (13).
+                        // re = new RegExp("^(4)");
+                        // if (this.value.match(re) != null && (this.value.length < cardLengths.length1 || this.value.length < maxLength)) {  
+                        if (this.value.length < cardLengths.length1 || this.value.length < cardLengths.length2) {    
+                            if (this.value.length == cardLengths.length1) {
+                                $(wrapper).removeClass('error');
+                                return;
+                            }
+                            if (cardLengths.length2) {
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                    '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ', s/b ' + cardLengths.length1 + ' or ' + maxLength + '</span>' +
+                                    '</div>');
+                            } else {
+                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                    '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + maxLength + '</span>' +
+                                    '</div>'); 
+                            }
+                        } 
+                        // else {
+                        //     $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                        //         '<span id="' + this.id + '_msg">Invalid Length: ' + unformatValue(this.value).length + ' of ' + maxLength + '</span>' +
+                        //         '</div>');
+                        // }                                                
+                        isPreInvalid = true;
+                        //$(logo).attr('src', '../public/img/card/card_warning.png');
+                    } else {
+                        
                         var mod10Valid = validateCard($(this).val()); // MOD 10 check. See util.js
+                        
                         if (!mod10Valid) {
-
                             $(alert).remove();
                             $(wrapper).addClass('error');
                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                     '<span id="' + this.id + '_msg">Invalid PAN: MOD10 Failed</span>' +
-                                    '</div>');
-                            $(logo).attr('src', '../public/img/card/private.png')                            
+                                    '</div>');                      
                         } else {
                             $(wrapper).removeClass('error');       
                             $(alert).remove();
+                            
                             var cardType = getCardType($(this).val()); // See util.js
                             console.log(cardType)
                             if (this.value.trim() != '') {
@@ -473,6 +507,7 @@ $(function() {
                                         $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                                 '<span id="' + this.id + '_msg">PAN with duplicate</span>' +
                                                 '</div>');
+                                        $(logo).attr('src', '../public/img/card/card_warning.png');        
                                     }                                    
                                 } else {
                                     $(wrapper).removeClass('error');
@@ -493,6 +528,7 @@ $(function() {
                                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                                     '<span id="' + this.id + '_msg">Invalid Starting Number</span>' +
                                                     '</div>');
+                                            $(logo).attr('src', '../public/img/card/card_warning.png');
                                             isPreInvalid = true;
                                             break;
 
@@ -556,7 +592,7 @@ $(function() {
                                             $(logo).attr('src', '../public/img/card/cup.png')
                                             break;     
 
-                                        case 'Diners':
+                                        case 'Diners-1' || 'Diners-2':
                                             if ($.inArray('Diners', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Discover.');  
                                                 $(alert).remove();
@@ -596,27 +632,18 @@ $(function() {
                                             $(wrapper).addClass('error');
                                             $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
                                                     '<span id="' + this.id + '_msg">Card Unknown</span>' +
-                                                    '</div>');                                     
+                                                    '</div>');   
+                                            $(logo).attr('src', '../public/img/card/card_warning.png');                                          
                                             break; 
                                     }
                                 }
                             }
                         }
-                    //}
+                    }
                 }
             }
         }
-    });
-
-    $('#card_number').focus(function() {
-        unformat(this); // See util.js
-        limitCardLengthByStartingNumbers(this); // See util.js
-    });
-
-    $('#card_number').keyup(function() {
-        unformat(this); // See util.js
-        limitCardLengthByStartingNumbers(this); // See util.js
-    });
+    });    
 
     $('#card_number').click(function() {
         unformat(this); // See util.js
