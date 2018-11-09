@@ -482,6 +482,8 @@ $(function() {
                         //$(logo).attr('src', '../public/img/card/card_warning.png');
                     } else {
                         
+                        this.value = cc_format(this.value); // See util.js
+
                         var mod10Valid = validateCard($(this).val()); // MOD 10 check. See util.js
                         
                         if (!mod10Valid) {
@@ -498,7 +500,7 @@ $(function() {
                             
                             if (this.value.trim() != '') {
                                 
-                                this.value = cc_format(this.value); // See util.js                                
+                                //this.value = cc_format(this.value); // See util.js                                
                                 
                                 if (slipPage > 1) { // Get the previous transaction and check if PAN is already used.
                                     var exists = findSlipValueMatch('card_number', this.value);

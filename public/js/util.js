@@ -1,6 +1,6 @@
 function cc_format(value) {
     var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-    var matches = v.match(/\d{4,16}/g);
+    var matches = v.match(/\d{4,19}/g); // Set to 19 to accommodate Diners and Discover digit count.
     var match = matches && matches[0] || ''
     var parts = []
 

@@ -99,7 +99,7 @@ function setFieldValue(key, value) {
         
         // Load card logo. See cc_helpers.js
         if (key.indexOf('card') != -1) {
-            var cardType = getCardType(value);
+            var cardType = getCardType(unformatValue(value));
             showCardLogo(cardType);
         }
 
