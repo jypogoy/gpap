@@ -169,7 +169,11 @@ function showCardLogo(cardType) {
             $(logo).attr('src', '../public/img/card/cup.png')
             break;     
 
-        case 'Diners-1' || 'Diners-2':
+        case 'Diners-1':
+            $(logo).attr('src', '../public/img/card/diners.png')
+            break;      
+        
+        case 'Diners-2':
             $(logo).attr('src', '../public/img/card/diners.png')
             break;      
 

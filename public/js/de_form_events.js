@@ -495,7 +495,7 @@ $(function() {
                             $(alert).remove();
                             
                             var cardType = getCardType($(this).val()); // See util.js
-                            console.log(cardType)
+                            
                             if (this.value.trim() != '') {
                                 
                                 this.value = cc_format(this.value); // See util.js                                
@@ -592,7 +592,19 @@ $(function() {
                                             $(logo).attr('src', '../public/img/card/cup.png')
                                             break;     
 
-                                        case 'Diners-1' || 'Diners-2':
+                                        case 'Diners-1':
+                                            if ($.inArray('Diners', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
+                                                //toastr.info('Merchant does not accept Discover.');  
+                                                $(alert).remove();
+                                                $(wrapper).addClass('error');
+                                                $(wrapper).append('<div class="ui basic red pointing prompt label transition" id="' + this.id + '_alert">' +
+                                                        '<span id="' + this.id + '_msg">Merchant does not accept Diners</span>' +
+                                                        '</div>');
+                                            }
+                                            $(logo).attr('src', '../public/img/card/diners.png')
+                                            break;          
+                                        
+                                        case 'Diners-2':
                                             if ($.inArray('Diners', merchantAcceptedCards) < 0 && (batchPullReason == 0 || batchPullReason == '')) {
                                                 //toastr.info('Merchant does not accept Discover.');  
                                                 $(alert).remove();
