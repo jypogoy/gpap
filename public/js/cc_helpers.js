@@ -1,9 +1,20 @@
+function withinCardCollection(value) {
+    // Supported starting numbers
+    re = new RegExp("^(3|4|6|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
+    return value.match(re) != null ? true : false;
+}
+
 function getCardType(number)
 {    
     // Visa
     var re = new RegExp("^4");
     if (number.match(re) != null)
         return "Visa";
+
+    // Visa Electron
+    re = new RegExp("^(4026|417500|4508|4844|491(3|7))");
+    if (number.match(re) != null)
+        return "Visa Electron";
 
     // Mastercard 
     // Updated for Mastercard 2017 BINs expansion
@@ -117,12 +128,7 @@ function getCardType(number)
     // JCB
     re = new RegExp("^35(2[89]|[3-8][0-9])");
     if (number.match(re) != null)
-        return "JCB";
-
-    // Visa Electron
-    re = new RegExp("^(4026|417500|4508|4844|491(3|7))");
-    if (number.match(re) != null)
-        return "Visa Electron";
+        return "JCB";    
 
     // China Union Pay
     re = new RegExp("^(62[0-9]{14,17})$");
@@ -256,9 +262,3 @@ function validateCard(value) { // Luhn algorithm or MOD 10
 //         if (number.match(re) != null) $(el).attr('maxlength', 15);
 //     }
 // }
-
-function withinCardCollection(value) {
-    // Supported starting numbers
-    re = new RegExp("^(3|4|6|9|51|52|53|54|55|2131|1800|589460)|^(222[1-8][0-9]{2}|2229[0-8][0-9]|22299[0-9]|22[3-9][0-9]{3}|2[3-6][0-9]{4}|27[01][0-9]{3}|2720[0-8][0-9]|27209[0-9])");
-    return value.match(re) != null ? true : false;
-}

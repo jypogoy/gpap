@@ -59,56 +59,6 @@ function createCORSRequest(method, url) {
     return xhr;
 }
 
-function getLengthByCard(card) {
-    var lengths = [];
-    switch (card) {
-        case "Visa":
-            lengths.push(13);
-            lengths.push(16);
-            break;
-
-        case "Visa Electron":
-            lengths.push(13);
-            lengths.push(16);
-            break;    
-
-        case "Mastercard":
-            lengths.push(16);
-            break;    
-        
-        case "AMEX":
-            lengths.push(16);
-            break;     
-
-        case "Discover":
-            lengths.push(16);
-            break;
-        
-        case "Diners":
-            lengths.push(16);   
-            break;  
-
-        case "Diners - Carte Blanche":
-            lengths.push(16);
-            break;    
-
-        case "JCB":
-            
-            break;                     
-            
-        case "CUP":
-            
-            break; 
-            
-        case "Maestro":
-            
-            break;     
-
-        default:
-            break;
-    }
-}
-
 function checkWebStorageSupport() {
   if (typeof(Storage) !== "undefined") {
       // Code for localStorage/sessionStorage.

@@ -482,9 +482,10 @@ $(function() {
                         //$(logo).attr('src', '../public/img/card/card_warning.png');
                     } else {
                         
-                        this.value = cc_format(this.value); // See util.js
+                        var unformattedCC = this.value;
+                        this.value = cc_format(unformattedCC); // See util.js
 
-                        var mod10Valid = validateCard($(this).val()); // MOD 10 check. See util.js
+                        var mod10Valid = validateCard(this.value); // MOD 10 check. See util.js
                         
                         if (!mod10Valid) {
                             $(alert).remove();
@@ -496,7 +497,7 @@ $(function() {
                             $(wrapper).removeClass('error');       
                             $(alert).remove();
                             
-                            var cardType = getCardType($(this).val()); // See util.js
+                            var cardType = getCardType(unformattedCC); // See util.js
                             
                             if (this.value.trim() != '') {
                                 
@@ -512,7 +513,7 @@ $(function() {
                                         $(logo).attr('src', '../public/img/card/card_warning.png');        
                                     }                                    
                                 } else {
-                                    $(wrapper).removeClass('error');
+                                    $(wrapper).removeClass('error');                                    
                                     switch (cardType) {
                                         case 'Maestro':
                                             $(alert).remove();
