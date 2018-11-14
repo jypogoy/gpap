@@ -98,7 +98,7 @@ function setFieldValue(key, value) {
         $('#' + key).val(value);
         
         // Load card logo. See cc_helpers.js
-        if (key.indexOf('card') != -1) {
+        if (key.indexOf('card') != -1 && value) {
             var cardType = getCardType(unformatValue(value));
             showCardLogo(cardType);
         }
