@@ -83,19 +83,19 @@ $(function() {
 
         // Save and Next
         listener.simple_combo("ctrl 4", function() {
-            preSave(false, true, false);
+            preSaveNoValidation(false, true, false);
         });
         listener.simple_combo("ctrl num_4", function() {
-            preSave(false, true, false);
+            preSaveNoValidation(false, true, false);
         });
     }
 
     // Save and Exit
     listener.simple_combo("ctrl 5", function() {
-        preSave(false, false, false);
+        preSaveNoValidation(false, false, false);
     });
     listener.simple_combo("ctrl num_5", function() {
-        preSave(false, false, false);
+        preSaveNoValidation(false, false, false);
     });
 
     // Viewer commands. See viewer.js--------------------------------------------------------------   
