@@ -1180,11 +1180,15 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
             var wrapper = $('#variance_exception_wrapper');
             var pullReason = $('#batch_pull_reason_id').val();
             $('#variance_alert').remove();
-            // Do not proceed with negative variance and without batch pull reason.                
-            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
+            
+            // Do not proceed with positive or negative variance and without batch pull reason.                
+            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
+                || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0)
+                && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
+
                 $(wrapper).addClass('error');
                 wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
-                                '<span id="variance_msg">With negative variance</span>' +
+                                '<span id="variance_msg">With variance</span>' +
                                 '</div>');
                 
                 // var resp = confirm('Warning: This Batch has negative variance and should be tagged as exception. Click OK to ignore and proceed.');
@@ -1229,11 +1233,15 @@ function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
     var wrapper = $('#variance_exception_wrapper');
     var pullReason = $('#batch_pull_reason_id').val();
     $('#variance_alert').remove();
-    // Do not proceed with negative variance and without batch pull reason. 
-    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
+    
+    // Do not proceed with positive or negative variance and without batch pull reason.                
+    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
+        || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0)
+        && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {        
+
         $(wrapper).addClass('error');
         wrapper.append('<div class="ui basic red pointing prompt label transition" id="variance_alert">' +
-                        '<span id="variance_msg">With negative variance</span>' +
+                        '<span id="variance_msg">With variance</span>' +
                         '</div>');
         
         // var resp = confirm('Warning: This Batch has negative variance and should be tagged as exception. Click OK to ignore and proceed.');
