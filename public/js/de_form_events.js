@@ -1182,8 +1182,8 @@ function preSave(isSaveOnly, isSaveNew, isComplete) {
             $('#variance_alert').remove();
             
             // Do not proceed with positive or negative variance and without batch pull reason.                
-            if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
-                || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0)
+            if (((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
+                || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0))
                 && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {
 
                 $(wrapper).addClass('error');
@@ -1235,8 +1235,8 @@ function preSaveNoValidation(isSaveOnly, isSaveNew, isComplete) {
     $('#variance_alert').remove();
     
     // Do not proceed with positive or negative variance and without batch pull reason.                
-    if ((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
-        || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0)
+    if (((parseInt($('#variance').val()) < 0 || parseFloat($('#variance').val()) < 0) 
+        || (parseInt($('#variance').val()) > 0 || parseFloat($('#variance').val()) > 0))
         && !$('#variance_exception').prop('checked') && (pullReason == '' || pullReason == 0)) {        
 
         $(wrapper).addClass('error');
