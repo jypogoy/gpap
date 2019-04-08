@@ -89,18 +89,23 @@ function toNum(el) {
     el.value = el.value.replace(/[^0-9]/g, '');
 }
 
+/*
+*   CR Date: 03-19-2019
+*   Requestor: Hector Legazpi
+*   Details: VND currency will now have no decimal places.
+*/
 function formatAmount(currencyCode, amountValue) {
     if (currencyCode.indexOf('Other') != -1) {
         var otherCurrCode = $('#other_currency').val().toUpperCase();
         //|| ($('#region_code').val() == 'MY' && otherCurrCode.indexOf('TWD') != -1)
-        if (otherCurrCode.indexOf('JPY') != -1 || otherCurrCode.indexOf('KRW') != -1) {
+        if (otherCurrCode.indexOf('JPY') != -1 || otherCurrCode.indexOf('KRW') != -1 || otherCurrCode.indexOf('VND') != -1) {
             currNoDecimal = true;                
         } else {
             currNoDecimal = false;
         }            
     } else {
         //|| ($('#region_code').val() == 'MY' && currencyCode.indexOf('TWD') != -1)
-        if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1) {
+        if (currencyCode.indexOf('JPY') != -1 || currencyCode.indexOf('KRW') != -1 || currencyCode.indexOf('VND') != -1) {
             currNoDecimal = true;
         } else {
             currNoDecimal = false;
